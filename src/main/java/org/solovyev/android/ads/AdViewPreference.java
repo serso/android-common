@@ -4,7 +4,7 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.android.view.prefs;
+package org.solovyev.android.ads;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.google.ads.AdView;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.ads.AdsController;
 
 /**
  * User: serso

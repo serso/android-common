@@ -4,7 +4,7 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.android.view.prefs;
+package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;

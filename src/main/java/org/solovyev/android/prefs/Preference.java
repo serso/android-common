@@ -4,7 +4,7 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.android.view.prefs;
+package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +25,7 @@ public interface Preference<T> {
 
 	T getPreference(@NotNull SharedPreferences preferences);
 
-	 void putPreference(@NotNull SharedPreferences preferences, @Nullable T value);
+	void putPreference(@NotNull SharedPreferences preferences, @Nullable T value);
 
 	void putDefault(@NotNull SharedPreferences preferences);
 

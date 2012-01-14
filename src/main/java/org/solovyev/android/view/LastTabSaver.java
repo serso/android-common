@@ -10,7 +10,7 @@ import android.app.TabActivity;
 import android.preference.PreferenceManager;
 import android.widget.TabHost;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.view.prefs.StringPreference;
+import org.solovyev.android.prefs.StringPreference;
 
 /**
  * User: serso

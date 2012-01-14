@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Vibrator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.NumberMapper;
+import org.solovyev.common.text.NumberMapper;
 
 /**
  * User: serso

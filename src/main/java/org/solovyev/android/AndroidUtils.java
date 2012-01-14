@@ -17,13 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 /**
  * User: serso
@@ -124,35 +119,6 @@ public final class AndroidUtils {
 			// App not installed!
 		}
 		return -1;
-	}
-
-	@NotNull
-	public static AdView createAndInflateAdView(@NotNull Activity activity,
-												@NotNull String admobAccountId,
-												@Nullable ViewGroup parentView,
-												int layoutId,
-												@NotNull List<String> keywords) {
-		final ViewGroup layout = parentView != null ? parentView : (ViewGroup) activity.findViewById(layoutId);
-
-		// Create the adView
-		final AdView adView = new AdView(activity, AdSize.BANNER, admobAccountId);
-
-		// Add the adView to it
-		layout.addView(adView);
-
-		// Initiate a generic request to load it with an ad
-		final AdRequest adRequest = new AdRequest();
-
-		// todo serso: revert - only for tests
-		//adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
-		//adRequest.addTestDevice("DB3C2F605A1296971898F0E60224A927");
-
-		for (String keyword : keywords) {
-			adRequest.addKeyword(keyword);
-		}
-		adView.loadAd(adRequest);
-
-		return adView;
 	}
 
 	public static <T> void processViewsOfType(@NotNull View view, @NotNull Class<T> clazz, @NotNull ViewProcessor<T> viewProcessor) {

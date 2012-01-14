@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.ViewGroup;
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import net.robotmedia.billing.BillingController;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.AndroidUtils;
 import org.solovyev.android.R;
 
 import java.util.Collections;
@@ -40,6 +41,35 @@ public final class AdsController {
 	private boolean initialized = false;
 
 	private boolean transactionsRestored = false;
+
+	@NotNull
+	public AdView createAndInflateAdView(@NotNull Activity activity,
+												@NotNull String admobAccountId,
+												@Nullable ViewGroup parentView,
+												int layoutId,
+												@NotNull List<String> keywords) {
+		final ViewGroup layout = parentView != null ? parentView : (ViewGroup) activity.findViewById(layoutId);
+
+		// Create the adView
+		final AdView adView = new AdView(activity, AdSize.BANNER, admobAccountId);
+
+		// Add the adView to it
+		layout.addView(adView);
+
+		// Initiate a generic request to load it with an ad
+		final AdRequest adRequest = new AdRequest();
+
+		// todo serso: revert - only for tests
+		//adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
+		//adRequest.addTestDevice("DB3C2F605A1296971898F0E60224A927");
+
+		for (String keyword : keywords) {
+			adRequest.addKeyword(keyword);
+		}
+		adView.loadAd(adRequest);
+
+		return adView;
+	}
 
 	public void init(@NotNull String admobUserId, @NotNull String adFreeProductId, @NotNull BillingController.IConfiguration configuration) {
 		this.admobUserId = admobUserId;
@@ -77,7 +107,7 @@ public final class AdsController {
 		if (!isAdFree(activity)) {
 			Log.d(activity.getClass().getName(), "Application is not ad free - inflating ad!");
 			final List<String> keywords = Collections.emptyList();
-			result = AndroidUtils.createAndInflateAdView(activity, admobUserId, parentView, parentViewId, keywords);
+			result = createAndInflateAdView(activity, admobUserId, parentView, parentViewId, keywords);
 		} else {
 			Log.d(activity.getClass().getName(), "Application is ad free - no ads!");
 		}

@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.R;
-import org.solovyev.common.NumberParser;
+import org.solovyev.common.text.NumberParser;
 import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Point2d;
 import org.solovyev.common.utils.StringUtils;

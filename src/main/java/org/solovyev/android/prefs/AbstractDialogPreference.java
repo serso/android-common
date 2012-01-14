@@ -1,4 +1,4 @@
-package org.solovyev.android.view.prefs;
+package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.preference.DialogPreference;
@@ -158,7 +158,7 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
 		if (callChangeListener(value)) {
 			Log.d(AbstractDialogPreference.class.getName(), "android.preference.Preference.shouldPersist()");
 			if (shouldPersist()) {
-				Log.d(AbstractDialogPreference.class.getName(), "org.solovyev.android.view.prefs.AbstractDialogPreference.persist()");
+				Log.d(AbstractDialogPreference.class.getName(), "org.solovyev.android.prefs.AbstractDialogPreference.persist()");
 				persist(value);
 			}
 		}
