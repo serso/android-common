@@ -13,7 +13,7 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.calculator.R;
+import org.solovyev.android.R;
 import org.solovyev.common.math.LinearNormalizer;
 import org.solovyev.common.math.Normalizer;
 import org.solovyev.common.utils.Converter;

@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.calculator.R;
+import org.solovyev.android.R;
 import org.solovyev.common.NumberIntervalMapper;
 import org.solovyev.common.utils.*;
 
