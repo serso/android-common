@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.NumberMapper;
-import org.solovyev.common.utils.Mapper;
+import org.solovyev.common.text.Mapper;
+import org.solovyev.common.text.NumberMapper;
 
 
 /* The following code was written by Matthew Wiggins

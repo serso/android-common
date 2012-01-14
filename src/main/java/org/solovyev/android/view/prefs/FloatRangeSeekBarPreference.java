@@ -9,9 +9,9 @@ package org.solovyev.android.view.prefs;
 import android.content.Context;
 import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.NumberIntervalMapper;
+import org.solovyev.common.text.Mapper;
+import org.solovyev.common.text.NumberIntervalMapper;
 import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.Mapper;
 
 /**
  * User: serso

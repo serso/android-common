@@ -14,9 +14,9 @@ import android.widget.LinearLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.widgets.NumberPicker;
-import org.solovyev.common.NumberIntervalMapper;
+import org.solovyev.common.text.Mapper;
+import org.solovyev.common.text.NumberIntervalMapper;
 import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.Mapper;
 
 /**
  * User: serso

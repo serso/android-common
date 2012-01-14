@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Mapper;
+import org.solovyev.common.text.Mapper;
 
 /**
  * User: serso

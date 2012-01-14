@@ -8,14 +8,14 @@ package org.solovyev.android.view.prefs;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Mapper;
+import org.solovyev.common.text.Mapper;
 
 /**
  * User: serso
  * Date: 12/25/11
  * Time: 1:17 PM
  */
-public class EnumMapper<T extends Enum> implements Mapper<T>{
+public class EnumMapper<T extends Enum> implements Mapper<T> {
 
 	@NotNull
 	private final Class<T> enumClass;

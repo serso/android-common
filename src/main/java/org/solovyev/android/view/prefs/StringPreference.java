@@ -9,8 +9,8 @@ package org.solovyev.android.view.prefs;
 import android.content.SharedPreferences;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Mapper;
-import org.solovyev.common.utils.StringMapper;
+import org.solovyev.common.text.Mapper;
+import org.solovyev.common.text.StringMapper;
 
 /**
  * User: serso
