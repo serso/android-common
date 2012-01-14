@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.view.DragButton;
+import org.solovyev.android.view.drag.DragButton;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

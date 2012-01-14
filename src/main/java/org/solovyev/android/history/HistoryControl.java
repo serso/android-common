@@ -3,7 +3,7 @@
  * For more information, please, contact se.solovyev@gmail.com
  */
 
-package org.solovyev.android;
+package org.solovyev.android.history;
 
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.utils.history.HistoryAction;

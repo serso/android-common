@@ -3,7 +3,7 @@
  * For more information, please, contact se.solovyev@gmail.com
  */
 
-package org.solovyev.android.view;
+package org.solovyev.android.view.drag;
 
 import org.jetbrains.annotations.NotNull;
 

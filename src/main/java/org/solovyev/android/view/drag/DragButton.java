@@ -3,7 +3,7 @@
  * For more information, please, contact se.solovyev@gmail.com
  */
 
-package org.solovyev.android.view;
+package org.solovyev.android.view.drag;
 
 import android.content.Context;
 import android.os.Handler;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.view.ColorButton;
 import org.solovyev.common.utils.Point2d;
 
 public class DragButton extends ColorButton {
@@ -22,7 +23,7 @@ public class DragButton extends ColorButton {
 	private Point2d startPoint = null;
 
 	@Nullable
-	private org.solovyev.android.view.OnDragListener onDragListener;
+	private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
 	private final OnTouchListener onTouchListener = new OnTouchListenerImpl();
 
@@ -38,12 +39,12 @@ public class DragButton extends ColorButton {
 		}
 	}
 
-	public void setOnDragListener(@Nullable org.solovyev.android.view.OnDragListener onDragListener) {
+	public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
 		this.onDragListener = onDragListener;
 	}
 
 	@Nullable
-	public org.solovyev.android.view.OnDragListener getOnDragListener() {
+	public org.solovyev.android.view.drag.OnDragListener getOnDragListener() {
 		return onDragListener;
 	}
 
@@ -61,7 +62,7 @@ public class DragButton extends ColorButton {
 
 			// in order to avoid possible NPEs
 			final Point2d localStartPoint = startPoint;
-			final org.solovyev.android.view.OnDragListener localOnDragListener = onDragListener;
+			final org.solovyev.android.view.drag.OnDragListener localOnDragListener = onDragListener;
 
 			if (localOnDragListener != null) {
 				// only if onDrag() listener specified
