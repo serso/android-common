@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.view.widgets.NumberPicker;
+import org.solovyev.android.view.NumberPicker;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
 import org.solovyev.common.utils.Interval;

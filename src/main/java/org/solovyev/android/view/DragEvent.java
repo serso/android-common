@@ -3,7 +3,7 @@
  * For more information, please, contact se.solovyev@gmail.com
  */
 
-package org.solovyev.android.view.widgets;
+package org.solovyev.android.view;
 
 import android.view.MotionEvent;
 import org.jetbrains.annotations.NotNull;

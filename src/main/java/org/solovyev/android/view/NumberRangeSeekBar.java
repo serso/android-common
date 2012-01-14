@@ -1,4 +1,4 @@
-package org.solovyev.android.view.widgets;
+package org.solovyev.android.view;
 
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;

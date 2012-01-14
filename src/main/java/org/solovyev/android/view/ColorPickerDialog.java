@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.solovyev.android.view.widgets;
+package org.solovyev.android.view;
 
 import android.os.Bundle;
 import android.app.Dialog;

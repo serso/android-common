@@ -5,15 +5,16 @@
 
 package org.solovyev.android.view;
 
-import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.EventListener;
 
 /**
  * User: serso
- * Date: 9/10/11
- * Time: 7:21 PM
+ * Date: 9/18/11
+ * Time: 8:48 PM
  */
-public interface FontSizeAdjuster {
+public interface DragPreferencesChangeListener extends EventListener{
 
-    void adjustFontSize(@NotNull TextView textView);
+	void onDragPreferencesChange(@NotNull SimpleOnDragListener.Preferences preferences );
 }

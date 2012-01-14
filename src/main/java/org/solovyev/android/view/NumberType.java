@@ -4,7 +4,7 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.android.view.widgets;
+package org.solovyev.android.view;
 
 import org.jetbrains.annotations.NotNull;
 

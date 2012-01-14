@@ -4,21 +4,20 @@
  * or visit http://se.solovyev.org
  */
 
-package org.solovyev.android.view;
+package org.solovyev.android.menu;
 
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * User: serso
  * Date: 12/18/11
- * Time: 1:30 PM
+ * Time: 1:29 PM
  */
-public interface AMenu<T extends AMenuItem<D>, D> {
-	@Nullable
-	T itemAt(int i);
+public interface AMenuItem<T> {
 
 	@NotNull
-	CharSequence[] getMenuCaptions(@NotNull final Context context);
+	String getCaption(@NotNull Context context);
+
+	void doAction(@NotNull T data, @NotNull Context context);
 }

@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.view.widgets.AbstractRangeSeekBar;
-import org.solovyev.android.view.widgets.NumberRangeSeekBar;
+import org.solovyev.android.view.AbstractRangeSeekBar;
+import org.solovyev.android.view.NumberRangeSeekBar;
 import org.solovyev.common.utils.Interval;
 import org.solovyev.common.utils.NumberInterval;
 
