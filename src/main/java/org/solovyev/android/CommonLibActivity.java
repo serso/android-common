@@ -7,5 +7,5 @@ import android.app.Activity;
  * Date: 1/14/12
  * Time: 8:27 PM
  */
-public class MainActivity extends Activity {
+public class CommonLibActivity extends Activity {
 }

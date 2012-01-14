@@ -6,7 +6,7 @@
 		a:versionName="1.0">
 
 	<application a:label="@string/app_name">
-		<activity a:name="org.solovyev.android.MainActivity"
+		<activity a:name=".CommonLibActivity"
 				  a:label="@string/app_name">
 
 			<intent-filter>
