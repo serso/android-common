@@ -34,6 +34,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.android.R;
 import org.solovyev.android.view.FontSizeAdjuster;
 import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Point2d;

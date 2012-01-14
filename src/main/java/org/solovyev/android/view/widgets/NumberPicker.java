@@ -40,6 +40,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import org.solovyev.android.R;
 
 /**
  * A view for selecting a number

@@ -9,6 +9,7 @@ import net.robotmedia.billing.BillingController;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.AndroidUtils;
+import org.solovyev.android.R;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,9 +41,12 @@ public final class AdsController {
 
 	private boolean transactionsRestored = false;
 
-	public void init(@NotNull String admobUserId, @NotNull String adFreeProductId) {
+	public void init(@NotNull String admobUserId, @NotNull String adFreeProductId, @NotNull BillingController.IConfiguration configuration) {
 		this.admobUserId = admobUserId;
 		this.adFreeProductId = adFreeProductId;
+
+		//BillingController.setDebug(true);
+		BillingController.setConfiguration(configuration);
 
 		this.initialized = true;
 	}
