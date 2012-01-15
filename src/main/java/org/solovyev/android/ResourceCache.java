@@ -26,6 +26,8 @@ import java.util.*;
  * Date: 11/25/11
  * Time: 1:52 PM
  */
+// todo serso: think of refactor
+@Deprecated
 public enum ResourceCache {
 
 	instance;

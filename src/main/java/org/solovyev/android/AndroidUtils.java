@@ -25,6 +25,10 @@ import org.jetbrains.annotations.Nullable;
  * Date: 12/21/11
  * Time: 11:54 PM
  */
+
+/**
+ * This class contains static methods for working with some android classes
+ */
 public final class AndroidUtils {
 
 	// not intended for instantiation
@@ -32,12 +36,22 @@ public final class AndroidUtils {
 		throw new AssertionError();
 	}
 
+	/**
+	 * Method center the tabs' contents on specified tabHost elements.
+	 * This method should be invoked only for tabs with only text on them (and no image)
+	 * This method checks some known devices/android versions/builds which don't support tab centering and do nothing for them
+	 *
+	 * NOTE: be aware that this method doesn't cover all unsupported cases, for sure don't use this method
+	 *
+	 * @param tabHost tabHost element
+	 */
 	public static void centerAndWrapTabsFor(@NotNull TabHost tabHost) {
 		if (allowCenterAndWrappingTabs()) {
 			int tabCount = tabHost.getTabWidget().getTabCount();
 			for (int i = 0; i < tabCount; i++) {
 				final View view = tabHost.getTabWidget().getChildTabViewAt(i);
 				if (view != null) {
+
 					if (view.getLayoutParams().height > 0) {
 						// reduce height of the tab
 						view.getLayoutParams().height *= 0.8;
@@ -62,6 +76,11 @@ public final class AndroidUtils {
 		}
 	}
 
+	/**
+	 * Internal method where checking if device supports centering of text tabs
+	 *
+	 * @return true if centering of text tabs is supported for this device/build/OS version
+	 */
 	private static boolean allowCenterAndWrappingTabs() {
   		boolean result = true;
 
@@ -90,27 +109,37 @@ public final class AndroidUtils {
 		return result;
 	}
 
+	/**
+	 * Method adds tab to the tabHost element
+	 *
+	 * @param context activity which users tabHost
+	 * @param tabHost tabHost element
+	 * @param tabId id of tab to be added
+	 * @param tabCaptionId string id of tab to be added
+	 * @param activityClass activity class to be invoked if the tab is pressed
+	 */
 	public static void addTab(@NotNull Context context,
 							  @NotNull TabHost tabHost,
 							  @NotNull String tabId,
 							  int tabCaptionId,
 							  @NotNull Class<? extends Activity> activityClass) {
 
-		TabHost.TabSpec spec;
-
+		// create intent to be invoked on tab press
 		final Intent intent = new Intent().setClass(context, activityClass);
 
-		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec(tabId).setIndicator(context.getString(tabCaptionId)).setContent(intent);
+		// init TabSpec
+		final TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabId).setIndicator(context.getString(tabCaptionId)).setContent(intent);
 
-		tabHost.addTab(spec);
+		tabHost.addTab(tabSpec);
 	}
 
 
 	/**
-	 * @param context		context
-	 * @param appPackageName - full name of the package of an app, 'com.example.app' for example.
-	 * @return version number we are currently in
+	 * Method returns version of current application.
+	 *
+	 * @param context	context
+	 * @param appPackageName full name of the package of an app, 'com.example.app' for example.
+	 * @return version number we are currently in, if for some reason package info was not found and thus versionCode could not be found -1 is returned
 	 */
 	public static int getAppVersionCode(@NotNull Context context, @NotNull String appPackageName) {
 		try {
@@ -121,36 +150,57 @@ public final class AndroidUtils {
 		return -1;
 	}
 
-	public static <T> void processViewsOfType(@NotNull View view, @NotNull Class<T> clazz, @NotNull ViewProcessor<T> viewProcessor) {
-		processViewsOfType0(view, clazz, viewProcessor);
+		/**
+	 * Method runs through view and all it's children recursively and process all instances of viewClass via viewProcessor
+	 * @param view parent view to be processed, if view is ViewGroup then all it's children will be processed
+	 * @param viewClass only instances of specified class will be processed
+	 * @param viewProcessor object which processes views
+	 */
+	public static <T> void processViewsOfType(@NotNull View view, @NotNull Class<T> viewClass, @NotNull ViewProcessor<T> viewProcessor) {
+		processViewsOfType0(view, viewClass, viewProcessor);
 	}
 
+	/**
+	 * Method runs through view and all it's children recursively and process them via viewProcessor
+	 * @param view parent view to be processed, if view is ViewGroup then all it's children will be processed
+	 * @param viewProcessor object which processes views
+	 */
 	public static void processViews(@NotNull View view, @NotNull ViewProcessor<View> viewProcessor) {
 		processViewsOfType0(view, null, viewProcessor);
 	}
 
-	private static <T> void processViewsOfType0(@NotNull View view, @Nullable Class<T> clazz, @NotNull ViewProcessor<T> viewProcessor) {
+	private static <T> void processViewsOfType0(@NotNull View view, @Nullable Class<T> viewClass, @NotNull ViewProcessor<T> viewProcessor) {
 		if (view instanceof ViewGroup) {
 			final ViewGroup viewGroup = (ViewGroup) view;
 
-			if (clazz == null || ViewGroup.class.isAssignableFrom(clazz)) {
+			if (viewClass == null || ViewGroup.class.isAssignableFrom(viewClass)) {
 				//noinspection unchecked
 				viewProcessor.process((T) viewGroup);
 			}
 
 			for (int index = 0; index < viewGroup.getChildCount(); index++) {
-				processViewsOfType0(viewGroup.getChildAt(index), clazz, viewProcessor);
+				processViewsOfType0(viewGroup.getChildAt(index), viewClass, viewProcessor);
 			}
-		} else if (clazz == null || view.getClass().isAssignableFrom(clazz)) {
+		} else if (viewClass == null || view.getClass().isAssignableFrom(viewClass)) {
 			//noinspection unchecked
 			viewProcessor.process((T) view);
 		}
 	}
 
+	/**
+	 * Interface to process view. See org.solovyev.android.AndroidUtils#processViews(android.view.View, org.solovyev.android.AndroidUtils.ViewProcessor<android.view.View>) for more details
+	 *
+	 * @see org.solovyev.android.AndroidUtils#processViews(android.view.View, org.solovyev.android.AndroidUtils.ViewProcessor<android.view.View>)
+	 * @param <V> view type
+	 */
 	public static interface ViewProcessor<V> {
 		void process(@NotNull V view);
 	}
 
+	/**
+	 * Method restarts activity
+	 * @param activity to be restarted activity
+	 */
 	public static void restartActivity(@NotNull Activity activity) {
 		final Intent intent = activity.getIntent();
 		/*
