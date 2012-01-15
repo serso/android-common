@@ -17,6 +17,10 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int boundaries=0x7f010007;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int defaultButtonStyle=0x7f010009;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -83,48 +87,67 @@ containing a value of this type.
         public static final int textUp=0x7f010000;
     }
     public static final class color {
-        public static final int button_ce_text_color=0x7f030003;
-        public static final int button_operator_text_color=0x7f030002;
-        public static final int button_text_color=0x7f030001;
-        public static final int default_background=0x7f030006;
-        public static final int default_text_color=0x7f030004;
-        public static final int magic_flame=0x7f030000;
-        public static final int selected_angle_unit_text_color=0x7f030005;
+        public static final int button_ce_text_color=0x7f040003;
+        public static final int button_operator_text_color=0x7f040002;
+        public static final int button_text_color=0x7f040001;
+        public static final int default_background=0x7f040006;
+        public static final int default_text_color=0x7f040004;
+        public static final int magic_flame=0x7f040000;
+        public static final int selected_angle_unit_text_color=0x7f040005;
     }
     public static final class drawable {
-        public static final int seek_thumb_normal=0x7f020000;
-        public static final int seek_thumb_pressed=0x7f020001;
-        public static final int system_copy=0x7f020002;
-        public static final int system_delete=0x7f020003;
-        public static final int system_kb_delete_dark=0x7f020004;
-        public static final int system_kb_delete_light=0x7f020005;
-        public static final int system_paste=0x7f020006;
-        public static final int timepicker_down_btn=0x7f020007;
-        public static final int timepicker_down_disabled=0x7f020008;
-        public static final int timepicker_down_disabled_focused=0x7f020009;
-        public static final int timepicker_down_normal=0x7f02000a;
-        public static final int timepicker_down_pressed=0x7f02000b;
-        public static final int timepicker_down_selected=0x7f02000c;
-        public static final int timepicker_input=0x7f02000d;
-        public static final int timepicker_input_disabled=0x7f02000e;
-        public static final int timepicker_input_normal=0x7f02000f;
-        public static final int timepicker_input_pressed=0x7f020010;
-        public static final int timepicker_input_selected=0x7f020011;
-        public static final int timepicker_up_btn=0x7f020012;
-        public static final int timepicker_up_disabled=0x7f020013;
-        public static final int timepicker_up_disabled_focused=0x7f020014;
-        public static final int timepicker_up_normal=0x7f020015;
-        public static final int timepicker_up_pressed=0x7f020016;
-        public static final int timepicker_up_selected=0x7f020017;
+        public static final int default_button=0x7f020000;
+        public static final int default_button_dark=0x7f020001;
+        public static final int seek_thumb_normal=0x7f020002;
+        public static final int seek_thumb_pressed=0x7f020003;
+        public static final int system_copy=0x7f020004;
+        public static final int system_delete=0x7f020005;
+        public static final int system_kb_delete_dark=0x7f020006;
+        public static final int system_kb_delete_light=0x7f020007;
+        public static final int system_paste=0x7f020008;
+        public static final int timepicker_down_btn=0x7f020009;
+        public static final int timepicker_down_disabled=0x7f02000a;
+        public static final int timepicker_down_disabled_focused=0x7f02000b;
+        public static final int timepicker_down_normal=0x7f02000c;
+        public static final int timepicker_down_pressed=0x7f02000d;
+        public static final int timepicker_down_selected=0x7f02000e;
+        public static final int timepicker_input=0x7f02000f;
+        public static final int timepicker_input_disabled=0x7f020010;
+        public static final int timepicker_input_normal=0x7f020011;
+        public static final int timepicker_input_pressed=0x7f020012;
+        public static final int timepicker_input_selected=0x7f020013;
+        public static final int timepicker_up_btn=0x7f020014;
+        public static final int timepicker_up_disabled=0x7f020015;
+        public static final int timepicker_up_disabled_focused=0x7f020016;
+        public static final int timepicker_up_normal=0x7f020017;
+        public static final int timepicker_up_pressed=0x7f020018;
+        public static final int timepicker_up_selected=0x7f020019;
+    }
+    public static final class id {
+        public static final int ad_parent_view=0x7f070000;
+        public static final int decrement=0x7f070003;
+        public static final int increment=0x7f070001;
+        public static final int timepicker_input=0x7f070002;
+    }
+    public static final class layout {
+        public static final int ids=0x7f030000;
+        public static final int number_picker=0x7f030001;
     }
     public static final class string {
-        public static final int app_name=0x7f040006;
-        public static final int p_drag_angle=0x7f040003;
-        public static final int p_drag_angle_key=0x7f040002;
-        public static final int p_drag_distance=0x7f040001;
-        public static final int p_drag_distance_key=0x7f040000;
-        public static final int p_drag_duration=0x7f040005;
-        public static final int p_drag_duration_key=0x7f040004;
+        public static final int app_name=0x7f060006;
+        public static final int p_drag_angle=0x7f060003;
+        public static final int p_drag_angle_key=0x7f060002;
+        public static final int p_drag_distance=0x7f060001;
+        public static final int p_drag_distance_key=0x7f060000;
+        public static final int p_drag_duration=0x7f060005;
+        public static final int p_drag_duration_key=0x7f060004;
+    }
+    public static final class style {
+        public static final int button_style=0x7f050000;
+        public static final int button_style_parent=0x7f050004;
+        public static final int default_button_style=0x7f050001;
+        public static final int default_text_size=0x7f050003;
+        public static final int default_theme=0x7f050002;
     }
     public static final class styleable {
         /** Attributes that can be used with a DirectionDragButton.

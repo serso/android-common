@@ -1,0 +1,18 @@
+<!--
+  ~ Copyright (c) 2009-2011. Created by serso aka se.solovyev.
+  ~ For more information, please, contact se.solovyev@gmail.com
+  ~ or visit http://se.solovyev.org
+  -->
+
+<resources>
+
+	<style name="default_text_size">
+		<item name="android:textSize">20dp</item>
+	</style>
+
+	<style name="button_style_parent">
+		<item name="android:textSize">20dp</item>
+		<item name="android:textColor">@color/button_text_color</item>
+	</style>
+
+</resources>

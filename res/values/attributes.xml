@@ -20,4 +20,6 @@
 		<attr name="steps" format="integer"/>
 	</declare-styleable>
 
+	<attr name="defaultButtonStyle" format="reference" />
+
 </resources>
