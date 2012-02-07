@@ -122,8 +122,6 @@ containing a value of this type.
         public static final int timepicker_up_normal=0x7f020017;
         public static final int timepicker_up_pressed=0x7f020018;
         public static final int timepicker_up_selected=0x7f020019;
-        public static final int windows_button_dark=0x7f02001a;
-        public static final int windows_button_light=0x7f02001b;
     }
     public static final class id {
         public static final int ad_parent_view=0x7f070000;

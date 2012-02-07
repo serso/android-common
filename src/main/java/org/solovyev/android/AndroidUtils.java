@@ -173,7 +173,7 @@ public final class AndroidUtils {
 		if (view instanceof ViewGroup) {
 			final ViewGroup viewGroup = (ViewGroup) view;
 
-			if (viewClass == null || ViewGroup.class.isAssignableFrom(viewClass)) {
+			if (viewClass == null || viewClass.isAssignableFrom(ViewGroup.class)) {
 				//noinspection unchecked
 				viewProcessor.process((T) viewGroup);
 			}
@@ -181,7 +181,7 @@ public final class AndroidUtils {
 			for (int index = 0; index < viewGroup.getChildCount(); index++) {
 				processViewsOfType0(viewGroup.getChildAt(index), viewClass, viewProcessor);
 			}
-		} else if (viewClass == null || view.getClass().isAssignableFrom(viewClass)) {
+		} else if (viewClass == null || viewClass.isAssignableFrom(view.getClass())) {
 			//noinspection unchecked
 			viewProcessor.process((T) view);
 		}

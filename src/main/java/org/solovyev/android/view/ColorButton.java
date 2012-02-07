@@ -51,7 +51,9 @@ import java.util.Arrays;
  */
 public class ColorButton extends Button {
 
-	private int CLICK_FEEDBACK_COLOR;
+	private int magicFlameColour;
+	private boolean drawMagicFlame = true;
+
 	private static final int CLICK_FEEDBACK_INTERVAL = 10;
 	private static final int CLICK_FEEDBACK_DURATION = 350;
 
@@ -100,7 +102,7 @@ public class ColorButton extends Button {
 	protected void init(Context context) {
 		final Resources resources = getResources();
 
-		CLICK_FEEDBACK_COLOR = resources.getColor(R.color.magic_flame);
+		magicFlameColour = resources.getColor(R.color.magic_flame);
 		feedbackPaint = new Paint();
 		feedbackPaint.setStyle(Style.STROKE);
 		feedbackPaint.setStrokeWidth(2);
@@ -154,7 +156,7 @@ public class ColorButton extends Button {
 
 	public void drawMagicFlame(int duration, Canvas canvas) {
 		int alpha = 255 - 255 * duration / CLICK_FEEDBACK_DURATION;
-		int color = CLICK_FEEDBACK_COLOR | (alpha << 24);
+		int color = magicFlameColour | (alpha << 24);
 
 		feedbackPaint.setColor(color);
 		canvas.drawRect(1, 1, getWidth() - 1, getHeight() - 1, feedbackPaint);
@@ -162,14 +164,16 @@ public class ColorButton extends Button {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		if (animationStart != -1) {
-			int animDuration = (int) (System.currentTimeMillis() - animationStart);
+		if (drawMagicFlame) {
+			if (animationStart != -1) {
+				int animDuration = (int) (System.currentTimeMillis() - animationStart);
 
-			if (animDuration >= CLICK_FEEDBACK_DURATION) {
-				animationStart = -1;
-			} else {
-				drawMagicFlame(animDuration, canvas);
-				postInvalidateDelayed(CLICK_FEEDBACK_INTERVAL);
+				if (animDuration >= CLICK_FEEDBACK_DURATION) {
+					animationStart = -1;
+				} else {
+					drawMagicFlame(animDuration, canvas);
+					postInvalidateDelayed(CLICK_FEEDBACK_INTERVAL);
+				}
 			}
 		}
 
@@ -239,16 +243,22 @@ public class ColorButton extends Button {
 	public boolean onTouchEvent(MotionEvent event) {
 		boolean result = super.onTouchEvent(event);
 
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_UP:
-				animateClickFeedback();
-				break;
-			case MotionEvent.ACTION_DOWN:
-			case MotionEvent.ACTION_CANCEL:
-				invalidate();
-				break;
+		if (this.drawMagicFlame) {
+			switch (event.getAction()) {
+				case MotionEvent.ACTION_UP:
+					animateClickFeedback();
+					break;
+				case MotionEvent.ACTION_DOWN:
+				case MotionEvent.ACTION_CANCEL:
+					invalidate();
+					break;
+			}
 		}
 
 		return result;
+	}
+
+	public void setDrawMagicFlame(boolean drawMagicFlame) {
+		this.drawMagicFlame = drawMagicFlame;
 	}
 }
