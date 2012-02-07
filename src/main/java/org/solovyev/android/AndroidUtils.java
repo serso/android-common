@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -217,6 +218,11 @@ public final class AndroidUtils {
 		overridePendingTransition(0, 0);*/
 		Log.d(activity.getClass().getName(), "Starting new activity!");
 		activity.startActivity(intent);
+	}
+
+	public static int toPixels(@NotNull DisplayMetrics dm, int dps) {
+		final float scale = dm.density;
+		return (int) (dps * scale + 0.5f);
 	}
 
 }
