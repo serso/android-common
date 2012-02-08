@@ -82,7 +82,8 @@ public final class AdsController {
 	}
 
 	private boolean isAdFreePurchased(@NotNull Context context) {
-		return BillingController.isPurchased(context.getApplicationContext(), adFreeProductId);
+        // Blackberry playbook doesn't support billing => this it the only one point where we can stop application to communicate with billing service
+		return true;
 	}
 
 	public boolean isAdFree(@NotNull Context context) {
