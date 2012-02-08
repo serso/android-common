@@ -82,8 +82,10 @@ public final class AdsController {
 	}
 
 	private boolean isAdFreePurchased(@NotNull Context context) {
+        // todo serso: this piece of code is shared between two branches in Android Calculator project (Calculator++) don't forget to change code below for correct work
         // Blackberry playbook doesn't support billing => this it the only one point where we can stop application to communicate with billing service
-		return true;
+		//return true;
+        return BillingController.isPurchased(context.getApplicationContext(), adFreeProductId);
 	}
 
 	public boolean isAdFree(@NotNull Context context) {
