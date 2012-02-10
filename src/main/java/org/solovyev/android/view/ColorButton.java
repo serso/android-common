@@ -36,11 +36,8 @@ import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.FontSizeAdjuster;
 import org.solovyev.android.R;
-import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Point2d;
 import org.solovyev.common.utils.StringUtils;
-
-import java.util.Arrays;
 
 /**
  * NOTE: copied from com.android.calculator2.ColorButton
@@ -107,8 +104,8 @@ public class ColorButton extends Button {
 		feedbackPaint.setStyle(Style.STROKE);
 		feedbackPaint.setStrokeWidth(2);
 
-		// todo serso: set attribute through style!
-		getPaint().setColor(resources.getColor(R.color.button_text_color));
+		// applying textColor property on the paint (now it is not possible to set paint color through the xml)
+		getPaint().setColor(getCurrentTextColor());
 
 		animationStart = -1;
 
