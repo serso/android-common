@@ -58,6 +58,8 @@ public class DirectionDragButton extends DragButton {
 		@NotNull
 		private Float textScale;
 
+		private boolean showText = true;
+
 		private DirectionTextData(@NotNull GuiDragDirection guiDragDirection, @NotNull String text) {
 			this.guiDragDirection = guiDragDirection;
 			this.text = text;
@@ -102,6 +104,14 @@ public class DirectionDragButton extends DragButton {
 
 		public void setTextScale(@NotNull Float textScale) {
 			this.textScale = textScale;
+		}
+
+		public boolean isShowText() {
+			return showText;
+		}
+
+		public void setShowText(boolean showText) {
+			this.showText = showText;
 		}
 	}
 
@@ -294,13 +304,15 @@ public class DirectionDragButton extends DragButton {
 			final Resources resources = getResources();
 
 			for (DirectionTextData directionTextData : directionTextDataMap.values()) {
-				initDirectionTextPaint(basePaint, directionTextData, resources);
+				if (directionTextData.isShowText()) {
+					initDirectionTextPaint(basePaint, directionTextData, resources);
 
-				final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
-				final String directionText = directionTextData.getText();
-				final Paint directionPaint = directionTextData.getPaint();
+					final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
+					final String directionText = directionTextData.getText();
+					final Paint directionPaint = directionTextData.getPaint();
 
-				directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
+					directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
+				}
 			}
 		}
 	}
@@ -314,10 +326,12 @@ public class DirectionDragButton extends DragButton {
 		final Resources resources = getResources();
 
 		for (DirectionTextData directionTextData : directionTextDataMap.values()) {
-			initDirectionTextPaint(paint, directionTextData, resources);
-			final String text = directionTextData.getText();
-			final Point2d position = directionTextData.getPosition();
-			canvas.drawText(text, 0, text.length(), position.getX(), position.getY(), directionTextData.getPaint());
+			if (directionTextData.isShowText()) {
+				initDirectionTextPaint(paint, directionTextData, resources);
+				final String text = directionTextData.getText();
+				final Point2d position = directionTextData.getPosition();
+				canvas.drawText(text, 0, text.length(), position.getX(), position.getY(), directionTextData.getPaint());
+			}
 		}
 	}
 
@@ -353,10 +367,26 @@ public class DirectionDragButton extends DragButton {
 		return guiDragDirection == null ? null : getText(guiDragDirection);
 	}
 
+	public void showDirectionText(boolean showDirectionText, @NotNull DragDirection direction) {
+		final GuiDragDirection guiDragDirection = GuiDragDirection.valueOf(direction);
+		final DirectionTextData directionTextData = this.directionTextDataMap.get(guiDragDirection);
+		if ( directionTextData != null ) {
+			directionTextData.setShowText(showDirectionText);
+		}
+	}
+
 	@Nullable
 	private String getText(@NotNull GuiDragDirection direction) {
 		DirectionTextData directionTextData = this.directionTextDataMap.get(direction);
-		return directionTextData == null ? null : directionTextData.getText();
+		if ( directionTextData == null ) {
+			return null;
+		} else {
+			if ( directionTextData.isShowText() ) {
+				return directionTextData.getText();
+			} else {
+				return null;
+			}
+		}
 	}
 
 
