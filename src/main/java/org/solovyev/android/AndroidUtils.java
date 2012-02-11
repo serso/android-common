@@ -21,6 +21,9 @@ import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * User: serso
  * Date: 12/21/11
@@ -223,6 +226,28 @@ public final class AndroidUtils {
 	public static int toPixels(@NotNull DisplayMetrics dm, int dps) {
 		final float scale = dm.density;
 		return (int) (dps * scale + 0.5f);
+	}
+
+	public static enum PhoneModel {
+		samsung_galaxy_s_2(	"GT-I9100","GT-I9100M","GT-I9100P","GT-I9100T","SC-02C","SHW-M250K","SHW-M250L","SHW-M250S"),
+		samsung_galaxy_s("GT-I9000","GT-I9000B","GT-I9000M","GT-I9000T","SGH-I897");
+
+		@NotNull
+		private final List<String> values;
+
+		PhoneModel(@NotNull String... values) {
+			this.values = Arrays.asList(values);
+		}
+
+		@NotNull
+		public List<String> getValues() {
+			return values;
+		}
+	}
+
+	public static boolean isPhoneModel( @NotNull PhoneModel phoneModel ) {
+		final String model = Build.MODEL;
+		return model != null && phoneModel.getValues().contains(model);
 	}
 
 }

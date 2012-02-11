@@ -29,4 +29,6 @@ public interface Preference<T> {
 
 	void putDefault(@NotNull SharedPreferences preferences);
 
+	boolean isSet(@NotNull SharedPreferences preferences);
+
 }

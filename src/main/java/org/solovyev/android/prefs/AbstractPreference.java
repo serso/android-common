@@ -38,7 +38,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 
 	@Override
 	public final T getPreference(@NotNull SharedPreferences preferences) {
-		if ( preferences.contains(this.key) ) {
+		if ( isSet(preferences) ) {
 			return getPersistedValue(preferences);
 		} else {
 			return this.defaultValue;
@@ -63,4 +63,9 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 	}
 
 	protected abstract void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull T value);
+
+	@Override
+	public boolean isSet(@NotNull SharedPreferences preferences) {
+		return preferences.contains(this.key);
+	}
 }
