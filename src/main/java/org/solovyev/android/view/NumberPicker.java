@@ -218,6 +218,10 @@ public class NumberPicker extends LinearLayout {
         mText.setFilters(new InputFilter[] {inputFilter});
         mText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
+		// todo serso: solve the problem
+		// workaround for manual input (currently input through virtual keyboard is not handled by this class)
+		mText.setEnabled(false);
+
         if (!isEnabled()) {
             setEnabled(false);
         }
