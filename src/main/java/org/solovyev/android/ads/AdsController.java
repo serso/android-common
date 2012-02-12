@@ -8,6 +8,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.helper.AbstractBillingObserver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.R;
@@ -39,8 +40,6 @@ public final class AdsController {
 	private String adFreeProductId;
 
 	private boolean initialized = false;
-
-	private boolean transactionsRestored = false;
 
 	@NotNull
 	public AdView createAndInflateAdView(@NotNull Activity activity,
@@ -91,15 +90,15 @@ public final class AdsController {
 	public boolean isAdFree(@NotNull Context context) {
 		// check if user already bought this product
 		boolean purchased = isAdFreePurchased(context);
-		if (!purchased && !transactionsRestored) {
-			// we must to restore all transactions done by user to guarantee that product was purchased or not
-			BillingController.restoreTransactions(context);
+		if ( !purchased ) {
+			if (!AbstractBillingObserver.isTransactionsRestored(context)) {
+				// we must to restore all transactions done by user to guarantee that product was purchased or not
+				BillingController.restoreTransactions(context);
 
-			transactionsRestored = true;
-
-			// todo serso: may be call net.robotmedia.billing.BillingController.restoreTransactions() always before first check and get rid of second check
-			// check the billing one more time
-			purchased = isAdFreePurchased(context);
+				// todo serso: may be call net.robotmedia.billing.BillingController.restoreTransactions() always before first check and get rid of second check
+				// check the billing one more time
+				purchased = isAdFreePurchased(context);
+			}
 		}
 		return purchased;
 	}
