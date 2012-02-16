@@ -20,12 +20,12 @@ import org.solovyev.common.text.NumberMapper;
 public class VibratorContainer implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	public static final String HAPTIC_FEEDBACK_P_KEY = "org.solovyev.android.calculator.CalculatorModel_haptic_feedback";
-	public static final boolean HAPTIC_FEEDBACK_DEFAULT = false;
+	public static final boolean HAPTIC_FEEDBACK_DEFAULT = true;
 	public static final String HAPTIC_FEEDBACK_DURATION_P_KEY = "org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key";
 
 	private final static NumberMapper<Long> mapper = new NumberMapper<Long>(Long.class);
 
-	private static final long defaultVibrationTime = 100;
+	private static final long defaultVibrationTime = 60;
 
 	private final float vibrationTimeScale;
 
