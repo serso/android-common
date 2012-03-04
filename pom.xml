@@ -6,81 +6,139 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.solovyev.android</groupId>
-	<artifactId>common</artifactId>
+    <groupId>org.solovyev.android</groupId>
+    <artifactId>common</artifactId>
+    <version>0.1</version>
+
     <packaging>apklib</packaging>
-	<version>0.1</version>
 
-	<properties>
-		<additionalLibs>${basedir}/src/misc/lib</additionalLibs>
-	</properties>
+    <properties>
+        <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
+    </properties>
 
-	<repositories>
-		<repository>
-			<id>congrace.de</id>
-			<name>releases</name>
-			<url>http://nexus.congrace.de/nexus/content/repositories/releases/</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>congrace.de</id>
+            <name>releases</name>
+            <url>http://nexus.congrace.de/nexus/content/repositories/releases/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<version>2.3.3</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>2.3.3</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.solovyev</groupId>
-			<artifactId>common</artifactId>
-			<version>0.3</version>
-		</dependency>
+        <dependency>
+            <groupId>org.solovyev</groupId>
+            <artifactId>common</artifactId>
+            <version>0.3</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.simpleframework</groupId>
-			<artifactId>simple-xml</artifactId>
-			<version>2.6.1</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>stax-api</artifactId>
-					<groupId>stax</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>org.simpleframework</groupId>
+            <artifactId>simple-xml</artifactId>
+            <version>2.6.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>stax-api</artifactId>
+                    <groupId>stax</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xpp3</artifactId>
+                    <groupId>xpp3</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
-		<dependency>
-			<groupId>admob</groupId>
-			<artifactId>admob</artifactId>
-			<version>4.3.1</version>
-			<scope>system</scope>
-			<systemPath>${additionalLibs}/GoogleAdMobAdsSdk-4.3.1.jar</systemPath>
-		</dependency>
+        <dependency>
+            <groupId>admob</groupId>
+            <artifactId>admob</artifactId>
+            <version>4.3.1</version>
+            <scope>system</scope>
+            <systemPath>${additionalLibs}/GoogleAdMobAdsSdk-4.3.1.jar</systemPath>
+        </dependency>
 
-		<dependency>
-			<groupId>org.solovyev.android</groupId>
-			<artifactId>billing</artifactId>
-			<version>0.1</version>
-		</dependency>
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>billing</artifactId>
+            <version>0.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.intellij</groupId>
-			<artifactId>annotations</artifactId>
-			<version>7.0.3</version>
-		</dependency>
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+            <version>7.0.3</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
+
+    <build>
+
+        <extensions>
+            <extension>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.1.1</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>${basedir}/src/misc/env/env.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+<!--            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+
+                    <sourceDirectories>${project.basedir}/src/main/java</sourceDirectories>
+
+                    <sdk>
+                        <platform>15</platform>
+                    </sdk>
+
+                </configuration>
+
+            </plugin>-->
+
+        </plugins>
+    </build>
+
 </project>
