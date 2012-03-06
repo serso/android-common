@@ -80,7 +80,7 @@
             <groupId>org.solovyev.android</groupId>
             <artifactId>billing</artifactId>
             <version>0.1</version>
-			<type>apklib</type>
+            <type>apklib</type>
         </dependency>
 
         <dependency>
@@ -121,23 +121,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-<!--            <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-
-                    <sourceDirectories>${project.basedir}/src/main/java</sourceDirectories>
-
-                    <sdk>
-                        <platform>15</platform>
-                    </sdk>
-
-                </configuration>
-
-            </plugin>-->
 
         </plugins>
     </build>
