@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="c_error">Error</string>
+    <string name="c_billing_purchasing">Purchasing…</string>
+    <string name="c_billing_already_purchased">Product is already purchased</string>
+    <string name="c_billing_clearing">Clearing billing data…</string>
+    <string name="c_billing_error">Billing is not supported: you must have Google Checkout account linked to your Google account and must be connected to the internet.</string>
+</resources>
