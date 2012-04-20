@@ -23,7 +23,21 @@ public interface Preference<T> {
 
 	T getDefaultValue();
 
+    /**
+     * NOTE: this method can throw runtime exceptions if errors occurred while extracting preferences values
+     *
+     * @param preferences application preferences
+     * @return value from preference, default value if no value in preference was found
+     */
 	T getPreference(@NotNull SharedPreferences preferences);
+
+    /**
+     * NOTE: this method SHOULD not throw any runtime exceptions BUT return default value if any error occurred
+     *
+     * @param preferences application preferences
+     * @return value from preference, default value if no value in preference was found or error occurred
+     */
+    T getPreferenceNoError(@NotNull SharedPreferences preferences);
 
 	void putPreference(@NotNull SharedPreferences preferences, @Nullable T value);
 

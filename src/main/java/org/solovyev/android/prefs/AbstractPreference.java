@@ -45,7 +45,20 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 		}
 	}
 
-	@Nullable
+    @Override
+    public T getPreferenceNoError(@NotNull SharedPreferences preferences) {
+        if (isSet(preferences)) {
+            try {
+                return getPersistedValue(preferences);
+            } catch (RuntimeException e) {
+                return this.defaultValue;
+            }
+        } else {
+            return this.defaultValue;
+        }
+    }
+
+    @Nullable
 	protected abstract T getPersistedValue(@NotNull SharedPreferences preferences);
 
 	@Override

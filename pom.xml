@@ -13,14 +13,13 @@
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>common</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <name>Common Android Library</name>
 
     <packaging>apklib</packaging>
 
     <properties>
         <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
-        <android.sdk.path>/home/serso/projects/java/misc/libs/android-sdk-linux_x86</android.sdk.path>
     </properties>
 
     <repositories>
