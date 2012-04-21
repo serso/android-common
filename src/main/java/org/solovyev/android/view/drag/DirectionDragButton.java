@@ -303,18 +303,16 @@ public class DirectionDragButton extends DragButton {
 			final Paint basePaint = getPaint();
 			final Resources resources = getResources();
 
-			for (DirectionTextData directionTextData : directionTextDataMap.values()) {
-				if (directionTextData.isShowText()) {
-					initDirectionTextPaint(basePaint, directionTextData, resources);
+            for (DirectionTextData directionTextData : directionTextDataMap.values()) {
+                initDirectionTextPaint(basePaint, directionTextData, resources);
 
-					final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
-					final String directionText = directionTextData.getText();
-					final Paint directionPaint = directionTextData.getPaint();
+                final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
+                final String directionText = directionTextData.getText();
+                final Paint directionPaint = directionTextData.getPaint();
 
-					directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
-				}
-			}
-		}
+                directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
+            }
+        }
 	}
 
 

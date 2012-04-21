@@ -10,9 +10,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -249,6 +251,20 @@ public final class AndroidUtils {
 		final String model = Build.MODEL;
 		return model != null && phoneModel.getValues().contains(model);
 	}
+
+    public static int getScreenOrientation(@NotNull Activity activity) {
+        final Display display = activity.getWindowManager().getDefaultDisplay();
+
+        final int result;
+
+        if (display.getWidth() <= display.getHeight()) {
+            result = Configuration.ORIENTATION_PORTRAIT;
+        } else {
+            result = Configuration.ORIENTATION_LANDSCAPE;
+        }
+
+        return result;
+    }
 
 }
 
