@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.os.Vibrator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.text.NumberMapper;
+import org.solovyev.android.prefs.BooleanPreference;
+import org.solovyev.android.prefs.LongPreference;
+import org.solovyev.android.prefs.Preference;
 
 /**
  * User: serso
@@ -19,13 +21,10 @@ import org.solovyev.common.text.NumberMapper;
  */
 public class VibratorContainer implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-	public static final String HAPTIC_FEEDBACK_P_KEY = "org.solovyev.android.calculator.CalculatorModel_haptic_feedback";
-	public static final boolean HAPTIC_FEEDBACK_DEFAULT = true;
-	public static final String HAPTIC_FEEDBACK_DURATION_P_KEY = "org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key";
-
-	private final static NumberMapper<Long> mapper = new NumberMapper<Long>(Long.class);
-
-	private static final long defaultVibrationTime = 60;
+    public static class Preferences {
+        public static final Preference<Boolean> hapticFeedbackEnabled = new BooleanPreference("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", true);
+        public static final Preference<Long> hapticFeedbackDuration = new LongPreference("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L);
+    }
 
 	private final float vibrationTimeScale;
 
@@ -51,9 +50,9 @@ public class VibratorContainer implements SharedPreferences.OnSharedPreferenceCh
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preferences, @Nullable String key) {
-		if (preferences.getBoolean(HAPTIC_FEEDBACK_P_KEY, VibratorContainer.HAPTIC_FEEDBACK_DEFAULT)) {
+		if ( Preferences.hapticFeedbackEnabled.getPreference(preferences)) {
 			//noinspection ConstantConditions
-			this.time = getScaledValue(mapper.parseValue(preferences.getString(HAPTIC_FEEDBACK_DURATION_P_KEY, mapper.formatValue(getScaledValue(defaultVibrationTime)))));
+			this.time = getScaledValue(Preferences.hapticFeedbackDuration.getPreference(preferences));
 		} else {
 			this.time = 0;
 		}
