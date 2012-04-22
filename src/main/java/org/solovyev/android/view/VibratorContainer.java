@@ -11,7 +11,7 @@ import android.os.Vibrator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.prefs.BooleanPreference;
-import org.solovyev.android.prefs.LongPreference;
+import org.solovyev.android.prefs.LongToStringPreference;
 import org.solovyev.android.prefs.Preference;
 
 /**
@@ -22,8 +22,8 @@ import org.solovyev.android.prefs.Preference;
 public class VibratorContainer implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static class Preferences {
-        public static final Preference<Boolean> hapticFeedbackEnabled = new BooleanPreference("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", true);
-        public static final Preference<Long> hapticFeedbackDuration = new LongPreference("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L);
+        public static final Preference<Boolean> hapticFeedbackEnabled = new BooleanPreference("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", false);
+        public static final Preference<Long> hapticFeedbackDuration = new LongToStringPreference("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L);
     }
 
 	private final float vibrationTimeScale;
