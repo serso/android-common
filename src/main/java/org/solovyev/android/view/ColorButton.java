@@ -66,6 +66,8 @@ public class ColorButton extends Button {
 
 	private float hTextPosition = H_TEXT_POSITION_DEFAULT_VALUE;
 
+    private boolean showText = true;
+
 	public ColorButton(Context context, AttributeSet attrs) {
 		this(context, attrs, true);
 	}
@@ -169,9 +171,11 @@ public class ColorButton extends Button {
 		}
 
 		CharSequence text = getText();
-		if (!StringUtils.isEmpty(text) && textPosition != null) {
-			canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
-		} else {
+		if ( !StringUtils.isEmpty(text) && textPosition != null) {
+            if (showText) {
+                canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
+            }
+        } else {
 			drawDrawables(canvas);
 		}
 	}
@@ -252,4 +256,12 @@ public class ColorButton extends Button {
 	public void setDrawMagicFlame(boolean drawMagicFlame) {
 		this.drawMagicFlame = drawMagicFlame;
 	}
+
+    public boolean isShowText() {
+        return showText;
+    }
+
+    public void setShowText(boolean showText) {
+        this.showText = showText;
+    }
 }
