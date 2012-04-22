@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class LongPreference extends AbstractPreference<Long> {
 
-	protected LongPreference(@NotNull String key, @Nullable Long defaultValue) {
+	public LongPreference(@NotNull String key, @Nullable Long defaultValue) {
 		super(key, defaultValue);
 	}
 
