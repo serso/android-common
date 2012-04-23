@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2009-2011. Created by serso aka se.solovyev.
- * For more information, please, contact se.solovyev@gmail.com
- * or visit http://se.solovyev.org
- */
-
 package org.solovyev.android.menu;
 
 import android.content.Context;
@@ -11,13 +5,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * User: serso
- * Date: 12/18/11
- * Time: 1:29 PM
+ * Date: 4/23/12
+ * Time: 2:05 PM
  */
 public interface AMenuItem<T> {
 
-	@NotNull
-	String getCaption(@NotNull Context context);
-
-	void doAction(@NotNull T data, @NotNull Context context);
+    void onClick(@NotNull T data, @NotNull Context context);
 }
