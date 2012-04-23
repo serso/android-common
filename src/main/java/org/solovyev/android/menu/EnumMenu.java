@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
  * Date: 12/18/11
  * Time: 1:34 PM
  */
-public class EnumMenu<T extends Enum & AMenuItem<D>, D> implements AMenu<T, D> {
+public class EnumMenu<T extends Enum & LabeledMenuItem<D>, D> implements AMenu<T, D> {
 
 	@NotNull
 	private final AMenu<T, D> menu;
 
 	@NotNull
-	public static <T extends Enum & AMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull Class<T> enumClass) {
+	public static <T extends Enum & LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull Class<T> enumClass) {
 		return new EnumMenu<T, D>(enumClass);
 	}
 

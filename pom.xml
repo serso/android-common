@@ -20,6 +20,7 @@
 
     <properties>
         <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
+        <android.sdk.path>/home/ssolovyev/projects/org.solovyev/misc/lib/android-sdk-linux_x86</android.sdk.path>
     </properties>
 
     <repositories>

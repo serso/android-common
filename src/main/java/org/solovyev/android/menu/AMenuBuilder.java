@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 12/19/11
  * Time: 10:54 AM
  */
-public class AMenuBuilder<T extends AMenuItem<D>, D>{
+public class AMenuBuilder<T extends LabeledMenuItem<D>, D>{
 
 	@NotNull
 	private final Context context;
@@ -22,12 +22,12 @@ public class AMenuBuilder<T extends AMenuItem<D>, D>{
 	private final AMenu<T, D> menu;
 
 	@NotNull
-	public static <T extends Enum & AMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
+	public static <T extends Enum & LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
 		return new AMenuBuilder<T, D>(context, EnumMenu.<T, D>newInstance(enumClass));
 	}
 
 	@NotNull
-	public static <T extends AMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull AMenu<T, D> menu) {
+	public static <T extends LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull AMenu<T, D> menu) {
 		return new AMenuBuilder<T, D>(context, menu);
 	}
 
@@ -46,9 +46,9 @@ public class AMenuBuilder<T extends AMenuItem<D>, D>{
 	public AlertDialog create(@NotNull final D data) {
 		menuBuilder.setItems(menu.getMenuCaptions(context), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				final AMenuItem<D> menuItem = menu.itemAt(item);
+				final LabeledMenuItem<D> menuItem = menu.itemAt(item);
 				if (menuItem != null) {
-					menuItem.doAction(data, context);
+					menuItem.onClick(data, context);
 				}
 			}
 		});

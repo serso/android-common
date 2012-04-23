@@ -19,17 +19,17 @@ import java.util.List;
 * Date: 12/18/11
 * Time: 1:31 PM
 */
-public class MenuImpl<T extends AMenuItem<D>, D> implements AMenu<T, D> {
+public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
 
 	private final List<T> menuItems = new ArrayList<T>();
 
 	@NotNull
-	public static <T extends AMenuItem<D>, D> AMenu<T, D> newInstance(T... menuItems) {
+	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(T... menuItems) {
 		return new MenuImpl<T, D>(menuItems);
 	}
 
 	@NotNull
-	public static <T extends AMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull List<T> menuItems) {
+	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull List<T> menuItems) {
 		return new MenuImpl<T, D>(menuItems);
 	}
 
