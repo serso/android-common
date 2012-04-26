@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.UpdatableViewBuilder;
 
 /**
@@ -16,7 +17,7 @@ public interface ListItem<V extends View> extends UpdatableViewBuilder<V> {
 
     static final String TAG = "ListItem";
 
-    @NotNull
+    @Nullable
     OnClickAction getOnClickAction();
 
     public static interface OnClickAction {
