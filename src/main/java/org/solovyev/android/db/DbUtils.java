@@ -17,7 +17,7 @@ public final class DbUtils {
     }
 
     @NotNull
-    public static <R> R doDbOperation(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbOperation<R> operation) {
+    public static <R> R doDbQuery(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbQuery<R> query) {
         final R result;
 
         SQLiteDatabase db = null;
@@ -28,9 +28,9 @@ public final class DbUtils {
             Cursor cursor = null;
             try {
                 // open cursor
-                cursor = operation.createCursor(db);
+                cursor = query.createCursor(db);
                 // do operation
-                result = operation.doOperation(cursor);
+                result = query.retrieveData(cursor);
             } finally {
                 // anyway if cursor was opened - close it
                 if (cursor != null) {
@@ -45,5 +45,22 @@ public final class DbUtils {
         }
 
         return result;
+    }
+
+    public static void doDbExec(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbExec exec) {
+
+        SQLiteDatabase db = null;
+        try {
+            // open database
+            db = dbHelper.getWritableDatabase();
+
+            // do action
+            exec.exec(db);
+        } finally {
+            // anyway if database was opened - close it
+            if (db != null) {
+                db.close();
+            }
+        }
     }
 }

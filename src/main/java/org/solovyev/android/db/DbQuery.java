@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
  * Date: 4/15/12
  * Time: 6:00 PM
  */
-public interface DbOperation<R> {
+public interface DbQuery<R> {
 
     @NotNull
     Cursor createCursor(@NotNull SQLiteDatabase db);
 
     @NotNull
-    R doOperation(@NotNull Cursor cursor);
+    R retrieveData(@NotNull Cursor cursor);
 }
