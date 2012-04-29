@@ -18,6 +18,10 @@ public abstract class AbstractListItem implements UpdatableViewBuilder<TextView>
     @NotNull
     private final UpdatableViewBuilder<TextView> textViewCreator;
 
+    protected AbstractListItem(int textViewLayoutId, @NotNull String tag) {
+        this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, tag);
+    }
+
     protected AbstractListItem(int textViewLayoutId) {
         this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, null);
     }
