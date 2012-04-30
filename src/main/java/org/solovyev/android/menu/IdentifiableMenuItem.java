@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 * Date: 4/30/12
 * Time: 11:06 AM
 */
-public interface ActivityMenuItem extends AMenuItem<MenuItem> {
+public interface IdentifiableMenuItem extends AMenuItem<MenuItem> {
 
     @NotNull
     Integer getItemId();

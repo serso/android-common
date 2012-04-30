@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 4/30/12
  * Time: 11:19 AM
  */
-abstract class AbstractActivityMenu<I extends ActivityMenuItem> implements ActivityMenu {
+abstract class AbstractActivityMenu<I extends IdentifiableMenuItem> implements ActivityMenu {
 
     @NotNull
     private List<I> menuItems = new ArrayList<I>();

@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 4/23/12
  * Time: 1:57 PM
  */
-public class LayoutActivityMenu extends AbstractActivityMenu<ActivityMenuItem> {
+public class LayoutActivityMenu extends AbstractActivityMenu<IdentifiableMenuItem> {
 
     public final int menuLayoutId;
 
@@ -22,7 +22,7 @@ public class LayoutActivityMenu extends AbstractActivityMenu<ActivityMenuItem> {
     }
 
     @NotNull
-    public static <E extends Enum & ActivityMenuItem> ActivityMenu newInstance(int menuLayoutId, @NotNull Class<E> enumMenuClass) {
+    public static <E extends Enum & IdentifiableMenuItem> ActivityMenu newInstance(int menuLayoutId, @NotNull Class<E> enumMenuClass) {
         final LayoutActivityMenu result = new LayoutActivityMenu(menuLayoutId);
 
         Collections.addAll(result.getMenuItems(), enumMenuClass.getEnumConstants());
@@ -31,7 +31,7 @@ public class LayoutActivityMenu extends AbstractActivityMenu<ActivityMenuItem> {
     }
 
     @NotNull
-    public static ActivityMenu newInstance(int menuLayoutId, @NotNull List<ActivityMenuItem> menuItems) {
+    public static ActivityMenu newInstance(int menuLayoutId, @NotNull List<IdentifiableMenuItem> menuItems) {
         final LayoutActivityMenu result = new LayoutActivityMenu(menuLayoutId);
 
         result.addAll(menuItems);
