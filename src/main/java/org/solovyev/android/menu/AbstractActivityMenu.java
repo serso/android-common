@@ -36,6 +36,6 @@ abstract class AbstractActivityMenu<I extends ActivityMenuItem> implements Activ
             }
         }
 
-        return activity.onOptionsItemSelected(item);
+        return true;
     }
 }

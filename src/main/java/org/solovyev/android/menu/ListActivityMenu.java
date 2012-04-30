@@ -35,7 +35,7 @@ public class ListActivityMenu extends AbstractActivityMenu<ListActivityMenu.Muta
             menuItem.setItemId(menu.add(menuItem.getCaption(activity)).getItemId());
         }
 
-        return activity.onCreateOptionsMenu(menu);
+        return true;
     }
 
     static class MutableLabeledActivityMenuItem implements LabeledActivityMenuItem {
