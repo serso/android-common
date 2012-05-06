@@ -20,13 +20,22 @@ public final class DbUtils {
     }
 
     @NotNull
+    private static final ThreadLocal<SQLiteDatabase> threadLocalDb = new ThreadLocal<SQLiteDatabase>();
+
+    @NotNull
     public static <R> R doDbQuery(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbQuery<R> query) {
         final R result;
 
         SQLiteDatabase db = null;
+        boolean wasOpened = false;
         try {
-            // open database
-            db = dbHelper.getWritableDatabase();
+            db = threadLocalDb.get();
+            if ( db == null || !db.isOpen() ) {
+                // open database
+                wasOpened = true;
+                db = dbHelper.getWritableDatabase();
+                threadLocalDb.set(db);
+            }
 
             Cursor cursor = null;
             try {
@@ -41,9 +50,13 @@ public final class DbUtils {
                 }
             }
         } finally {
-            // anyway if database was opened - close it
-            if (db != null) {
-                db.close();
+            if (wasOpened) {
+                threadLocalDb.set(null);
+
+                // if database was opened - close it
+                if (db != null) {
+                    db.close();
+                }
             }
         }
 
@@ -57,16 +70,25 @@ public final class DbUtils {
     public static void doDbExecs(@NotNull SQLiteOpenHelper dbHelper, @NotNull List<DbExec> execs) {
 
         SQLiteDatabase db = null;
+        boolean wasOpened = false;
         try {
-            // open database
-            db = dbHelper.getWritableDatabase();
+            db = threadLocalDb.get();
+            if ( db == null || !db.isOpen() ) {
+                // open database
+                wasOpened = true;
+                db = dbHelper.getWritableDatabase();
+                threadLocalDb.set(db);
+            }
 
             doDbTransaction(db, execs);
         } finally {
+            if (wasOpened) {
+                threadLocalDb.set(null);
 
-            // anyway if database was opened - close it
-            if (db != null) {
-                db.close();
+                // if database was opened - close it
+                if (db != null) {
+                    db.close();
+                }
             }
         }
     }

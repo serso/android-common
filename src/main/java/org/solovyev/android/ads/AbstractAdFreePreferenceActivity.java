@@ -1,6 +1,5 @@
 package org.solovyev.android.ads;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -93,7 +92,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
                     if (BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this) != BillingController.BillingStatus.SUPPORTED) {
                         Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is not supported - warn user!");
                         // warn about not supported billing
-                        new AlertDialog.Builder(AbstractAdFreePreferenceActivity.this).setTitle(R.string.c_error).setMessage(R.string.c_billing_error).create().show();
+                        Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_error, Toast.LENGTH_LONG).show();
                     } else {
                         Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is supported - continue!");
                         if (!AdsController.getInstance().isAdFree(AbstractAdFreePreferenceActivity.this)) {

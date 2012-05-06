@@ -13,13 +13,13 @@
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>common</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
     <name>Common Android Library</name>
 
     <packaging>apklib</packaging>
 
     <properties>
-        <additionalLibs>${basedir}/src/misc/lib</additionalLibs>
+        <additionalLibs>${basedir}/libs</additionalLibs>
     </properties>
 
     <repositories>
@@ -74,11 +74,17 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>admob</groupId>
             <artifactId>admob</artifactId>
-            <version>4.3.1</version>
+            <version>6.0.0</version>
             <scope>system</scope>
-            <systemPath>${additionalLibs}/GoogleAdMobAdsSdk-4.3.1.jar</systemPath>
+            <systemPath>${additionalLibs}/GoogleAdMobAdsSdk-6.0.0.jar</systemPath>
         </dependency>
 
         <dependency>

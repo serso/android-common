@@ -1,0 +1,23 @@
+package org.solovyev.android.list;
+
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * User: serso
+ * Date: 5/5/12
+ * Time: 8:16 PM
+ */
+public interface ListItemOnClickData<T> {
+
+    @NotNull
+    T getDataObject();
+
+    @NotNull
+    ArrayAdapter<ListItem<? extends View>> getAdapter();
+
+    @NotNull
+    ListView getListView();
+}

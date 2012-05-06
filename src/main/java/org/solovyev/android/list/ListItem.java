@@ -20,6 +20,9 @@ public interface ListItem<V extends View> extends UpdatableViewBuilder<V> {
     @Nullable
     OnClickAction getOnClickAction();
 
+    @Nullable
+    OnClickAction getOnLongClickAction();
+
     public static interface OnClickAction {
 
         void onClick(@NotNull Context context, @NotNull ArrayAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView);

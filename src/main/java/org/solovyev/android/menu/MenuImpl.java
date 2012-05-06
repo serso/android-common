@@ -21,7 +21,7 @@ import java.util.List;
 */
 public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
 
-	private final List<T> menuItems = new ArrayList<T>();
+	private final List<? extends T> menuItems;
 
 	@NotNull
 	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(T... menuItems) {
@@ -29,7 +29,7 @@ public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
 	}
 
 	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull List<T> menuItems) {
+	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull List<? extends T> menuItems) {
 		return new MenuImpl<T, D>(menuItems);
 	}
 
@@ -37,8 +37,8 @@ public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
 		this(CollectionsUtils.asList(menuItems));
 	}
 
-	private MenuImpl(@NotNull List<T> menuItems) {
-		this.menuItems.addAll(menuItems);
+	private MenuImpl(@NotNull List<? extends T> menuItems) {
+		this.menuItems = new ArrayList<T>(menuItems);
 	}
 
 	@Override

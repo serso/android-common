@@ -1,9 +1,12 @@
 package org.solovyev.android.menu;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.android.ActivityDestroyerController;
+import org.solovyev.android.DialogOnActivityDestroyedListener;
 
 /**
  * User: serso
@@ -49,12 +52,16 @@ public class AMenuBuilder<T extends LabeledMenuItem<D>, D>{
 				final LabeledMenuItem<D> menuItem = menu.itemAt(item);
 				if (menuItem != null) {
 					menuItem.onClick(data, context);
-				}
+                }
 			}
 		});
 
-		return menuBuilder.create();
-	}
+        final AlertDialog result = menuBuilder.create();
+        if ( context instanceof Activity) {
+            ActivityDestroyerController.getInstance().put((Activity)context, new DialogOnActivityDestroyedListener(result));
+        }
+        return result;
+    }
 
 
 }
