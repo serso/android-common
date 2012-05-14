@@ -13,6 +13,7 @@ import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.IBillingObserver;
 import net.robotmedia.billing.ResponseCode;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.helper.DefaultBillingObserver;
 import net.robotmedia.billing.model.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,6 +27,8 @@ import org.solovyev.android.R;
  */
 public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivity implements IBillingObserver {
 
+    @NotNull
+    private final IBillingObserver defaultBillingObserver = new DefaultBillingObserver(this, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
         adFreePreference.setEnabled(false);
 
         // observer must be set before net.robotmedia.billing.BillingController.checkBillingSupported()
-        BillingController.registerObserver(this);
+        BillingController.registerObserver(defaultBillingObserver);
 
         BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this);
 
@@ -123,7 +126,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
 
     @Override
     protected void onDestroy() {
-        BillingController.unregisterObserver(this);
+        BillingController.unregisterObserver(defaultBillingObserver);
         super.onDestroy();
     }
 

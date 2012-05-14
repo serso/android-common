@@ -13,7 +13,7 @@
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>common</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
     <name>Common Android Library</name>
 
     <packaging>apklib</packaging>
