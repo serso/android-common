@@ -20,7 +20,10 @@ public final class DbUtils {
     }
 
     @NotNull
-    private static final ThreadLocal<SQLiteDatabase> threadLocalDb = new ThreadLocal<SQLiteDatabase>();
+    private static final ThreadLocal<SQLiteDatabase> threadLocalWriteDb = new ThreadLocal<SQLiteDatabase>();
+
+    @NotNull
+    private static final ThreadLocal<SQLiteDatabase> threadLocalReadDb = new ThreadLocal<SQLiteDatabase>();
 
     @NotNull
     public static <R> R doDbQuery(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbQuery<R> query) {
@@ -29,12 +32,12 @@ public final class DbUtils {
         SQLiteDatabase db = null;
         boolean wasOpened = false;
         try {
-            db = threadLocalDb.get();
+            db = threadLocalReadDb.get();
             if ( db == null || !db.isOpen() ) {
                 // open database
                 wasOpened = true;
-                db = dbHelper.getWritableDatabase();
-                threadLocalDb.set(db);
+                db = dbHelper.getReadableDatabase();
+                threadLocalReadDb.set(db);
             }
 
             Cursor cursor = null;
@@ -51,7 +54,7 @@ public final class DbUtils {
             }
         } finally {
             if (wasOpened) {
-                threadLocalDb.set(null);
+                threadLocalReadDb.set(null);
 
                 // if database was opened - close it
                 if (db != null) {
@@ -72,18 +75,18 @@ public final class DbUtils {
         SQLiteDatabase db = null;
         boolean wasOpened = false;
         try {
-            db = threadLocalDb.get();
+            db = threadLocalWriteDb.get();
             if ( db == null || !db.isOpen() ) {
                 // open database
                 wasOpened = true;
                 db = dbHelper.getWritableDatabase();
-                threadLocalDb.set(db);
+                threadLocalWriteDb.set(db);
             }
 
             doDbTransaction(db, execs);
         } finally {
             if (wasOpened) {
-                threadLocalDb.set(null);
+                threadLocalWriteDb.set(null);
 
                 // if database was opened - close it
                 if (db != null) {
