@@ -39,7 +39,7 @@ public final class AndroidDbUtils {
                 if (db == null || !db.isOpen()) {
                     // open database
                     wasOpened = true;
-                    db = dbHelper.getReadableDatabase();
+                    db = dbHelper.getWritableDatabase();
                     threadLocalDb.set(db);
                 }
 
