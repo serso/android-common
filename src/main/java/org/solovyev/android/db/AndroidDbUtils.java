@@ -13,19 +13,16 @@ import java.util.List;
  * Date: 4/15/12
  * Time: 6:01 PM
  */
-public final class DbUtils {
+public final class AndroidDbUtils {
 
-    private DbUtils() {
+    private AndroidDbUtils() {
         throw new AssertionError();
     }
 
     // NOTE: currently DbUtils can handle only ONE database!!!
 
     @NotNull
-    private static final ThreadLocal<SQLiteDatabase> threadLocalWriteDb = new ThreadLocal<SQLiteDatabase>();
-
-    @NotNull
-    private static final ThreadLocal<SQLiteDatabase> threadLocalReadDb = new ThreadLocal<SQLiteDatabase>();
+    private static final ThreadLocal<SQLiteDatabase> threadLocalDb = new ThreadLocal<SQLiteDatabase>();
 
     @NotNull
     private static final Object DB_LOCK = new Object();
@@ -38,12 +35,12 @@ public final class DbUtils {
             SQLiteDatabase db = null;
             boolean wasOpened = false;
             try {
-                db = threadLocalReadDb.get();
-                if ( db == null || !db.isOpen() ) {
+                db = threadLocalDb.get();
+                if (db == null || !db.isOpen()) {
                     // open database
                     wasOpened = true;
                     db = dbHelper.getReadableDatabase();
-                    threadLocalReadDb.set(db);
+                    threadLocalDb.set(db);
                 }
 
                 Cursor cursor = null;
@@ -60,7 +57,7 @@ public final class DbUtils {
                 }
             } finally {
                 if (wasOpened) {
-                    threadLocalReadDb.set(null);
+                    threadLocalDb.set(null);
 
                     // if database was opened - close it
                     if (db != null) {
@@ -83,18 +80,18 @@ public final class DbUtils {
             SQLiteDatabase db = null;
             boolean wasOpened = false;
             try {
-                db = threadLocalWriteDb.get();
-                if ( db == null || !db.isOpen() ) {
+                db = threadLocalDb.get();
+                if (db == null || !db.isOpen()) {
                     // open database
                     wasOpened = true;
                     db = dbHelper.getWritableDatabase();
-                    threadLocalWriteDb.set(db);
+                    threadLocalDb.set(db);
                 }
 
                 doDbTransaction(db, execs);
             } finally {
                 if (wasOpened) {
-                    threadLocalWriteDb.set(null);
+                    threadLocalDb.set(null);
 
                     // if database was opened - close it
                     if (db != null) {
