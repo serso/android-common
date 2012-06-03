@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.common.utils.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -119,5 +120,38 @@ public final class AndroidDbUtils {
             // end transaction
             db.endTransaction();
         }
+    }
+
+    @NotNull
+    public static String[] inClauseValues(@NotNull List<?> objects, @NotNull String... beforeInValues) {
+        final String[] result = new String[objects.size() + beforeInValues.length];
+
+        for (int i = 0; i < result.length; i++) {
+            if (i < beforeInValues.length) {
+                result[i] = beforeInValues[i];
+            } else {
+                result[i] = objects.get(i - beforeInValues.length).toString();
+            }
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public static String inClause(@NotNull List<?> objects) {
+        final StringBuilder result = new StringBuilder(3 * objects.size());
+
+        result.append("(");
+        if (objects.size() == 1) {
+            result.append("?");
+        } else if (objects.size() > 1) {
+            result.append("?");
+            result.append(StringUtils.repeat(", ?", objects.size() - 1));
+        } else {
+            result.append("'foo'");
+        }
+        result.append(")");
+
+        return result.toString();
     }
 }
