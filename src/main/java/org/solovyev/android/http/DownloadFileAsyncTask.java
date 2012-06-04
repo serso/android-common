@@ -3,6 +3,7 @@ package org.solovyev.android.http;
 import android.os.AsyncTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.RuntimeIoException;
 import org.solovyev.common.utils.Converter;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package org.solovyev.android.http;
+package org.solovyev.android;
 
 import android.graphics.drawable.Drawable;
 import org.jetbrains.annotations.NotNull;

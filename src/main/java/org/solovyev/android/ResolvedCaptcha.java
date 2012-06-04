@@ -1,4 +1,4 @@
-package org.solovyev.android.http;
+package org.solovyev.android;
 
 import org.jetbrains.annotations.NotNull;
 

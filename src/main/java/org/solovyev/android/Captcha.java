@@ -1,4 +1,4 @@
-package org.solovyev.android.http;
+package org.solovyev.android;
 
 import android.os.Parcel;
 import android.os.Parcelable;
