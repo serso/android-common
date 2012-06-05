@@ -3,7 +3,6 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * Date: 4/14/12
  * Time: 8:02 PM
  */
-public class ListItemArrayAdapter extends ArrayAdapter<ListItem<? extends View>> {
+public class ListItemArrayAdapter extends ListAdapter<ListItem<? extends View>> {
 
 
     public ListItemArrayAdapter(@NotNull Context context,

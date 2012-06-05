@@ -2,7 +2,6 @@ package org.solovyev.android.list;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.menu.AMenuBuilder;
@@ -26,7 +25,7 @@ public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
     }
 
     @Override
-    public void onClick(@NotNull Context context, @NotNull ArrayAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView) {
+    public void onClick(@NotNull Context context, @NotNull ListAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView) {
         if (!menuItems.isEmpty()) {
             AMenuBuilder.newInstance(context, MenuImpl.newInstance(menuItems)).create(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
         }

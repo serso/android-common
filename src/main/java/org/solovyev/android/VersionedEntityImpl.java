@@ -65,4 +65,12 @@ public final class VersionedEntityImpl implements VersionedEntity {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "VersionedEntityImpl{" +
+                "id=" + id +
+                ", version=" + version +
+                '}';
+    }
 }

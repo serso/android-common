@@ -24,13 +24,12 @@ public final class AndroidDbUtils {
     public static <R> R doDbQuery(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbQuery<R> query) {
         final R result;
 
-        SQLiteDatabase db = null;
-        try {
-            db = dbHelper.getWritableDatabase();
+        // assuming there is only one dbHelper per database in application
+        synchronized (dbHelper) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbHelper.getWritableDatabase();
 
-            // database is cached inside SQLiteOpenHelper
-            //noinspection SynchronizationOnLocalVariableOrMethodParameter
-            synchronized (db) {
                 Cursor cursor = null;
                 try {
                     // open cursor
@@ -43,14 +42,13 @@ public final class AndroidDbUtils {
                         cursor.close();
                     }
                 }
-            }
-        } finally {
-            // if database was opened - close it
-            if (db != null) {
-                db.close();
+            } finally {
+                // if database was opened - close it
+                if (db != null) {
+                    db.close();
+                }
             }
         }
-
 
         return result;
     }
@@ -61,20 +59,18 @@ public final class AndroidDbUtils {
 
     public static void doDbExecs(@NotNull SQLiteOpenHelper dbHelper, @NotNull List<DbExec> execs) {
 
-        SQLiteDatabase db = null;
-        try {
-            db = dbHelper.getWritableDatabase();
-
-            // database is cached inside SQLiteOpenHelper
-            //noinspection SynchronizationOnLocalVariableOrMethodParameter
-            synchronized (db) {
+        // assuming there is only one dbHelper per database in application
+        synchronized (dbHelper) {
+            SQLiteDatabase db = null;
+            try {
+                db = dbHelper.getWritableDatabase();
                 doDbTransaction(db, execs);
-            }
 
-        } finally {
-            // if database was opened - close it
-            if (db != null) {
-                db.close();
+            } finally {
+                // if database was opened - close it
+                if (db != null) {
+                    db.close();
+                }
             }
         }
     }
