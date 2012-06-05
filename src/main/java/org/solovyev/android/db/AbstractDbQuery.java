@@ -1,6 +1,7 @@
 package org.solovyev.android.db;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,11 +15,11 @@ public abstract class AbstractDbQuery<R> implements DbQuery<R> {
     private final Context context;
 
     @NotNull
-    private final SQLiteOpenHelperConfiguration configuration;
+    private final SQLiteOpenHelper sqliteOpenHelper;
 
-    protected AbstractDbQuery(@NotNull Context context, @NotNull SQLiteOpenHelperConfiguration configuration) {
+    protected AbstractDbQuery(@NotNull Context context, @NotNull SQLiteOpenHelper sqliteOpenHelper) {
         this.context = context;
-        this.configuration = configuration;
+        this.sqliteOpenHelper = sqliteOpenHelper;
     }
 
     @NotNull
@@ -27,7 +28,7 @@ public abstract class AbstractDbQuery<R> implements DbQuery<R> {
     }
 
     @NotNull
-    protected SQLiteOpenHelperConfiguration getConfiguration() {
-        return configuration;
+    protected SQLiteOpenHelper getSqliteOpenHelper() {
+        return sqliteOpenHelper;
     }
 }

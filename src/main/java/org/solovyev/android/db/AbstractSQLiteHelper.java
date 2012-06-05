@@ -15,15 +15,11 @@ public abstract class AbstractSQLiteHelper {
     private final Context context;
 
     @NotNull
-    private final SQLiteOpenHelperConfiguration configuration;
+    private final SQLiteOpenHelper sqliteOpenHelper;
 
-    @NotNull
-    private final SQLiteOpenHelper dbHelper;
-
-    protected AbstractSQLiteHelper(@NotNull Context context, @NotNull SQLiteOpenHelperConfiguration configuration) {
+    protected AbstractSQLiteHelper(@NotNull Context context, @NotNull SQLiteOpenHelper sqliteOpenHelper) {
         this.context = context;
-        this.configuration = configuration;
-        this.dbHelper = new CommonSQLiteOpenHelper(context, configuration);
+        this.sqliteOpenHelper = sqliteOpenHelper;
     }
 
     @NotNull
@@ -32,12 +28,7 @@ public abstract class AbstractSQLiteHelper {
     }
 
     @NotNull
-    protected SQLiteOpenHelper getDbHelper() {
-        return dbHelper;
-    }
-
-    @NotNull
-    protected SQLiteOpenHelperConfiguration getConfiguration() {
-        return configuration;
+    protected SQLiteOpenHelper getSqliteOpenHelper() {
+        return sqliteOpenHelper;
     }
 }
