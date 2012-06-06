@@ -65,11 +65,8 @@ public abstract class AdapterFilter<T> extends Filter {
     protected void publishResults(CharSequence constraint, FilterResults results) {
         //noinspection unchecked
         helper.setShownElements((List<T>) results.values);
-        if (results.count > 0) {
-            helper.notifyDataSetChanged();
-        } else {
-            helper.notifyDataSetInvalidated();
-        }
+        helper.notifyDataSetChanged();
+
     }
 
     public static interface Helper<T> {
@@ -88,7 +85,5 @@ public abstract class AdapterFilter<T> extends Filter {
         void setAllElements(@NotNull List<T> allElements);
 
         void notifyDataSetChanged();
-
-        void notifyDataSetInvalidated();
     }
 }

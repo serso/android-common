@@ -348,6 +348,19 @@ public class ListAdapter<T> extends BaseAdapter {
         return createViewFromResource(position, convertView, parent, resources);
     }
 
+    public void doWork(@NotNull Runnable runnable) {
+        final boolean notifyOnChange = isNotifyOnChange();
+        try {
+            setNotifyOnChange(false);
+            runnable.run();
+        } finally {
+            setNotifyOnChange(notifyOnChange);
+            if ( notifyOnChange ) {
+                notifyDataSetChanged();
+            }
+        }
+    }
+
     private View createViewFromResource(int position, View convertView, ViewGroup parent,
                                         int resource) {
         View view;
@@ -478,11 +491,6 @@ public class ListAdapter<T> extends BaseAdapter {
         @Override
         public void notifyDataSetChanged() {
             ListAdapter.this.notifyDataSetChanged();
-        }
-
-        @Override
-        public void notifyDataSetInvalidated() {
-            ListAdapter.this.notifyDataSetInvalidated();
         }
     }
 
