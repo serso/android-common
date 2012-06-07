@@ -1,9 +1,9 @@
 package org.solovyev.android.http;
 
+import android.content.Context;
 import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.CollectionsUtils;
 import org.solovyev.common.utils.Converter;
 
 import java.io.InputStream;
@@ -32,32 +32,32 @@ public class HttpRemoteFileService implements RemoteFileService {
     private final Map<String, Object> cache = new HashMap<String, Object>();
 
     @Override
-    public void loadFile(@NotNull final String uri,
+    public void loadFile(@NotNull Context context,
+                         @NotNull final String uri,
                          @NotNull final HttpMethod method,
                          @NotNull final Converter<InputStream, ?> fileConverter,
                          @Nullable final DownloadFileAsyncTask.OnPostExecute<List<Object>> onPostExecute) {
-        final LoadRemoteFileAsyncTask loadRemoteFileAsyncTask = createTask(onPostExecute);
+        final LoadRemoteFileAsyncTask loadRemoteFileAsyncTask = createTask(context, onPostExecute);
 
         final DownloadFileAsyncTask.Input input = new DownloadFileAsyncTask.Input(uri, method, fileConverter);
         try {
             loadRemoteFileAsyncTask.execute(input);
         } catch (RejectedExecutionException e) {
             // not enough "free" threads
-            if (onPostExecute != null) {
-                onPostExecute.onPostExecute(Collections.emptyList());
-            }
         }
     }
 
     @NotNull
-    private LoadRemoteFileAsyncTask createTask(@Nullable DownloadFileAsyncTask.OnPostExecute<List<Object>> onPostExecute) {
+    private LoadRemoteFileAsyncTask createTask(@NotNull Context context,
+                                               @Nullable DownloadFileAsyncTask.OnPostExecute<List<Object>> onPostExecute) {
         final LoadRemoteFileAsyncTask loadRemoteFileAsyncTask;
 
         if (onPostExecute != null) {
-            loadRemoteFileAsyncTask = new LoadRemoteFileAsyncTask(this, onPostExecute);
+            loadRemoteFileAsyncTask = new LoadRemoteFileAsyncTask(this, onPostExecute, context);
         } else {
-            loadRemoteFileAsyncTask = new LoadRemoteFileAsyncTask(this);
+            loadRemoteFileAsyncTask = new LoadRemoteFileAsyncTask(this, context);
         }
+
         return loadRemoteFileAsyncTask;
     }
 
@@ -67,20 +67,21 @@ public class HttpRemoteFileService implements RemoteFileService {
         private HttpRemoteFileService httpRemoteFileService;
 
 
-        private LoadRemoteFileAsyncTask(@NotNull HttpRemoteFileService httpRemoteFileService) {
+        private LoadRemoteFileAsyncTask(@NotNull HttpRemoteFileService httpRemoteFileService, @NotNull Context context) {
+            super(context);
             this.httpRemoteFileService = httpRemoteFileService;
         }
 
-        private LoadRemoteFileAsyncTask(@NotNull HttpRemoteFileService httpRemoteFileService, @NotNull OnPostExecute<List<Object>> onPostExecute) {
-            super(onPostExecute);
+        private LoadRemoteFileAsyncTask(@NotNull HttpRemoteFileService httpRemoteFileService, @NotNull OnPostExecute<List<Object>> onPostExecute, @NotNull Context context) {
+            super(context, onPostExecute);
             this.httpRemoteFileService = httpRemoteFileService;
         }
 
         @NotNull
         @Override
-        protected List<Object> doInBackground(@NotNull Input... params) {
-            final List<Input> inputsForLookup = CollectionsUtils.asList(params);
-            final List<Input> inputsForRemoteLoad = new ArrayList<Input>(params.length);
+        protected List<Object> doWork(@NotNull List<Input> params) {
+            final List<Input> inputsForLookup = new ArrayList<Input>(params);
+            final List<Input> inputsForRemoteLoad = new ArrayList<Input>(params.size());
 
             final List<Object> result = new ArrayList<Object>(inputsForLookup.size());
 
@@ -98,7 +99,7 @@ public class HttpRemoteFileService implements RemoteFileService {
             if (!inputsForRemoteLoad.isEmpty()) {
                 // NOTE: doInBackground method instead of execute as we are already "in background"
                 try {
-                    final List<Object> objectsFromRemoteServer = super.doInBackground(inputsForRemoteLoad.toArray(new Input[inputsForRemoteLoad.size()]));
+                    final List<Object> objectsFromRemoteServer = super.doWork(inputsForRemoteLoad);
 
                     for (int i = 0; i < inputsForRemoteLoad.size(); i++) {
                         final Object objectFromRemoteServer = objectsFromRemoteServer.get(i);

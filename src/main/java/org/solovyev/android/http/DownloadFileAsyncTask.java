@@ -1,9 +1,10 @@
 package org.solovyev.android.http;
 
-import android.os.AsyncTask;
+import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.RuntimeIoException;
+import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.common.utils.Converter;
 
 import java.io.IOException;
@@ -16,21 +17,23 @@ import java.util.List;
  * Date: 5/29/12
  * Time: 9:50 PM
  */
-public class DownloadFileAsyncTask extends AsyncTask<DownloadFileAsyncTask.Input, Integer, List<Object>> {
+public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask.Input, Integer, List<Object>> {
 
     @Nullable
     private OnPostExecute<List<Object>> onPostExecute;
 
-    public DownloadFileAsyncTask() {
+    public DownloadFileAsyncTask(@NotNull Context context) {
+        super(context);
     }
 
-    public DownloadFileAsyncTask(@NotNull OnPostExecute<List<Object>> onPostExecute) {
+    public DownloadFileAsyncTask(@NotNull Context context, @NotNull OnPostExecute<List<Object>> onPostExecute) {
+        super(context);
         this.onPostExecute = onPostExecute;
     }
 
     @NotNull
     @Override
-    protected List<Object> doInBackground(@NotNull Input... params) {
+    protected List<Object> doWork(@NotNull List<Input> params) {
         final List<Object> result = new ArrayList<Object>();
         for (Input param : params) {
             final DownloadFileHttpTransaction<?> downloadFileHttpTransaction = new DownloadFileHttpTransaction<Object>(param.getUri(), param.getMethod(), param.getFileConverter());
@@ -45,10 +48,19 @@ public class DownloadFileAsyncTask extends AsyncTask<DownloadFileAsyncTask.Input
     }
 
     @Override
-    protected void onPostExecute(@NotNull List<Object> objects) {
-        super.onPostExecute(objects);
+    protected void onSuccessPostExecute(@Nullable List<Object> result) {
         if ( onPostExecute != null ) {
-            onPostExecute.onPostExecute(objects);
+            assert result != null;
+            onPostExecute.onPostExecute(result);
+        }
+    }
+
+    @Override
+    protected void onFailurePostExecute(@NotNull Exception e) {
+        if ( e instanceof RuntimeIoException ) {
+            // no internet connection => ok
+        } else {
+            defaultOnFailurePostExecute(e);
         }
     }
 
