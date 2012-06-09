@@ -73,4 +73,18 @@ public final class VersionedEntityImpl implements VersionedEntity {
                 ", version=" + version +
                 '}';
     }
+
+    @NotNull
+    @Override
+    public VersionedEntityImpl clone() {
+        final VersionedEntityImpl clone;
+
+        try {
+            clone = (VersionedEntityImpl)super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
+
+        return clone;
+    }
 }

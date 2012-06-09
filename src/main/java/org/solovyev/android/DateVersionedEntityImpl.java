@@ -96,4 +96,23 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     public int hashCode() {
         return versionedEntity.hashCode();
     }
+
+    @NotNull
+    @Override
+    public DateVersionedEntityImpl clone() {
+        final DateVersionedEntityImpl clone;
+
+        try {
+            clone = (DateVersionedEntityImpl) super.clone();
+
+            clone.versionedEntity = this.versionedEntity.clone();
+            clone.creationDate = new DateTime(this.creationDate);
+            clone.modificationDate = new DateTime(this.modificationDate);
+
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
+
+        return clone;
+    }
 }

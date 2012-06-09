@@ -15,4 +15,7 @@ public interface DateVersionedEntity extends VersionedEntity {
 
     @NotNull
     DateTime getModificationDate();
+
+    @NotNull
+    DateVersionedEntity clone();
 }
