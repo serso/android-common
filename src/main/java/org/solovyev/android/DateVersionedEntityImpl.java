@@ -106,8 +106,8 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
             clone = (DateVersionedEntityImpl) super.clone();
 
             clone.versionedEntity = this.versionedEntity.clone();
-            clone.creationDate = new DateTime(this.creationDate);
-            clone.modificationDate = new DateTime(this.modificationDate);
+
+            // dates are immutable => can leave links as is
 
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);
