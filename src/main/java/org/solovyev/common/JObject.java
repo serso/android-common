@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 6/9/12
  * Time: 8:50 PM
  */
-public abstract class JObject implements JCloneable<JObject> {
+public abstract class JObject implements Cloneable {
 
     @NotNull
     @Override
