@@ -261,6 +261,11 @@ public class ListAdapter<T> extends BaseAdapter {
      */
     public void sort(Comparator<? super T> comparator) {
         Collections.sort(shownElements, comparator);
+
+        // must to sort all elements!!!
+        if (allElements != null) {
+            Collections.sort(allElements, comparator);
+        }
         if (notifyOnChange) notifyDataSetChanged();
     }
 

@@ -32,7 +32,7 @@ public class AndroidHttpUtils {
     }
 
     @NotNull
-    public static <R> List<R> execute(@NotNull List<HttpTransaction<R>> httpTransactions) throws IOException {
+    public static <R> List<R> execute(@NotNull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
         final DefaultHttpClient httpClient = new DefaultHttpClient();
 
         final List<R> result = new ArrayList<R>();

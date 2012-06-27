@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbstractSQLiteHelper {
 
+    protected static final int MAX_IN_COUNT = 999;
+
     @NotNull
     private final Context context;
 

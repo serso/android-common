@@ -1,12 +1,8 @@
 package org.solovyev.android.http;
 
-import android.content.Context;
+import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Converter;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * User: serso
@@ -15,9 +11,9 @@ import java.util.List;
  */
 public interface RemoteFileService {
 
-    void loadFile(@NotNull Context context,
-                  @NotNull String uri,
-                  @NotNull HttpMethod method,
-                  @NotNull Converter<InputStream, ?> fileConverter,
-                  @Nullable DownloadFileAsyncTask.OnPostExecute<List<Object>> onPostExecute);
+    void loadImage(@NotNull String uri,
+                   @NotNull ImageView imageView,
+                   @Nullable Integer defaultImageId);
+
+    void loadImage(@NotNull String uri);
 }
