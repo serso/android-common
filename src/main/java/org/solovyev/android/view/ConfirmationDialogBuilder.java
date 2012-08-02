@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.ActivityDestroyerController;
 import org.solovyev.android.DialogOnActivityDestroyedListener;
-import org.solovyev.android.ext.R;
+import org.solovyev.android.R;
 
 /**
  * User: serso
