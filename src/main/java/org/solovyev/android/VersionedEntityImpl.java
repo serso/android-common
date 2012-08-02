@@ -7,39 +7,39 @@ import org.jetbrains.annotations.NotNull;
  * Date: 4/29/12
  * Time: 9:47 PM
  */
-public final class VersionedEntityImpl implements VersionedEntity {
+public final class VersionedEntityImpl<I> implements VersionedEntity<I> {
 
     @NotNull
     public static final Integer FIRST_VERSION = 1;
 
     @NotNull
-    private Integer id;
+    private I id;
 
     @NotNull
     private Integer version = FIRST_VERSION;
 
-    public VersionedEntityImpl(@NotNull Integer id) {
+    public VersionedEntityImpl(@NotNull I id) {
         this.id = id;
     }
 
-    public VersionedEntityImpl(@NotNull Integer id, @NotNull Integer version) {
+    public VersionedEntityImpl(@NotNull I id, @NotNull Integer version) {
         this.id = id;
         this.version = version;
     }
 
-    public VersionedEntityImpl(@NotNull VersionedEntity versionedEntity) {
+    public VersionedEntityImpl(@NotNull VersionedEntity<I> versionedEntity) {
         this.id = versionedEntity.getId();
         this.version = versionedEntity.getVersion();
     }
 
     @NotNull
-    public static VersionedEntity newVersion(@NotNull VersionedEntity versionedEntity) {
-        return new VersionedEntityImpl(versionedEntity.getId(),  versionedEntity.getVersion() + 1);
+    public static <I> VersionedEntity<I> newVersion(@NotNull VersionedEntity<I> versionedEntity) {
+        return new VersionedEntityImpl<I>(versionedEntity.getId(),  versionedEntity.getVersion() + 1);
     }
 
     @NotNull
     @Override
-    public Integer getId() {
+    public I getId() {
         return this.id;
     }
 
@@ -52,13 +52,18 @@ public final class VersionedEntityImpl implements VersionedEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof VersionedEntityImpl)) return false;
 
         VersionedEntityImpl that = (VersionedEntityImpl) o;
 
         if (!id.equals(that.id)) return false;
 
         return true;
+    }
+
+    @Override
+    public boolean equalsVersion(Object that) {
+        return this.equals(that) && this.version.equals(((VersionedEntityImpl) that).version);
     }
 
     @Override
@@ -76,11 +81,12 @@ public final class VersionedEntityImpl implements VersionedEntity {
 
     @NotNull
     @Override
-    public VersionedEntityImpl clone() {
-        final VersionedEntityImpl clone;
+    public VersionedEntityImpl<I> clone() {
+        final VersionedEntityImpl<I> clone;
 
         try {
-            clone = (VersionedEntityImpl)super.clone();
+            //noinspection unchecked
+            clone = (VersionedEntityImpl<I>)super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);
         }

@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
  * Date: 4/29/12
  * Time: 9:52 PM
  */
-public interface DateVersionedEntity extends VersionedEntity {
+public interface DateVersionedEntity<I> extends VersionedEntity<I> {
 
     @NotNull
     DateTime getCreationDate();
@@ -17,5 +17,5 @@ public interface DateVersionedEntity extends VersionedEntity {
     DateTime getModificationDate();
 
     @NotNull
-    DateVersionedEntity clone();
+    DateVersionedEntity<I> clone();
 }

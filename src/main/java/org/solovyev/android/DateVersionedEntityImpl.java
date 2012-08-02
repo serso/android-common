@@ -8,10 +8,10 @@ import org.joda.time.DateTime;
  * Date: 4/29/12
  * Time: 9:53 PM
  */
-public final class DateVersionedEntityImpl implements DateVersionedEntity {
+public final class DateVersionedEntityImpl<I> implements DateVersionedEntity<I> {
 
     @NotNull
-    private VersionedEntity versionedEntity;
+    private VersionedEntity<I> versionedEntity;
 
     @NotNull
     private DateTime creationDate;
@@ -23,10 +23,10 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     }
 
     @NotNull
-    public static DateVersionedEntity newEntity(@NotNull Integer id) {
-        final DateVersionedEntityImpl result = new DateVersionedEntityImpl();
+    public static <I> DateVersionedEntity<I> newEntity(@NotNull I id) {
+        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
-        result.versionedEntity = new VersionedEntityImpl(id);
+        result.versionedEntity = new VersionedEntityImpl<I>(id);
         result.creationDate = DateTime.now();
         result.modificationDate = result.creationDate;
 
@@ -34,11 +34,11 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     }
 
     @NotNull
-    public static DateVersionedEntity newVersion(@NotNull DateVersionedEntity dateVersionedEntity) {
-        final DateVersionedEntityImpl result = new DateVersionedEntityImpl();
+    public static <I> DateVersionedEntity<I> newVersion(@NotNull DateVersionedEntity<I> dateVersionedEntity) {
+        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
         // increase version
-        result.versionedEntity = new VersionedEntityImpl(dateVersionedEntity.getId(), dateVersionedEntity.getVersion() + 1);
+        result.versionedEntity = new VersionedEntityImpl<I>(dateVersionedEntity.getId(), dateVersionedEntity.getVersion() + 1);
         result.creationDate = dateVersionedEntity.getCreationDate();
         result.modificationDate = DateTime.now();
 
@@ -46,8 +46,8 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     }
 
     @NotNull
-    public static DateVersionedEntity newInstance(@NotNull VersionedEntity versionedEntity, @NotNull DateTime creationDate, @NotNull DateTime modificationDate) {
-        final DateVersionedEntityImpl result = new DateVersionedEntityImpl();
+    public static <I> DateVersionedEntity<I> newInstance(@NotNull VersionedEntity<I> versionedEntity, @NotNull DateTime creationDate, @NotNull DateTime modificationDate) {
+        final DateVersionedEntityImpl<I> result = new DateVersionedEntityImpl<I>();
 
         result.versionedEntity = versionedEntity;
         result.creationDate = creationDate;
@@ -70,7 +70,7 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
 
     @Override
     @NotNull
-    public Integer getId() {
+    public I getId() {
         return versionedEntity.getId();
     }
 
@@ -83,7 +83,7 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof DateVersionedEntityImpl)) return false;
 
         DateVersionedEntityImpl that = (DateVersionedEntityImpl) o;
 
@@ -93,17 +93,23 @@ public final class DateVersionedEntityImpl implements DateVersionedEntity {
     }
 
     @Override
+    public boolean equalsVersion(Object that) {
+        return this.equals(that) && this.versionedEntity.equalsVersion(((DateVersionedEntityImpl) that).versionedEntity);
+    }
+
+    @Override
     public int hashCode() {
         return versionedEntity.hashCode();
     }
 
     @NotNull
     @Override
-    public DateVersionedEntityImpl clone() {
-        final DateVersionedEntityImpl clone;
+    public DateVersionedEntityImpl<I> clone() {
+        final DateVersionedEntityImpl<I> clone;
 
         try {
-            clone = (DateVersionedEntityImpl) super.clone();
+            //noinspection unchecked
+            clone = (DateVersionedEntityImpl<I>) super.clone();
 
             clone.versionedEntity = this.versionedEntity.clone();
 
