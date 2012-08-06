@@ -34,12 +34,6 @@ public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
         return menu.add(groupId, itemId, orderId, caption);
     }
 
-    @NotNull
-    @Override
-    public Integer getItemId(@NotNull MenuItem menuItem) {
-        return menuItem.getItemId();
-    }
-
     @Override
     public void setOnMenuItemClickListener(@NotNull final MenuItem menuItem, @NotNull final AMenuItem<MenuItem> onMenuItemClick, @NotNull final Activity activity) {
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {

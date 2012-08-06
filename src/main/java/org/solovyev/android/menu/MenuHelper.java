@@ -15,9 +15,6 @@ public interface MenuHelper<M, MI> {
     @NotNull
     MI add(@NotNull M menu, int groupId, int itemId, int orderId, @NotNull String caption);
 
-    @NotNull
-    Integer getItemId(@NotNull MI menuItem);
-
     public void setOnMenuItemClickListener(@NotNull MI menuItem, @NotNull AMenuItem<MI> onMenuItemClick, @NotNull Activity activity);
 
     void removeItem(@NotNull M menu, @NotNull Integer menuItemId);

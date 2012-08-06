@@ -70,9 +70,10 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
                              @NotNull final M menu,
                              @NotNull final MenuItemWrapper<MI> menuItemWrapper) {
         final int size = menuHelper.size(menu);
-        final MI aMenuItem = menuHelper.add(menu, 0, size + 1, 0, menuItemWrapper.menuItem.getCaption(activity));
+        final int menuItemId = size + 1;
+        final MI aMenuItem = menuHelper.add(menu, 0, menuItemId, 0, menuItemWrapper.menuItem.getCaption(activity));
 
-        menuItemWrapper.menuItemId = menuHelper.getItemId(aMenuItem);
+        menuItemWrapper.menuItemId = menuItemId;
 
         menuHelper.setOnMenuItemClickListener(aMenuItem, menuItemWrapper.menuItem, activity);
     }
