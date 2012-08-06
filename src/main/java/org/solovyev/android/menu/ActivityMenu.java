@@ -1,8 +1,6 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -10,9 +8,11 @@ import org.jetbrains.annotations.NotNull;
  * Date: 4/23/12
  * Time: 1:56 PM
  */
-public interface ActivityMenu {
+public interface ActivityMenu<M, MI> {
 
-    public boolean onCreateOptionsMenu(@NotNull Activity activity, @NotNull Menu menu);
+    boolean onCreateOptionsMenu(@NotNull Activity activity, @NotNull M menu);
 
-   	public boolean onOptionsItemSelected(@NotNull Activity activity, @NotNull MenuItem item);
+    boolean onPrepareOptionsMenu(@NotNull Activity activity, @NotNull M menu);
+
+    boolean onOptionsItemSelected(@NotNull Activity activity, @NotNull MI item);
 }

@@ -1,6 +1,7 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
+import android.view.Menu;
 import android.view.MenuItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Date: 4/30/12
  * Time: 11:19 AM
  */
-abstract class AbstractActivityMenu<I extends IdentifiableMenuItem> implements ActivityMenu {
+abstract class AbstractActivityMenu<I extends IdentifiableMenuItem> implements ActivityMenu<Menu, MenuItem> {
 
     @NotNull
     private List<I> menuItems = new ArrayList<I>();
@@ -36,6 +37,11 @@ abstract class AbstractActivityMenu<I extends IdentifiableMenuItem> implements A
             }
         }
 
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(@NotNull Activity activity, @NotNull Menu menu) {
         return true;
     }
 }
