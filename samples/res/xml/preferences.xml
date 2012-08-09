@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+            a:key="to_be_or_not_to_be"
+            a:defaultValue="to_be"
+            a:title="@string/to_be_or_not_to_be"
+            a:entries="@array/choice_labels"
+            a:entryValues="@array/choice_ids"/>
+
+    <org.solovyev.android.prefs.IntegerPickerDialogPreference
+            xmlns:range="http://schemas.android.com/apk/res-auto"
+            a:key="integer_number"
+            a:defaultValue="5"
+            a:title="@string/pick_integer_number"
+            range:boundaries="0;16"/>
+
+    <org.solovyev.android.prefs.DoublePickerDialogPreference
+            xmlns:range="http://schemas.android.com/apk/res-auto"
+            a:key="double_number"
+            a:defaultValue="0.5"
+            range:step="0.1"
+            a:title="@string/pick_double_number"
+            range:boundaries="0;1"/>
+
+    <org.solovyev.android.samples.prefs.CountryPickerDialogPreference
+            xmlns:range="http://schemas.android.com/apk/res-auto"
+            a:key="country"
+            a:defaultValue="russia"
+            a:title="@string/choose_country"/>
+
+
+    <org.solovyev.android.prefs.FloatRangeSeekBarPreference
+            xmlns:range="http://schemas.android.com/apk/res-auto"
+            a:key="float_interval"
+            a:title="@string/select_float_interval"
+            a:defaultValue="35;350"
+            range:step="50"
+            range:boundaries="10;500"/>
+
+    <org.solovyev.android.prefs.IntegerRangeSeekBarPreference
+            xmlns:range="http://schemas.android.com/apk/res-auto"
+            a:key="integer_interval"
+            a:title="@string/select_integer_interval"
+            a:defaultValue="35;350"
+            range:step="50"
+            range:boundaries="10;500"/>
+
+</PreferenceScreen>

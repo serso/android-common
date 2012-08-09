@@ -12,20 +12,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.solovyev.android</groupId>
-    <artifactId>common</artifactId>
-    <version>0.1.8</version>
-    <name>Common Android Library</name>
+    <artifactId>android-common</artifactId>
+    <version>1.0.0</version>
+    <modules>
+        <module>preferences</module>
+        <module>db</module>
+        <module>menu</module>
+        <module>core</module>
+        <module>view</module>
+        <module>list</module>
+        <module>ads</module>
+        <module>http</module>
+        <module>other</module>
+        <module>samples</module>
+    </modules>
+    <name>Android Common Library</name>
 
-    <packaging>apklib</packaging>
-
-    <repositories>
-        <repository>
-            <id>congrace.de</id>
-            <name>releases</name>
-            <url>http://nexus.congrace.de/nexus/content/repositories/releases/</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
+    <packaging>pom</packaging>
 
     <dependencies>
 
@@ -33,15 +36,8 @@
 
         <dependency>
             <groupId>org.solovyev</groupId>
-            <artifactId>common</artifactId>
-            <version>0.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>billing</artifactId>
-            <version>0.1</version>
-            <!--<type>apklib</type>-->
+            <artifactId>common-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <!-- OTHER -->
@@ -51,47 +47,6 @@
             <artifactId>android</artifactId>
             <version>2.3.3</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>android-async-http</groupId>
-            <artifactId>android-async-http</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-
-        <!-- Joda time -->
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.simpleframework</groupId>
-            <artifactId>simple-xml</artifactId>
-            <version>2.6.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>stax-api</artifactId>
-                    <groupId>stax</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>xpp3</artifactId>
-                    <groupId>xpp3</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>11.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>admob</groupId>
-            <artifactId>admob</artifactId>
-            <version>6.0.0</version>
         </dependency>
 
         <dependency>
@@ -109,43 +64,69 @@
             <scope>test</scope>
         </dependency>
 
-
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
 
-        <!-- specifying the resources: e.g. layout.xml, strings.xml etc-->
-        <resources>
+                <plugin>
+                    <artifactId>maven-jarsigner-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
 
-            <!-- a pair definition for resource filtering of xml files only (not binary files since they get mangled -->
-            <resource>
-                <directory>${project.basedir}/res</directory>
-                <filtering>true</filtering>
-                <targetPath>${project.build.directory}/filtered-res</targetPath>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.4.3</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
 
-            <resource>
-                <directory>${project.basedir}/res</directory>
-                <filtering>false</filtering>
-                <targetPath>${project.build.directory}/filtered-res</targetPath>
-                <excludes>
-                    <exclude>**/*.xml</exclude>
-                </excludes>
-            </resource>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
 
-        </resources>
+                        <sourceDirectories>
+                            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+                        </sourceDirectories>
 
-        <extensions>
-            <extension>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.1.1</version>
-            </extension>
-        </extensions>
+                        <sdk>
+                            <platform>15</platform>
+                        </sdk>
 
+                        <emulator>
+                            <avd>23</avd>
+                            <wait>10000</wait>
+                            <!--<options>-no-skin</options>-->
+                        </emulator>
+
+                        <zipalign>
+                            <verbose>true</verbose>
+                        </zipalign>
+
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+
+                    </configuration>
+
+                </plugin>
+
+                <plugin>
+                    <groupId>com.pyx4me</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>2.0.4</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.5</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

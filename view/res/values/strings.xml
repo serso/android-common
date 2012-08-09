@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="c_confirmation">Confirmation</string>
+    <string name="c_error">Error</string>
+</resources>
