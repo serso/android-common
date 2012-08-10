@@ -1,19 +1,18 @@
 package org.solovyev.android.view;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.text.Mapper;
-import org.solovyev.common.text.NumberMapper;
-import org.solovyev.common.utils.StringUtils;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
  * Date: 8/9/12
  * Time: 11:44 PM
  */
-public abstract class NumberRange<N extends Number & Comparable<N>> implements Picker.Range {
+public abstract class NumberRange<N extends Number & Comparable<N>> implements Picker.Range<N> {
 
-    @NotNull
-    private Mapper<N> mapper;
+    @Nullable
+    private Formatter<N> formatter;
 
     @NotNull
     private final N min;
@@ -28,18 +27,18 @@ public abstract class NumberRange<N extends Number & Comparable<N>> implements P
 
     private int count = -1;
 
-    public NumberRange(@NotNull Class<N> numberClass,
-                       @NotNull N min,
+    public NumberRange(@NotNull N min,
                        @NotNull N max,
                        @NotNull N step,
-                       int startPosition) {
+                       int startPosition,
+                       @Nullable Formatter<N> formatter) {
         assert min.compareTo(max) <= 0;
 
         this.min = min;
         this.max = max;
         this.step = step;
         this.startPosition = startPosition;
-        this.mapper = new NumberMapper<N>(numberClass);
+        this.formatter = formatter;
     }
 
     @Override
@@ -69,12 +68,13 @@ public abstract class NumberRange<N extends Number & Comparable<N>> implements P
             throw new IllegalArgumentException("Position " + position + " must be >= 0 and < " + count + "!");
         }
 
-        return StringUtils.getNotEmpty(mapper.formatValue(getValueAt(position, min, max, step)), "");
+        final N number = getValueAt(position, min, max, step);
+        return formatter == null ? number.toString() : formatter.formatValue(number);
     }
 
     @NotNull
     @Override
-    public Object getValueAt(int position) {
+    public N getValueAt(int position) {
         return getValueAt(position, min, max, step);
     }
 

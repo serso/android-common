@@ -42,7 +42,7 @@ public abstract class NumberPickerDialogPreference<N extends Number & Comparable
 
     @NotNull
     @Override
-    protected Picker.Range createRange(@NotNull N selected) {
+    protected Picker.Range<N> createRange(@NotNull N selected) {
         return createRange(boundaries, step, selected);
     }
 

@@ -43,13 +43,13 @@ import org.jetbrains.annotations.Nullable;
  * <p/>
  * For a dialog using this view, see {@link android.app.TimePickerDialog}.
  */
-public class Picker extends LinearLayout {
+public class Picker<T> extends LinearLayout {
 
-    public static interface OnChangedListener {
-        void onChanged(@NotNull Picker picker, @NotNull Object value);
+    public static interface OnChangedListener<T> {
+        void onChanged(@NotNull Picker picker, @NotNull T value);
     }
 
-    public static interface Range {
+    public static interface Range<T> {
 
         int getStartPosition();
 
@@ -59,7 +59,7 @@ public class Picker extends LinearLayout {
         String getStringValueAt(int position);
 
         @NotNull
-        Object getValueAt(int position);
+        T getValueAt(int position);
     }
 
 
@@ -83,20 +83,16 @@ public class Picker extends LinearLayout {
     private final TextView text;
 
     @NotNull
-    private Range range;
+    private Range<T> range;
 
     /**
      * Current value of this NumberPicker
      */
     private int current;
 
-    /**
-     * Previous value of this NumberPicker.
-     */
-    private int previous;
 
     @Nullable
-    private OnChangedListener onChangedListener;
+    private OnChangedListener<T> onChangedListener;
 
     private long speed = 300;
 
@@ -201,11 +197,11 @@ public class Picker extends LinearLayout {
      *
      * @param listener the callback, should not be null.
      */
-    public void setOnChangeListener(OnChangedListener listener) {
+    public void setOnChangeListener(OnChangedListener<T> listener) {
         this.onChangedListener = listener;
     }
 
-    public void setRange(@NotNull Range range) {
+    public void setRange(@NotNull Range<T> range) {
         this.range = range;
         this.current = range.getStartPosition();
 
@@ -241,7 +237,6 @@ public class Picker extends LinearLayout {
             current = 0;
         }
 
-        this.previous = this.current;
         this.current = current;
 
         notifyChange();

@@ -1,6 +1,8 @@
 package org.solovyev.android.view;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -12,12 +14,17 @@ public class DoubleRange extends NumberRange<Double> {
     public DoubleRange(@NotNull Double min,
                        @NotNull Double max,
                        @NotNull Double step,
-                       int startPosition) {
-        super(Double.class, min, max, step, startPosition);
+                       int startPosition,
+                       @Nullable Formatter<Double> formatter) {
+        super(min, max, step, startPosition, formatter);
     }
 
     @NotNull
-    public static NumberRange<Double> newInstance(@NotNull Double min, @NotNull Double max, @NotNull Double step, @NotNull Double selected) {
+    public static NumberRange<Double> newInstance(@NotNull Double min,
+                                                  @NotNull Double max,
+                                                  @NotNull Double step,
+                                                  @NotNull Double selected,
+                                                  @Nullable Formatter<Double> formatter) {
         if (selected < min || selected > max) {
             throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
         }
@@ -27,7 +34,7 @@ public class DoubleRange extends NumberRange<Double> {
             startPosition += 1;
         }
 
-        return new DoubleRange(min, max, step, startPosition);
+        return new DoubleRange(min, max, step, startPosition, formatter);
     }
 
     @Override

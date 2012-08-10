@@ -1,6 +1,8 @@
 package org.solovyev.android.view;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -12,8 +14,9 @@ public class IntegerRange extends NumberRange<Integer> {
     public IntegerRange(@NotNull Integer min,
                         @NotNull Integer max,
                         @NotNull Integer step,
-                        int startPosition) {
-        super(Integer.class, min, max, step, startPosition);
+                        int startPosition,
+                        @Nullable Formatter<Integer> formatter) {
+        super(min, max, step, startPosition, formatter);
     }
 
     @NotNull
@@ -27,7 +30,7 @@ public class IntegerRange extends NumberRange<Integer> {
             startPosition += 1;
         }
 
-        return new IntegerRange(min, max, step, startPosition);
+        return new IntegerRange(min, max, step, startPosition, null);
     }
 
     @Override

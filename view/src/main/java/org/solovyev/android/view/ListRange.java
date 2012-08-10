@@ -2,6 +2,7 @@ package org.solovyev.android.view;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.text.Formatter;
 
 import java.util.List;
 
@@ -10,12 +11,15 @@ import java.util.List;
  * Date: 8/10/12
  * Time: 1:55 AM
  */
-public class ListRange<T> implements Picker.Range {
+public class ListRange<T> implements Picker.Range<T> {
 
     @NotNull
-    private final List<T> elements;
+    private List<T> elements;
 
     private int startPosition;
+
+    @Nullable
+    private Formatter<T> formatter;
 
     public ListRange(@NotNull List<T> elements, @Nullable T selected) {
         this.elements = elements;
@@ -23,6 +27,12 @@ public class ListRange<T> implements Picker.Range {
         if ( this.startPosition < 0 ) {
             this.startPosition = 0;
         }
+        this.formatter = null;
+    }
+
+    public ListRange(@NotNull List<T> elements, @Nullable T selected, @Nullable Formatter<T> formatter) {
+        this(elements, selected);
+        this.formatter = formatter;
     }
 
     @Override
@@ -38,12 +48,13 @@ public class ListRange<T> implements Picker.Range {
     @NotNull
     @Override
     public String getStringValueAt(int position) {
-        return this.elements.get(position).toString();
+        final T value = getValueAt(position);
+        return formatter == null ? value.toString() : formatter.formatValue(value);
     }
 
     @NotNull
     @Override
-    public Object getValueAt(int position) {
+    public T getValueAt(int position) {
         return this.elements.get(position);
     }
 }

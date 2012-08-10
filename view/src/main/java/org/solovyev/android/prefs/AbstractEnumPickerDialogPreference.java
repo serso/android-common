@@ -31,7 +31,7 @@ public abstract class AbstractEnumPickerDialogPreference<T extends Enum> extends
 
     @NotNull
     @Override
-    protected Picker.Range createRange(@NotNull T selected) {
+    protected Picker.Range<T> createRange(@NotNull T selected) {
         return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected);
     }
 }

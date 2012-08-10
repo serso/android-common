@@ -15,7 +15,7 @@ import org.solovyev.common.text.Mapper;
  * Date: 8/10/12
  * Time: 1:58 AM
  */
-public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPreference<T> implements Picker.OnChangedListener {
+public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPreference<T> implements Picker.OnChangedListener<T> {
 
 
     protected AbstractPickerDialogPreference(Context context,
@@ -38,7 +38,7 @@ public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPr
     @NotNull
     @Override
     protected View createPreferenceView(@NotNull Context context) {
-        final Picker result = new Picker(context);
+        final Picker<T> result = new Picker<T>(context);
 
         result.setOnChangeListener(this);
 
@@ -48,15 +48,15 @@ public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPr
     @Override
     protected void initPreferenceView(@NotNull View v, @Nullable T value) {
         if (value != null) {
-            ((Picker) v).setRange(createRange(value));
+            ((Picker<T>) v).setRange(createRange(value));
         }
     }
 
     @NotNull
-    protected abstract Picker.Range createRange(@NotNull T selected);
+    protected abstract Picker.Range<T> createRange(@NotNull T selected);
 
     @Override
-    public void onChanged(@NotNull Picker picker, @NotNull Object o) {
-        persistValue((T) o);
+    public void onChanged(@NotNull Picker picker, @NotNull T o) {
+        persistValue(o);
     }
 }
