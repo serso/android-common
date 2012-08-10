@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="http">Http</string>
+    <string name="fetch_data_text">Fetch data from internet</string>
+    <string name="http_response">Response:</string>
+
+</resources>
