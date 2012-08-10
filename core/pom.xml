@@ -17,6 +17,14 @@
 
     <packaging>apklib</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.solovyev</groupId>
+            <artifactId>common-text</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+    </dependencies>
+
     <build>
 
         <!-- specifying the resources: e.g. layout.xml, strings.xml etc-->

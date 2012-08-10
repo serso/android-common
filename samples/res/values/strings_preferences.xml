@@ -25,5 +25,11 @@
     <string name="select_integer_interval">Select integer interval</string>
     <string name="choose_country">Choose country</string>
 
+    <string name="sweden">Sweden</string>
+    <string name="usa">USA</string>
+    <string name="russia">Russia</string>
+    <string name="ukraine">Ukraine</string>
+    <string name="germany">Germany</string>
+
 
 </resources>

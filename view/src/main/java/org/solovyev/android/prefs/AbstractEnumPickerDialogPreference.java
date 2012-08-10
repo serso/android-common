@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.Labeled;
+import org.solovyev.android.LabeledFormatter;
 import org.solovyev.android.view.ListRange;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.text.EnumMapper;
@@ -15,7 +17,7 @@ import java.util.Arrays;
  * Date: 8/10/12
  * Time: 2:02 AM
  */
-public abstract class AbstractEnumPickerDialogPreference<T extends Enum> extends AbstractPickerDialogPreference<T> {
+public abstract class AbstractEnumPickerDialogPreference<T extends Enum & Labeled> extends AbstractPickerDialogPreference<T> {
 
     @NotNull
     private final Class<T> enumClass;
@@ -32,6 +34,6 @@ public abstract class AbstractEnumPickerDialogPreference<T extends Enum> extends
     @NotNull
     @Override
     protected Picker.Range<T> createRange(@NotNull T selected) {
-        return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected);
+        return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected, new LabeledFormatter<T>(getContext()));
     }
 }
