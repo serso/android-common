@@ -13,6 +13,11 @@ import java.util.List;
  * Date: 4/30/12
  * Time: 11:19 AM
  */
+
+/**
+ * Activity menu implementation based on the list. Allows to use filter in order
+ * to change displayed menu items.
+ */
 public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
 
     @NotNull

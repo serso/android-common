@@ -15,6 +15,7 @@
         </activity>
 
         <activity android:name=".prefs.SamplesPreferencesActivity"/>
+        <activity android:name=".menu.SamplesMenuActivity"/>
 
     </application>
 

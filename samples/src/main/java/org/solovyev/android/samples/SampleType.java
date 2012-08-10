@@ -9,6 +9,7 @@ import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
+import org.solovyev.android.samples.menu.SamplesMenuActivity;
 import org.solovyev.android.samples.prefs.SamplesPreferencesActivity;
 import org.solovyev.android.view.TextViewBuilder;
 
@@ -18,7 +19,8 @@ import org.solovyev.android.view.TextViewBuilder;
  * Time: 2:06 AM
  */
 public enum SampleType implements ListItem<View> {
-    preferences(R.string.preferences, SamplesPreferencesActivity.class);
+    preferences(R.string.preferences, SamplesPreferencesActivity.class),
+    menu(R.string.menu, SamplesMenuActivity.class);
 
     private final int captionResId;
 
@@ -73,6 +75,6 @@ public enum SampleType implements ListItem<View> {
 
     @NotNull
     private String getTag() {
-        return this.name();
+        return "sample_type";
     }
 }
