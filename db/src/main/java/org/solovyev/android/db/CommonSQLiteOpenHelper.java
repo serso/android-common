@@ -44,7 +44,7 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
                 // prepare version based postfix
                 final String fileVersionPostfix = decimalFormat.format(version);
 
-                final String fileName = "db_" + fileVersionPostfix + ".sql";
+                final String fileName = "db_" + getDatabaseName() + "_" + fileVersionPostfix + ".sql";
 
                 Log.d(TAG, "Reading " + fileName + "...");
 
