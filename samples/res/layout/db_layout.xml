@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:layout_width="match_parent"
+              a:layout_height="match_parent"
+              a:orientation="vertical">
+
+    <LinearLayout a:layout_width="match_parent"
+                  a:layout_height="wrap_content"
+                  a:orientation="horizontal">
+
+        <Button a:id="@+id/add_item_button"
+                a:text="@string/save"
+                a:layout_height="wrap_content"
+                a:layout_width="wrap_content"/>
+
+        <EditText a:id="@+id/item_name"
+                  a:inputType="text"
+                  a:layout_height="wrap_content"
+                  a:layout_width="match_parent"/>
+
+    </LinearLayout>
+
+    <ListView a:layout_width="match_parent"
+              a:layout_height="match_parent"
+              a:fadingEdge="none"
+              a:id="@android:id/list"/>
+
+</LinearLayout>

@@ -23,14 +23,21 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
     @NotNull
     protected final Context context;
 
+    @NotNull
+    private String databaseName;
+
+    private int version;
+
     public CommonSQLiteOpenHelper(@NotNull Context context, @NotNull SQLiteOpenHelperConfiguration configuration) {
         super(context, configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
         this.context = context;
+        this.databaseName = configuration.getName();
+        this.version = configuration.getVersion();
     }
 
     @Override
     public void onCreate(@NotNull SQLiteDatabase db) {
-        onUpgrade(db, -1, 1);
+        onUpgrade(db, 0, this.version);
     }
 
     @Override
@@ -44,7 +51,7 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
                 // prepare version based postfix
                 final String fileVersionPostfix = decimalFormat.format(version);
 
-                final String fileName = "db_" + getDatabaseName() + "_" + fileVersionPostfix + ".sql";
+                final String fileName = "db_" + databaseName + "_" + fileVersionPostfix + ".sql";
 
                 Log.d(TAG, "Reading " + fileName + "...");
 

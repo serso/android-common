@@ -53,6 +53,12 @@
             <type>apklib</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-db</artifactId>
+            <version>1.0.0</version>
+            <type>apklib</type>
+        </dependency>
 
     </dependencies>
 

@@ -7,7 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application android:debuggable="true" android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:debuggable="true"
+                 android:icon="@drawable/icon"
+                 android:label="@string/app_name"
+                 android:name=".SamplesApplication">
 
         <activity android:label="@string/app_name" android:name=".SamplesActivity">
 
@@ -21,6 +24,7 @@
         <activity android:name=".prefs.SamplesPreferencesActivity"/>
         <activity android:name=".menu.SamplesMenuActivity"/>
         <activity android:name=".http.SamplesHttpActivity"/>
+        <activity android:name=".db.SamplesDbActivity"/>
 
     </application>
 
