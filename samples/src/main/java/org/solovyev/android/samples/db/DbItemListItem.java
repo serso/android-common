@@ -61,4 +61,21 @@ public class DbItemListItem implements ListItem<View> {
     private void fillView(@NotNull Context context, @NotNull TextView view) {
         view.setText(dbItem.getName());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DbItemListItem)) return false;
+
+        DbItemListItem that = (DbItemListItem) o;
+
+        if (!dbItem.equals(that.dbItem)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return dbItem.hashCode();
+    }
 }

@@ -21,4 +21,21 @@ public class DbItemImpl implements DbItem {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DbItemImpl)) return false;
+
+        DbItemImpl dbItem = (DbItemImpl) o;
+
+        if (!name.equals(dbItem.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

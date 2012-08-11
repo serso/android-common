@@ -41,10 +41,12 @@ public class DbItemServiceImpl implements DbItemService {
             result = new ArrayList<DbItem>(getAllDbItems(context));
         }
 
+        prefix = prefix.toLowerCase();
+
         // filter by prefix
         for (Iterator<DbItem> it = result.iterator(); it.hasNext(); ) {
             final DbItem notFilteredItem = it.next();
-            if (!notFilteredItem.getName().startsWith(prefix)) {
+            if (!notFilteredItem.getName().toLowerCase().startsWith(prefix)) {
                 it.remove();
             }
         }
@@ -61,9 +63,12 @@ public class DbItemServiceImpl implements DbItemService {
         }
     }
 
+    @NotNull
     @Override
-    public void removeItemByName(@NotNull String name, @NotNull Context context) {
+    public List<DbItem> removeItemByName(@NotNull String name, @NotNull Context context) {
         synchronized (items) {
+            final List<DbItem> removedItems = new ArrayList<DbItem>();
+
             // remove from db
             getDbItemDao().removeByName(name);
 
@@ -72,8 +77,11 @@ public class DbItemServiceImpl implements DbItemService {
                 final DbItem dbItem = it.next();
                 if (name.equals(dbItem.getName())) {
                     it.remove();
+                    removedItems.add(dbItem);
                 }
             }
+
+            return removedItems;
         }
     }
 

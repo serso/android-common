@@ -8,11 +8,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.core.FileCache;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -74,7 +76,7 @@ public class ImageLoader {
 
     @Nullable
     private Bitmap getBitmap(@NotNull String url) {
-        final File cachedBitmapFile = fileCache.getFile(url);
+        final File cachedBitmapFile = fileCache.getFile(createFilename(url));
 
         // from SD cache
         Bitmap result = decodeFile(cachedBitmapFile);
@@ -113,6 +115,15 @@ public class ImageLoader {
         }
 
         return result;
+    }
+
+    @NotNull
+    private String createFilename(String url) {
+        try {
+            return URLEncoder.encode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError(e);
+        }
     }
 
     // decodes image and scales it to reduce memory consumption

@@ -1,11 +1,10 @@
-package org.solovyev.android.http;
+package org.solovyev.android.core;
 
 import android.content.Context;
+import android.os.Build;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class FileCache {
 
@@ -15,7 +14,7 @@ public class FileCache {
     public FileCache(@NotNull Context context, @NotNull String cacheFileName) {
         // find the dir to save cached images
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            cacheDir = new File(android.os.Environment.getExternalStorageDirectory(), cacheFileName);
+            cacheDir = new File(createCachePath(context), cacheFileName);
         } else {
             cacheDir = context.getCacheDir();
         }
@@ -26,14 +25,17 @@ public class FileCache {
     }
 
     @NotNull
-    public File getFile(@NotNull String url) {
-        try {
-            final String filename = URLEncoder.encode(url, "UTF-8");
-
-            return new File(cacheDir, filename);
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError(e);
+    private String createCachePath(@NotNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            return context.getExternalCacheDir().getPath();
+        } else {
+            return android.os.Environment.getExternalStorageDirectory().getPath() + "/Android/data/" + context.getApplicationContext().getPackageName() + "/cache";
         }
+    }
+
+    @NotNull
+    public File getFile(@NotNull String filename) {
+        return new File(cacheDir, filename);
     }
 
     public void clear() {

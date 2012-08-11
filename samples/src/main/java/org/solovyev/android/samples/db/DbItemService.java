@@ -20,5 +20,6 @@ public interface DbItemService {
 
     void addItem(@NotNull DbItem dbItem, @NotNull Context context);
 
-    void removeItemByName(@NotNull String name, @NotNull Context context);
+    @NotNull
+    List<DbItem> removeItemByName(@NotNull String name, @NotNull Context context);
 }
