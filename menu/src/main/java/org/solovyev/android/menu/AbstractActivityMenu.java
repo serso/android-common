@@ -14,6 +14,7 @@ import java.util.List;
  * Date: 4/30/12
  * Time: 11:19 AM
  */
+@Deprecated
 abstract class AbstractActivityMenu<I extends IdentifiableMenuItem> implements ActivityMenu<Menu, MenuItem> {
 
     @NotNull

@@ -13,6 +13,7 @@ import java.util.List;
  * Date: 4/23/12
  * Time: 1:57 PM
  */
+@Deprecated
 public class LayoutActivityMenu extends AbstractActivityMenu<IdentifiableMenuItem> {
 
     public final int menuLayoutId;

@@ -71,6 +71,7 @@
             <plugins>
 
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jarsigner-plugin</artifactId>
                     <version>1.2</version>
                 </plugin>
@@ -128,5 +129,32 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
+    <profiles>
+
+        <profile>
+            <!-- the standard profile runs the instrumentation tests -->
+            <id>standard</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+        </profile>
+
+        <profile>
+            <!-- the release profile does sign, proguard, zipalign  -->
+            <id>release</id>
+            <!-- via this activation the profile is automatically used when the release is done with the maven release
+            plugin -->
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+        </profile>
+    </profiles>
 
 </project>
