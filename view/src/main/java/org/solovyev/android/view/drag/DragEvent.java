@@ -7,7 +7,7 @@ package org.solovyev.android.view.drag;
 
 import android.view.MotionEvent;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.utils.Point2d;
+import org.solovyev.common.math.Point2d;
 
 public class DragEvent {
 

@@ -6,7 +6,7 @@
 package org.solovyev.android.history;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.utils.history.HistoryAction;
+import org.solovyev.common.history.HistoryAction;
 
 /**
  * User: serso

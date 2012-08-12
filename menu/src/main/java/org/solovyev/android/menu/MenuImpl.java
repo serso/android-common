@@ -9,7 +9,7 @@ package org.solovyev.android.menu;
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.CollectionsUtils;
+import org.solovyev.common.collections.CollectionsUtils;
 
 import java.util.ArrayList;
 import java.util.List;

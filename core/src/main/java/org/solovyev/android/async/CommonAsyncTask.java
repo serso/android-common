@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.CollectionsUtils;
+import org.solovyev.common.collections.CollectionsUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

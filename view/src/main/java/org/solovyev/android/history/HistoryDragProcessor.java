@@ -7,12 +7,12 @@ package org.solovyev.android.history;
 
 import android.util.Log;
 import android.view.MotionEvent;
+import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.drag.DragButton;
 import org.solovyev.android.view.drag.DragDirection;
 import org.solovyev.android.view.drag.SimpleOnDragListener;
-import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.utils.Point2d;
-import org.solovyev.common.utils.history.HistoryAction;
+import org.solovyev.common.history.HistoryAction;
+import org.solovyev.common.math.Point2d;
 
 /**
 * User: serso

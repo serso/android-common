@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.R;
+import org.solovyev.common.MutableObject;
+import org.solovyev.common.interval.Interval;
+import org.solovyev.common.interval.IntervalImpl;
+import org.solovyev.common.math.MathUtils;
+import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
-import org.solovyev.common.utils.*;
 
 import java.util.HashMap;
 import java.util.Map;

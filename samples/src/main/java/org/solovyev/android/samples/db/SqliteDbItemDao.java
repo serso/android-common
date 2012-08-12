@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.db.*;
-import org.solovyev.common.utils.Converter;
+import org.solovyev.common.Converter;
 
 import java.util.List;
 

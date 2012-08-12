@@ -16,7 +16,7 @@ import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.samples.SamplesApplication;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.text.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

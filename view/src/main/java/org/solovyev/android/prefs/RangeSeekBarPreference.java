@@ -7,9 +7,9 @@ import android.widget.LinearLayout;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.AbstractRangeSeekBar;
 import org.solovyev.android.view.NumberRangeSeekBar;
+import org.solovyev.common.interval.Interval;
+import org.solovyev.common.interval.IntervalImpl;
 import org.solovyev.common.text.NumberIntervalMapper;
-import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.IntervalImpl;
 
 /**
  * User: serso

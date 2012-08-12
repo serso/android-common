@@ -3,7 +3,7 @@ package org.solovyev.android.http;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.utils.Converter;
+import org.solovyev.common.Converter;
 
 import java.io.IOException;
 import java.io.InputStream;

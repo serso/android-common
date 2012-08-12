@@ -2,6 +2,8 @@ package org.solovyev.android;
 
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
+import org.solovyev.common.VersionedEntity;
+import org.solovyev.common.VersionedEntityImpl;
 
 /**
  * User: serso

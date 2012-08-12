@@ -11,8 +11,8 @@ import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.IntegerRange;
 import org.solovyev.android.view.NumberRange;
+import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.NumberIntervalMapper;
-import org.solovyev.common.utils.Interval;
 
 /**
  * User: serso

@@ -1,11 +1,11 @@
 package org.solovyev.android.http;
 
-import org.solovyev.android.RuntimeIoException;
-import org.solovyev.android.async.CommonAsyncTask;
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Converter;
+import org.solovyev.android.RuntimeIoException;
+import org.solovyev.android.async.CommonAsyncTask;
+import org.solovyev.common.Converter;
 
 import java.io.IOException;
 import java.io.InputStream;

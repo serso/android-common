@@ -35,8 +35,8 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.FontSizeAdjuster;
-import org.solovyev.common.utils.Point2d;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.math.Point2d;
+import org.solovyev.common.text.StringUtils;
 
 /**
  * NOTE: copied from com.android.calculator2.ColorButton

@@ -15,10 +15,10 @@ import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
+import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.CollectionTransformations;
 import org.solovyev.common.text.NumberParser;
-import org.solovyev.common.utils.Point2d;
-import org.solovyev.common.utils.StringUtils;
+import org.solovyev.common.text.StringUtils;
 
 import java.util.EnumMap;
 import java.util.HashMap;

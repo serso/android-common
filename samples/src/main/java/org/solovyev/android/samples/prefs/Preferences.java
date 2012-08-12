@@ -4,8 +4,8 @@ import org.solovyev.android.prefs.NumberIntervalPreference;
 import org.solovyev.android.prefs.NumberToStringPreference;
 import org.solovyev.android.prefs.Preference;
 import org.solovyev.android.prefs.StringPreference;
-import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.IntervalImpl;
+import org.solovyev.common.interval.Interval;
+import org.solovyev.common.interval.IntervalImpl;
 
 /**
  * User: serso

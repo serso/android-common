@@ -15,7 +15,7 @@ import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.ColorButton;
-import org.solovyev.common.utils.Point2d;
+import org.solovyev.common.math.Point2d;
 
 public class DragButton extends ColorButton {
 

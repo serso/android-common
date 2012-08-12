@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
 import org.solovyev.android.samples.R;
-import org.solovyev.common.utils.CompareTools;
+import org.solovyev.common.IPredicate;
+import org.solovyev.common.compare.CompareTools;
 
 import java.util.ArrayList;
 import java.util.Collections;

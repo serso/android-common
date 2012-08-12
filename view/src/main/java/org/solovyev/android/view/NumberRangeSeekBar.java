@@ -3,9 +3,9 @@ package org.solovyev.android.view;
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.utils.Converter;
-import org.solovyev.common.utils.Interval;
-import org.solovyev.common.utils.NumberValuer;
+import org.solovyev.common.Converter;
+import org.solovyev.common.interval.Interval;
+import org.solovyev.common.math.NumberValuer;
 
 /**
  * User: serso

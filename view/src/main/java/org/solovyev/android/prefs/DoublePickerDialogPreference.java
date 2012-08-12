@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.DoubleRange;
 import org.solovyev.android.view.NumberRange;
+import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.Formatter;
 import org.solovyev.common.text.NumberIntervalMapper;
-import org.solovyev.common.utils.Interval;
 
 import java.text.DecimalFormat;
 
