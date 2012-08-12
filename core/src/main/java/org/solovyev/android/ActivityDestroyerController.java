@@ -38,8 +38,10 @@ public class ActivityDestroyerController {
 
     public synchronized void fireActivityDestroyed(@NotNull Activity activity) {
         final Collection<OnActivityDestroyedListener> listeners = listenersMap.remove(activity);
-        for (OnActivityDestroyedListener listener : listeners) {
-            listener.onActivityDestroyed(activity);
+        if (listeners != null) {
+            for (OnActivityDestroyedListener listener : listeners) {
+                listener.onActivityDestroyed(activity);
+            }
         }
     }
 }

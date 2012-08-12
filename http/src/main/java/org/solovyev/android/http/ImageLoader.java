@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.core.FileCache;
+import org.solovyev.android.FileCache;
 
 import java.io.*;
 import java.net.HttpURLConnection;

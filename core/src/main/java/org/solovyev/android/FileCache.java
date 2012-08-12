@@ -1,4 +1,4 @@
-package org.solovyev.android.core;
+package org.solovyev.android;
 
 import android.content.Context;
 import android.os.Build;
