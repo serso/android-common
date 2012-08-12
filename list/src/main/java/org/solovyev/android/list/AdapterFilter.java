@@ -3,6 +3,7 @@ package org.solovyev.android.list;
 import android.widget.Filter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.IPredicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +45,12 @@ public abstract class AdapterFilter<T> extends Filter {
             }
         } else {
             // filter
-            final org.solovyev.android.IFilter<T> filter = getFilter(prefix);
+            final IPredicate<T> filter = getFilter(prefix);
             synchronized (helper.getLock()) {
 
                 filteredElements = new ArrayList<T>(allElements.size());
                 for (T element : allElements) {
-                    if ( !filter.isFiltered(element) ) {
+                    if ( !filter.apply(element) ) {
                         filteredElements.add(element);
                     }
                 }
@@ -62,7 +63,7 @@ public abstract class AdapterFilter<T> extends Filter {
         return results;
     }
 
-    protected abstract org.solovyev.android.IFilter<T> getFilter(@NotNull CharSequence prefix);
+    protected abstract IPredicate<T> getFilter(@NotNull CharSequence prefix);
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {

@@ -3,9 +3,9 @@ package org.solovyev.android.prefs;
 import android.content.SharedPreferences;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
-import org.solovyev.common.utils.Interval;
 
 /**
  * User: serso

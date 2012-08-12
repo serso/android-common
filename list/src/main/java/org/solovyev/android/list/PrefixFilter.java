@@ -2,7 +2,7 @@ package org.solovyev.android.list;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.IFilter;
+import org.solovyev.common.IPredicate;
 
 
 /**
@@ -10,7 +10,7 @@ import org.solovyev.android.IFilter;
  * Date: 6/6/12
  * Time: 1:09 AM
  */
-public class PrefixFilter<T> implements IFilter<T> {
+public class PrefixFilter<T> implements IPredicate<T> {
 
     @NotNull
     private String prefix;
@@ -20,7 +20,7 @@ public class PrefixFilter<T> implements IFilter<T> {
     }
 
     @Override
-    public boolean isFiltered(@Nullable T input) {
+    public boolean apply(@Nullable T input) {
         if (input != null) {
             final String valueText = input.toString().toLowerCase();
 

@@ -3,7 +3,7 @@ package org.solovyev.android.menu;
 import android.app.Activity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.IFilter;
+import org.solovyev.common.IPredicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +24,12 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     private final List<MenuItemWrapper<MI>> menuItems = new ArrayList<MenuItemWrapper<MI>>();
 
     @Nullable
-    private final IFilter<LabeledMenuItem<MI>> filter;
+    private final IPredicate<LabeledMenuItem<MI>> filter;
 
     @NotNull
     private final MenuHelper<M, MI> menuHelper;
 
-    public ListActivityMenu(@Nullable IFilter<LabeledMenuItem<MI>> filter,
+    public ListActivityMenu(@Nullable IPredicate<LabeledMenuItem<MI>> filter,
                             @NotNull MenuHelper<M, MI> menuHelper) {
         this.filter = filter;
         this.menuHelper = menuHelper;
@@ -50,7 +50,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> newInstance(@NotNull List<LabeledMenuItem<MI>> menuItems,
                                                           @NotNull MenuHelper<M, MI> menuHelper,
-                                                          @NotNull IFilter<LabeledMenuItem<MI>> filter) {
+                                                          @NotNull IPredicate<LabeledMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(filter, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -93,7 +93,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
                     menuHelper.removeItem(menu, menuItemId);
                 }
 
-                if (!filter.isFiltered(menuItemWrapper.menuItem)) {
+                if (!filter.apply(menuItemWrapper.menuItem)) {
                     // and if needed -> add
                     addMenuItem(activity, menu, menuItemWrapper);
                 }

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.IFilter;
+import org.solovyev.common.IPredicate;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
@@ -71,10 +71,10 @@ public class SamplesMenuActivity extends ListActivity {
         return this.menu.onCreateOptionsMenu(this, menu);
     }
 
-    private class MenuFilter implements IFilter<LabeledMenuItem<MenuItem>> {
+    private class MenuFilter implements IPredicate<LabeledMenuItem<MenuItem>> {
 
         @Override
-        public boolean isFiltered(@Nullable LabeledMenuItem<MenuItem> menuItem) {
+        public boolean apply(@Nullable LabeledMenuItem<MenuItem> menuItem) {
             if (menuItem instanceof AscSortMenuItem) {
                 return !ascSort;
             } else {

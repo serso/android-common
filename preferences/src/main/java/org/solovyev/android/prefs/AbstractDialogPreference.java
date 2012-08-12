@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.equals.EqualsUtils;
 import org.solovyev.common.text.Mapper;
-import org.solovyev.common.utils.EqualsUtils;
 
 /**
  * User: serso
