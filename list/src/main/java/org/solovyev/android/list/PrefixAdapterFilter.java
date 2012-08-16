@@ -1,6 +1,7 @@
 package org.solovyev.android.list;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.IPredicate;
 
 /**
@@ -11,7 +12,7 @@ import org.solovyev.common.IPredicate;
 public class PrefixAdapterFilter<T> extends AdapterFilter<T> {
 
     @Override
-    protected IPredicate<T> getFilter(@NotNull CharSequence prefix) {
+    protected IPredicate<T> getFilter(@Nullable CharSequence prefix) {
         return new PrefixFilter<T>(prefix.toString().toLowerCase());
     }
 

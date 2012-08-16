@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.IPredicate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,24 +21,43 @@ import java.util.List;
  */
 public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
 
+    private static final int NO_MENU_RES_ID = -1;
+
     @NotNull
     private final List<MenuItemWrapper<MI>> menuItems = new ArrayList<MenuItemWrapper<MI>>();
 
+    private final int menuResId;
+
     @Nullable
-    private final IPredicate<LabeledMenuItem<MI>> filter;
+    private final IPredicate<AMenuItem<MI>> filter;
 
     @NotNull
     private final MenuHelper<M, MI> menuHelper;
 
-    public ListActivityMenu(@Nullable IPredicate<LabeledMenuItem<MI>> filter,
-                            @NotNull MenuHelper<M, MI> menuHelper) {
+    private ListActivityMenu(@Nullable IPredicate<AMenuItem<MI>> filter,
+                             @NotNull MenuHelper<M, MI> menuHelper) {
+        this(NO_MENU_RES_ID, filter, menuHelper);
+    }
+
+    private ListActivityMenu(int menuResId,
+                             @Nullable IPredicate<AMenuItem<MI>> filter,
+                             @NotNull MenuHelper<M, MI> menuHelper) {
+        this.menuResId = menuResId;
         this.filter = filter;
         this.menuHelper = menuHelper;
     }
 
+    /*
+    **********************************************************************
+    *
+    *                           PUBLIC CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
     @NotNull
-    public static <M, MI> ActivityMenu<M, MI> newInstance(@NotNull List<LabeledMenuItem<MI>> menuItems,
-                                                          @NotNull MenuHelper<M, MI> menuHelper) {
+    public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
+                                                       @NotNull MenuHelper<M, MI> menuHelper) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(null, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -48,9 +68,9 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @NotNull
-    public static <M, MI> ActivityMenu<M, MI> newInstance(@NotNull List<LabeledMenuItem<MI>> menuItems,
-                                                          @NotNull MenuHelper<M, MI> menuHelper,
-                                                          @NotNull IPredicate<LabeledMenuItem<MI>> filter) {
+    public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
+                                                       @NotNull MenuHelper<M, MI> menuHelper,
+                                                       @NotNull IPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(filter, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -60,15 +80,101 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return result;
     }
 
+    @NotNull
+    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromList(
+            @NotNull Class<E> enumMenuClass,
+            @NotNull MenuHelper<M, MI> menuHelper,
+            @NotNull IPredicate<AMenuItem<MI>> filter) {
+        return fromList(toList(enumMenuClass), menuHelper, filter);
+    }
+
+    @NotNull
+    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromList(
+            @NotNull Class<E> enumMenuClass,
+            @NotNull MenuHelper<M, MI> menuHelper) {
+        return fromList(toList(enumMenuClass), menuHelper);
+    }
+
+    @NotNull
+    public static <M, MI> ActivityMenu<M, MI> fromLayout(int menuResId,
+                                                         @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                         @NotNull MenuHelper<M, MI> menuHelper,
+                                                         @NotNull IPredicate<AMenuItem<MI>> filter) {
+        final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, filter, menuHelper);
+
+        for (IdentifiableMenuItem<MI> menuItem : menuItems) {
+            result.menuItems.add(new MenuItemWrapper<MI>(menuItem));
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public static <M, MI> ActivityMenu<M, MI> fromLayout(int menuResId,
+                                                         @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                         @NotNull MenuHelper<M, MI> menuHelper) {
+        final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, null, menuHelper);
+
+        for (IdentifiableMenuItem<MI> menuItem : menuItems) {
+            result.menuItems.add(new MenuItemWrapper<MI>(menuItem));
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromLayout(
+            int menuResId,
+            @NotNull Class<? extends E> enumMenuClass,
+            @NotNull MenuHelper<M, MI> menuHelper,
+            @NotNull IPredicate<AMenuItem<MI>> filter) {
+        return fromLayout(menuResId, toList(enumMenuClass), menuHelper, filter);
+    }
+
+
+    @NotNull
+    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromLayout(
+            int menuResId,
+            @NotNull Class<? extends E> enumMenuClass,
+            @NotNull MenuHelper<M, MI> menuHelper) {
+        return fromLayout(menuResId, toList(enumMenuClass), menuHelper);
+    }
+
+    @NotNull
+    private static <E extends Enum> List<E> toList(@NotNull Class<E> enumMenuClass) {
+        final List<E> result = new ArrayList<E>();
+
+        Collections.addAll(result, enumMenuClass.getEnumConstants());
+
+        return result;
+    }
+
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
     @Override
     public boolean onCreateOptionsMenu(@NotNull final Activity activity, @NotNull M menu) {
         if (filter == null) {
-            for (final MenuItemWrapper<MI> menuItem : this.menuItems) {
-                addMenuItem(activity, menu, menuItem);
+            if (isFromMenuRes()) {
+                this.menuHelper.inflateMenu(activity, menuResId, menu);
+            } else {
+                for (final MenuItemWrapper<MI> menuItem : this.menuItems) {
+                    addMenuItem(activity, menu, menuItem);
+                }
             }
         }
 
         return true;
+    }
+
+    private boolean isFromMenuRes() {
+        return menuResId != NO_MENU_RES_ID;
     }
 
     private void addMenuItem(@NotNull final Activity activity,
@@ -76,26 +182,46 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
                              @NotNull final MenuItemWrapper<MI> menuItemWrapper) {
         final int size = menuHelper.size(menu);
         final int menuItemId = size + 1;
-        final MI aMenuItem = menuHelper.add(menu, 0, menuItemId, 0, menuItemWrapper.menuItem.getCaption(activity));
+        final MI aMenuItem = menuHelper.add(menu, 0, menuItemId, 0, menuItemWrapper.getCaption(activity));
 
-        menuItemWrapper.menuItemId = menuItemId;
+        menuItemWrapper.setMenuItemId(menuItemId);
 
-        menuHelper.setOnMenuItemClickListener(aMenuItem, menuItemWrapper.menuItem, activity);
+        menuHelper.setOnMenuItemClickListener(aMenuItem, menuItemWrapper.getMenuItem(), activity);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(@NotNull Activity activity, @NotNull M menu) {
         if (filter != null) {
-            for (MenuItemWrapper<MI> menuItemWrapper : menuItems) {
-                // always remove
-                final Integer menuItemId = menuItemWrapper.menuItemId;
-                if (menuItemId != null) {
-                    menuHelper.removeItem(menu, menuItemId);
+            if (isFromMenuRes()) {
+
+                for (MenuItemWrapper<MI> menuItemWrapper : menuItems) {
+                    // always remove
+                    final Integer menuItemId = menuItemWrapper.getMenuItemId();
+                    if (menuItemId != null) {
+                        menuHelper.removeItem(menu, menuItemId);
+                    }
                 }
 
-                if (!filter.apply(menuItemWrapper.menuItem)) {
-                    // and if needed -> add
-                    addMenuItem(activity, menu, menuItemWrapper);
+                this.menuHelper.inflateMenu(activity, menuResId, menu);
+
+                for (MenuItemWrapper<MI> menuItemWrapper : menuItems) {
+                    if (filter.apply(menuItemWrapper.getMenuItem())) {
+                        // remove if needed
+                        menuHelper.removeItem(menu, menuItemWrapper.getMenuItemId());
+                    }
+                }
+            } else {
+                for (MenuItemWrapper<MI> menuItemWrapper : menuItems) {
+                    // always remove
+                    final Integer menuItemId = menuItemWrapper.getMenuItemId();
+                    if (menuItemId != null) {
+                        menuHelper.removeItem(menu, menuItemId);
+                    }
+
+                    if (!filter.apply(menuItemWrapper.getMenuItem())) {
+                        // and if needed -> add
+                        addMenuItem(activity, menu, menuItemWrapper);
+                    }
                 }
             }
         }
@@ -105,19 +231,16 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
 
     @Override
     public boolean onOptionsItemSelected(@NotNull Activity activity, @NotNull MI item) {
-        return false;
-    }
-
-    private static class MenuItemWrapper<MI> {
-
-        @NotNull
-        private final LabeledMenuItem<MI> menuItem;
-
-        @Nullable
-        private Integer menuItemId;
-
-        private MenuItemWrapper(@NotNull LabeledMenuItem<MI> menuItem) {
-            this.menuItem = menuItem;
+        if (isFromMenuRes()) {
+            for (MenuItemWrapper<MI> menuItem : menuItems) {
+                if (menuHelper.getItemId(item).equals(menuItem.getMenuItemId())) {
+                    menuItem.getMenuItem().onClick(item, activity);
+                    return true;
+                }
+            }
         }
+
+        return true;
     }
+
 }

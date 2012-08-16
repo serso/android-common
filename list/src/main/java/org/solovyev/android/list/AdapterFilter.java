@@ -38,7 +38,7 @@ public abstract class AdapterFilter<T> extends Filter {
 
         // elements to be shown on list view
         final List<T> filteredElements;
-        if (prefix == null || prefix.length() == 0) {
+        if ((prefix == null || prefix.length() == 0) && !doFilterOnEmptyString()) {
             // no constraint => show all elements
             synchronized (helper.getLock()) {
                 filteredElements = new ArrayList<T>(allElements);
@@ -63,7 +63,11 @@ public abstract class AdapterFilter<T> extends Filter {
         return results;
     }
 
-    protected abstract IPredicate<T> getFilter(@NotNull CharSequence prefix);
+    protected boolean doFilterOnEmptyString() {
+        return false;
+    }
+
+    protected abstract IPredicate<T> getFilter(@Nullable CharSequence prefix);
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {

@@ -66,15 +66,15 @@ public class SamplesMenuActivity extends ListActivity {
             menuItems.add(new ReverseSortMenuItem());
             menuItems.add(new AscSortMenuItem());
 
-            this.menu = ListActivityMenu.newInstance(menuItems, AndroidMenuHelper.getInstance(), new MenuFilter());
+            this.menu = ListActivityMenu.fromList(menuItems, AndroidMenuHelper.getInstance(), new MenuFilter());
         }
         return this.menu.onCreateOptionsMenu(this, menu);
     }
 
-    private class MenuFilter implements IPredicate<LabeledMenuItem<MenuItem>> {
+    private class MenuFilter implements IPredicate<AMenuItem<MenuItem>> {
 
         @Override
-        public boolean apply(@Nullable LabeledMenuItem<MenuItem> menuItem) {
+        public boolean apply(@Nullable AMenuItem<MenuItem> menuItem) {
             if (menuItem instanceof AscSortMenuItem) {
                 return !ascSort;
             } else {

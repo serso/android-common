@@ -1,26 +1,29 @@
-package org.solovyev.android.menu;
+package org.solovyev.android.sherlock.menu;
 
 import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.android.menu.AMenuItem;
+import org.solovyev.android.menu.MenuHelper;
+import org.solovyev.android.sherlock.SherlockUtils;
 
 /**
  * User: serso
  * Date: 8/4/12
- * Time: 2:51 PM
+ * Time: 3:02 PM
  */
-public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
+public final class SherlockMenuHelper implements MenuHelper<Menu, MenuItem> {
 
     @NotNull
-    private static final AndroidMenuHelper instance = new AndroidMenuHelper();
+    private static final SherlockMenuHelper instance = new SherlockMenuHelper();
 
     @NotNull
     public static MenuHelper<Menu, MenuItem> getInstance() {
         return instance;
     }
 
-    private AndroidMenuHelper() {
+    private SherlockMenuHelper() {
     }
 
     @Override
@@ -52,7 +55,7 @@ public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
 
     @Override
     public void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull Menu menu) {
-        activity.getMenuInflater().inflate(layoutId, menu);
+        SherlockUtils.getSupportMenuInflater(activity).inflate(layoutId, menu);
     }
 
     @NotNull
@@ -60,4 +63,5 @@ public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
     public Integer getItemId(@NotNull MenuItem item) {
         return item.getItemId();
     }
+
 }

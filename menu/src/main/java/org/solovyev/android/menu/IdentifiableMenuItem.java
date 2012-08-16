@@ -1,6 +1,5 @@
 package org.solovyev.android.menu;
 
-import android.view.MenuItem;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -8,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 * Date: 4/30/12
 * Time: 11:06 AM
 */
-public interface IdentifiableMenuItem extends AMenuItem<MenuItem> {
+public interface IdentifiableMenuItem<MI> extends AMenuItem<MI> {
 
     @NotNull
     Integer getItemId();

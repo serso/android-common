@@ -437,11 +437,16 @@ public class ListAdapter<T> extends BaseAdapter {
     /**
      * {@inheritDoc}
      */
-    public Filter getFilter() {
+    public final Filter getFilter() {
         if (filter == null) {
-            filter = new PrefixAdapterFilter<T>(adapterHelper);
+            filter = createFilter();
         }
         return filter;
+    }
+
+    @NotNull
+    protected Filter createFilter() {
+        return new PrefixAdapterFilter<T>(adapterHelper);
     }
 
     @NotNull
@@ -463,7 +468,7 @@ public class ListAdapter<T> extends BaseAdapter {
         return notifyOnChange;
     }
 
-    private class AdapterHelper implements AdapterFilter.Helper<T> {
+    public class AdapterHelper implements AdapterFilter.Helper<T> {
 
         @NotNull
         @Override

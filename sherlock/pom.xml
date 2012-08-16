@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>android-common</artifactId>
+        <groupId>org.solovyev.android</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.solovyev.android</groupId>
+    <artifactId>android-common-sherlock</artifactId>
+    <version>1.0.0</version>
+
+    <name>Android Common Library Sherlock</name>
+
+    <packaging>apklib</packaging>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>library</artifactId>
+            <version>4.0.2</version>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-list</artifactId>
+            <version>1.0.0</version>
+            <type>apklib</type>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <!-- specifying the resources: e.g. layout.xml, strings.xml etc-->
+        <resources>
+
+            <!-- a pair definition for resource filtering of xml files only (not binary files since they get mangled -->
+            <resource>
+                <directory>${project.basedir}/res</directory>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/filtered-res</targetPath>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+
+            <resource>
+                <directory>${project.basedir}/res</directory>
+                <filtering>false</filtering>
+                <targetPath>${project.build.directory}/filtered-res</targetPath>
+                <excludes>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </resource>
+
+        </resources>
+
+        <extensions>
+            <extension>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.1.1</version>
+            </extension>
+        </extensions>
+
+    </build>
+
+
+</project>

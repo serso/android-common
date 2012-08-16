@@ -25,6 +25,7 @@
         <module>http</module>
         <module>other</module>
         <module>samples</module>
+        <module>sherlock</module>
     </modules>
     <name>Android Common Library</name>
 
@@ -49,7 +50,7 @@
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
-            <version>2.3.3</version>
+            <version>4.0.1.2</version>
             <scope>provided</scope>
         </dependency>
 

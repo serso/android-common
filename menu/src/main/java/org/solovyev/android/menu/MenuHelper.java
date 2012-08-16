@@ -18,4 +18,9 @@ public interface MenuHelper<M, MI> {
     public void setOnMenuItemClickListener(@NotNull MI menuItem, @NotNull AMenuItem<MI> onMenuItemClick, @NotNull Activity activity);
 
     void removeItem(@NotNull M menu, @NotNull Integer menuItemId);
+
+    void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull M menu);
+
+    @NotNull
+    Integer getItemId(@NotNull MI item);
 }
