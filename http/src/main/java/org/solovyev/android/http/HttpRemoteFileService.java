@@ -26,7 +26,7 @@ public class HttpRemoteFileService implements RemoteFileService {
     private final ImageLoader imageLoader;
 
     public HttpRemoteFileService(@NotNull Context context, @NotNull String cacheFileName) {
-        this.imageLoader = new ImageLoader(context, cacheFileName);
+        this.imageLoader = new ImageLoaderImpl(context, cacheFileName);
     }
 
     @Override
@@ -34,6 +34,11 @@ public class HttpRemoteFileService implements RemoteFileService {
                           @NotNull ImageView imageView,
                           @Nullable Integer defaultImageId) {
         imageLoader.loadImage(uri, imageView, defaultImageId);
+    }
+
+    @Override
+    public void loadImage(@NotNull String uri, @NotNull OnImageLoadedListener imageLoadedListener) {
+        imageLoader.loadImage(uri, imageLoadedListener);
     }
 
     @Override

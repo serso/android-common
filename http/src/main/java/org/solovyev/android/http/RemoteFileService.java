@@ -15,5 +15,9 @@ public interface RemoteFileService {
                    @NotNull ImageView imageView,
                    @Nullable Integer defaultImageId);
 
+    void loadImage(@NotNull String uri,
+                   @NotNull OnImageLoadedListener imageLoadedListener);
+
     void loadImage(@NotNull String uri);
+
 }

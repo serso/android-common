@@ -32,6 +32,9 @@ public class FragmentItemImpl implements FragmentItem {
     @Nullable
     private Fragment fragment;
 
+    @Nullable
+    private final Integer parentViewId;
+
     /**
      * Constructor used each time a new tab is created.
      *
@@ -39,16 +42,19 @@ public class FragmentItemImpl implements FragmentItem {
      * @param tag           The identifier tag for the fragment
      * @param fragmentClass The fragment's Class, used to instantiate the fragment
      * @param fragmentArgs  arguments to be passed to fragment
+     * @param parentViewId parent view id
      */
 
     public FragmentItemImpl(@NotNull SherlockFragmentActivity activity,
                             @NotNull String tag,
                             @NotNull Class<? extends Fragment> fragmentClass,
-                            @Nullable Bundle fragmentArgs) {
+                            @Nullable Bundle fragmentArgs,
+                            @Nullable Integer parentViewId) {
         this.activity = activity;
         this.tag = tag;
         this.fragmentClass = fragmentClass;
         this.fragmentArgs = fragmentArgs;
+        this.parentViewId = parentViewId;
 
         final FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
         this.fragment = supportFragmentManager.findFragmentByTag(tag);
@@ -63,7 +69,11 @@ public class FragmentItemImpl implements FragmentItem {
         if (fragment == null) {
             // If not, instantiate and add it to the activity
             fragment = Fragment.instantiate(activity, fragmentClass.getName(), fragmentArgs);
-            ft.add(android.R.id.content, fragment, tag);
+            if (parentViewId != null) {
+                ft.add(parentViewId, fragment, tag);
+            } else {
+                ft.add(fragment, tag);
+            }
         } else {
             if (fragment.isDetached()) {
                 // If it exists, simply attach it in order to show it

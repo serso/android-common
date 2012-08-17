@@ -26,13 +26,15 @@ public class ActionBarFragmentTabListener implements ActionBar.TabListener {
      * @param tag           The identifier tag for the fragment
      * @param fragmentClass The fragment's Class, used to instantiate the fragment
      * @param fragmentArgs  arguments to be passed to fragment
+     * @param parentViewId  parent view id
      */
 
     public ActionBarFragmentTabListener(@NotNull SherlockFragmentActivity activity,
                                         @NotNull String tag,
                                         @NotNull Class<? extends Fragment> fragmentClass,
-                                        @Nullable Bundle fragmentArgs) {
-        this.fragmentItem = new FragmentItemImpl(activity, tag, fragmentClass, fragmentArgs);
+                                        @Nullable Bundle fragmentArgs,
+                                        @Nullable Integer parentViewId) {
+        this.fragmentItem = new FragmentItemImpl(activity, tag, fragmentClass, fragmentArgs, parentViewId);
     }
 
 
