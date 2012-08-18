@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.RuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.http.*;
-import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.samples.R;
 
@@ -101,7 +100,7 @@ public class SamplesHttpActivity extends ListActivity {
         // should be one instance in application if several threads are working with it
         this.remoteFileService = new HttpRemoteFileService(this, "acl-samples");
 
-        final List<ListItem<? extends View>> listItems = new ArrayList<ListItem<? extends View>>();
+        final List<HttpListItem> listItems = new ArrayList<HttpListItem>();
         for (String imageName : imageNames) {
             listItems.add(new HttpListItem(uriPrefix + imageName, this.remoteFileService));
         }

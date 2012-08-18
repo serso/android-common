@@ -13,7 +13,7 @@ import org.solovyev.android.view.TextViewBuilder;
  * Date: 8/10/12
  * Time: 5:06 PM
  */
-public class DbItemListItem implements ListItem<View> {
+public class DbItemListItem implements ListItem {
 
     @NotNull
     private final DbItem dbItem;

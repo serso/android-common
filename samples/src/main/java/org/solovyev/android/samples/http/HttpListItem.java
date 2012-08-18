@@ -15,7 +15,7 @@ import org.solovyev.android.view.ViewFromLayoutBuilder;
  * Date: 8/10/12
  * Time: 2:32 PM
  */
-public class HttpListItem implements ListItem<View> {
+public class HttpListItem implements ListItem {
 
     @NotNull
     private String uri;

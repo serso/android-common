@@ -10,6 +10,7 @@ import java.util.List;
  * Date: 5/5/12
  * Time: 7:58 PM
  */
+// class for types object to be passed on click
 public class SimpleMenuOnClick<T> extends MenuOnClick<T> {
 
     @NotNull

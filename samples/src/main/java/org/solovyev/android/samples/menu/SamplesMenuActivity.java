@@ -5,11 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
 import org.solovyev.android.samples.R;
@@ -36,16 +34,17 @@ public class SamplesMenuActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final List<ListItem<? extends View>> listItems = new ArrayList<ListItem<? extends View>>();
+        final List<MenuListItem> listItems = new ArrayList<MenuListItem>();
         listItems.add(new MenuListItem(R.string.menu_01, 1));
         listItems.add(new MenuListItem(R.string.menu_02, 2));
         listItems.add(new MenuListItem(R.string.menu_03, 3));
         ListItemArrayAdapter.createAndAttach(getListView(), this, listItems);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public ListItemArrayAdapter getListAdapter() {
-        return (ListItemArrayAdapter) super.getListAdapter();
+    public ListItemArrayAdapter<MenuListItem> getListAdapter() {
+        return (ListItemArrayAdapter<MenuListItem>) super.getListAdapter();
     }
 
     /*
@@ -83,7 +82,7 @@ public class SamplesMenuActivity extends ListActivity {
         }
     }
 
-    private static class ListItemComparator implements Comparator<ListItem<? extends View>> {
+    private static class ListItemComparator implements Comparator<MenuListItem> {
 
         private final boolean sortAsc;
 
@@ -92,16 +91,12 @@ public class SamplesMenuActivity extends ListActivity {
         }
 
         @Override
-        public int compare(ListItem<? extends View> lhs, ListItem<? extends View> rhs) {
-            if (lhs instanceof MenuListItem && rhs instanceof MenuListItem) {
-                int result = CompareTools.comparePreparedObjects(((MenuListItem) lhs).getSortOrder(), ((MenuListItem) rhs).getSortOrder());
-                if (sortAsc) {
-                    return result;
-                } else {
-                    return -result;
-                }
+        public int compare(MenuListItem lhs, MenuListItem rhs) {
+            int result = CompareTools.comparePreparedObjects(lhs.getSortOrder(), rhs.getSortOrder());
+            if (sortAsc) {
+                return result;
             } else {
-                return 0;
+                return -result;
             }
         }
     }
@@ -117,7 +112,7 @@ public class SamplesMenuActivity extends ListActivity {
             final SamplesMenuActivity a = SamplesMenuActivity.this;
 
             a.ascSort = !a.ascSort;
-            ((ListItemArrayAdapter) a.getListView().getAdapter()).sort(new ListItemComparator(a.ascSort));
+            getListAdapter().sort(new ListItemComparator(a.ascSort));
         }
     }
 

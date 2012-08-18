@@ -114,28 +114,29 @@ public class SamplesDbActivity extends ListActivity {
             }
         });
 
-        ListItemArrayAdapter.createAndAttach(getListView(), this, new ArrayList<ListItem<? extends View>>());
+        ListItemArrayAdapter.createAndAttach(getListView(), this, new ArrayList<ListItem>());
 
         loadDbItems(null);
     }
 
     private void loadDbItems(@Nullable final String filter) {
-        new CommonAsyncTask<Void, Void, List<ListItem<? extends View>>>(this) {
+        new CommonAsyncTask<Void, Void, List<DbItemListItem>>(this) {
 
             @Override
-            protected List<ListItem<? extends View>> doWork(@NotNull List<Void> voids) {
+            protected List<DbItemListItem> doWork(@NotNull List<Void> voids) {
 
                 final Context context = getContext();
 
-                final List<ListItem<? extends View>> result;
+                final List<DbItemListItem> result;
                 if (context != null) {
-                    result = new ArrayList<ListItem<? extends View>>();
+                    result = new ArrayList<DbItemListItem>();
 
                     final List<DbItem> dbItems;
                     if (StringUtils.isEmpty(filter)) {
                         dbItems = getDbItemService().getAllDbItems(context);
                     } else {
                         // NOTE: filter can be applied to Adapter. Usage here only in academical purposes
+                        assert filter != null;
                         dbItems = getDbItemService().getAllStartsWith(filter, context);
                     }
 
@@ -150,7 +151,7 @@ public class SamplesDbActivity extends ListActivity {
             }
 
             @Override
-            protected void onSuccessPostExecute(@Nullable List<ListItem<? extends View>> result) {
+            protected void onSuccessPostExecute(@Nullable List<DbItemListItem> result) {
                 getListItemAdapter().addAll(result);
             }
 
@@ -161,9 +162,10 @@ public class SamplesDbActivity extends ListActivity {
         }.execute((Void) null);
     }
 
+    @SuppressWarnings("unchecked")
     @NotNull
-    private ListItemArrayAdapter getListItemAdapter() {
-        return (ListItemArrayAdapter) getListView().getAdapter();
+    private ListItemArrayAdapter<DbItemListItem> getListItemAdapter() {
+        return (ListItemArrayAdapter<DbItemListItem>) getListView().getAdapter();
     }
 
     private void removeItem(@NotNull String itemName) {
@@ -188,7 +190,7 @@ public class SamplesDbActivity extends ListActivity {
 
                 SamplesDbActivity.this.removeItemName.setText("");
                 Toast.makeText(getContext(), getString(R.string.items_removed, result.size()), Toast.LENGTH_SHORT).show();
-                final ListItemArrayAdapter adapter = SamplesDbActivity.this.getListItemAdapter();
+                final ListItemArrayAdapter<DbItemListItem> adapter = getListItemAdapter();
                 for (DbItem dbItem : result) {
                     adapter.remove(new DbItemListItem(dbItem));
                 }
@@ -224,7 +226,7 @@ public class SamplesDbActivity extends ListActivity {
 
                 SamplesDbActivity.this.addButtonName.setText("");
                 Toast.makeText(getContext(), getString(R.string.item_saved), Toast.LENGTH_SHORT).show();
-                ((ListItemArrayAdapter) SamplesDbActivity.this.getListView().getAdapter()).add(new DbItemListItem(result));
+                getListItemAdapter().add(new DbItemListItem(result));
             }
 
             @Override

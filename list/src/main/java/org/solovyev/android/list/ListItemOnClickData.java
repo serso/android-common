@@ -1,6 +1,5 @@
 package org.solovyev.android.list;
 
-import android.view.View;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +14,7 @@ public interface ListItemOnClickData<T> {
     T getDataObject();
 
     @NotNull
-    ListAdapter<ListItem<? extends View>> getAdapter();
+    ListAdapter<? extends ListItem> getAdapter();
 
     @NotNull
     ListView getListView();

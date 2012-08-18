@@ -6,10 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.list.ListAdapter;
-import org.solovyev.android.list.ListItem;
-import org.solovyev.android.list.ListItemOnClickData;
-import org.solovyev.android.list.SimpleMenuOnClick;
+import org.solovyev.android.list.*;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.TextViewBuilder;
@@ -21,7 +18,7 @@ import java.util.Arrays;
  * Date: 8/10/12
  * Time: 1:39 PM
  */
-public class MenuListItem implements ListItem<View> {
+public class MenuListItem implements ListItem {
 
     private final int captionResId;
 
@@ -36,7 +33,7 @@ public class MenuListItem implements ListItem<View> {
     public OnClickAction getOnClickAction() {
         return new OnClickAction() {
             @Override
-            public void onClick(@NotNull Context context, @NotNull ListAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView) {
+            public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
                 Toast.makeText(context, context.getString(R.string.long_press_to_open_menu), Toast.LENGTH_SHORT).show();
             }
         };

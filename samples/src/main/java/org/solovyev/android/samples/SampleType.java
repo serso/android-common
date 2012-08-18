@@ -20,7 +20,7 @@ import org.solovyev.android.view.TextViewBuilder;
  * Date: 8/8/12
  * Time: 2:06 AM
  */
-public enum SampleType implements ListItem<View> {
+public enum SampleType implements ListItem {
     preferences(R.string.preferences, SamplesPreferencesActivity.class),
     http(R.string.http, SamplesHttpActivity.class),
     db(R.string.db, SamplesDbActivity.class),
@@ -40,7 +40,7 @@ public enum SampleType implements ListItem<View> {
     public OnClickAction getOnClickAction() {
         return new OnClickAction() {
             @Override
-            public void onClick(@NotNull Context context, @NotNull ListAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView) {
+            public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
                 context.startActivity(new Intent(context.getApplicationContext(), sampleActivity));
             }
         };

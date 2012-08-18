@@ -1,6 +1,5 @@
 package org.solovyev.android.list;
 
-import android.view.View;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +14,12 @@ public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
     private T dataObject;
 
     @NotNull
-    private ListAdapter<ListItem<? extends View>> adapter;
+    private ListAdapter<? extends ListItem> adapter;
 
     @NotNull
     private ListView listView;
 
-    public ListItemOnClickDataImpl(@NotNull T dataObject, @NotNull ListAdapter<ListItem<? extends View>> adapter, @NotNull ListView listView) {
+    public ListItemOnClickDataImpl(@NotNull T dataObject, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
         this.dataObject = dataObject;
         this.adapter = adapter;
         this.listView = listView;
@@ -34,7 +33,7 @@ public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
 
     @NotNull
     @Override
-    public ListAdapter<ListItem<? extends View>> getAdapter() {
+    public ListAdapter<? extends ListItem> getAdapter() {
         return this.adapter;
     }
 

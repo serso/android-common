@@ -14,25 +14,31 @@ import java.util.List;
  * Date: 4/14/12
  * Time: 8:02 PM
  */
-public class ListItemArrayAdapter extends ListAdapter<ListItem<? extends View>> {
+public class ListItemArrayAdapter<LI extends ListItem> extends ListAdapter<LI> {
 
 
     public ListItemArrayAdapter(@NotNull Context context,
-                                @NotNull List<ListItem<? extends View>> listItems) {
-        super(context, 0, 0, listItems);
+                                @NotNull List<? extends LI> listItems) {
+        super(context, 0, 0, castList(listItems));
+    }
+
+    @SuppressWarnings("unchecked")
+    @NotNull
+    private static <LI> List<LI> castList(List<? extends LI> listItems) {
+        return (List<LI>)listItems;
     }
 
     @NotNull
-    public static ListItemArrayAdapter createAndAttach(@NotNull final ListView lv,
+    public static <LI extends ListItem> ListItemArrayAdapter<LI> createAndAttach(@NotNull final ListView lv,
                                                        @NotNull final Context context,
-                                                       @NotNull List<ListItem<? extends View>> listItems) {
-        final ListItemArrayAdapter result = new ListItemArrayAdapter(context, listItems);
+                                                       @NotNull List<LI> listItems) {
+        final ListItemArrayAdapter<LI> result = new ListItemArrayAdapter<LI>(context, listItems);
 
         lv.setAdapter(result);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final ListItem<?> listItem = (ListItem<?>) lv.getItemAtPosition(position);
+                final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
                 ListItem.OnClickAction onClickAction = listItem.getOnClickAction();
                 if ( onClickAction != null ) {
                     onClickAction.onClick(context, result, lv);
@@ -43,7 +49,7 @@ public class ListItemArrayAdapter extends ListAdapter<ListItem<? extends View>> 
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final ListItem<?> listItem = (ListItem<?>) lv.getItemAtPosition(position);
+                final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
                 ListItem.OnClickAction onLongClickAction = listItem.getOnLongClickAction();
                 if ( onLongClickAction != null ) {
                     onLongClickAction.onClick(context, result, lv);
