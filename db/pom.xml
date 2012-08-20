@@ -15,6 +15,15 @@
 
     <packaging>apklib</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-core</artifactId>
+            <version>1.0.0</version>
+            <type>apklib</type>
+        </dependency>
+    </dependencies>
+
     <build>
 
         <extensions>
