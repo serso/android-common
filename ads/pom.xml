@@ -14,6 +14,10 @@
 
     <packaging>apklib</packaging>
 
+    <properties>
+        <system.libs.path>${project.basedir}/src/misc/lib</system.libs.path>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -27,12 +31,16 @@
             <groupId>org.solovyev.android</groupId>
             <artifactId>billing</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${system.libs.path}/billing-0.1.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>admob</groupId>
             <artifactId>admob</artifactId>
-            <version>6.0.0</version>
+            <version>6.1.0</version>
+            <scope>system</scope>
+            <systemPath>${system.libs.path}/admob-6.1.0.jar</systemPath>
         </dependency>
 
     </dependencies>

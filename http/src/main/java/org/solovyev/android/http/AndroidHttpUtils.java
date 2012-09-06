@@ -47,7 +47,8 @@ public class AndroidHttpUtils {
         return result;
     }
 
-    public static void asyncExecute(@NotNull HttpTransactionDef httpTransactionDef, @Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
+    public static void asyncExecute(@NotNull HttpTransactionDef httpTransactionDef,
+                                    @Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
         final AsyncHttpClient httpClient = new AsyncHttpClient();
 
         final RequestParams requestParams = new RequestParams();

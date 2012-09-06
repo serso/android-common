@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 public class Utils {
 
+    // todo serso: move
     public static void copyStream(@NotNull InputStream is, @NotNull OutputStream os) throws IOException {
         final int bufferSize = 1024;
         byte[] bytes = new byte[bufferSize];
