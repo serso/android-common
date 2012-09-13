@@ -25,6 +25,7 @@
         <module>http</module>
         <module>other</module>
         <module>samples</module>
+        <module>samples-test</module>
         <module>sherlock</module>
     </modules>
     <name>Android Common Library</name>
@@ -34,6 +35,29 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android-test</artifactId>
+                <version>4.0.1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android</artifactId>
+                <version>4.0.1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.2</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -48,13 +72,6 @@
         <!-- OTHER -->
 
         <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>4.0.1.2</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.intellij</groupId>
             <artifactId>annotations</artifactId>
             <version>7.0.3</version>
@@ -65,7 +82,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -94,6 +110,9 @@
                     <artifactId>android-maven-plugin</artifactId>
                     <version>3.3.2</version>
                     <configuration>
+                        <test>
+                            <skip>true</skip>
+                        </test>
 
                         <sourceDirectories>
                             <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
@@ -104,8 +123,8 @@
                         </sdk>
 
                         <emulator>
-                            <avd>23</avd>
-                            <wait>10000</wait>
+                            <avd>Default</avd>
+                            <wait>30000</wait>
                             <!--<options>-no-skin</options>-->
                         </emulator>
 
@@ -151,6 +170,7 @@
             <!-- the standard profile runs the instrumentation tests -->
             <id>standard</id>
         </profile>
+
 
         <profile>
             <!-- the release profile does sign, proguard, zipalign  -->

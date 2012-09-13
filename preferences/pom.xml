@@ -19,6 +19,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-text</artifactId>
             <version>1.0.1</version>

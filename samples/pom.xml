@@ -19,6 +19,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-core</artifactId>
             <version>1.0.0</version>
@@ -193,6 +199,7 @@
                         <version>1.0-alpha-2</version>
                         <executions>
                             <execution>
+                                <id>read-jarsigner-properties</id>
                                 <phase>initialize</phase>
                                 <goals>
                                     <goal>read-project-properties</goal>
@@ -209,7 +216,8 @@
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jarsigner-plugin</artifactId>
+                        <artifactId>
+maven-jarsigner-plugin</artifactId>
 
                         <executions>
                             <execution>
