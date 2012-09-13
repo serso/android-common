@@ -64,10 +64,12 @@
 
     <build>
 
-        <!-- specifying the resources: e.g. layout.xml, strings.xml etc-->
+<!--tag:filter_resources        &lt;!&ndash; specifying the resources: e.g. layout.xml, strings.xml to be processed &ndash;&gt;
         <resources>
 
-            <!-- a pair definition for resource filtering of xml files only (not binary files since they get mangled -->
+
+            &lt;!&ndash; a pair definition for resource filtering of xml files only
+            (not binary files since they can become mangled) &ndash;&gt;
             <resource>
                 <directory>${project.basedir}/res</directory>
                 <filtering>true</filtering>
@@ -86,34 +88,43 @@
                 </excludes>
             </resource>
 
-        </resources>
+        </resources>-->
 
         <plugins>
 
-            <plugin>
+<!--tag:filter_resources
+                <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
+
                 <executions>
+
+                    &lt;!&ndash; NOTE: default phase changed to initialize in order to filter resources before manifest-update&ndash;&gt;
                     <execution>
                         <phase>initialize</phase>
                         <goals>
                             <goal>resources</goal>
                         </goals>
                     </execution>
+
                 </executions>
-            </plugin>
+
+            </plugin>-->
 
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
                 <extensions>true</extensions>
+
                 <configuration>
-                    <resourceDirectory>${project.build.directory}/filtered-res</resourceDirectory>
+                    <!--tag:filter_resources <resourceDirectory>${project.build.directory}/filtered-res</resourceDirectory>-->
                     <manifest>
                         <debuggable>true</debuggable>
                     </manifest>
                 </configuration>
+
                 <executions>
+
                     <execution>
                         <id>manifestUpdate</id>
                         <phase>process-resources</phase>
@@ -121,6 +132,7 @@
                             <goal>manifest-update</goal>
                         </goals>
                     </execution>
+
                     <execution>
                         <id>alignApk</id>
                         <phase>package</phase>
@@ -128,6 +140,7 @@
                             <goal>zipalign</goal>
                         </goals>
                     </execution>
+
                 </executions>
             </plugin>
 
@@ -137,9 +150,10 @@
 
     <profiles>
 
+        <!-- tag:filter_resources We can update some resources by specifying properties, for example, using development/production profiles and specifying deployment.stage property
         <profile>
             <id>development</id>
-            <!-- using this since activeByDefault does not work well with multiple profiles -->
+            &lt;!&ndash; using this since activeByDefault does not work well with multiple profiles &ndash;&gt;
             <activation>
                 <property>
                     <name>environment</name>
@@ -156,7 +170,7 @@
             <properties>
                 <deployment.stage>In Production</deployment.stage>
             </properties>
-        </profile>
+        </profile>-->
 
         <profile>
             <id>release</id>
@@ -172,6 +186,7 @@
             <build>
                 <plugins>
 
+                    <!-- read the properties needed for jarsigner plugin-->
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>properties-maven-plugin</artifactId>
@@ -191,35 +206,44 @@
                         </executions>
                     </plugin>
 
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jarsigner-plugin</artifactId>
+
                         <executions>
                             <execution>
                                 <id>signing</id>
+
                                 <goals>
                                     <goal>sign</goal>
                                     <goal>verify</goal>
                                 </goals>
                                 <phase>package</phase>
+
                                 <inherited>true</inherited>
 
                                 <configuration>
                                     <removeExistingSignatures>true</removeExistingSignatures>
+
                                     <archiveDirectory/>
+
                                     <includes>
                                         <include>
                                             ${project.build.directory}/${project.artifactId}-${project.version}.apk
                                         </include>
                                     </includes>
+
                                     <keystore>${sign.keystore}</keystore>
                                     <alias>${sign.alias}</alias>
                                     <storepass>${sign.storepass}</storepass>
                                     <keypass>${sign.keypass}</keypass>
+
                                     <verbose>true</verbose>
                                 </configuration>
                             </execution>
                         </executions>
+
                     </plugin>
 
                     <!-- the signed apk then needs to be zipaligned and we activate proguard and we run the manifest
@@ -254,6 +278,7 @@
                         </configuration>
 
                         <executions>
+
                             <execution>
                                 <id>manifestUpdate</id>
                                 <phase>process-resources</phase>
@@ -261,6 +286,7 @@
                                     <goal>manifest-update</goal>
                                 </goals>
                             </execution>
+
                             <execution>
                                 <id>alignApk</id>
                                 <phase>package</phase>
@@ -268,13 +294,17 @@
                                     <goal>zipalign</goal>
                                 </goals>
                             </execution>
+
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
+
                         <configuration>
                             <artifacts>
+
                                 <artifact>
                                     <file>
                                         ${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk
@@ -282,13 +312,16 @@
                                     <type>apk</type>
                                     <classifier>signed-aligned</classifier>
                                 </artifact>
+
                                 <artifact>
                                     <file>${project.build.directory}/proguard/mapping.txt</file>
                                     <type>map</type>
                                     <classifier>release</classifier>
                                 </artifact>
+
                             </artifacts>
                         </configuration>
+
                         <executions>
                             <execution>
                                 <id>attach-signed-aligned</id>

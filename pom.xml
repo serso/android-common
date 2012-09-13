@@ -92,7 +92,7 @@
                 <plugin>
                     <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                     <artifactId>android-maven-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.3.2</version>
                     <configuration>
 
                         <sourceDirectories>
@@ -139,8 +139,8 @@
     <profiles>
 
         <profile>
-            <!-- the standard profile runs the instrumentation tests -->
-            <id>standard</id>
+            <!-- the development profile runs only unit tests -->
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -148,7 +148,13 @@
         </profile>
 
         <profile>
+            <!-- the standard profile runs the instrumentation tests -->
+            <id>standard</id>
+        </profile>
+
+        <profile>
             <!-- the release profile does sign, proguard, zipalign  -->
+            <!-- NOTE: release profile doesn't run instrumentation tests as apk file is signed -->
             <id>release</id>
             <!-- via this activation the profile is automatically used when the release is done with the maven release
             plugin -->
