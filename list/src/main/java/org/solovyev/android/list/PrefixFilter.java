@@ -2,7 +2,7 @@ package org.solovyev.android.list;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 
 /**
@@ -10,7 +10,7 @@ import org.solovyev.common.IPredicate;
  * Date: 6/6/12
  * Time: 1:09 AM
  */
-public class PrefixFilter<T> implements IPredicate<T> {
+public class PrefixFilter<T> implements JPredicate<T> {
 
     @NotNull
     private String prefix;

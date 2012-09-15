@@ -206,7 +206,7 @@
                                 </goals>
                                 <configuration>
                                     <files>
-                                        <file>${project.basedir}/src/misc/env/jarsigner.properties</file>
+                                        <file>${project.basedir}/env/jarsigner.properties</file>
                                     </files>
                                 </configuration>
                             </execution>

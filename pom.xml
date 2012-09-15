@@ -158,15 +158,6 @@
     <profiles>
 
         <profile>
-            <!-- the development profile runs only unit tests -->
-            <id>development</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-
-        </profile>
-
-        <profile>
             <!-- the standard profile runs the instrumentation tests -->
             <id>standard</id>
         </profile>

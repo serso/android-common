@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
 import org.solovyev.android.samples.R;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 import org.solovyev.common.compare.CompareTools;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class SamplesMenuActivity extends ListActivity {
         return this.menu.onCreateOptionsMenu(this, menu);
     }
 
-    private class MenuFilter implements IPredicate<AMenuItem<MenuItem>> {
+    private class MenuFilter implements JPredicate<AMenuItem<MenuItem>> {
 
         @Override
         public boolean apply(@Nullable AMenuItem<MenuItem> menuItem) {

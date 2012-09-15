@@ -3,7 +3,7 @@ package org.solovyev.android.menu;
 import android.app.Activity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.IPredicate;
+import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,18 +29,18 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     private final int menuResId;
 
     @Nullable
-    private final IPredicate<AMenuItem<MI>> filter;
+    private final JPredicate<AMenuItem<MI>> filter;
 
     @NotNull
     private final MenuHelper<M, MI> menuHelper;
 
-    private ListActivityMenu(@Nullable IPredicate<AMenuItem<MI>> filter,
+    private ListActivityMenu(@Nullable JPredicate<AMenuItem<MI>> filter,
                              @NotNull MenuHelper<M, MI> menuHelper) {
         this(NO_MENU_RES_ID, filter, menuHelper);
     }
 
     private ListActivityMenu(int menuResId,
-                             @Nullable IPredicate<AMenuItem<MI>> filter,
+                             @Nullable JPredicate<AMenuItem<MI>> filter,
                              @NotNull MenuHelper<M, MI> menuHelper) {
         this.menuResId = menuResId;
         this.filter = filter;
@@ -70,7 +70,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
                                                        @NotNull MenuHelper<M, MI> menuHelper,
-                                                       @NotNull IPredicate<AMenuItem<MI>> filter) {
+                                                       @NotNull JPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(filter, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -84,7 +84,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromList(
             @NotNull Class<E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper,
-            @NotNull IPredicate<AMenuItem<MI>> filter) {
+            @NotNull JPredicate<AMenuItem<MI>> filter) {
         return fromList(toList(enumMenuClass), menuHelper, filter);
     }
 
@@ -99,7 +99,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     public static <M, MI> ActivityMenu<M, MI> fromLayout(int menuResId,
                                                          @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
                                                          @NotNull MenuHelper<M, MI> menuHelper,
-                                                         @NotNull IPredicate<AMenuItem<MI>> filter) {
+                                                         @NotNull JPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, filter, menuHelper);
 
         for (IdentifiableMenuItem<MI> menuItem : menuItems) {
@@ -127,7 +127,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
             int menuResId,
             @NotNull Class<? extends E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper,
-            @NotNull IPredicate<AMenuItem<MI>> filter) {
+            @NotNull JPredicate<AMenuItem<MI>> filter) {
         return fromLayout(menuResId, toList(enumMenuClass), menuHelper, filter);
     }
 
