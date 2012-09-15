@@ -216,8 +216,7 @@
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>
-maven-jarsigner-plugin</artifactId>
+                        <artifactId>maven-jarsigner-plugin</artifactId>
 
                         <executions>
                             <execution>
@@ -237,15 +236,13 @@ maven-jarsigner-plugin</artifactId>
                                     <archiveDirectory/>
 
                                     <includes>
-                                        <include>
-                                            ${project.build.directory}/${project.artifactId}-${project.version}.apk
-                                        </include>
+                                        <include>${project.build.directory}/${project.artifactId}-${project.version}.apk</include>
                                     </includes>
 
-                                    <keystore>${sign.keystore}</keystore>
-                                    <alias>${sign.alias}</alias>
-                                    <storepass>${sign.storepass}</storepass>
-                                    <keypass>${sign.keypass}</keypass>
+                                    <keystore>${jarsigner.keystore}</keystore>
+                                    <alias>${jarsigner.alias}</alias>
+                                    <storepass>${jarsigner.storepass}</storepass>
+                                    <keypass>${jarsigner.keypass}</keypass>
 
                                     <verbose>true</verbose>
                                 </configuration>
@@ -268,11 +265,8 @@ maven-jarsigner-plugin</artifactId>
 
                             <zipalign>
                                 <verbose>false</verbose>
-                                <inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk
-                                </inputApk>
-                                <outputApk>
-                                    ${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk
-                                </outputApk>
+                                <inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
+                                <outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
                             </zipalign>
 
                             <manifest>
@@ -281,8 +275,9 @@ maven-jarsigner-plugin</artifactId>
                             </manifest>
 
                             <proguard>
-                                <skip>true</skip>
+                                <skip>false</skip>
                             </proguard>
+
                         </configuration>
 
                         <executions>
@@ -314,9 +309,7 @@ maven-jarsigner-plugin</artifactId>
                             <artifacts>
 
                                 <artifact>
-                                    <file>
-                                        ${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk
-                                    </file>
+                                    <file>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</file>
                                     <type>apk</type>
                                     <classifier>signed-aligned</classifier>
                                 </artifact>
