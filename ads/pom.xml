@@ -15,7 +15,7 @@
     <packaging>apklib</packaging>
 
     <properties>
-        <system.libs.path>${project.basedir}/lib</system.libs.path>
+        <system.libs.path>${project.basedir}/libs</system.libs.path>
     </properties>
 
     <dependencies>
