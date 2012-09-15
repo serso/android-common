@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>org.solovyev.android</groupId>
-    <artifactId>samples-test</artifactId>
+    <artifactId>android-common-samples-test</artifactId>
     <version>1.0.0</version>
     <name>Android Common Library Samples (Test)</name>
 
