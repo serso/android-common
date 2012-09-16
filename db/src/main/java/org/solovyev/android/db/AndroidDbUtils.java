@@ -7,7 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.text.StringUtils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: serso
@@ -15,6 +17,10 @@ import java.util.List;
  * Time: 6:01 PM
  */
 public final class AndroidDbUtils {
+
+    // cache for databases. Used in order not to close database in nested transactions
+    @NotNull
+    private static final Map<SQLiteOpenHelper, SQLiteDatabase> dbCache = new HashMap<SQLiteOpenHelper, SQLiteDatabase>(3);
 
     private AndroidDbUtils() {
         throw new AssertionError();
@@ -27,8 +33,14 @@ public final class AndroidDbUtils {
         // assuming there is only one dbHelper per database in application
         synchronized (dbHelper) {
             SQLiteDatabase db = null;
+            boolean wasOpened = false;
             try {
-                db = dbHelper.getWritableDatabase();
+                db = dbCache.get(dbHelper);
+                if (db == null) {
+                    db = dbHelper.getWritableDatabase();
+                    dbCache.put(dbHelper, db);
+                    wasOpened = true;
+                }
 
                 Cursor cursor = null;
                 try {
@@ -44,8 +56,9 @@ public final class AndroidDbUtils {
                 }
             } finally {
                 // if database was opened - close it
-                if (db != null) {
-                    db.close();
+                if (db != null && wasOpened) {
+                    //db.close();
+                    dbCache.remove(dbHelper);
                 }
             }
         }
@@ -62,14 +75,22 @@ public final class AndroidDbUtils {
         // assuming there is only one dbHelper per database in application
         synchronized (dbHelper) {
             SQLiteDatabase db = null;
+            boolean wasOpened = false;
             try {
-                db = dbHelper.getWritableDatabase();
+                db = dbCache.get(dbHelper);
+                if (db == null) {
+                    db = dbHelper.getWritableDatabase();
+                    dbCache.put(dbHelper, db);
+                    wasOpened = true;
+                }
+
                 doDbTransaction(db, execs);
 
             } finally {
                 // if database was opened - close it
-                if (db != null) {
-                    db.close();
+                if (db != null && wasOpened) {
+                    //db.close();
+                    dbCache.remove(dbHelper);
                 }
             }
         }
