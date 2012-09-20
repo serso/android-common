@@ -6,8 +6,8 @@
 
 package org.solovyev.android.msg;
 
+import android.app.Application;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.ResourceCache;
 import org.solovyev.common.msg.AbstractMessage;
 import org.solovyev.common.msg.MessageType;
 
@@ -21,20 +21,32 @@ import java.util.Locale;
  */
 public class AndroidMessage extends AbstractMessage {
 
-	public AndroidMessage(@NotNull String messageCode,
-						  @NotNull MessageType messageType,
-						  @org.jetbrains.annotations.Nullable Object... arguments) {
-		super(messageCode, messageType, arguments);
-	}
+    @NotNull
+    private final Integer messageCodeId;
 
-	public AndroidMessage(@NotNull String messageCode,
-						  @NotNull MessageType messageType,
-						  @NotNull List<?> arguments) {
-		super(messageCode, messageType, arguments);
-	}
+    @NotNull
+    private final Application application;
 
-	@Override
-	protected String getMessagePattern(@NotNull Locale locale) {
-		return ResourceCache.instance.getCaption(getMessageCode());
-	}
+    public AndroidMessage(@NotNull Integer messageCodeId,
+                          @NotNull MessageType messageType,
+                          @NotNull Application application,
+                          @org.jetbrains.annotations.Nullable Object... arguments) {
+        super(String.valueOf(messageCodeId), messageType, arguments);
+        this.messageCodeId = messageCodeId;
+        this.application = application;
+    }
+
+    public AndroidMessage(@NotNull Integer messageCodeId,
+                          @NotNull MessageType messageType,
+                          @NotNull Application application,
+                          @NotNull List<?> arguments) {
+        super(String.valueOf(messageCodeId), messageType, arguments);
+        this.messageCodeId = messageCodeId;
+        this.application = application;
+    }
+
+    @Override
+    protected String getMessagePattern(@NotNull Locale locale) {
+        return application.getResources().getString(messageCodeId);
+    }
 }

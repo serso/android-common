@@ -72,7 +72,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 			Log.d(String.valueOf(dragButton.getId()), "Drag direction: " + directionEntry.getKey());
 			Log.d(String.valueOf(dragButton.getId()), "Trying direction interval: " + directionEntry.getValue().getInterval());
 
-			if (isInInterval(directionEntry.getValue().getInterval(), distance)) {
+			if (directionEntry.getValue().getInterval().contains(distance)) {
 				final DragPreference anglePreference = anglePreferences.getDirectionPreferences().get(directionEntry.getKey());
 
 				Log.d(String.valueOf(dragButton.getId()), "Trying angle interval: " + anglePreference.getInterval());
@@ -80,7 +80,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 				if (directionEntry.getKey() == DragDirection.left && right.getObject()) {
 				} else if (directionEntry.getKey() == DragDirection.right && !right.getObject()) {
 				} else {
-					if (isInInterval(anglePreference.getInterval(), (float) angle)) {
+					if (anglePreference.getInterval().contains((float) angle)) {
 						direction = directionEntry.getKey();
 						Log.d(String.valueOf(dragButton.getId()), "MATCH! Direction: " + direction);
 						break;
@@ -96,17 +96,13 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 			final DragPreference durationDragPreferences = durationPreferences.getDirectionPreferences().get(direction);
 
 			Log.d(String.valueOf(dragButton.getId()), "Trying time interval: " + durationDragPreferences.getInterval());
-			if (isInInterval(durationDragPreferences.getInterval(), (float) duration)) {
+			if (durationDragPreferences.getInterval().contains((float) duration)) {
 				Log.d(String.valueOf(dragButton.getId()), "MATCH!");
 				result = dragProcessor.processDragEvent(direction, dragButton, startPoint, motionEvent);
 			}
 		}
 
 		return result;
-	}
-
-	private boolean isInInterval(@NotNull Interval<Float> interval, float value) {
-		return interval.getLeftLimit() - MathUtils.MIN_AMOUNT <= value && value <= interval.getRightLimit() + MathUtils.MIN_AMOUNT;
 	}
 
 	@Override
@@ -183,10 +179,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 				final String value = preferences.getString(preferenceId, defaultValue);
 
 				if (defaultValue != null) {
-					final Interval<Float> intervalPref = mapper.parseValue(value);
-					assert intervalPref != null;
-
-					transformInterval(preferenceType, dragDirection, intervalPref);
+					final Interval<Float> intervalPref = transformInterval(preferenceType, dragDirection, mapper.parseValue(value));
 
 					Log.d(SimpleOnDragListener.class.getName(), "Preference loaded for " + dragDirection +". Id: " + preferenceId + ", value: " + intervalPref.toString());
 
@@ -207,33 +200,37 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 	}
 
 	@NotNull
-	public static Interval<Float> transformInterval(@NotNull PreferenceType preferenceType, @NotNull DragDirection dragDirection, @NotNull Interval<Float> interval) {
+	public static Interval<Float> transformInterval(@NotNull PreferenceType preferenceType,
+                                                    @NotNull DragDirection dragDirection,
+                                                    @NotNull Interval<Float> interval) {
 
         if (preferenceType == PreferenceType.angle) {
 			final Float leftLimit = interval.getLeftLimit();
 			final Float rightLimit = interval.getRightLimit();
 
-            final Float newLeftLimit;
-            final Float newRightLimit;
+            if (leftLimit != null && rightLimit != null) {
+                final Float newLeftLimit;
+                final Float newRightLimit;
 
-			if (dragDirection == DragDirection.up) {
-				newLeftLimit = 180f - rightLimit;
-                newRightLimit = 180f - leftLimit;
-			} else if (dragDirection == DragDirection.left ) {
-				newLeftLimit = 90f - rightLimit;
-				newRightLimit = 90f + rightLimit;
-			} else if ( dragDirection == DragDirection.right ) {
-				newLeftLimit = 90f - rightLimit;
-				newRightLimit = 90f + rightLimit;
-			} else {
-                newLeftLimit = leftLimit;
-                newRightLimit = rightLimit;
+                if (dragDirection == DragDirection.up) {
+                    newLeftLimit = 180f - rightLimit;
+                    newRightLimit = 180f - leftLimit;
+                } else if (dragDirection == DragDirection.left) {
+                    newLeftLimit = 90f - rightLimit;
+                    newRightLimit = 90f + rightLimit;
+                } else if (dragDirection == DragDirection.right) {
+                    newLeftLimit = 90f - rightLimit;
+                    newRightLimit = 90f + rightLimit;
+                } else {
+                    newLeftLimit = leftLimit;
+                    newRightLimit = rightLimit;
+                }
+
+                return IntervalImpl.newClosed(newLeftLimit, newRightLimit);
             }
+        }
 
-            return IntervalImpl.newClosed(newLeftLimit, newRightLimit);
-		}
-
-		return interval;
+        return interval;
 	}
 
 
