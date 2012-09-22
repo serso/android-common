@@ -12,6 +12,7 @@ import org.solovyev.android.view.drag.DragButton;
 import org.solovyev.android.view.drag.DragDirection;
 import org.solovyev.android.view.drag.SimpleOnDragListener;
 import org.solovyev.common.history.HistoryAction;
+import org.solovyev.common.history.HistoryControl;
 import org.solovyev.common.math.Point2d;
 
 /**
