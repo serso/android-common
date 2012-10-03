@@ -266,5 +266,12 @@ public final class AndroidUtils {
         return result;
     }
 
+	// copied from API-15
+	public static boolean isLayoutSizeAtLeast(int size, @NotNull Configuration configuration) {
+		int cur = configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+		if (cur == Configuration.SCREENLAYOUT_SIZE_UNDEFINED) return false;
+		return cur >= size;
+	}
+
 }
 
