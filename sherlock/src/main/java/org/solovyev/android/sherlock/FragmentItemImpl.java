@@ -58,7 +58,7 @@ public class FragmentItemImpl implements FragmentItem {
 
         final FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
         this.fragment = supportFragmentManager.findFragmentByTag(tag);
-		if (!fragment.isDetached()) {
+		if (fragment != null && !fragment.isDetached()) {
 			// if configuration changes activity recreated with new view hierarchy
 			// But fragment may still be attached to old view => we must detach it first
 			final FragmentTransaction ft = supportFragmentManager.beginTransaction();
