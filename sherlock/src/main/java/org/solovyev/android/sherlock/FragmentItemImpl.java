@@ -58,21 +58,16 @@ public class FragmentItemImpl implements FragmentItem {
 
         final FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
         this.fragment = supportFragmentManager.findFragmentByTag(tag);
-		if (fragment != null && !fragment.isDetached()) {
-			// if configuration changes activity recreated with new view hierarchy
-			// But fragment may still be attached to old view => we must detach it first
-			final FragmentTransaction ft = supportFragmentManager.beginTransaction();
-			ft.detach(fragment);
-			ft.commit();
-		}
     }
 
 
     @Override
     public void onSelected(@NotNull FragmentTransaction ft) {
-        fragment = activity.getSupportFragmentManager().findFragmentByTag(this.tag);
+		if (fragment == null) {
+			fragment = activity.getSupportFragmentManager().findFragmentByTag(this.tag);
+		}
 
-        // Check if the fragment is already initialized
+		// Check if the fragment is already initialized
         if (fragment == null) {
             // If not, instantiate and add it to the activity
             fragment = Fragment.instantiate(activity, fragmentClass.getName(), fragmentArgs);
