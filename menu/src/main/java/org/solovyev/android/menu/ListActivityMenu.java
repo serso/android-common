@@ -96,7 +96,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @NotNull
-    public static <M, MI> ActivityMenu<M, MI> fromLayout(int menuResId,
+    public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
                                                          @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
                                                          @NotNull MenuHelper<M, MI> menuHelper,
                                                          @NotNull JPredicate<AMenuItem<MI>> filter) {
@@ -110,7 +110,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @NotNull
-    public static <M, MI> ActivityMenu<M, MI> fromLayout(int menuResId,
+    public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
                                                          @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
                                                          @NotNull MenuHelper<M, MI> menuHelper) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, null, menuHelper);
@@ -123,21 +123,21 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @NotNull
-    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromLayout(
+    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
             @NotNull Class<? extends E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper,
             @NotNull JPredicate<AMenuItem<MI>> filter) {
-        return fromLayout(menuResId, toList(enumMenuClass), menuHelper, filter);
+        return fromResource(menuResId, toList(enumMenuClass), menuHelper, filter);
     }
 
 
     @NotNull
-    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromLayout(
+    public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
             @NotNull Class<? extends E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper) {
-        return fromLayout(menuResId, toList(enumMenuClass), menuHelper);
+        return fromResource(menuResId, toList(enumMenuClass), menuHelper);
     }
 
     @NotNull
@@ -240,7 +240,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
             }
         }
 
-        return true;
+        return false;
     }
 
 }
