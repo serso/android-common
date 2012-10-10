@@ -9,6 +9,7 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -272,6 +273,10 @@ public final class AndroidUtils {
 		if (cur == Configuration.SCREENLAYOUT_SIZE_UNDEFINED) return false;
 		return cur >= size;
 	}
+
+    public static boolean isDebuggable(@NotNull Context context) {
+        return 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
+    }
 
 }
 
