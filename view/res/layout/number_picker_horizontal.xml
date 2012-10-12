@@ -20,6 +20,7 @@
 			  a:gravity="center"
 			  a:singleLine="true"
 			  style="?android:attr/textAppearanceLargeInverse"
+			  a:padding="3sp"
 			  a:textColor="@android:color/primary_text_light"
 			  a:textSize="30sp"
 			  a:inputType="none"
