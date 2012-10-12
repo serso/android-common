@@ -15,6 +15,13 @@
 		<attr name="hTextPosition" format="float"/>
 	</declare-styleable>
 
+	<declare-styleable name="Picker">
+		<attr name="orientation" format="integer">
+			<enum name="horizontal" value="0"/>
+			<enum name="vertical" value="1"/>
+		</attr>
+	</declare-styleable>
+
 	<attr name="defaultButtonStyle" format="reference" />
 
 </resources>

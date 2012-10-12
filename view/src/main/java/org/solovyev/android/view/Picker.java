@@ -29,6 +29,7 @@ package org.solovyev.android.view;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -64,17 +65,17 @@ public class Picker<T> extends LinearLayout {
 
 
     @NotNull
-    private final Handler handler;
+    private final Handler uiHandler =  new Handler();
 
     @NotNull
     private final Runnable runnable = new Runnable() {
         public void run() {
             if (increment) {
                 changeCurrent(current + 1);
-                handler.postDelayed(this, speed);
+                uiHandler.postDelayed(this, speed);
             } else if (decrement) {
                 changeCurrent(current - 1);
-                handler.postDelayed(this, speed);
+                uiHandler.postDelayed(this, speed);
             }
         }
     };
@@ -124,15 +125,21 @@ public class Picker<T> extends LinearLayout {
     public Picker(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        setOrientation(VERTICAL);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Picker);
+
+		final int orientation = a.getInt(R.styleable.Picker_orientation, VERTICAL);
+
+        setOrientation(orientation);
 
         // INFLATING LAYOUT
         final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.number_picker, this, true);
+		if (orientation == HORIZONTAL) {
+			inflater.inflate(R.layout.number_picker_horizontal, this, true);
+		} else {
+			inflater.inflate(R.layout.number_picker, this, true);
+		}
 
-        handler = new Handler();
-
-        final OnClickListener clickListener = new OnClickListener() {
+		final OnClickListener clickListener = new OnClickListener() {
             public void onClick(View v) {
                 // now perform the increment/decrement
                 if (R.id.increment == v.getId()) {
@@ -151,10 +158,10 @@ public class Picker<T> extends LinearLayout {
             public boolean onLongClick(View v) {
                 if (R.id.increment == v.getId()) {
                     increment = true;
-                    handler.post(runnable);
+                    uiHandler.post(runnable);
                 } else if (R.id.decrement == v.getId()) {
                     decrement = true;
-                    handler.post(runnable);
+                    uiHandler.post(runnable);
                 }
                 return true;
             }

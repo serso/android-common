@@ -22,6 +22,7 @@
         <activity android:name=".menu.SamplesMenuActivity"/>
         <activity android:name=".http.SamplesHttpActivity"/>
         <activity android:name=".db.SamplesDbActivity"/>
+        <activity android:name=".view.SamplesViewActivity"/>
 
     </application>
 
