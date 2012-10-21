@@ -40,7 +40,7 @@
     <scm>
         <connection>scm:git:git://github.com/serso/android-common.git</connection>
         <developerConnection>scm:git:git://github.com/serso/android-common.git</developerConnection>
-        <url>http://github.com/serso/android-common</url>
+        <url>scm:git:git://github.com/serso/android-common.git</url>
     </scm>
 
     <properties>
