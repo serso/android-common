@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-text</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
 
     </dependencies>

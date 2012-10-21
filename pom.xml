@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>com.electriccloud</groupId>
                 <artifactId>javac2-maven-plugin</artifactId>
-                <version>1.0.2-SNAPSHOT</version>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>@NotNull Instrumentation</id>
