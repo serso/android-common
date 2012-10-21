@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.solovyev.android</groupId>
         <artifactId>android-common</artifactId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>1.0.4</version>
     </parent>
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>android-common-billing</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <name>Android Common Library Billing</name>
 
