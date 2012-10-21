@@ -27,6 +27,7 @@
         <module>view</module>
         <module>list</module>
         <module>ads</module>
+        <module>billing</module>
         <module>http</module>
         <module>other</module>
         <module>samples</module>
@@ -56,6 +57,13 @@
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-core</artifactId>
+                <version>1.0.3-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-billing</artifactId>
                 <version>1.0.3-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>

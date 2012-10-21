@@ -29,8 +29,7 @@
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
-            <artifactId>billing</artifactId>
-            <version>0.2</version>
+            <artifactId>android-common-billing</artifactId>
 			<type>apklib</type>
         </dependency>
 
