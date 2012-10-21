@@ -43,6 +43,25 @@ public final class AndroidUtils {
 		throw new AssertionError();
 	}
 
+    /*
+    **********************************************************************
+    *
+    *                           STATIC FIELDS
+    *
+    **********************************************************************
+    */
+
+    /*@Nullable*/
+    private static Boolean debug = null;
+
+    /*
+    **********************************************************************
+    *
+    *                           STATIC METHODS
+    *
+    **********************************************************************
+    */
+
 	/**
 	 * Method center the tabs' contents on specified tabHost elements.
 	 * This method should be invoked only for tabs with only text on them (and no image)
@@ -275,7 +294,10 @@ public final class AndroidUtils {
 	}
 
     public static boolean isDebuggable(@NotNull Context context) {
-        return 0 != ( context.getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE );
+        if (debug == null) {
+            debug = 0 != (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE);
+        }
+        return debug;
     }
 
 }
