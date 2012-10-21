@@ -24,38 +24,13 @@
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-core</artifactId>
+            <artifactId>android-common-all</artifactId>
             <type>apklib</type>
         </dependency>
 
         <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-menu</artifactId>
-            <type>apklib</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-list</artifactId>
-            <type>apklib</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-view</artifactId>
-            <type>apklib</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-http</artifactId>
-            <type>apklib</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-db</artifactId>
-            <type>apklib</type>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
         </dependency>
 
     </dependencies>

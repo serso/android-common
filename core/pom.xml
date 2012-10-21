@@ -26,8 +26,13 @@
         <dependency>
             <groupId>org.solovyev</groupId>
             <artifactId>common-text</artifactId>
-            <version>1.0.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -26,6 +26,12 @@
             <artifactId>android-common-core</artifactId>
             <type>apklib</type>
         </dependency>
+
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>annotations</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

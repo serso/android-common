@@ -33,6 +33,7 @@
         <module>samples</module>
         <module>samples-test</module>
         <module>sherlock</module>
+        <module>all</module>
     </modules>
     <name>Android Common Library</name>
 
@@ -47,6 +48,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <common.version>1.0.1</common.version>
     </properties>
 
     <dependencyManagement>
@@ -152,6 +154,27 @@
                 <type>apklib</type>
             </dependency>
 
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-all</artifactId>
+                <version>1.0.4-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <!-- Own -->
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-text</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-msg</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
             <!-- Other -->
 
             <dependency>
@@ -172,37 +195,14 @@
                 <version>4.9</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.intellij</groupId>
+                <artifactId>annotations</artifactId>
+                <version>7.0.3</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-
-        <!-- OWN -->
-
-        <dependency>
-            <groupId>org.solovyev</groupId>
-            <artifactId>common-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <!-- OTHER -->
-
-        <dependency>
-            <groupId>com.intellij</groupId>
-            <artifactId>annotations</artifactId>
-            <version>11.1.2</version>
-        </dependency>
-
-        <!-- TESTS -->
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 
     <build>
 
