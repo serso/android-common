@@ -17,11 +17,11 @@
 
     <dependencies>
 
-<!--        <dependency>
+        <dependency>
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-samples</artifactId>
             <type>apk</type>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
@@ -45,9 +45,8 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>provided</scope>
         </dependency>
-
-
 
     </dependencies>
 
