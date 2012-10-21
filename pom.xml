@@ -17,7 +17,7 @@
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>android-common</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
 
     <modules>
         <module>preferences</module>
@@ -42,7 +42,7 @@
         <connection>scm:git:git@github.com:serso/android-common.git</connection>
         <developerConnection>scm:git:git@github.com:serso/android-common.git</developerConnection>
         <url>http://github.com/serso/android-common</url>
-    <tag>release-1.0.3</tag>
+    <tag>HEAD</tag>
   </scm>
 
     <properties>
@@ -57,98 +57,98 @@
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-core</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-billing</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-ads</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-db</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-http</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-list</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-menu</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-other</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-preferences</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-samples</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apk</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-samples</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>jar</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-samples-test</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-sherlock</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-view</artifactId>
-                <version>1.0.3</version>
+                <version>1.0.4-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
 
