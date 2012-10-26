@@ -269,10 +269,12 @@
                             <platform>15</platform>
                         </sdk>
 
+                        <device>emulator</device>
+
                         <emulator>
                             <avd>Default</avd>
-                            <wait>10000</wait>
-                            <!--<options>-no-skin</options>-->
+                            <wait>30000</wait>
+                            <options>-no-skin</options>
                         </emulator>
 
                         <zipalign>

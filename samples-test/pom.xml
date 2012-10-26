@@ -20,6 +20,7 @@
         <dependency>
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-samples</artifactId>
+            <scope>provided</scope>
             <type>apk</type>
         </dependency>
 
@@ -45,6 +46,7 @@
         <dependency>
             <groupId>com.intellij</groupId>
             <artifactId>annotations</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
