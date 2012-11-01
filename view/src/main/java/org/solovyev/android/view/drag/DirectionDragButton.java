@@ -249,7 +249,7 @@ public class DirectionDragButton extends DragButton {
 	private boolean initialized = false;
 
 	public DirectionDragButton(Context context, @NotNull AttributeSet attrs) {
-		super(context, attrs, false);
+		super(context, attrs);
 		init(context, attrs);
 	}
 
@@ -291,13 +291,20 @@ public class DirectionDragButton extends DragButton {
 			}
 		}
 
-		super.init(context);
 		initialized = true;
 	}
 
 	@Override
+	public void onSizeChanged(int w, int h, int oldW, int oldH) {
+		measureText();
+	}
+
+	@Override
+	protected void onTextChanged(CharSequence text, int start, int before, int after) {
+		measureText();
+	}
+
 	protected void measureText() {
-		super.measureText();
 
 		if (initialized) {
 			final Paint basePaint = getPaint();
@@ -349,11 +356,13 @@ public class DirectionDragButton extends DragButton {
 		return directionTextAlpha;
 	}
 
+	@SuppressWarnings("UnusedDeclaration")
 	@Nullable
 	public String getTextUp() {
 		return getText(GuiDragDirection.up);
 	}
 
+	@SuppressWarnings("UnusedDeclaration")
 	@Nullable
 	public String getTextDown() {
 		return getText(GuiDragDirection.down);
@@ -365,6 +374,7 @@ public class DirectionDragButton extends DragButton {
 		return guiDragDirection == null ? null : getText(guiDragDirection);
 	}
 
+	@SuppressWarnings("UnusedDeclaration")
 	public void showDirectionText(boolean showDirectionText, @NotNull DragDirection direction) {
 		final GuiDragDirection guiDragDirection = GuiDragDirection.valueOf(direction);
 		final DirectionTextData directionTextData = this.directionTextDataMap.get(guiDragDirection);

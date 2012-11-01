@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.interval.Interval;
@@ -149,7 +150,17 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 	}
 
 	@NotNull
+	public static Preferences getDefaultPreferences(@NotNull Context context) {
+		return getPreferences0(null, context);
+	}
+
+	@NotNull
 	public static Preferences getPreferences(@NotNull final SharedPreferences preferences, @NotNull Context context) {
+		return getPreferences0(preferences, context);
+	}
+
+	@NotNull
+	private static Preferences getPreferences0(@Nullable final SharedPreferences preferences, @NotNull Context context) {
 
 		final Mapper<Interval<Float>> mapper = new NumberIntervalMapper<Float>(Float.class);
 
@@ -176,9 +187,9 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 						Log.e(SimpleOnDragListener.class.getName(), "New preference type added: default preferences should be defined. Preference id: " + preferenceId);
 				}
 
-				final String value = preferences.getString(preferenceId, defaultValue);
+				final String value = preferences == null ? defaultValue : preferences.getString(preferenceId, defaultValue);
 
-				if (defaultValue != null) {
+				if (value != null) {
 					final Interval<Float> intervalPref = transformInterval(preferenceType, dragDirection, mapper.parseValue(value));
 
 					Log.d(SimpleOnDragListener.class.getName(), "Preference loaded for " + dragDirection +". Id: " + preferenceId + ", value: " + intervalPref.toString());

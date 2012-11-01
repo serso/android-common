@@ -14,10 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.view.ColorButton;
 import org.solovyev.common.math.Point2d;
 
-public class DragButton extends ColorButton {
+public class DragButton extends Button {
 
 	@Nullable
 	private Point2d startPoint = null;
@@ -25,18 +24,9 @@ public class DragButton extends ColorButton {
 	@Nullable
 	private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
-	private final OnTouchListener onTouchListener = new OnTouchListenerImpl();
-
 	public DragButton(Context context, @NotNull AttributeSet attrs) {
-		this(context, attrs, true);
-	}
-
-	public DragButton(Context context, @NotNull AttributeSet attrs, boolean init) {
-		super(context, attrs, false);
-		setOnTouchListener(this.onTouchListener);
-		if ( init ) {
-			super.init(context);
-		}
+		super(context, attrs);
+		setOnTouchListener(new OnTouchListenerImpl());
 	}
 
 	public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
