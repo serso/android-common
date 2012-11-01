@@ -2,8 +2,8 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
 
@@ -137,7 +137,7 @@ final class LatinKeyboardProvider extends MapKeyboardProvider {
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         final InputMethodServiceInterface imsi = getInputMethodServiceInterface();
-        final KeyboardView keyboardView = imsi.getKeyboardView();
+        final AKeyboardView keyboardView = imsi.getKeyboardView();
 
         if (imsi.isWordSeparator(primaryCode)) {
             // Handle separator
@@ -152,7 +152,7 @@ final class LatinKeyboardProvider extends MapKeyboardProvider {
             imsi.handleShift();
         } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
             imsi.handleClose();
-        } else if (primaryCode == AKeyboardView.KEYCODE_OPTIONS) {
+        } else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
             // Show a menu or somethin'
         } else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE) {
             Keyboard current = keyboardView.getKeyboard();
@@ -172,5 +172,11 @@ final class LatinKeyboardProvider extends MapKeyboardProvider {
 
     @Override
     public void onCreate(@NotNull Context context) {
+    }
+
+    @NotNull
+    @Override
+    public AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+        return new AKeyboardViewImpl((LatinKeyboardView) layoutInflater.inflate(R.layout.input, null));
     }
 }

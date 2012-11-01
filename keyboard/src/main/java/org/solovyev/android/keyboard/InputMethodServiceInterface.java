@@ -1,6 +1,5 @@
 package org.solovyev.android.keyboard;
 
-import android.inputmethodservice.KeyboardView;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +20,7 @@ public interface InputMethodServiceInterface {
     StringBuilder getText();
 
     @NotNull
-    KeyboardView getKeyboardView();
+    AKeyboardView getKeyboardView();
 
     void handleBackspace();
 

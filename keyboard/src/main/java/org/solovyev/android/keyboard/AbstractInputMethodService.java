@@ -141,10 +141,10 @@ public abstract class AbstractInputMethodService extends InputMethodService impl
      */
     @Override
     public View onCreateInputView() {
-        keyboardView = (AKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
+        keyboardView = keyboardProvider.createKeyboardView(this,  getLayoutInflater());
         keyboardView.setOnKeyboardActionListener(this);
         keyboardView.setKeyboard(keyboardProvider.getCurrentKeyboard().getKeyboard());
-        return keyboardView;
+        return keyboardView.getKeyboardView();
     }
 
     /**
@@ -578,7 +578,7 @@ public abstract class AbstractInputMethodService extends InputMethodService impl
 
     @NotNull
     @Override
-    public KeyboardView getKeyboardView() {
+    public AKeyboardView getKeyboardView() {
         return keyboardView;
     }
 

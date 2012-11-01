@@ -2,6 +2,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
+import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,4 +26,7 @@ public interface AKeyboardProvider {
     void onKey(int primaryCode, int[] keyCodes);
 
     void onCreate(@NotNull Context context);
+
+    @NotNull
+    AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
 }
