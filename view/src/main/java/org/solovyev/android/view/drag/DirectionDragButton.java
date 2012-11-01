@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -37,6 +38,8 @@ public class DirectionDragButton extends DragButton {
 
 	@NotNull
 	private final static Integer DEFAULT_DIRECTION_TEXT_ALPHA = 140;
+
+	private final static int  DEFAULT_DIRECTION_TEXT_COLOR = Color.WHITE;
 
 	@NotNull
 	private final static String DEFAULT_DIRECTION_TEXT_SCALE = "0.33;0.33;0.33;0.33";
@@ -246,6 +249,8 @@ public class DirectionDragButton extends DragButton {
 	@NotNull
 	private Integer directionTextAlpha = DEFAULT_DIRECTION_TEXT_ALPHA;
 
+	private int directionTextColor = DEFAULT_DIRECTION_TEXT_COLOR;
+
 	private boolean initialized = false;
 
 	public DirectionDragButton(Context context, @NotNull AttributeSet attrs) {
@@ -265,6 +270,9 @@ public class DirectionDragButton extends DragButton {
 
 			if (!StringUtils.isEmpty(attrValue)) {
 				switch (attr) {
+					case R.styleable.DirectionDragButton_directionTextColor:
+						this.directionTextColor = a.getColor(attr, DEFAULT_DIRECTION_TEXT_COLOR);
+						break;
 					case R.styleable.DirectionDragButton_directionTextScale:
 						this.directionTextScale = attrValue;
 						break;
@@ -345,7 +353,7 @@ public class DirectionDragButton extends DragButton {
 										  @NotNull Resources resources) {
 		final TextPaint directionTextPaint = new TextPaint(basePaint);
 
-		directionTextPaint.setColor(resources.getColor(R.color.button_text_color));
+		directionTextPaint.setColor(directionTextColor);
 		directionTextPaint.setAlpha(getDirectionTextAlpha());
 		directionTextPaint.setTextSize(basePaint.getTextSize() * directionTextData.getTextScale());
 

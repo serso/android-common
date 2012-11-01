@@ -3,6 +3,7 @@
 <resources>
 
 	<declare-styleable name="DirectionDragButton">
+		<attr name="directionTextColor" format="color"/>
 		<attr name="textUp" format="string"/>
 		<attr name="textDown" format="string"/>
 		<attr name="textRight" format="string"/>
