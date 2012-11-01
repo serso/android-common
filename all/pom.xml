@@ -89,6 +89,12 @@
             <type>apklib</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-keyboard</artifactId>
+            <type>apklib</type>
+        </dependency>
+
     </dependencies>
 
     <build>

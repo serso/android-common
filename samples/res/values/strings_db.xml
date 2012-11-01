@@ -3,6 +3,7 @@
     <string name="db">Database</string>
     <string name="save">Save</string>
     <string name="view">View</string>
+    <string name="keyboard">Keyboard</string>
     <string name="remove">Remove</string>
     <string name="name_is_empty">Item name is empty!</string>
     <string name="item_saved">Item successfully saved!</string>

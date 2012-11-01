@@ -157,6 +157,13 @@
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-keyboard</artifactId>
+                <version>1.0.5-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-all</artifactId>
                 <version>1.0.5-SNAPSHOT</version>
                 <type>apklib</type>

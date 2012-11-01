@@ -11,6 +11,7 @@ import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.db.SamplesDbActivity;
 import org.solovyev.android.samples.http.SamplesHttpActivity;
+import org.solovyev.android.samples.keyboard.SamplesKeyboardActivity;
 import org.solovyev.android.samples.menu.SamplesMenuActivity;
 import org.solovyev.android.samples.prefs.SamplesPreferencesActivity;
 import org.solovyev.android.samples.view.SamplesViewActivity;
@@ -26,6 +27,7 @@ public enum SampleType implements ListItem {
     http(R.string.http, SamplesHttpActivity.class),
     db(R.string.db, SamplesDbActivity.class),
     view(R.string.view, SamplesViewActivity.class),
+    keyboard(R.string.keyboard, SamplesKeyboardActivity.class),
     menu(R.string.menu, SamplesMenuActivity.class);
 
     private final int captionResId;
