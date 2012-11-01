@@ -25,6 +25,7 @@
         <module>menu</module>
         <module>core</module>
         <module>view</module>
+        <module>keyboard</module>
         <module>list</module>
         <module>ads</module>
         <module>billing</module>
