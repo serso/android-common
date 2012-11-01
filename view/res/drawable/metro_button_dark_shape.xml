@@ -15,7 +15,6 @@
 -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient android:startColor="#000000" android:endColor="#333333"
-            android:angle="90"/>
-    <corners android:radius="0dp" />
+    <solid android:color="@color/metro_button_dark_background"/>
+    <corners android:radius="1dp" />
 </shape>

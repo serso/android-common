@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:picker="http://schemas.android.com/apk/res-auto"
-			  xmlns:drag="http://schemas.android.com/apk/res-auto"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent">
+              xmlns:picker="http://schemas.android.com/apk/res-auto"
+              xmlns:drag="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
-	<org.solovyev.android.view.Picker android:id="@+id/vertical_picker"
-									  android:layout_width="wrap_content"
-									  android:layout_height="wrap_content"/>
+    <org.solovyev.android.view.Picker android:id="@+id/vertical_picker"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"/>
 
-	<org.solovyev.android.view.Picker android:id="@+id/horizontal_picker"
-									  android:layout_width="wrap_content"
-									  android:layout_height="wrap_content"
-									  picker:orientation="horizontal"/>
+    <org.solovyev.android.view.Picker android:id="@+id/horizontal_picker"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      picker:orientation="horizontal"/>
 
 
-	<org.solovyev.android.view.drag.DirectionDragButton
-									  android:id="@+id/drag_button"
-									  android:layout_width="100dp"
-									  android:layout_height="100dp"
-									  android:layout_gravity="center"
-									  android:padding="10dp"
-									  android:text="Try!"
-									  drag:directionTextScale="0.7"
-									  drag:directionTextColor="@android:color/black"
-									  drag:textUp="Up"
-									  drag:textDown="Down"
-									  drag:textLeft="Left"
-									  drag:textRight="Right"/>
+    <org.solovyev.android.view.drag.DirectionDragButton
+            android:id="@+id/drag_button"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_weight="0"
+            android:layout_gravity="center"
+            style="@style/metro_button_dark_style"
+            android:text="Try!"
+            drag:directionTextScale="0.7"
+            drag:directionTextColor="@color/metro_button_dark_text_color"
+            drag:textUp="Up"
+            drag:textDown="Down"
+            drag:textLeft="Left"
+            drag:textRight="Right"/>
 
 </LinearLayout>
