@@ -3,8 +3,11 @@ package org.solovyev.android.keyboard;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.view.View;
+import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * User: serso
@@ -18,9 +21,6 @@ public interface AKeyboardView {
 
     void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener);
 
-    @NotNull
-    Keyboard getKeyboard();
-
     void setKeyboard(@NotNull Keyboard keyboard);
 
     void closing();
@@ -33,4 +33,18 @@ public interface AKeyboardView {
 
     void setShifted(boolean shifted);
 
+	boolean isExtractViewShown();
+
+	void setCandidatesViewShown(boolean shown);
+
+	void setSuggestions(@NotNull List<String> suggestions, boolean completions, boolean typedWordValid);
+
+	void setCompletions(@NotNull List<CompletionInfo> completions);
+
+	@NotNull
+	List<CompletionInfo> getCompletions();
+
+	void clearCandidateView();
+
+	View onCreateCandidatesView();
 }

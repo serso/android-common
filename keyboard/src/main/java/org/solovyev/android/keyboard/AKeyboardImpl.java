@@ -50,7 +50,7 @@ public class AKeyboardImpl implements AKeyboard {
         this.keyboard.setShifted(shifted);
     }
 
-    @Override
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AKeyboardImpl)) return false;

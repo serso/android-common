@@ -8,7 +8,7 @@ package org.solovyev.android.keyboard;
 public class LatinInputMethodService extends AbstractInputMethodService {
 
     public LatinInputMethodService() {
-        super(new LatinKeyboardProvider());
+        super(new LatinKeyboardController());
     }
 
 }
