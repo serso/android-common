@@ -40,4 +40,14 @@ public interface AKeyboardInput {
 	void append(char primaryCode);
 
 	void commitText(@Nullable String text, int i);
+
+    void handleCursorRight();
+
+    void handleCursorLeft();
+
+    void handleClear();
+
+    void handlePaste();
+
+    void handleCopy();
 }

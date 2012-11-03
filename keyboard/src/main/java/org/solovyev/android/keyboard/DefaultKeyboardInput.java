@@ -1,6 +1,10 @@
 package org.solovyev.android.keyboard;
 
+import android.content.Context;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
+import android.text.ClipboardManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
@@ -140,4 +144,79 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 			inputConnection.setComposingText(typedText, 1);
 		}
 	}
+
+    @Override
+    public void handleCursorRight() {
+        final InputConnection ic = getCurrentInputConnection();
+        if (ic != null) {
+            int selectionStart = getSelectionStart(ic);
+            int selectionEnd = getSelectionEnd(ic, selectionStart);
+            if ( selectionStart > 0 ) {
+                selectionStart = selectionStart - 1;
+                ic.setSelection(selectionStart, selectionEnd);
+            }
+        }
+    }
+
+    private int getSelectionEnd(@NotNull InputConnection ic, int selectionStart) {
+        final CharSequence selectedText = ic.getSelectedText(0);
+        return selectionStart + (selectedText == null ? 0 : selectedText.length());
+    }
+
+    private int getSelectionStart(@NotNull InputConnection ic) {
+        return ic.getTextBeforeCursor(Integer.MAX_VALUE, 0).length();
+    }
+
+    @Override
+    public void handleCursorLeft() {
+        final InputConnection ic = getCurrentInputConnection();
+        if (ic != null) {
+            int selectionStart = getSelectionStart(ic);
+            int selectionEnd = getSelectionEnd(ic, selectionStart);
+            if ( selectionStart < 0 ) {
+                selectionStart = selectionStart - 1;
+                ic.setSelection(selectionStart, selectionEnd);
+            }
+        }
+    }
+
+    @Override
+    public void handleClear() {
+        typedText.setLength(0);
+        commitText("", 0);
+    }
+
+    @Override
+    public void handlePaste() {
+        final InputConnection inputConnection = getCurrentInputConnection();
+        if (inputConnection != null) {
+            final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
+            final CharSequence text = clipboardManager.getText();
+            if ( !StringUtils.isEmpty(text) ) {
+                commitText(String.valueOf(text), 1);
+            }
+        }
+    }
+
+    @Override
+    public void handleCopy() {
+        final InputConnection inputConnection = getCurrentInputConnection();
+        if (inputConnection != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+                CharSequence text = inputConnection.getSelectedText(0);
+                if (!StringUtils.isEmpty(text)) {
+                    final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clipboardManager.setText(text);
+                } else {
+                    text = inputConnection.getTextAfterCursor(0, 0);
+                    if (!StringUtils.isEmpty(text)) {
+                        final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboardManager.setText(text);
+                    }
+                }
+            } else {
+                Log.e("KeyboardInput", "Copy doesn't work with " + Build.VERSION.SDK_INT + " API level!");
+            }
+        }
+    }
 }

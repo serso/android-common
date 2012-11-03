@@ -3,6 +3,7 @@ package org.solovyev.android.keyboard;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
+import android.os.Build;
 import android.text.InputType;
 import android.text.method.MetaKeyKeyListener;
 import android.view.KeyCharacterMap;
@@ -126,8 +127,11 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
         // Apply the selected keyboard to the input view.
         keyboardView.setKeyboard(getCurrentKeyboard().getKeyboard());
         keyboardView.closing();
-        final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
-        keyboardView.setSubtypeOnSpaceKey(subtype);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
+            keyboardView.setSubtypeOnSpaceKey(subtype);
+        }
     }
 
 	@NotNull

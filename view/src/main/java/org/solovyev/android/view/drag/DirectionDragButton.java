@@ -59,7 +59,7 @@ public class DirectionDragButton extends DragButton {
 		private TextPaint paint;
 
 		@NotNull
-		private Float textScale = 1f;
+		private Float textScale = 0.4f;
 
 		private boolean showText = true;
 
@@ -271,6 +271,15 @@ public class DirectionDragButton extends DragButton {
         }
 
         this.initialized = true;
+    }
+
+    public void applyDef(@NotNull DirectionDragButtonDef directionDragButtonDef) {
+        super.applyDef(directionDragButtonDef);
+
+        for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
+            final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
+            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, StringUtils.getNotEmpty(directionText, "")));
+        }
     }
 
     private void init(@NotNull Context context, @NotNull AttributeSet attrs) {

@@ -25,13 +25,13 @@
         <activity android:name=".view.SamplesViewActivity"/>
         <activity android:name=".keyboard.SamplesKeyboardActivity"/>
 
-        <service android:name="org.solovyev.android.keyboard.LatinInputMethodService"
+<!--        <service android:name="org.solovyev.android.keyboard.LatinInputMethodService"
                  android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
-        </service>
+        </service>-->
 
         <service android:name="org.solovyev.android.keyboard.DragInputMethodService"
                  android:permission="android.permission.BIND_INPUT_METHOD">

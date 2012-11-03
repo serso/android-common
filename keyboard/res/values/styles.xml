@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright (c) 2009-2011. Created by serso aka se.solovyev.
+  ~ For more information, please, contact se.solovyev@gmail.com
+  ~ or visit http://se.solovyev.org
+  -->
+
+<resources>
+
+    <style name="keyboard_metro_button_dark_style" parent="metro_button_dark_style">
+        <item name="android:textSize">@dimen/keyboard_button_text_size</item>
+        <item name="android:padding">@dimen/keyboard_button_padding</item>
+    </style>
+
+</resources>

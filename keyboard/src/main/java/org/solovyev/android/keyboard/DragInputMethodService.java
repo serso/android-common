@@ -8,6 +8,6 @@ package org.solovyev.android.keyboard;
 public class DragInputMethodService extends AbstractInputMethodService {
 
     public DragInputMethodService() {
-        super(new DragKeyboardController());
+        super(new CalculatorKeyboardController());
     }
 }

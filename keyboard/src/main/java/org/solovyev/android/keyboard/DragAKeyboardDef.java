@@ -3,7 +3,6 @@ package org.solovyev.android.keyboard;
 import android.content.res.Resources;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.drag.DirectionDragButtonDef;
-import org.solovyev.android.view.drag.DirectionDragButtonDefImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,26 +16,10 @@ import java.util.List;
 public class DragAKeyboardDef implements AKeyboardDef {
 
     @NotNull
-    private final KeyboardDef keyboardDef = new KeyboardDef();
+    private final KeyboardDef keyboardDef;
 
-    public DragAKeyboardDef() {
-        final RowDef firstRow = new RowDef();
-        firstRow.add(DirectionDragButtonDefImpl.newInstance("7"));
-        firstRow.add(DirectionDragButtonDefImpl.newInstance("8"));
-        firstRow.add(DirectionDragButtonDefImpl.newInstance("9"));
-        this.keyboardDef.add(firstRow);
-
-        final RowDef secondRow = new RowDef();
-        secondRow.add(DirectionDragButtonDefImpl.newInstance("4"));
-        secondRow.add(DirectionDragButtonDefImpl.newInstance("5"));
-        secondRow.add(DirectionDragButtonDefImpl.newInstance("6"));
-        this.keyboardDef.add(secondRow);
-
-        final RowDef thirdRow = new RowDef();
-        thirdRow.add(DirectionDragButtonDefImpl.newInstance("1"));
-        thirdRow.add(DirectionDragButtonDefImpl.newInstance("2"));
-        thirdRow.add(DirectionDragButtonDefImpl.newInstance("3"));
-        this.keyboardDef.add(thirdRow);
+    public DragAKeyboardDef(@NotNull KeyboardDef keyboardDef) {
+        this.keyboardDef = keyboardDef;
     }
 
     @Override
@@ -62,7 +45,7 @@ public class DragAKeyboardDef implements AKeyboardDef {
         public KeyboardDef() {
         }
 
-        private boolean add(RowDef object) {
+        protected boolean add(RowDef object) {
             return rowDefs.add(object);
         }
 
@@ -84,7 +67,7 @@ public class DragAKeyboardDef implements AKeyboardDef {
         public RowDef() {
         }
 
-        private boolean add(@NotNull DirectionDragButtonDef dragButtonDef) {
+        protected boolean add(@NotNull DirectionDragButtonDef dragButtonDef) {
             return buttonDefs.add(dragButtonDef);
         }
 

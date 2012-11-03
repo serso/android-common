@@ -6,6 +6,7 @@
 package org.solovyev.android.view.drag;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.AndroidUtils;
 import org.solovyev.common.math.Point2d;
 
 public class DragButton extends Button {
@@ -45,7 +47,31 @@ public class DragButton extends Button {
 		return onDragListener;
 	}
 
-	/**
+    public void applyDef(@NotNull DragButtonDef buttonDef) {
+        setText(buttonDef.getText());
+
+        final Integer backgroundColor = buttonDef.getBackgroundColor();
+        if (backgroundColor != null) {
+            setBackgroundColor(backgroundColor);
+        }
+
+        final Integer drawableResId = buttonDef.getDrawableResId();
+        if ( drawableResId != null ) {
+            final int padding = AndroidUtils.toPixels(getResources().getDisplayMetrics(), 6);
+            setPadding(padding, padding, padding, padding);
+
+            final Drawable drawable = getContext().getResources().getDrawable(drawableResId);
+            setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+        }
+
+        final String tag = buttonDef.getTag();
+        if ( tag != null ) {
+            setTag(tag);
+        }
+
+    }
+
+    /**
 	 * OnTouchListener implementation that fires onDrag()
 	 * 
 	 * @author serso

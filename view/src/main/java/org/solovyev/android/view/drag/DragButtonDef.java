@@ -10,5 +10,14 @@ import org.jetbrains.annotations.Nullable;
 public interface DragButtonDef {
 
     @Nullable
+    Integer getDrawableResId();
+
+    @Nullable
+    String getTag();
+
+    @Nullable
+    Integer getBackgroundColor();
+
+    @Nullable
     CharSequence getText();
 }

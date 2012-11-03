@@ -22,4 +22,6 @@
     <dimen name="key_height">50dip</dimen>
     <dimen name="candidate_font_height">16sp</dimen>
     <dimen name="candidate_vertical_padding">6sp</dimen>
+    <dimen name="keyboard_button_text_size">25dp</dimen>
+    <dimen name="keyboard_button_padding">5dp</dimen>
 </resources>

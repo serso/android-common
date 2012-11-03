@@ -18,7 +18,11 @@
 */
 -->
 
-<resources>
-    <dimen name="key_height">46dip</dimen>
-    <dimen name="keyboard_button_text_size">25dp</dimen>
-</resources>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/keyboard"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/default_background"
+        android:layout_alignParentBottom="true"/>
