@@ -24,7 +24,7 @@ public class AKeyboardViewImpl extends AbstractAndroidAKeyboardView {
 	@NotNull
 	private List<CompletionInfo> completions = Collections.emptyList();
 
-	public AKeyboardViewImpl(@NotNull int keyboardLayoutResId,
+	public AKeyboardViewImpl(int keyboardLayoutResId,
 							 @NotNull AKeyboardController keyboardController,
 							 @NotNull InputMethodService inputMethodService,
 							 @Nullable CandidateView candidateView) {
