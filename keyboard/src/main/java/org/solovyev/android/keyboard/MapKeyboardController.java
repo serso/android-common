@@ -18,25 +18,23 @@ public abstract class MapKeyboardController extends AbstractKeyboardController {
 	@NotNull
 	private final Map<String, AKeyboard> keyboards = new HashMap<String, AKeyboard>();
 
-	@Override
-	public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
-		super.onInitializeInterface(inputMethodService);
+    @NotNull
+    @Override
+    protected AKeyboardControllerState onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+        synchronized (this.keyboards) {
 
-		synchronized (this.keyboards) {
+            this.keyboards.clear();
 
-			this.keyboards.clear();
+            final List<AKeyboard> keyboards = createKeyboard(inputMethodService);
+            for (AKeyboard keyboard : keyboards) {
+                this.keyboards.put(keyboard.getKeyboardId(), keyboard);
+            }
 
-			final List<AKeyboard> keyboards = createKeyboard(inputMethodService);
-			for (AKeyboard keyboard : keyboards) {
-				this.keyboards.put(keyboard.getKeyboardId(), keyboard);
-			}
+            return AKeyboardControllerStateImpl.newDefaultState(this.keyboards.get(getDefaultKeyboardId()));
+        }
+    }
 
-			setCurrentKeyboard(this.keyboards.get(getDefaultKeyboardId()));
-		}
-
-	}
-
-	@NotNull
+    @NotNull
 	protected abstract List<AKeyboard> createKeyboard(@NotNull Context context);
 
 	@NotNull

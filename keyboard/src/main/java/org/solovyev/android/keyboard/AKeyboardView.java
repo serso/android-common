@@ -1,6 +1,8 @@
 package org.solovyev.android.keyboard;
 
+import android.content.Context;
 import android.inputmethodservice.KeyboardView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodSubtype;
 import org.jetbrains.annotations.NotNull;
@@ -11,9 +13,6 @@ import org.jetbrains.annotations.NotNull;
  * Time: 10:01 PM
  */
 public interface AKeyboardView<K extends AKeyboardDef> {
-
-    @NotNull
-    View getKeyboardView();
 
     void setKeyboard(@NotNull K keyboard);
 
@@ -30,4 +29,9 @@ public interface AKeyboardView<K extends AKeyboardDef> {
     void setShifted(boolean shifted);
 
 	boolean isExtractViewShown();
+
+    void createAndroidKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
+
+    @NotNull
+    View getAndroidKeyboardView();
 }

@@ -1,12 +1,9 @@
 package org.solovyev.android.keyboard;
 
 import android.content.Context;
-import android.inputmethodservice.KeyboardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodSubtype;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.text.StringUtils;
@@ -58,90 +55,7 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
 
     @NotNull
     @Override
-    protected abstract AndroidAKeyboardView createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
-
-    @NotNull
-    @Override
-    protected AKeyboardView<AndroidAKeyboardDef> createDefaultKeyboardView0() {
-        return new AndroidAKeyboardView() {
-            @Override
-            public void setCandidatesViewShown(boolean shown) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setSuggestions(@NotNull List<String> suggestions, boolean completions, boolean typedWordValid) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setCompletions(@NotNull List<CompletionInfo> completions) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @NotNull
-            @Override
-            public List<CompletionInfo> getCompletions() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void clearCandidateView() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public View onCreateCandidatesView() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @NotNull
-            @Override
-            public View getKeyboardView() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setKeyboard(@NotNull AndroidAKeyboardDef keyboard) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void closing() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public boolean handleBack() {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public boolean isShifted() {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void setShifted(boolean shifted) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public boolean isExtractViewShown() {
-                return false;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        };
-    }
+    protected abstract AndroidAKeyboardView createKeyboardView0(@NotNull Context context);
 
     public void setSuggestions(@NotNull List<String> suggestions,
                                boolean completions,

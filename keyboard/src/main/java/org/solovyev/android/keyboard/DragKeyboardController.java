@@ -2,9 +2,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
-import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
-import android.widget.LinearLayout;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,26 +15,20 @@ public class DragKeyboardController extends AbstractKeyboardController<DragAKeyb
 
     @NotNull
 	@Override
-	protected AKeyboardView<DragAKeyboardDef> createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
-		return new DragAKeyboardView(new LinearLayout(context), this, getInputMethodService());
+	protected AKeyboardView<DragAKeyboardDef> createKeyboardView0(@NotNull Context context) {
+		return new DragAKeyboardView(this, getInputMethodService());
 	}
-
-    @Override
-    public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
-        super.onInitializeInterface(inputMethodService);
-        setCurrentKeyboard(new AKeyboardImpl<DragAKeyboardDef>("drag_keyboard", new DragAKeyboardDef()));
-    }
 
     @NotNull
     @Override
-    protected AKeyboardView<DragAKeyboardDef> createDefaultKeyboardView0() {
-        return new DummyAKeyboardView<DragAKeyboardDef>();
+    protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+        return AKeyboardControllerStateImpl.newDefaultState(new AKeyboardImpl<DragAKeyboardDef>("drag_keyboard", new DragAKeyboardDef()));
     }
 
     @NotNull
 	@Override
 	public AKeyboardControllerState<DragAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
-		return AKeyboardControllerStateImpl.newDefaultState();
+		return getState();
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public abstract class AbstractInputMethodService extends InputMethodService {
 
     @Override
     public View onCreateInputView() {
-        return keyboardController.createKeyboardView(this,  getLayoutInflater()).getKeyboardView();
+        return keyboardController.createKeyboardView(this,  getLayoutInflater()).getAndroidKeyboardView();
     }
 
     @Override

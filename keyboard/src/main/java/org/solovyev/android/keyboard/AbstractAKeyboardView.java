@@ -1,8 +1,11 @@
 package org.solovyev.android.keyboard;
 
+import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView;
+import android.view.LayoutInflater;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * User: Solovyev_S
@@ -11,53 +14,83 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbstractAKeyboardView implements AndroidAKeyboardView {
 
-	@NotNull
-	private final KeyboardView keyboardView;
+	@Nullable
+	private KeyboardView keyboardView;
 
-	@NotNull
+    private final int keyboardLayoutResId;
+
+    @NotNull
 	private final AKeyboardController keyboardController;
 
 	@NotNull
 	private final InputMethodService inputMethodService;
 
-	public AbstractAKeyboardView(@NotNull KeyboardView keyboardView,
+    @Nullable
+    private KeyboardView.OnKeyboardActionListener keyboardActionListener;
+
+    public AbstractAKeyboardView(int keyboardLayoutResId,
 								 @NotNull AKeyboardController keyboardController,
 								 @NotNull InputMethodService inputMethodService) {
-		this.keyboardView = keyboardView;
-		this.keyboardController = keyboardController;
+        this.keyboardLayoutResId = keyboardLayoutResId;
+        this.keyboardController = keyboardController;
 		this.inputMethodService = inputMethodService;
 	}
 
 
 	@Override
 	public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
-		this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
-	}
+        this.keyboardActionListener = keyboardActionListener;
+        if (this.keyboardView != null) {
+            this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
+        }
+    }
 
-	@Override
+    @Override
+    public void createAndroidKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+        this.keyboardView = (KeyboardView)layoutInflater.inflate(keyboardLayoutResId, null);
+        if (this.keyboardActionListener != null) {
+            this.keyboardView.setOnKeyboardActionListener(this.keyboardActionListener);
+        }
+    }
+
+    @Override
 	public void setKeyboard(@NotNull AndroidAKeyboardDef keyboard) {
-		this.keyboardView.setKeyboard(keyboard.getKeyboard());
-	}
+        if (this.keyboardView != null) {
+            this.keyboardView.setKeyboard(keyboard.getKeyboard());
+        }
+    }
 
 	@Override
 	public void closing() {
-		this.keyboardView.closing();
-	}
+        if (this.keyboardView != null) {
+            this.keyboardView.closing();
+        }
+    }
 
 	@Override
 	public boolean handleBack() {
-		return this.keyboardView.handleBack();
-	}
+        if (this.keyboardView != null) {
+            return this.keyboardView.handleBack();
+        } else {
+            return false;
+        }
+    }
 
 	@Override
 	public boolean isShifted() {
-		return this.keyboardView.isShifted();
-	}
+        if (this.keyboardView != null) {
+            return this.keyboardView.isShifted();
+        } else {
+            return false;
+        }
+    }
 
 	@Override
 	public void setShifted(boolean shifted) {
-		this.keyboardView.setShifted(shifted);
-	}
+        if (this.keyboardView != null) {
+            this.keyboardView.setShifted(shifted);
+        }
+    }
 
 	@Override
 	public boolean isExtractViewShown() {
@@ -70,7 +103,8 @@ public abstract class AbstractAKeyboardView implements AndroidAKeyboardView {
 	}
 
 	@NotNull
-	public KeyboardView getKeyboardView() {
+	public KeyboardView getAndroidKeyboardView() {
+        assert keyboardView != null;
 		return keyboardView;
 	}
 

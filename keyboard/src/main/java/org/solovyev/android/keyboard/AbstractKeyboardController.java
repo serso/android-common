@@ -32,7 +32,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	private static final boolean PROCESS_HARD_KEYS = true;
 
 	@NotNull
-	private AKeyboardControllerState<KD> state = AKeyboardControllerStateImpl.newDefaultState();
+	private AKeyboardControllerState<KD> state;
 
 	@NotNull
 	private AKeyboardView<KD> keyboardView;
@@ -59,30 +59,31 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     @Override
     public void onCreate(@NotNull Context context) {
         this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.keyboardView = createDefaultKeyboardView0();
 
     }
 
 	@Override
-	public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
+	public final void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
 		this.keyboardInput = new DefaultKeyboardInput(inputMethodService);
-	}
+        this.keyboardView = createKeyboardView0(inputMethodService);
+        this.state = onInitializeInterface0(inputMethodService);
+    }
+
+    @NotNull
+    protected abstract AKeyboardControllerState<KD> onInitializeInterface0(@NotNull InputMethodService inputMethodService);
 
     @NotNull
     @Override
     public final AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
-        keyboardView = createKeyboardView0(context, layoutInflater);
-        keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
+        keyboardView.createAndroidKeyboardView(context, layoutInflater);
+        keyboardView.setKeyboard(getCurrentKeyboard().getKeyboard());
         keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
         return keyboardView;
     }
 
     @NotNull
-    protected abstract AKeyboardView<KD> createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
-
-    @NotNull
-    protected abstract AKeyboardView<KD> createDefaultKeyboardView0();
+    protected abstract AKeyboardView<KD> createKeyboardView0(@NotNull Context context);
 
     @Override
     public View onCreateCandidatesView() {
@@ -123,7 +124,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     @Override
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         // Apply the selected keyboard to the input view.
-        keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
+        keyboardView.setKeyboard(getCurrentKeyboard().getKeyboard());
         keyboardView.closing();
         final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
         keyboardView.setSubtypeOnSpaceKey(subtype);
@@ -135,8 +136,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	}
 
 	@NotNull
-	protected
-    AKeyboard<? extends KD> getCurrentKeyboard() {
+	protected AKeyboard<? extends KD> getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
 
@@ -224,7 +224,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     }
 
     @Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(int keyCode, @NotNull KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
 				// The InputMethodService already takes care of the back
@@ -258,8 +258,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 				// text being entered with a hard keyboard, we need to process
 				// it and do the appropriate action.
 				if (PROCESS_HARD_KEYS) {
-					if (keyCode == KeyEvent.KEYCODE_SPACE
-							&& (event.getMetaState() & KeyEvent.META_ALT_ON) != 0) {
+					if (keyCode == KeyEvent.KEYCODE_SPACE && (event.getMetaState() & KeyEvent.META_ALT_ON) != 0) {
 						// A silly example: in our input method, Alt+Space
 						// is a shortcut for 'android' in lower case.
 						InputConnection ic = keyboardInput.getCurrentInputConnection();
@@ -311,7 +310,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	 * InputConnection.  It is only needed when using the
 	 * PROCESS_HARD_KEYS option.
 	 */
-	private boolean translateKeyDown(int keyCode, KeyEvent event) {
+	private boolean translateKeyDown(int keyCode, @NotNull KeyEvent event) {
 		metaState = MetaKeyKeyListener.handleKeyDown(metaState, keyCode, event);
 		int unicodeChar = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(metaState));
 

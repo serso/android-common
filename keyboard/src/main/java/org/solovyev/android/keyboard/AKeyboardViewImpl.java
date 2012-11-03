@@ -1,7 +1,9 @@
 package org.solovyev.android.keyboard;
 
+import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
@@ -24,24 +26,24 @@ public class AKeyboardViewImpl extends AbstractAKeyboardView{
 	@NotNull
 	private List<CompletionInfo> completions = Collections.emptyList();
 
-	public AKeyboardViewImpl(@NotNull KeyboardView keyboardView,
+	public AKeyboardViewImpl(@NotNull int keyboardLayoutResId,
 							 @NotNull AKeyboardController keyboardController,
 							 @NotNull InputMethodService inputMethodService,
 							 @Nullable CandidateView candidateView) {
-		super(keyboardView,keyboardController, inputMethodService);
+		super(keyboardLayoutResId,keyboardController, inputMethodService);
 		this.candidateView = candidateView;
 	}
 
     @Override
     public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
-		final KeyboardView keyboardView = getKeyboardView();
+		final KeyboardView keyboardView = getAndroidKeyboardView();
         if ( keyboardView instanceof LatinKeyboardView ) {
             // todo serso: refactor
             ((LatinKeyboardView) keyboardView).setSubtypeOnSpaceKey(subtype);
         }
     }
 
-	@Override
+    @Override
 	public void setSuggestions(@NotNull List<String> suggestions, boolean completions, boolean typedWordValid) {
 		if (candidateView != null) {
 			candidateView.setSuggestions(suggestions, completions, typedWordValid);

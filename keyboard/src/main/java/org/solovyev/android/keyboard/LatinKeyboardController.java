@@ -3,9 +3,7 @@ package org.solovyev.android.keyboard;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.text.StringUtils;
@@ -31,19 +29,17 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 	@NotNull
 	private AKeyboard<AndroidAKeyboardDef> symbolsShiftedKeyboard;
 
-	@Override
-	public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
-		super.onInitializeInterface(inputMethodService);
+    @NotNull
+    @Override
+    protected AKeyboardControllerState<AndroidAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+        qwertyKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.qwerty);
+        symbolsKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols);
+        symbolsShiftedKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols_shift);
 
-		qwertyKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.qwerty);
-		symbolsKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols);
-		symbolsShiftedKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols_shift);
+        return AKeyboardControllerStateImpl.newDefaultState(qwertyKeyboard);
+    }
 
-		setCurrentKeyboard(qwertyKeyboard);
-
-	}
-
-	@NotNull
+    @NotNull
 	@Override
 	public AKeyboardControllerState<AndroidAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
 		final AKeyboardControllerState<AndroidAKeyboardDef> result;
@@ -61,8 +57,7 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 			case InputType.TYPE_CLASS_PHONE:
 				// Phones will also default to the symbols keyboard, though
 				// often you will want to have a dedicated phone keyboard.
-				setCurrentKeyboard(symbolsKeyboard);
-				result = AKeyboardControllerStateImpl.newDefaultState();
+				result = AKeyboardControllerStateImpl.newDefaultState(symbolsKeyboard);
 				break;
 
 			case InputType.TYPE_CLASS_TEXT:
@@ -101,7 +96,7 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 					completion = getInputMethodService().isFullscreenMode();
 				}
 
-				result = AKeyboardControllerStateImpl.<AndroidAKeyboardDef>newInstance(prediction, completion).copyForNewKeyboard(qwertyKeyboard);
+				result = AKeyboardControllerStateImpl.newInstance(prediction, completion, qwertyKeyboard);
 
 				// We also want to look at the current state of the editor
 				// to decide whether our alphabetic keyboard should start out
@@ -167,8 +162,8 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 
 	@NotNull
 	@Override
-	public AndroidAKeyboardView createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
-		return new AKeyboardViewImpl((KeyboardView)layoutInflater.inflate(R.layout.latin_keyboard, null), this, getInputMethodService(), null);
+	public AndroidAKeyboardView createKeyboardView0(@NotNull Context context) {
+		return new AKeyboardViewImpl(R.layout.latin_keyboard, this, getInputMethodService(), null);
 	}
 
 	public void handleShift() {

@@ -1,6 +1,5 @@
 package org.solovyev.android.keyboard;
 
-import android.content.res.Resources;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -25,40 +24,27 @@ public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKe
     }
 
     @NotNull
-    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState() {
+    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState(@NotNull AKeyboard<? extends K> keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
         result.capsLock = false;
         result.completion = false;
         result.prediction = false;
-        result.keyboard = createDefaultKeyboard();
+        result.keyboard = keyboard;
 
         return result;
     }
 
-    private static <K extends AKeyboardDef> AKeyboardImpl<K> createDefaultKeyboard() {
-        return new AKeyboardImpl<K>("default", (K)new AKeyboardDef(){
-
-            @Override
-            public void setImeOptions(@NotNull Resources resources, int imeOptions) {
-            }
-
-            @Override
-            public void setShifted(boolean shifted) {
-            }
-        });
-    }
-
     @NotNull
-    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion) {
+    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @NotNull AKeyboard<? extends K> keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
         result.capsLock = false;
         result.completion = completion;
         result.prediction = prediction;
-        result.keyboard = createDefaultKeyboard();
+        result.keyboard = keyboard;
 
         return result;
     }
@@ -111,12 +97,5 @@ public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKe
 		result.completion = this.completion;
 		result.keyboard = this.keyboard;
 		return result;
-	}
-
-	@NotNull
-	public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState(@NotNull AKeyboard<K> keyboard) {
-		final AKeyboardControllerStateImpl<K> keyboardControllerState = (AKeyboardControllerStateImpl<K>) newDefaultState();
-		keyboardControllerState.keyboard = keyboard;
-		return keyboardControllerState;
 	}
 }
