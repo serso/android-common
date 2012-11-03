@@ -59,7 +59,7 @@ public class DirectionDragButton extends DragButton {
 		private TextPaint paint;
 
 		@NotNull
-		private Float textScale = 0.4f;
+		private Float textScale = 0.5f;
 
 		private boolean showText = true;
 
