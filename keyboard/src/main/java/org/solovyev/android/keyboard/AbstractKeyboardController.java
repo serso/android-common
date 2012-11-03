@@ -37,7 +37,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	 * a QWERTY keyboard to Chinese), but may not be used for input methods
 	 * that are primarily intended to be used for on-screen text entry.
 	 */
-	private static final boolean PROCESS_HARD_KEYS = true;
+	private static final boolean PROCESS_HARD_KEYS = false;
 
     protected static final int KEYCODE_CLEAR = -800;
     protected static final int KEYCODE_COPY = -801;

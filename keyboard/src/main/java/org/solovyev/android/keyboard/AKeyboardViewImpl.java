@@ -1,9 +1,7 @@
 package org.solovyev.android.keyboard;
 
-import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
@@ -18,7 +16,7 @@ import java.util.List;
  * Date: 11/1/12
  * Time: 10:04 PM
  */
-public class AKeyboardViewImpl extends AbstractAKeyboardView{
+public class AKeyboardViewImpl extends AbstractAndroidAKeyboardView {
 
 	@Nullable
 	private CandidateView candidateView;

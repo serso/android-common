@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
  * Date: 02.11.12
  * Time: 14:44
  */
-public abstract class AbstractAKeyboardView implements AndroidAKeyboardView {
+public abstract class AbstractAndroidAKeyboardView implements AndroidAKeyboardView {
 
 	@Nullable
 	private KeyboardView keyboardView;
@@ -28,9 +28,9 @@ public abstract class AbstractAKeyboardView implements AndroidAKeyboardView {
     @Nullable
     private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
-    public AbstractAKeyboardView(int keyboardLayoutResId,
-								 @NotNull AKeyboardController keyboardController,
-								 @NotNull InputMethodService inputMethodService) {
+    public AbstractAndroidAKeyboardView(int keyboardLayoutResId,
+                                        @NotNull AKeyboardController keyboardController,
+                                        @NotNull InputMethodService inputMethodService) {
         this.keyboardLayoutResId = keyboardLayoutResId;
         this.keyboardController = keyboardController;
 		this.inputMethodService = inputMethodService;
