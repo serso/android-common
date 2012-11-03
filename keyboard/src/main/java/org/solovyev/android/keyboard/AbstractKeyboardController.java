@@ -9,26 +9,17 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.CompletionInfo;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodSubtype;
+import android.view.inputmethod.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.text.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * User: Solovyev_S
  * Date: 02.11.12
  * Time: 11:33
  */
-public abstract class AbstractKeyboardController implements AKeyboardController {
+public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implements AKeyboardController {
 
 	/**
 	 * This boolean indicates the optional example code for performing
@@ -41,10 +32,10 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	private static final boolean PROCESS_HARD_KEYS = true;
 
 	@NotNull
-	private AKeyboardControllerState state = AKeyboardControllerStateImpl.newDefaultState();
+	private AKeyboardControllerState<KD> state = AKeyboardControllerStateImpl.newDefaultState();
 
 	@NotNull
-	private AKeyboardView keyboardView = new DummyAKeyboardView();
+	private AKeyboardView<KD> keyboardView;
 
 	@NotNull
 	private AKeyboardInput keyboardInput;
@@ -57,11 +48,86 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	@NotNull
 	private InputMethodManager inputMethodManager;
 
+    /*
+    **********************************************************************
+    *
+    *                           LIFECYCLE
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public void onCreate(@NotNull Context context) {
+        this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        this.keyboardView = createDefaultKeyboardView0();
+
+    }
+
 	@Override
 	public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
 		this.keyboardInput = new DefaultKeyboardInput(inputMethodService);
 	}
+
+    @NotNull
+    @Override
+    public final AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+        keyboardView = createKeyboardView0(context, layoutInflater);
+        keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
+        keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
+        return keyboardView;
+    }
+
+    @NotNull
+    protected abstract AKeyboardView<KD> createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
+
+    @NotNull
+    protected abstract AKeyboardView<KD> createDefaultKeyboardView0();
+
+    @Override
+    public View onCreateCandidatesView() {
+        return null;
+    }
+
+    @Override
+    public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {
+        if (!restarting) {
+            // Clear shift states.
+            metaState = 0;
+        }
+
+        this.state = onStartInput0(attribute, restarting);
+
+        keyboardInput.clearTypedText();
+
+        // Update the label on the enter key, depending on what the application
+        // says it will do.
+        getCurrentKeyboard().setImeOptions(inputMethodService.getResources(), attribute.imeOptions);
+    }
+
+
+    @Override
+    public void onFinishInput() {
+        keyboardInput.clearTypedText();
+        keyboardView.closing();
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           SYSTEM CALLS
+    *
+    **********************************************************************
+    */
+
+    @Override
+    public void onStartInputView(EditorInfo attribute, boolean restarting) {
+        // Apply the selected keyboard to the input view.
+        keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
+        keyboardView.closing();
+        final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
+        keyboardView.setSubtypeOnSpaceKey(subtype);
+    }
 
 	@NotNull
 	protected InputMethodService getInputMethodService() {
@@ -69,95 +135,44 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	}
 
 	@NotNull
-	@Override
-	public AKeyboard getCurrentKeyboard() {
+	protected
+    AKeyboard<? extends KD> getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
 
-	protected void setCurrentKeyboard(@NotNull AKeyboard keyboard) {
+	protected void setCurrentKeyboard(@NotNull AKeyboard<? extends KD> keyboard) {
 		this.state = this.state.copyForNewKeyboard(keyboard);
-		this.keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
+		this.keyboardView.setKeyboard(keyboard.getKeyboard());
 	}
 
-	@Override
 	@NotNull
-	public AKeyboardControllerState getState() {
+	protected AKeyboardControllerState<KD> getState() {
 		return state;
 	}
 
-	protected void setState(@NotNull AKeyboardControllerState state) {
+	protected void setState(@NotNull AKeyboardControllerState<KD> state) {
 		this.state = state;
 	}
 
-	@Override
 	@NotNull
-	public AKeyboardView getKeyboardView() {
+    protected AKeyboardView<KD> getKeyboardView() {
 		return keyboardView;
 	}
 
-	@Override
 	@NotNull
-	public AKeyboardInput getKeyboardInput() {
+	protected AKeyboardInput getKeyboardInput() {
 		return keyboardInput;
 	}
 
 	@Override
 	public void handleClose() {
 		keyboardInput.commitTyped();
-
-		updateCandidates();
-
 		inputMethodService.requestHideSelf(0);
 		keyboardView.closing();
 	}
 
-	@Override
-	public void onCreate(@NotNull Context context) {
-		inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-	}
-
-	@Override
-	public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {
-		if (!restarting) {
-			// Clear shift states.
-			metaState = 0;
-		}
-
-		this.state = onStartInput0(attribute, restarting);
-
-		keyboardInput.clear();
-
-		updateCandidates();
-		keyboardView.setCompletions(Collections.<CompletionInfo>emptyList());
-
-		// Update the label on the enter key, depending on what the application
-		// says it will do.
-		getCurrentKeyboard().setImeOptions(inputMethodService.getResources(), attribute.imeOptions);
-	}
-
-	@Override
-	public void onStartInputView(EditorInfo attribute, boolean restarting) {
-		// Apply the selected keyboard to the input view.
-		keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
-		keyboardView.closing();
-		final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
-		keyboardView.setSubtypeOnSpaceKey(subtype);
-	}
-
 	@NotNull
-	@Override
-	public final AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
-		keyboardView = createKeyboardView0(context, layoutInflater);
-		keyboardView.setKeyboard(state.getKeyboard().getKeyboard());
-		keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
-		return keyboardView;
-	}
-
-	@NotNull
-	protected abstract AKeyboardView createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
-
-	@NotNull
-	public abstract AKeyboardControllerState onStartInput0(@NotNull EditorInfo attribute, boolean restarting);
+	public abstract AKeyboardControllerState<KD> onStartInput0(@NotNull EditorInfo attribute, boolean restarting);
 
 	@Override
 	public void onText(@Nullable CharSequence text) {
@@ -168,51 +183,6 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 
 	@Override
 	public void onDisplayCompletions(@Nullable CompletionInfo[] completions) {
-		if (state.isCompletion()) {
-
-			if (completions == null) {
-				setSuggestions(Collections.<String>emptyList(), false, false);
-			} else {
-				final List<String> suggestions = new ArrayList<String>();
-				for (CompletionInfo completion : Arrays.asList(completions)) {
-					if (completion != null) {
-						suggestions.add(completion.getText().toString());
-					}
-				}
-
-				setSuggestions(suggestions, true, true);
-			}
-		}
-	}
-
-	/**
-	 * Update the list of available candidates from the current composing
-	 * text.  This will need to be filled in by however you are determining
-	 * candidates.
-	 */
-	public void updateCandidates() {
-		if (!state.isCompletion()) {
-			final CharSequence text = keyboardInput.getText();
-			if (!StringUtils.isEmpty(text)) {
-				final List<String> list = new ArrayList<String>();
-				list.add(text.toString());
-				setSuggestions(list, true, true);
-			} else {
-				setSuggestions(Collections.<String>emptyList(), false, false);
-			}
-		}
-	}
-
-	public void setSuggestions(@NotNull List<String> suggestions,
-							   boolean completions,
-							   boolean typedWordValid) {
-		if (suggestions.size() > 0) {
-			keyboardView.setCandidatesViewShown(true);
-		} else if (keyboardView.isExtractViewShown()) {
-			keyboardView.setCandidatesViewShown(true);
-		}
-
-		keyboardView.setSuggestions(suggestions, completions, typedWordValid);
 	}
 
 	/**
@@ -236,19 +206,12 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	}
 
 	@Override
-	public void onFinishInput() {
-		keyboardInput.clear();
-		updateCandidates();
-		keyboardView.closing();
-	}
-
-	@Override
 	public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
 		// If the current selection in the text view changes, we should
 		// clear whatever candidate text we have.
-		final CharSequence text = keyboardInput.getText();
+		final CharSequence text = keyboardInput.getTypedText();
 		if (!StringUtils.isEmpty(text) && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
-			keyboardInput.clear();
+			keyboardInput.clearTypedText();
 			updateCandidates();
 			final InputConnection ic = keyboardInput.getCurrentInputConnection();
 			if (ic != null) {
@@ -257,7 +220,10 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 		}
 	}
 
-	@Override
+    protected void updateCandidates() {
+    }
+
+    @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
@@ -276,7 +242,7 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 				// Special handling of the delete key: if we currently are
 				// composing text for the user, we want to modify that instead
 				// of let the application to the delete itself.
-				final CharSequence text = keyboardInput.getText();
+				final CharSequence text = keyboardInput.getTypedText();
 				if (!StringUtils.isEmpty(text)) {
 					onKey(Keyboard.KEYCODE_DELETE, null);
 					return true;
@@ -321,14 +287,15 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 		return false;
 	}
 
-	public void handleBackspace() {
-		if ( keyboardInput.handleBackspace() ) {
-			updateCandidates();
-		} else {
-			keyDownUp(KeyEvent.KEYCODE_DEL);
-		}
+	public boolean handleBackspace() {
+        boolean changed = keyboardInput.handleBackspace();
+        if (!changed) {
+            keyDownUp(KeyEvent.KEYCODE_DEL);
+        }
 
-		updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
+        updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
+
+        return changed;
 	}
 
 	/**
@@ -399,33 +366,21 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	}
 
 	public void pickDefaultCandidate() {
-		pickSuggestionManually(0);
+        if (state.isCompletion()) {
+            pickSuggestionManually(0);
+        }
 	}
 
 	public void pickSuggestionManually(int index) {
-		final List<CompletionInfo> completions = keyboardView.getCompletions();
-
-		final CharSequence text = keyboardInput.getText();
-
-		if (state.isCompletion() && index >= 0 && index < completions.size()) {
-			final CompletionInfo ci = completions.get(index);
-			keyboardInput.commitCompletion(ci);
-			keyboardView.clearCandidateView();
-			updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
-		} else if (!StringUtils.isEmpty(text)) {
-			// If we were generating candidate suggestions for the current
-			// text, we would commit one of them here.  But for this sample,
-			// we will just commit the current text.
-			keyboardInput.commitTyped();
-		}
 	}
 
-	public void handleCharacter(int primaryCode, int[] keyCodes) {
+	protected void handleCharacter(int primaryCode, int[] keyCodes) {
 		if (inputMethodService.isInputViewShown()) {
 			if (keyboardView.isShifted()) {
 				primaryCode = Character.toUpperCase(primaryCode);
 			}
 		}
+
 		if (isAlphabet(primaryCode) && state.isPrediction()) {
 			keyboardInput.append((char)primaryCode);
 			updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
@@ -445,10 +400,5 @@ public abstract class AbstractKeyboardController implements AKeyboardController 
 	@Override
 	public void onCurrentInputMethodSubtypeChanged(@NotNull InputMethodSubtype subtype) {
 		keyboardView.setSubtypeOnSpaceKey(subtype);
-	}
-
-	@Override
-	public View onCreateCandidatesView() {
-		return this.keyboardView.onCreateCandidatesView();
 	}
 }

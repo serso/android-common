@@ -20,7 +20,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 	private final InputMethodService inputMethodService;
 
 	@NotNull
-	private final StringBuilder text = new StringBuilder(1000);
+	private final StringBuilder typedText = new StringBuilder(100);
 
 	public DefaultKeyboardInput(@NotNull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
@@ -29,26 +29,34 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 	@Override
 	public void commitTyped() {
 		final InputConnection inputConnection = inputMethodService.getCurrentInputConnection();
-		if (text.length() > 0) {
+		if (typedText.length() > 0) {
 			if (inputConnection != null) {
-				inputConnection.commitText(text, text.length());
+				inputConnection.commitText(typedText, typedText.length());
 			}
-			text.setLength(0);
+			typedText.setLength(0);
 		}
 	}
 
 	@Override
-	public void onText(CharSequence text) {
+	public void onText(@Nullable CharSequence text) {
 		final InputConnection inputConnection = inputMethodService.getCurrentInputConnection();
 		if (inputConnection != null) {
 			inputConnection.beginBatchEdit();
-			if (this.text.length() > 0) {
+			if (this.typedText.length() > 0) {
 				commitTyped();
 			}
 			inputConnection.commitText(text, 0);
 			inputConnection.endBatchEdit();
 		}
 	}
+
+    @Override
+    public void commitText(@Nullable String text, int position) {
+        final InputConnection inputConnection = getCurrentInputConnection();
+        if (inputConnection != null) {
+            inputConnection.commitText(text, position);
+        }
+    }
 
 	@NotNull
 	@Override
@@ -63,28 +71,28 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 	}
 
 	@Override
-	public CharSequence getText() {
-		return text;
+	public CharSequence getTypedText() {
+		return typedText;
 	}
 
 	@Override
-	public void clear() {
-		this.text.setLength(0);
+	public void clearTypedText() {
+		this.typedText.setLength(0);
 	}
 
 	@Override
 	public boolean handleBackspace() {
 		boolean changed = false;
 
-		int length = text.length();
+		int length = typedText.length();
 		final InputConnection inputConnection = getCurrentInputConnection();
 		if (inputConnection != null) {
 			if (length > 1) {
-				text.delete(length - 1, length);
-				inputConnection.setComposingText(text, 1);
+				typedText.delete(length - 1, length);
+				inputConnection.setComposingText(typedText, 1);
 				changed = true;
 			} else if (length > 0) {
-				text.setLength(0);
+				typedText.setLength(0);
 				inputConnection.commitText("", 0);
 				changed = true;
 			}
@@ -103,13 +111,13 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
 	@Override
 	public int translateKeyDown(int unicodeChar) {
-		if (!StringUtils.isEmpty(text)) {
-			char accent = text.charAt(text.length() - 1);
+		if (!StringUtils.isEmpty(typedText)) {
+			char accent = typedText.charAt(typedText.length() - 1);
 			int composed = KeyEvent.getDeadChar(accent, unicodeChar);
 
 			if (composed != 0) {
 				unicodeChar = composed;
-				text.setLength(text.length() - 1);
+				typedText.setLength(typedText.length() - 1);
 			}
 		}
 
@@ -126,18 +134,10 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
 	@Override
 	public void append(char primaryCode) {
-		text.append(primaryCode);
+		typedText.append(primaryCode);
 		final InputConnection inputConnection = getCurrentInputConnection();
 		if (inputConnection != null) {
-			inputConnection.setComposingText(text, 1);
-		}
-	}
-
-	@Override
-	public void commitText(@Nullable String text, int i) {
-		final InputConnection inputConnection = getCurrentInputConnection();
-		if (inputConnection != null) {
-			inputConnection.commitText(text, i);
+			inputConnection.setComposingText(typedText, 1);
 		}
 	}
 }

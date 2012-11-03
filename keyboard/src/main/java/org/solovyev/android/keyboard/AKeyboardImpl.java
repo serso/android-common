@@ -2,7 +2,6 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.inputmethodservice.Keyboard;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -10,22 +9,22 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 8:12 PM
  */
-public class AKeyboardImpl implements AKeyboard {
+public class AKeyboardImpl<K extends AKeyboardDef> implements AKeyboard<K> {
 
     @NotNull
     private final String keyboardId;
 
     @NotNull
-    private final AbstractKeyboard keyboard;
+    private final K keyboard;
 
-    public AKeyboardImpl(@NotNull String keyboardId, @NotNull AbstractKeyboard keyboard) {
+    public AKeyboardImpl(@NotNull String keyboardId, @NotNull K keyboard) {
         this.keyboardId = keyboardId;
         this.keyboard = keyboard;
     }
 
     @NotNull
-    public static AKeyboard fromResource(@NotNull Context context, int keyboardRes) {
-        return new AKeyboardImpl(String.valueOf(keyboardRes), new AbstractKeyboard(context, keyboardRes));
+    public static AKeyboard<AndroidAKeyboardDef> fromResource(@NotNull Context context, int keyboardRes) {
+        return new AKeyboardImpl<AndroidAKeyboardDef>(String.valueOf(keyboardRes), AndroidAKeyboardDef.newInstance(new AbstractKeyboard(context, keyboardRes)));
     }
 
     @NotNull
@@ -36,7 +35,7 @@ public class AKeyboardImpl implements AKeyboard {
 
     @NotNull
     @Override
-    public Keyboard getKeyboard() {
+    public K getKeyboard() {
         return keyboard;
     }
 

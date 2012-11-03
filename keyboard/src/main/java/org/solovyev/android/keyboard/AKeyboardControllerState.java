@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 9:30 PM
  */
-public interface AKeyboardControllerState {
+public interface AKeyboardControllerState<K extends AKeyboardDef> {
 
     boolean isShifted();
 
@@ -18,11 +18,11 @@ public interface AKeyboardControllerState {
     boolean isPrediction();
 
 	@NotNull
-	AKeyboard getKeyboard();
+	AKeyboard<? extends K> getKeyboard();
 
 	@NotNull
-	AKeyboardControllerState copyForNewKeyboard(@NotNull AKeyboard keyboard);
+	AKeyboardControllerState<K> copyForNewKeyboard(@NotNull AKeyboard<? extends K> keyboard);
 
 	@NotNull
-	AKeyboardControllerState copyForNewCapsLock(boolean capsLock);
+	AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock);
 }

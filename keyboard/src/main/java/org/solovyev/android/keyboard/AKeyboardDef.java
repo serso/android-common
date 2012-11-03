@@ -5,16 +5,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * User: serso
- * Date: 11/1/12
- * Time: 7:55 PM
+ * Date: 11/3/12
+ * Time: 1:05 PM
  */
-public interface AKeyboard<K extends AKeyboardDef> {
-
-    @NotNull
-    String getKeyboardId();
-
-    @NotNull
-    K getKeyboard();
+public interface AKeyboardDef {
 
     void setImeOptions(@NotNull Resources resources, int imeOptions);
 

@@ -258,7 +258,20 @@ public class DirectionDragButton extends DragButton {
 		init(context, attrs);
 	}
 
-	private void init(@NotNull Context context, @NotNull AttributeSet attrs) {
+    public DirectionDragButton(Context context, @NotNull DirectionDragButtonDef directionDragButtonDef) {
+        super(context, directionDragButtonDef);
+        init(context, directionDragButtonDef);
+    }
+
+    private void init(@NotNull Context context,
+                      @NotNull DirectionDragButtonDef directionDragButtonDef) {
+        for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
+            final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
+            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, StringUtils.getNotEmpty(directionText, "")));
+        }
+    }
+
+    private void init(@NotNull Context context, @NotNull AttributeSet attrs) {
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionDragButton);
 

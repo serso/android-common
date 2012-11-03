@@ -42,9 +42,7 @@ public class DefaultKeyboardActionListener implements KeyboardView.OnKeyboardAct
 
 	@Override
 	public void swipeRight() {
-		if (keyboardController.getState().isCompletion()) {
-			keyboardController.pickDefaultCandidate();
-		}
+		keyboardController.pickDefaultCandidate();
 	}
 
 	@Override

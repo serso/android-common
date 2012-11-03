@@ -24,12 +24,19 @@ public class DragButton extends Button {
 	@Nullable
 	private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
-	public DragButton(Context context, @NotNull AttributeSet attrs) {
+	public DragButton(@NotNull Context context, @NotNull AttributeSet attrs) {
 		super(context, attrs);
 		setOnTouchListener(new OnTouchListenerImpl());
 	}
 
-	public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
+    public DragButton(@NotNull Context context, @NotNull DragButtonDef dragButtonDef) {
+        super(context);
+        setOnTouchListener(new OnTouchListenerImpl());
+
+        setText(dragButtonDef.getText());
+    }
+
+    public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
 		this.onDragListener = onDragListener;
 	}
 

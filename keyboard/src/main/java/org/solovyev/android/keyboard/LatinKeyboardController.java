@@ -15,7 +15,7 @@ import org.solovyev.common.text.StringUtils;
  * Date: 11/1/12
  * Time: 9:22 PM
  */
-final class LatinKeyboardController extends AbstractKeyboardController {
+final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 
 	@NotNull
 	private String wordSeparators;
@@ -23,13 +23,13 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 	private long lastShiftTime;
 
 	@NotNull
-	private AKeyboard qwertyKeyboard;
+	private AKeyboard<AndroidAKeyboardDef> qwertyKeyboard;
 
 	@NotNull
-	private AKeyboard symbolsKeyboard;
+	private AKeyboard<AndroidAKeyboardDef> symbolsKeyboard;
 
 	@NotNull
-	private AKeyboard symbolsShiftedKeyboard;
+	private AKeyboard<AndroidAKeyboardDef> symbolsShiftedKeyboard;
 
 	@Override
 	public void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
@@ -45,8 +45,8 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 
 	@NotNull
 	@Override
-	public AKeyboardControllerState onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
-		final AKeyboardControllerState result;
+	public AKeyboardControllerState<AndroidAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+		final AKeyboardControllerState<AndroidAKeyboardDef> result;
 
 		// We are now going to initialize our state based on the type of
 		// text being edited.
@@ -101,7 +101,7 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 					completion = getInputMethodService().isFullscreenMode();
 				}
 
-				result = AKeyboardControllerStateImpl.newInstance(prediction, completion).copyForNewKeyboard(qwertyKeyboard);
+				result = AKeyboardControllerStateImpl.<AndroidAKeyboardDef>newInstance(prediction, completion).copyForNewKeyboard(qwertyKeyboard);
 
 				// We also want to look at the current state of the editor
 				// to decide whether our alphabetic keyboard should start out
@@ -129,7 +129,7 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 	public void onKey(int primaryCode, int[] keyCodes) {
 		if (isWordSeparator(primaryCode)) {
 			// Handle separator
-			if (!StringUtils.isEmpty(getKeyboardInput().getText())) {
+			if (!StringUtils.isEmpty(getKeyboardInput().getTypedText())) {
 				getKeyboardInput().commitTyped();
 			}
 			sendKey(primaryCode);
@@ -143,7 +143,7 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 		} else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
 			// Show a menu or somethin'
 		} else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE) {
-			AKeyboard current = getCurrentKeyboard();
+			AKeyboard<? extends AndroidAKeyboardDef> current = getCurrentKeyboard();
 			if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
 				current = qwertyKeyboard;
 			} else {
@@ -167,8 +167,8 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 
 	@NotNull
 	@Override
-	public AKeyboardView createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
-		return new AKeyboardViewImpl((KeyboardView)layoutInflater.inflate(R.layout.input, null), this, getInputMethodService(), null);
+	public AndroidAKeyboardView createKeyboardView0(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+		return new AKeyboardViewImpl((KeyboardView)layoutInflater.inflate(R.layout.latin_keyboard, null), this, getInputMethodService(), null);
 	}
 
 	public void handleShift() {
@@ -192,7 +192,7 @@ final class LatinKeyboardController extends AbstractKeyboardController {
 	private void checkToggleCapsLock() {
 		long now = System.currentTimeMillis();
 		if (lastShiftTime + 800 > now) {
-			setState(getState().copyForNewCapsLock(!getState().isCapsLock()));
+            setState(getState().copyForNewCapsLock(!getState().isCapsLock()));
 			lastShiftTime = 0;
 		} else {
 			lastShiftTime = now;

@@ -1,5 +1,6 @@
 package org.solovyev.android.keyboard;
 
+import android.content.res.Resources;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -7,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 9:32 PM
  */
-public class AKeyboardControllerStateImpl implements AKeyboardControllerState {
+public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKeyboardControllerState<K> {
 
     private boolean shifted;
 
@@ -18,31 +19,46 @@ public class AKeyboardControllerStateImpl implements AKeyboardControllerState {
     private boolean prediction;
 
 	@NotNull
-	private AKeyboard keyboard;
+	private AKeyboard<? extends K> keyboard;
 
     private AKeyboardControllerStateImpl() {
     }
 
     @NotNull
-    public static AKeyboardControllerState newDefaultState() {
-        final AKeyboardControllerStateImpl result = new AKeyboardControllerStateImpl();
+    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState() {
+        final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
         result.capsLock = false;
         result.completion = false;
         result.prediction = false;
+        result.keyboard = createDefaultKeyboard();
 
         return result;
     }
 
+    private static <K extends AKeyboardDef> AKeyboardImpl<K> createDefaultKeyboard() {
+        return new AKeyboardImpl<K>("default", (K)new AKeyboardDef(){
+
+            @Override
+            public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+            }
+
+            @Override
+            public void setShifted(boolean shifted) {
+            }
+        });
+    }
+
     @NotNull
-    public static AKeyboardControllerState newInstance(boolean prediction, boolean completion) {
-        final AKeyboardControllerStateImpl result = new AKeyboardControllerStateImpl();
+    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion) {
+        final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
         result.capsLock = false;
         result.completion = completion;
         result.prediction = prediction;
+        result.keyboard = createDefaultKeyboard();
 
         return result;
     }
@@ -69,14 +85,14 @@ public class AKeyboardControllerStateImpl implements AKeyboardControllerState {
 
 	@Override
 	@NotNull
-	public AKeyboard getKeyboard() {
+	public AKeyboard<? extends K> getKeyboard() {
 		return keyboard;
 	}
 
 	@NotNull
 	@Override
-	public AKeyboardControllerState copyForNewKeyboard(@NotNull AKeyboard keyboard) {
-		final AKeyboardControllerStateImpl result = new AKeyboardControllerStateImpl();
+	public AKeyboardControllerState<K> copyForNewKeyboard(@NotNull AKeyboard<? extends K> keyboard) {
+		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 		result.capsLock = this.capsLock;
 		result.prediction = this.prediction;
 		result.shifted = this.shifted;
@@ -87,8 +103,8 @@ public class AKeyboardControllerStateImpl implements AKeyboardControllerState {
 
 	@NotNull
 	@Override
-	public AKeyboardControllerState copyForNewCapsLock(boolean capsLock) {
-		final AKeyboardControllerStateImpl result = new AKeyboardControllerStateImpl();
+	public AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock) {
+		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 		result.capsLock = capsLock;
 		result.prediction = this.prediction;
 		result.shifted = this.shifted;
@@ -98,8 +114,8 @@ public class AKeyboardControllerStateImpl implements AKeyboardControllerState {
 	}
 
 	@NotNull
-	public static AKeyboardControllerState newDefaultState(@NotNull AKeyboard keyboard) {
-		final AKeyboardControllerStateImpl keyboardControllerState = (AKeyboardControllerStateImpl) newDefaultState();
+	public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState(@NotNull AKeyboard<K> keyboard) {
+		final AKeyboardControllerStateImpl<K> keyboardControllerState = (AKeyboardControllerStateImpl<K>) newDefaultState();
 		keyboardControllerState.keyboard = keyboard;
 		return keyboardControllerState;
 	}

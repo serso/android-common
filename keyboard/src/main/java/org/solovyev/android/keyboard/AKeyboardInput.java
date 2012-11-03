@@ -16,7 +16,7 @@ public interface AKeyboardInput {
 
 	void commitTyped();
 
-	void onText(CharSequence text);
+	void onText(@Nullable CharSequence text);
 
 	@NotNull
 	EditorInfo getCurrentInputEditorInfo();
@@ -25,9 +25,9 @@ public interface AKeyboardInput {
 	InputConnection getCurrentInputConnection();
 
 	@Nullable
-	CharSequence getText();
+	CharSequence getTypedText();
 
-	void clear();
+	void clearTypedText();
 
 	boolean handleBackspace();
 

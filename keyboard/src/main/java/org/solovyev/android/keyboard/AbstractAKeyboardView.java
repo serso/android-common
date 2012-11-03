@@ -1,7 +1,6 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.InputMethodService;
-import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 02.11.12
  * Time: 14:44
  */
-public abstract class AbstractAKeyboardView implements AKeyboardView {
+public abstract class AbstractAKeyboardView implements AndroidAKeyboardView {
 
 	@NotNull
 	private final KeyboardView keyboardView;
@@ -36,8 +35,8 @@ public abstract class AbstractAKeyboardView implements AKeyboardView {
 	}
 
 	@Override
-	public void setKeyboard(@NotNull Keyboard keyboard) {
-		this.keyboardView.setKeyboard(keyboard);
+	public void setKeyboard(@NotNull AndroidAKeyboardDef keyboard) {
+		this.keyboardView.setKeyboard(keyboard.getKeyboard());
 	}
 
 	@Override
