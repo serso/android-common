@@ -1,7 +1,6 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.KeyboardView;
-import android.view.View;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,8 +20,5 @@ public interface AndroidKeyboardView<K extends AKeyboardDef> {
 
     boolean isShifted();
 
-    void setShifted(boolean shifted);
-
-    @NotNull
-    View getView();
+    boolean setShifted(boolean shifted);
 }

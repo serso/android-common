@@ -31,8 +31,8 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
 
     @NotNull
     @Override
-    public AndroidAKeyboardView getKeyboardView() {
-        return (AndroidAKeyboardView) super.getKeyboardView();
+    public AKeyboardViewWithSuggestions getKeyboardView() {
+        return (AKeyboardViewWithSuggestions) super.getKeyboardView();
     }
 
     @Override
@@ -55,12 +55,12 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
 
     @NotNull
     @Override
-    protected abstract AndroidAKeyboardView createKeyboardView0(@NotNull Context context);
+    protected abstract AKeyboardViewWithSuggestions createKeyboardView0(@NotNull Context context);
 
     public void setSuggestions(@NotNull List<String> suggestions,
                                boolean completions,
                                boolean typedWordValid) {
-        final AndroidAKeyboardView keyboardView = getKeyboardView();
+        final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();
 
         if (suggestions.size() > 0) {
             keyboardView.setCandidatesViewShown(true);
@@ -121,7 +121,7 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
     public void pickSuggestionManually(int index) {
         super.pickSuggestionManually(index);
 
-        final AndroidAKeyboardView keyboardView = getKeyboardView();
+        final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();
         final AKeyboardInput keyboardInput = getKeyboardInput();
 
         final List<CompletionInfo> completions = keyboardView.getCompletions();

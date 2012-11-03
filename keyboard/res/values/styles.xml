@@ -9,6 +9,7 @@
     <style name="keyboard_metro_button_dark_style" parent="metro_button_dark_style">
         <item name="android:textSize">@dimen/keyboard_button_text_size</item>
         <item name="android:padding">@dimen/keyboard_button_padding</item>
+        <item name="android:minHeight">@dimen/keyboard_button_min_height</item>
     </style>
 
 </resources>

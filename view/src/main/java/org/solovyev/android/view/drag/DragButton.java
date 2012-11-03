@@ -63,6 +63,7 @@ public class DragButton extends Button {
 
             final Drawable drawable = getContext().getResources().getDrawable(drawableResId);
             setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+            setCompoundDrawablePadding(0);
         }
 
         final String tag = buttonDef.getTag();

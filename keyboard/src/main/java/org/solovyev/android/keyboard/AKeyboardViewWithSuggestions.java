@@ -11,7 +11,7 @@ import java.util.List;
  * Date: 11/3/12
  * Time: 1:02 PM
  */
-public interface AndroidAKeyboardView<K extends AKeyboardDef> extends AKeyboardView<K> {
+public interface AKeyboardViewWithSuggestions<K extends AKeyboardDef> extends AKeyboardView<K> {
 
     void setCandidatesViewShown(boolean shown);
 

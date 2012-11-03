@@ -153,8 +153,8 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 
     @NotNull
 	@Override
-	public AndroidAKeyboardView createKeyboardView0(@NotNull Context context) {
-		return new AKeyboardViewImpl(R.layout.latin_keyboard, this, getInputMethodService(), null);
+	public AKeyboardViewWithSuggestions createKeyboardView0(@NotNull Context context) {
+		return new AKeyboardViewWithSuggestionsImpl(R.layout.latin_keyboard, this, getInputMethodService(), null);
 	}
 
 	public void handleShift() {

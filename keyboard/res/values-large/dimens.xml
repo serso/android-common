@@ -21,4 +21,5 @@
 <resources>
     <dimen name="keyboard_button_text_size">40dp</dimen>
     <dimen name="keyboard_button_padding">15dp</dimen>
+    <dimen name="keyboard_button_min_height">80dp</dimen>
 </resources>

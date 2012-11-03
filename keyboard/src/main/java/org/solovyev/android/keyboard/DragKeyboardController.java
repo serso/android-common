@@ -27,7 +27,7 @@ public abstract class DragKeyboardController extends AbstractKeyboardController<
     @NotNull
     @Override
     protected AKeyboardView<DragAKeyboardDef> createKeyboardView0(@NotNull Context context) {
-        return new DragAKeyboardView(this, getInputMethodService());
+        return new AKeyboardViewImpl<DragAKeyboardDef, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
     }
 
     @NotNull
