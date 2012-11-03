@@ -1,7 +1,6 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.InputMethodService;
-import android.inputmethodservice.KeyboardView;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
@@ -16,7 +15,7 @@ import java.util.List;
  * Date: 11/1/12
  * Time: 10:04 PM
  */
-public class AKeyboardViewImpl extends AbstractAndroidAKeyboardView {
+public class AKeyboardViewImpl<K extends AKeyboardDef, KV extends AndroidKeyboardView<K>> extends AbstractAndroidAKeyboardView<K, KV> implements AndroidAKeyboardView<K> {
 
 	@Nullable
 	private CandidateView candidateView;
@@ -34,7 +33,7 @@ public class AKeyboardViewImpl extends AbstractAndroidAKeyboardView {
 
     @Override
     public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
-		final KeyboardView keyboardView = getAndroidKeyboardView();
+		final View keyboardView = getAndroidKeyboardView();
         if ( keyboardView instanceof LatinKeyboardView ) {
             // todo serso: refactor
             ((LatinKeyboardView) keyboardView).setSubtypeOnSpaceKey(subtype);
