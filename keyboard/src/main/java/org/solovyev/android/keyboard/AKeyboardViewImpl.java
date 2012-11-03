@@ -1,74 +1,137 @@
 package org.solovyev.android.keyboard;
 
+import android.content.Context;
 import android.inputmethodservice.InputMethodService;
+import android.inputmethodservice.KeyboardView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
- * User: serso
- * Date: 11/1/12
- * Time: 10:04 PM
+ * User: Solovyev_S
+ * Date: 02.11.12
+ * Time: 14:44
  */
-public class AKeyboardViewImpl<K extends AKeyboardDef, KV extends AndroidKeyboardView<K>> extends AbstractAndroidAKeyboardView<K, KV> implements AndroidAKeyboardView<K> {
+public class AKeyboardViewImpl<K extends AKeyboardDef, KV extends View & AndroidKeyboardView<K>> implements AKeyboardView<K> {
 
-	@Nullable
-	private CandidateView candidateView;
+    @Nullable
+    private KV keyboardView;
 
-	@NotNull
-	private List<CompletionInfo> completions = Collections.emptyList();
+    private final int keyboardLayoutResId;
 
-	public AKeyboardViewImpl(int keyboardLayoutResId,
-							 @NotNull AKeyboardController keyboardController,
-							 @NotNull InputMethodService inputMethodService,
-							 @Nullable CandidateView candidateView) {
-		super(keyboardLayoutResId,keyboardController, inputMethodService);
-		this.candidateView = candidateView;
-	}
+    @NotNull
+    private final AKeyboardController keyboardController;
+
+    @NotNull
+    private final InputMethodService inputMethodService;
+
+    @Nullable
+    private KeyboardView.OnKeyboardActionListener keyboardActionListener;
+
+
+    public AKeyboardViewImpl(int keyboardLayoutResId,
+                             @NotNull AKeyboardController keyboardController,
+                             @NotNull InputMethodService inputMethodService) {
+        this.keyboardLayoutResId = keyboardLayoutResId;
+        this.keyboardController = keyboardController;
+        this.inputMethodService = inputMethodService;
+    }
+
+
+    @Nullable
+    protected KeyboardView.OnKeyboardActionListener getKeyboardActionListener() {
+        return keyboardActionListener;
+    }
+
 
     @Override
-    public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
-		final View keyboardView = getAndroidKeyboardView();
-        if ( keyboardView instanceof LatinKeyboardView ) {
-            // todo serso: refactor
-            ((LatinKeyboardView) keyboardView).setSubtypeOnSpaceKey(subtype);
+    public boolean isExtractViewShown() {
+        return inputMethodService.isExtractViewShown();
+    }
+
+    public void setCandidatesViewShown(boolean shown) {
+        inputMethodService.setCandidatesViewShown(shown);
+    }
+
+    @NotNull
+    public AKeyboardController getKeyboardController() {
+        return keyboardController;
+    }
+
+    @NotNull
+    public InputMethodService getInputMethodService() {
+        return inputMethodService;
+    }
+
+
+    @Override
+    public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+        this.keyboardActionListener = keyboardActionListener;
+
+        if (this.keyboardView != null) {
+            this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
         }
     }
 
     @Override
-	public void setSuggestions(@NotNull List<String> suggestions, boolean completions, boolean typedWordValid) {
-		if (candidateView != null) {
-			candidateView.setSuggestions(suggestions, completions, typedWordValid);
-		}
-	}
+    public void createAndroidKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+        this.keyboardView = (KV) layoutInflater.inflate(keyboardLayoutResId, null);
 
-	@Override
-	public void setCompletions(@NotNull List<CompletionInfo> completions) {
-		this.completions = completions;
-	}
+        final KeyboardView.OnKeyboardActionListener keyboardActionListener = this.getKeyboardActionListener();
+        if (keyboardActionListener != null) {
+            this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
+        }
+    }
 
-	@NotNull
-	@Override
-	public List<CompletionInfo> getCompletions() {
-		return this.completions;
-	}
+    @Override
+    public void setKeyboard(@NotNull K keyboard) {
+        if (this.keyboardView != null) {
+            this.keyboardView.setKeyboard(keyboard);
+        }
+    }
 
-	@Override
-	public void clearCandidateView() {
-		if (candidateView != null) {
-			candidateView.clear();
-		}
-	}
+    @Override
+    public void closing() {
+        if (this.keyboardView != null) {
+            this.keyboardView.closing();
+        }
+    }
 
-	@Override
-	public View onCreateCandidatesView() {
-		candidateView = new CandidateView(getInputMethodService());
-		candidateView.setKeyboardController(getKeyboardController());
-		return candidateView;
-	}
+    @Override
+    public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
+    }
+
+    @Override
+    public boolean handleBack() {
+        if (this.keyboardView != null) {
+            return this.keyboardView.handleBack();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isShifted() {
+        if (this.keyboardView != null) {
+            return this.keyboardView.isShifted();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void setShifted(boolean shifted) {
+        if (this.keyboardView != null) {
+            this.keyboardView.setShifted(shifted);
+        }
+    }
+
+    @NotNull
+    public View getAndroidKeyboardView() {
+        assert keyboardView != null;
+        return keyboardView;
+    }
+
 }
