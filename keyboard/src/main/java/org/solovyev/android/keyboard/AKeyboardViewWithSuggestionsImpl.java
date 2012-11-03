@@ -25,10 +25,8 @@ public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboardDef, KV extends
 
 	public AKeyboardViewWithSuggestionsImpl(int keyboardLayoutResId,
                                             @NotNull AKeyboardController keyboardController,
-                                            @NotNull InputMethodService inputMethodService,
-                                            @Nullable CandidateView candidateView) {
+                                            @NotNull InputMethodService inputMethodService) {
 		super(keyboardLayoutResId,keyboardController, inputMethodService);
-		this.candidateView = candidateView;
 	}
 
     @Override
