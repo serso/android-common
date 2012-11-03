@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 02.11.12
  * Time: 14:42
  */
-public abstract class DragKeyboardController extends AbstractKeyboardController<DragAKeyboardDef> {
+public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboardDef> {
 
     protected static String ACTION = "action:";
 
@@ -26,7 +26,7 @@ public abstract class DragKeyboardController extends AbstractKeyboardController<
 
     @NotNull
     @Override
-    protected AKeyboardView<DragAKeyboardDef> createKeyboardView0(@NotNull Context context) {
+    protected AKeyboardViewWithSuggestions<DragAKeyboardDef> createKeyboardView0(@NotNull Context context) {
         return new AKeyboardViewWithSuggestionsImpl<DragAKeyboardDef, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
     }
 

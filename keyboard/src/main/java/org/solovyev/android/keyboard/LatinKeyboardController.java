@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 9:22 PM
  */
-final class LatinKeyboardController extends AbstractAndroidKeyboardController {
+final class LatinKeyboardController extends AbstractAndroidKeyboardController<AndroidAKeyboardDef> {
 
 	private long lastShiftTime;
 

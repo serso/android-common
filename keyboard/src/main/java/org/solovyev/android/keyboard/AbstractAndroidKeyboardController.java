@@ -18,7 +18,7 @@ import java.util.List;
  * Date: 11/3/12
  * Time: 1:11 PM
  */
-public abstract class AbstractAndroidKeyboardController extends AbstractKeyboardController<AndroidAKeyboardDef> {
+public abstract class AbstractAndroidKeyboardController<K extends AKeyboardDef> extends AbstractKeyboardController<K> {
 
     @Override
     public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {
@@ -31,8 +31,8 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
 
     @NotNull
     @Override
-    public AKeyboardViewWithSuggestions getKeyboardView() {
-        return (AKeyboardViewWithSuggestions) super.getKeyboardView();
+    public AKeyboardViewWithSuggestions<K> getKeyboardView() {
+        return (AKeyboardViewWithSuggestions<K>) super.getKeyboardView();
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
 
     @NotNull
     @Override
-    protected abstract AKeyboardViewWithSuggestions createKeyboardView0(@NotNull Context context);
+    protected abstract AKeyboardViewWithSuggestions<K> createKeyboardView0(@NotNull Context context);
 
     public void setSuggestions(@NotNull List<String> suggestions,
                                boolean completions,
@@ -121,7 +121,7 @@ public abstract class AbstractAndroidKeyboardController extends AbstractKeyboard
     public void pickSuggestionManually(int index) {
         super.pickSuggestionManually(index);
 
-        final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();
+        final AKeyboardViewWithSuggestions<K> keyboardView = getKeyboardView();
         final AKeyboardInput keyboardInput = getKeyboardInput();
 
         final List<CompletionInfo> completions = keyboardView.getCompletions();
