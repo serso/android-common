@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -119,6 +120,7 @@ public class DragAKeyboardView implements AKeyboardView<DragAKeyboardDef>, View.
                     final LinearLayout rowLayout = new LinearLayout(context);
                     rowLayout.setOrientation(LinearLayout.HORIZONTAL);
                     for (DirectionDragButtonDef buttonDef : rowDef.getButtonDefs()) {
+
                         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                         params.leftMargin = buttonMargin;
                         params.bottomMargin = buttonMargin;
@@ -153,11 +155,17 @@ public class DragAKeyboardView implements AKeyboardView<DragAKeyboardDef>, View.
         return false;
     }
 
-    private boolean handleText(@Nullable CharSequence text, @Nullable Object tag) {
+    private boolean handleText(@Nullable CharSequence text, @Nullable Object tagObject) {
         // we need to check if there is something in the tag
-        if ( tag instanceof String && ((String) tag).startsWith(DragKeyboardController.ACTION)) {
+        if ( tagObject instanceof String && ((String) tagObject).startsWith(DragKeyboardController.ACTION)) {
             if (keyboardActionListener != null) {
-                keyboardActionListener.onText((String)tag);
+                final String tag = ((String) tagObject);
+                final String code = tag.substring(DragKeyboardController.ACTION.length());
+                try {
+                    keyboardActionListener.onKey(Integer.valueOf(code), null);
+                } catch (NumberFormatException e) {
+                    Log.e(DragAKeyboardView.class.getSimpleName(), e.getMessage(), e);
+                }
             }
             return true;
         } else {

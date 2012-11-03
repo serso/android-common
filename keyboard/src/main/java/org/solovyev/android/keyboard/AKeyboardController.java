@@ -115,7 +115,7 @@ public interface AKeyboardController {
      **********************************************************************
      */
 
-    void onKey(int primaryCode, @Nullable int[] keyCodes);
+    boolean onKey(int primaryCode, @Nullable int[] keyCodes);
 
     void handleClose();
 

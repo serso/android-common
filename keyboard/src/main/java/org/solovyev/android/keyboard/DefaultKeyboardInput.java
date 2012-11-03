@@ -20,7 +20,8 @@ import org.solovyev.common.text.StringUtils;
  */
 public class DefaultKeyboardInput implements AKeyboardInput {
 
-	@NotNull
+    public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
+    @NotNull
 	private final InputMethodService inputMethodService;
 
 	@NotNull
@@ -164,7 +165,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     }
 
     private int getSelectionStart(@NotNull InputConnection ic) {
-        return ic.getTextBeforeCursor(Integer.MAX_VALUE, 0).length();
+        return ic.getTextBeforeCursor(MAX_INT, 0).length();
     }
 
     @Override
@@ -183,7 +184,12 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     @Override
     public void handleClear() {
         typedText.setLength(0);
-        commitText("", 0);
+        final InputConnection ic = getCurrentInputConnection();
+        if ( ic != null ) {
+            ic.setSelection(0, 0);
+            ic.deleteSurroundingText(MAX_INT, MAX_INT);
+        }
+
     }
 
     @Override
@@ -208,15 +214,30 @@ public class DefaultKeyboardInput implements AKeyboardInput {
                     final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
                     clipboardManager.setText(text);
                 } else {
-                    text = inputConnection.getTextAfterCursor(0, 0);
-                    if (!StringUtils.isEmpty(text)) {
-                        final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboardManager.setText(text);
-                    }
+                    copyWholeText(inputConnection);
                 }
             } else {
                 Log.e("KeyboardInput", "Copy doesn't work with " + Build.VERSION.SDK_INT + " API level!");
             }
+        }
+    }
+
+    private void copyWholeText(@NotNull InputConnection ic) {
+        final CharSequence textAfter = ic.getTextAfterCursor(MAX_INT, 0);
+        final CharSequence textBefore = ic.getTextBeforeCursor(MAX_INT, 0);
+
+        String text = "";
+        if ( textBefore != null ) {
+            text += textBefore.toString();
+        }
+
+        if ( textAfter != null ) {
+            text += textAfter.toString();
+        }
+
+        if (!StringUtils.isEmpty(text)) {
+            final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.setText(text);
         }
     }
 }

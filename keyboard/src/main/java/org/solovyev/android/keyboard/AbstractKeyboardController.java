@@ -22,6 +22,13 @@ import org.solovyev.common.text.StringUtils;
  */
 public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implements AKeyboardController {
 
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
 	/**
 	 * This boolean indicates the optional example code for performing
 	 * processing of hard keys in addition to regular text generation
@@ -31,6 +38,20 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	 * that are primarily intended to be used for on-screen text entry.
 	 */
 	private static final boolean PROCESS_HARD_KEYS = true;
+
+    protected static final int KEYCODE_CLEAR = -800;
+    protected static final int KEYCODE_COPY = -801;
+    protected static final int KEYCODE_PASTE = -802;
+    protected static final int KEYCODE_CURSOR_LEFT = -803;
+    protected static final int KEYCODE_CURSOR_RIGHT = -804;
+
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
 	@NotNull
 	private AKeyboardControllerState<KD> state;
@@ -49,6 +70,20 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	@NotNull
 	private InputMethodManager inputMethodManager;
 
+    @NotNull
+	private AKeyboardConfiguration configuration;
+
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    protected AbstractKeyboardController() {
+    }
+
     /*
     **********************************************************************
     *
@@ -58,12 +93,15 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     */
 
     @Override
-    public void onCreate(@NotNull Context context) {
+    public final void onCreate(@NotNull Context context) {
         this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-
+        this.configuration = onCreate0(context);
     }
 
-	@Override
+    @NotNull
+    protected abstract AKeyboardConfiguration onCreate0(@NotNull Context context);
+
+    @Override
 	public final void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
 		this.keyboardInput = new DefaultKeyboardInput(inputMethodService);
@@ -139,7 +177,73 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 		return inputMethodService;
 	}
 
-	@NotNull
+    @Override
+    public final boolean onKey(int primaryCode, int[] keyCodes) {
+        boolean consumed = handleSpecialKey(primaryCode);
+
+        if ( !consumed ) {
+
+            if (isWordSeparator(primaryCode)) {
+                // Handle separator
+                if (!StringUtils.isEmpty(getKeyboardInput().getTypedText())) {
+                    getKeyboardInput().commitTyped();
+                }
+                sendKey(primaryCode);
+                updateShiftKeyState(getInputMethodService().getCurrentInputEditorInfo());
+                consumed = true;
+            } else {
+                handleCharacter(primaryCode, keyCodes);
+            }
+        }
+
+        return consumed;
+    }
+
+    protected boolean handleSpecialKey(int primaryCode) {
+        boolean consumed = false;
+
+        switch (primaryCode) {
+            case Keyboard.KEYCODE_DELETE:
+                handleBackspace();
+                consumed = true;
+                break;
+            case Keyboard.KEYCODE_CANCEL:
+                handleClose();
+                consumed = true;
+                break;
+            case Keyboard.KEYCODE_SHIFT:
+                handleShift();
+                consumed = true;
+                break;
+            case KEYCODE_COPY:
+                getKeyboardInput().handleCopy();
+                consumed = true;
+                break;
+            case KEYCODE_PASTE:
+                getKeyboardInput().handlePaste();
+                consumed = true;
+                break;
+            case KEYCODE_CLEAR:
+                getKeyboardInput().handleClear();
+                consumed = true;
+                break;
+            case KEYCODE_CURSOR_LEFT:
+                getKeyboardInput().handleCursorLeft();
+                consumed = true;
+                break;
+            case KEYCODE_CURSOR_RIGHT:
+                getKeyboardInput().handleCursorRight();
+                consumed = true;
+                break;
+        }
+
+        return consumed;
+    }
+
+    protected abstract void handleShift();
+
+
+    @NotNull
 	protected AKeyboard<? extends KD> getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
@@ -404,4 +508,9 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	public void onCurrentInputMethodSubtypeChanged(@NotNull InputMethodSubtype subtype) {
 		keyboardView.setSubtypeOnSpaceKey(subtype);
 	}
+
+    public boolean isWordSeparator(int code) {
+        final String separators = configuration.getWordSeparators();
+        return separators.contains(String.valueOf((char) code));
+    }
 }

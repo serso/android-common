@@ -29,7 +29,7 @@ public final class CalculatorDragAKeyboardDef  {
         secondRow.add(DirectionDragButtonDefImpl.newInstance("5", "t", null, "j", "E"));
         secondRow.add(DirectionDragButtonDefImpl.newInstance("6", null, null, null, "F"));
         secondRow.add(DirectionDragButtonDefImpl.newInstance("/", "%", null, null, null, operatorButtonColor));
-        secondRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.sym_keyboard_delete, CalculatorKeyboardController.ERASE));
+        secondRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, CalculatorKeyboardController.DELETE));
         result.add(secondRow);
 
         final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
@@ -37,7 +37,7 @@ public final class CalculatorDragAKeyboardDef  {
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("2", "cos", null, "acos", "B"));
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("3", "tan", null, "atan", "C"));
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("+", null, null, "E", null, operatorButtonColor));
-        thirdRow.add(DirectionDragButtonDefImpl.newInstance("C", CalculatorKeyboardController.COPY));
+        thirdRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, CalculatorKeyboardController.COPY));
         result.add(thirdRow);
 
         final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
@@ -45,7 +45,7 @@ public final class CalculatorDragAKeyboardDef  {
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("0", "00", null, "000", null));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("-", null, null, null, null, operatorButtonColor));
-        fourthRow.add(DirectionDragButtonDefImpl.newInstance("P", CalculatorKeyboardController.PASTE));
+        fourthRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.PASTE));
         result.add(fourthRow);
 
         return result;

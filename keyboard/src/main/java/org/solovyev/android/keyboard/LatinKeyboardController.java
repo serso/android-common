@@ -6,7 +6,6 @@ import android.inputmethodservice.Keyboard;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.text.StringUtils;
 
 /**
  * User: serso
@@ -14,9 +13,6 @@ import org.solovyev.common.text.StringUtils;
  * Time: 9:22 PM
  */
 final class LatinKeyboardController extends AbstractAndroidKeyboardController {
-
-	@NotNull
-	private String wordSeparators;
 
 	private long lastShiftTime;
 
@@ -121,46 +117,41 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 	}
 
 	@Override
-	public void onKey(int primaryCode, int[] keyCodes) {
-		if (isWordSeparator(primaryCode)) {
-			// Handle separator
-			if (!StringUtils.isEmpty(getKeyboardInput().getTypedText())) {
-				getKeyboardInput().commitTyped();
-			}
-			sendKey(primaryCode);
-			updateShiftKeyState(getInputMethodService().getCurrentInputEditorInfo());
-		} else if (primaryCode == Keyboard.KEYCODE_DELETE) {
-			handleBackspace();
-		} else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-			handleShift();
-		} else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
-			handleClose();
-		} else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
-			// Show a menu or somethin'
-		} else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE) {
-			AKeyboard<? extends AndroidAKeyboardDef> current = getCurrentKeyboard();
-			if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
-				current = qwertyKeyboard;
-			} else {
-				current = symbolsKeyboard;
-			}
-			setCurrentKeyboard(current);
-			if (current == symbolsKeyboard) {
-				current.setShifted(false);
-			}
-		} else {
-			handleCharacter(primaryCode, keyCodes);
-		}
+	public boolean handleSpecialKey(int primaryCode) {
+        boolean consumed = super.handleSpecialKey(primaryCode);
+
+        if (!consumed) {
+            switch (primaryCode) {
+                case Keyboard.KEYCODE_MODE_CHANGE:
+
+                    AKeyboard<? extends AndroidAKeyboardDef> current = getCurrentKeyboard();
+                    if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
+                        current = qwertyKeyboard;
+                    } else {
+                        current = symbolsKeyboard;
+                    }
+                    setCurrentKeyboard(current);
+                    if (current == symbolsKeyboard) {
+                        current.setShifted(false);
+                    }
+
+                    consumed = true;
+
+                    break;
+
+            }
+        }
+
+        return consumed;
 	}
 
-	@Override
-	public void onCreate(@NotNull Context context) {
-		super.onCreate(context);
+    @NotNull
+    @Override
+    protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
+        return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
+    }
 
-		wordSeparators = context.getResources().getString(R.string.word_separators);
-	}
-
-	@NotNull
+    @NotNull
 	@Override
 	public AndroidAKeyboardView createKeyboardView0(@NotNull Context context) {
 		return new AKeyboardViewImpl(R.layout.latin_keyboard, this, getInputMethodService(), null);
@@ -192,15 +183,5 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController {
 		} else {
 			lastShiftTime = now;
 		}
-	}
-
-	@NotNull
-	private String getWordSeparators() {
-		return wordSeparators;
-	}
-
-	public boolean isWordSeparator(int code) {
-		final String separators = getWordSeparators();
-		return separators.contains(String.valueOf((char) code));
 	}
 }

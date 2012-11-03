@@ -27,7 +27,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -175,44 +174,11 @@ public class ColorButton extends Button {
                 canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
             }
         } else {
-			drawDrawables(canvas);
+			AndroidViewUtils.drawDrawables(canvas, this);
 		}
 	}
 
-	private void drawDrawables(Canvas canvas) {
-		final int compoundPaddingLeft = getCompoundPaddingLeft();
-		final int compoundPaddingTop = getCompoundPaddingTop();
-		final int compoundPaddingRight = getCompoundPaddingRight();
-		final int compoundPaddingBottom = getCompoundPaddingBottom();
-
-		final int scrollX = getScrollX();
-		final int scrollY = getScrollY();
-
-		final int right = getRight();
-		final int left = getLeft();
-		final int bottom = getBottom();
-		final int top = getTop();
-
-		final Drawable[] drawables = getCompoundDrawables();
-		if (drawables != null) {
-
-			int vspace = bottom - top - compoundPaddingBottom - compoundPaddingTop;
-			int hspace = right - left - compoundPaddingRight - compoundPaddingLeft;
-
-			Drawable topDr = drawables[1];
-			// IMPORTANT: The coordinates computed are also used in invalidateDrawable()
-			// Make sure to update invalidateDrawable() when changing this code.
-			if (topDr != null) {
-				canvas.save();
-				canvas.translate(scrollX + compoundPaddingLeft + (hspace - topDr.getBounds().width()) / 2,
-						scrollY + getPaddingTop() + vspace / 2);
-				topDr.draw(canvas);
-				canvas.restore();
-			}
-		}
-	}
-
-	public void animateClickFeedback() {
+    public void animateClickFeedback() {
 		animationStart = System.currentTimeMillis();
 		invalidate();
 	}

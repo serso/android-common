@@ -6,6 +6,7 @@
 package org.solovyev.android.view.drag;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -15,8 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.AndroidUtils;
+import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.common.math.Point2d;
+import org.solovyev.common.text.StringUtils;
 
 public class DragButton extends Button {
 
@@ -57,8 +59,7 @@ public class DragButton extends Button {
 
         final Integer drawableResId = buttonDef.getDrawableResId();
         if ( drawableResId != null ) {
-            final int padding = AndroidUtils.toPixels(getResources().getDisplayMetrics(), 6);
-            setPadding(padding, padding, padding, padding);
+            setPadding(0, 0, 0, 0);
 
             final Drawable drawable = getContext().getResources().getDrawable(drawableResId);
             setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
@@ -129,4 +130,14 @@ public class DragButton extends Button {
 			return false;
 		}
 	}
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        CharSequence text = getText();
+        if ( !StringUtils.isEmpty(text)) {
+            super.onDraw(canvas);
+        } else {
+            AndroidViewUtils.drawDrawables(canvas, this);
+        }
+    }
 }

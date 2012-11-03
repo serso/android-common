@@ -2,10 +2,9 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
+import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.text.StringUtils;
 
 /**
  * User: Solovyev_S
@@ -16,13 +15,14 @@ public abstract class DragKeyboardController extends AbstractKeyboardController<
 
     protected static String ACTION = "action:";
 
-    protected static String COPY = ACTION + "copy";
-    protected static String PASTE = ACTION + "paste";
-    protected static String ERASE = ACTION + "erase";
-    protected static String CLEAR = ACTION + "clear";
+    protected static String COPY = ACTION + KEYCODE_COPY;
+    protected static String PASTE = ACTION + KEYCODE_PASTE;
 
-    protected static String LEFT = ACTION + "left";
-    protected static String RIGHT = ACTION + "right";
+    protected static String DELETE = ACTION + Keyboard.KEYCODE_DELETE;
+    protected static String CLEAR = ACTION + KEYCODE_CLEAR;
+
+    protected static String LEFT = ACTION + KEYCODE_CURSOR_LEFT;
+    protected static String RIGHT = ACTION + KEYCODE_CURSOR_RIGHT;
 
     @NotNull
     @Override
@@ -44,31 +44,13 @@ public abstract class DragKeyboardController extends AbstractKeyboardController<
         return getState();
     }
 
+    @NotNull
     @Override
-    public void onKey(int primaryCode, @Nullable int[] keyCodes) {
+    protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
+        return new AKeyboardConfigurationImpl("");
     }
 
     @Override
-    public void onText(@Nullable CharSequence text) {
-        if (!StringUtils.isEmpty(text)) {
-            if (COPY.equals(text)) {
-                getKeyboardInput().handleCopy();
-            } else if (PASTE.equals(text)) {
-                getKeyboardInput().handlePaste();
-            } else if (ERASE.equals(text)) {
-                getKeyboardInput().handleBackspace();
-            } else if (CLEAR.equals(text)) {
-                getKeyboardInput().handleClear();
-            } else if (LEFT.equals(text)) {
-                getKeyboardInput().handleCursorLeft();
-            } else if (RIGHT.equals(text)) {
-                getKeyboardInput().handleCursorRight();
-            } else {
-                super.onText(text);
-            }
-        } else {
-            super.onText(text);
-        }
+    protected void handleShift() {
     }
-
 }
