@@ -245,7 +245,7 @@ public final class AndroidUtils {
 		activity.startActivity(intent);
 	}
 
-	public static int toPixels(@NotNull DisplayMetrics dm, int dps) {
+	public static int toPixels(@NotNull DisplayMetrics dm, float dps) {
 		final float scale = dm.density;
 		return (int) (dps * scale + 0.5f);
 	}

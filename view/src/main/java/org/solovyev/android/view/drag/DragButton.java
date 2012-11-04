@@ -7,7 +7,6 @@ package org.solovyev.android.view.drag;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -50,26 +49,7 @@ public class DragButton extends Button {
 	}
 
     public void applyDef(@NotNull DragButtonDef buttonDef) {
-        setText(buttonDef.getText());
-
-        final Integer backgroundColor = buttonDef.getBackgroundColor();
-        if (backgroundColor != null) {
-            setBackgroundColor(backgroundColor);
-        }
-
-        final Integer drawableResId = buttonDef.getDrawableResId();
-        if ( drawableResId != null ) {
-            setPadding(0, 0, 0, 0);
-
-            final Drawable drawable = getContext().getResources().getDrawable(drawableResId);
-            setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-            setCompoundDrawablePadding(0);
-        }
-
-        final String tag = buttonDef.getTag();
-        if ( tag != null ) {
-            setTag(tag);
-        }
+        AndroidViewUtils.applyButtonDef(this, buttonDef);
 
     }
 

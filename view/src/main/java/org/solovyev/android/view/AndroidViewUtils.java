@@ -2,6 +2,9 @@ package org.solovyev.android.view;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +49,42 @@ public final class AndroidViewUtils {
                 topDr.draw(canvas);
                 canvas.restore();
             }
+        }
+    }
+
+    public static void applyButtonDef(@NotNull Button button, @NotNull ButtonDef buttonDef) {
+        button.setText(buttonDef.getText());
+
+        final Integer drawableResId = buttonDef.getDrawableResId();
+        if ( drawableResId != null ) {
+            button.setPadding(0, 0, 0, 0);
+
+            final Drawable drawable = button.getContext().getResources().getDrawable(drawableResId);
+            button.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+            button.setCompoundDrawablePadding(0);
+        }
+
+        applyViewDef(button, buttonDef);
+    }
+
+    public static void applyButtonDef(@NotNull ImageButton imageButton, @NotNull ButtonDef buttonDef) {
+        final Integer drawableResId = buttonDef.getDrawableResId();
+        if ( drawableResId != null ) {
+            imageButton.setImageDrawable(imageButton.getContext().getResources().getDrawable(drawableResId));
+        }
+
+        applyViewDef(imageButton, buttonDef);
+    }
+
+    public static void applyViewDef(@NotNull View view, @NotNull ViewDef viewDef) {
+        final Integer backgroundColor = viewDef.getBackgroundColor();
+        if (backgroundColor != null) {
+            view.setBackgroundColor(backgroundColor);
+        }
+
+        final String tag = viewDef.getTag();
+        if ( tag != null ) {
+            view.setTag(tag);
         }
     }
 }

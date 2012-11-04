@@ -41,6 +41,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 
     protected static final int KEYCODE_CLEAR = -800;
     protected static final int KEYCODE_COPY = -801;
+    protected static final int KEYCODE_ENTER = 10;
     protected static final int KEYCODE_PASTE = -802;
     protected static final int KEYCODE_CURSOR_LEFT = -803;
     protected static final int KEYCODE_CURSOR_RIGHT = -804;

@@ -14,6 +14,9 @@ import org.jetbrains.annotations.NotNull;
 public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboardDef> {
 
     protected static String ACTION = "action:";
+    protected static String TEXT = "text:";
+
+    protected static String ENTER = ACTION + KEYCODE_ENTER;
 
     protected static String COPY = ACTION + KEYCODE_COPY;
     protected static String PASTE = ACTION + KEYCODE_PASTE;
@@ -47,7 +50,7 @@ public abstract class DragKeyboardController extends AbstractAndroidKeyboardCont
     @NotNull
     @Override
     protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
-        return new AKeyboardConfigurationImpl("");
+        return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
     }
 
     @Override

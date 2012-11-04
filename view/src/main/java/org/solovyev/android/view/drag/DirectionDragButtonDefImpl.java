@@ -27,23 +27,32 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     @Nullable
     private String tag;
 
+    @Nullable
+    private Float weight;
+
+    @Nullable
+    private Integer layoutMarginLeft;
+
+    @Nullable
+    private Integer layoutMarginRight;
+
     private DirectionDragButtonDefImpl() {
     }
 
     @NotNull
-    public static DirectionDragButtonDef newInstance(@Nullable CharSequence text) {
+    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text) {
         return newInstance(text, null, null, null, null);
     }
 
     @NotNull
-    public static DirectionDragButtonDef newInstance(@Nullable CharSequence text, @NotNull String tag) {
-        DirectionDragButtonDefImpl result = (DirectionDragButtonDefImpl) newInstance(text, null, null, null, null);
+    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text, @NotNull String tag) {
+        DirectionDragButtonDefImpl result = newInstance(text, null, null, null, null);
         result.tag = tag;
         return result;
     }
 
     @NotNull
-    public static DirectionDragButtonDef newInstance(@Nullable CharSequence text,
+    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text,
                                                      @Nullable CharSequence up,
                                                      @Nullable CharSequence right,
                                                      @Nullable CharSequence down,
@@ -52,7 +61,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     }
 
     @NotNull
-    public static DirectionDragButtonDef newInstance(@Nullable CharSequence text,
+    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text,
                                                      @Nullable CharSequence up,
                                                      @Nullable CharSequence right,
                                                      @Nullable CharSequence down,
@@ -72,7 +81,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     }
 
     @NotNull
-    public static DirectionDragButtonDef newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag) {
+    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag) {
         final DirectionDragButtonDefImpl result = new DirectionDragButtonDefImpl();
 
         result.drawableResId = drawableResId;
@@ -86,6 +95,24 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     @Override
     public CharSequence getText(@NotNull DragDirection dragDirection) {
         return directionsTexts.get(dragDirection);
+    }
+
+    @Nullable
+    @Override
+    public Float getLayoutWeight() {
+        return this.weight;
+    }
+
+    @Nullable
+    @Override
+    public Integer getLayoutMarginLeft() {
+        return this.layoutMarginLeft;
+    }
+
+    @Nullable
+    @Override
+    public Integer getLayoutMarginRight() {
+        return this.layoutMarginRight;
     }
 
     @Nullable
@@ -110,5 +137,17 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     @Override
     public CharSequence getText() {
         return text;
+    }
+
+    public void setWeight(@Nullable Float weight) {
+        this.weight = weight;
+    }
+
+    public void setLayoutMarginRight(@Nullable Integer layoutMarginRight) {
+        this.layoutMarginRight = layoutMarginRight;
+    }
+
+    public void setLayoutMarginLeft(@Nullable Integer layoutMarginLeft) {
+        this.layoutMarginLeft = layoutMarginLeft;
     }
 }
