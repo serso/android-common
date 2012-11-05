@@ -17,6 +17,9 @@ import org.solovyev.android.view.drag.*;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.StringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * User: Solovyev_S
  * Date: 02.11.12
@@ -29,6 +32,9 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     @NotNull
     private AKeyboardButtonPreview preview;
+
+    @NotNull
+    private final Map<View, DirectionDragButtonDef> defs = new HashMap<View, DirectionDragButtonDef>();
 
     public DragAndroidKeyboardView(Context context) {
         super(context);
@@ -92,6 +98,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
             this.removeAllViews();
 
+            this.defs.clear();
+
             for (DragAKeyboardDef.RowDef rowDef : keyboardDef.getRowDefs()) {
                 final LinearLayout rowLayout = new LinearLayout(context);
                 rowLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -122,11 +130,13 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                         directionDragButton.applyDef(buttonDef);
                         directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
                         directionDragButton.setOnClickListener(this);
+                        defs.put(directionDragButton, buttonDef);
                         rowLayout.addView(directionDragButton, params);
                     } else {
                         final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
                         AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
                         imageButton.setOnClickListener(this);
+                        defs.put(imageButton, buttonDef);
                         rowLayout.addView(imageButton, params);
                     }
                 }
@@ -181,7 +191,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
         if (action) {
 
-            preview.showText(view, null);
+            showPreview(view, null);
 
             if (keyboardActionListener != null) {
                 final String code = tag.substring(DragKeyboardController.ACTION.length());
@@ -199,7 +209,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     private boolean handleText(@NotNull View view, @Nullable CharSequence text) {
         if (!StringUtils.isEmpty(text)) {
-            preview.showText(view, text);
+            showPreview(view, text);
 
             if (keyboardActionListener != null) {
                 keyboardActionListener.onText(text);
@@ -208,6 +218,15 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             return true;
         }
         return false;
+    }
+
+    private void showPreview(@NotNull View view, @Nullable CharSequence text) {
+        final DirectionDragButtonDef buttonDef = defs.get(view);
+        if (buttonDef != null) {
+            preview.showPreview(view, text, buttonDef.getDrawableResId());
+        } else {
+            preview.showPreview(view, text, null);
+        }
     }
 
 }
