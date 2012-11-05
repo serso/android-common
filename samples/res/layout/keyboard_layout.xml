@@ -6,6 +6,7 @@
 
     <EditText android:id="@+id/edit_text"
               android:inputType="text"
+              android:singleLine="false"
               android:layout_height="match_parent"
               android:layout_width="match_parent"/>
 
