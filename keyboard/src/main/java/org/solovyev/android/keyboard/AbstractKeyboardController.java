@@ -179,7 +179,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	}
 
     @Override
-    public final boolean onKey(int primaryCode, int[] keyCodes) {
+    public final boolean onKey(int primaryCode, @Nullable int[] keyCodes) {
         boolean consumed = handleSpecialKey(primaryCode);
 
         if ( !consumed ) {
@@ -304,10 +304,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 
 			int caps = 0;
 			if (editorInfo.inputType != InputType.TYPE_NULL) {
-				final InputConnection currentInputConnection = keyboardInput.getCurrentInputConnection();
-				if (currentInputConnection != null) {
-					caps = currentInputConnection.getCursorCapsMode(attr.inputType);
-				}
+                caps = keyboardInput.getCursorCapsMode(attr.inputType);
 			}
 
 			keyboardView.setShifted(state.isCapsLock() || caps != 0);
@@ -322,10 +319,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 		if (!StringUtils.isEmpty(text) && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
 			keyboardInput.clearTypedText();
 			updateCandidates();
-			final InputConnection ic = keyboardInput.getCurrentInputConnection();
-			if (ic != null) {
-				ic.finishComposingText();
-			}
+            keyboardInput.finishComposingText();
 		}
 	}
 
@@ -370,22 +364,20 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 					if (keyCode == KeyEvent.KEYCODE_SPACE && (event.getMetaState() & KeyEvent.META_ALT_ON) != 0) {
 						// A silly example: in our input method, Alt+Space
 						// is a shortcut for 'android' in lower case.
-						InputConnection ic = keyboardInput.getCurrentInputConnection();
-						if (ic != null) {
-							// First, tell the editor that it is no longer in the
-							// shift state, since we are consuming this.
-							ic.clearMetaKeyStates(KeyEvent.META_ALT_ON);
-							keyDownUp(KeyEvent.KEYCODE_A);
-							keyDownUp(KeyEvent.KEYCODE_N);
-							keyDownUp(KeyEvent.KEYCODE_D);
-							keyDownUp(KeyEvent.KEYCODE_R);
-							keyDownUp(KeyEvent.KEYCODE_O);
-							keyDownUp(KeyEvent.KEYCODE_I);
-							keyDownUp(KeyEvent.KEYCODE_D);
-							// And we consume this event.
-							return true;
-						}
-					}
+
+                        // First, tell the editor that it is no longer in the
+                        // shift state, since we are consuming this.
+                        keyboardInput.clearMetaKeyStates(KeyEvent.META_ALT_ON);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_A);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_N);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_R);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_O);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_I);
+                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
+                        // And we consume this event.
+                        return true;
+                    }
 					if (state.isPrediction() && translateKeyDown(keyCode, event)) {
 						return true;
 					}
@@ -410,8 +402,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	 * Helper to send a key down / key up pair to the current editor.
 	 */
 	public void keyDownUp(int keyEventCode) {
-		keyboardInput.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
-		keyboardInput.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+        keyboardInput.keyDownUp(keyEventCode);
 	}
 
 	/**
@@ -424,8 +415,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 		int unicodeChar = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(metaState));
 
 		metaState = MetaKeyKeyListener.adjustMetaAfterKeypress(metaState);
-		InputConnection ic = keyboardInput.getCurrentInputConnection();
-		if (unicodeChar == 0 || ic == null) {
+		if (unicodeChar == 0 || !keyboardInput.isInputConnected()) {
 			return false;
 		}
 
@@ -441,7 +431,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	}
 
 	@Override
-	public void onKeyUp(int keyCode, KeyEvent event) {
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		// If we want to do transformations on text being entered with a hard
 		// keyboard, we need to process the up events to update the meta key
 		// state we are tracking.
@@ -450,6 +440,8 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 				metaState = MetaKeyKeyListener.handleKeyUp(metaState, keyCode, event);
 			}
 		}
+
+        return false;
 	}
 
 	/**
@@ -464,10 +456,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 				if (keyCode >= '0' && keyCode <= '9') {
 					keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
 				} else {
-					final InputConnection inputConnection = keyboardInput.getCurrentInputConnection();
-					if (inputConnection != null) {
-						inputConnection.commitText(String.valueOf((char) keyCode), 1);
-					}
+                    keyboardInput.commitText(String.valueOf((char) keyCode), 1);
 				}
 				break;
 		}

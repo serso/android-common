@@ -22,6 +22,6 @@ public interface ViewDef {
     String getTag();
 
     @Nullable
-    Integer getBackgroundColor();
+    Integer getBackgroundResId();
 
 }

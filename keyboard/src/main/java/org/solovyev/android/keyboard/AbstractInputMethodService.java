@@ -132,14 +132,22 @@ public abstract class AbstractInputMethodService extends InputMethodService {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-		return keyboardController.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+        boolean consumed = keyboardController.onKeyDown(keyCode, event);
+        if ( !consumed ) {
+            return super.onKeyDown(keyCode, event);
+        } else {
+            return consumed;
+        }
     }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        keyboardController.onKeyUp(keyCode, event);
-
-        return super.onKeyUp(keyCode, event);
+        boolean consumed = keyboardController.onKeyUp(keyCode, event);
+        if ( !consumed ) {
+            return super.onKeyUp(keyCode, event);
+        } else {
+            return consumed;
+        }
     }
 
 

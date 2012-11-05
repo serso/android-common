@@ -101,7 +101,7 @@ public interface AKeyboardController {
      * We get first crack at them, and can either resume them or let them
      * continue to the app.
      */
-    void onKeyUp(int keyCode, KeyEvent event);
+    boolean onKeyUp(int keyCode, KeyEvent event);
 
     void onCurrentInputMethodSubtypeChanged(@NotNull InputMethodSubtype subtype);
 

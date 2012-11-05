@@ -16,7 +16,8 @@ public abstract class DragKeyboardController extends AbstractAndroidKeyboardCont
     protected static String ACTION = "action:";
     protected static String TEXT = "text:";
 
-    protected static String ENTER = ACTION + KEYCODE_ENTER;
+    protected static String ENTER = ACTION + (int)'\n';
+
 
     protected static String COPY = ACTION + KEYCODE_COPY;
     protected static String PASTE = ACTION + KEYCODE_PASTE;

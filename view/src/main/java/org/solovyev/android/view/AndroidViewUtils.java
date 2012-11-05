@@ -77,9 +77,9 @@ public final class AndroidViewUtils {
     }
 
     public static void applyViewDef(@NotNull View view, @NotNull ViewDef viewDef) {
-        final Integer backgroundColor = viewDef.getBackgroundColor();
-        if (backgroundColor != null) {
-            view.setBackgroundColor(backgroundColor);
+        final Integer backgroundResId = viewDef.getBackgroundResId();
+        if (backgroundResId != null) {
+            view.setBackgroundResource(backgroundResId);
         }
 
         final String tag = viewDef.getTag();

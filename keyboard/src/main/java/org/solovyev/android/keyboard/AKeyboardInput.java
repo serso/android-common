@@ -3,7 +3,6 @@ package org.solovyev.android.keyboard;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,32 +13,27 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface AKeyboardInput {
 
-	void commitTyped();
+    void commitTyped();
 
-	void onText(@Nullable CharSequence text);
+    void onText(@Nullable CharSequence text);
 
-	@NotNull
-	EditorInfo getCurrentInputEditorInfo();
+    @NotNull
+    EditorInfo getCurrentInputEditorInfo();
 
-	@Nullable
-	InputConnection getCurrentInputConnection();
+    @Nullable
+    CharSequence getTypedText();
 
-	@Nullable
-	CharSequence getTypedText();
+    boolean handleBackspace();
 
-	void clearTypedText();
+    void sendKeyEvent(@NotNull KeyEvent keyEvent);
 
-	boolean handleBackspace();
+    int translateKeyDown(int unicodeChar);
 
-	void sendKeyEvent(@NotNull KeyEvent keyEvent);
+    void commitCompletion(@NotNull CompletionInfo completionInfo);
 
-	int translateKeyDown(int unicodeChar);
+    void append(char primaryCode);
 
-	void commitCompletion(@NotNull CompletionInfo completionInfo);
-
-	void append(char primaryCode);
-
-	void commitText(@Nullable String text, int i);
+    void commitText(@Nullable String text, int i);
 
     void handleCursorRight();
 
@@ -50,4 +44,16 @@ public interface AKeyboardInput {
     void handlePaste();
 
     void handleCopy();
+
+    void clearMetaKeyStates(int flags);
+
+    void keyDownUp(int keyEventCode);
+
+    void finishComposingText();
+
+    boolean isInputConnected();
+
+    int getCursorCapsMode(int inputType);
+
+    void clearTypedText();
 }

@@ -19,7 +19,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     private Map<DragDirection, CharSequence> directionsTexts = new EnumMap<DragDirection, CharSequence>(DragDirection.class);
 
     @Nullable
-    private Integer backgroundColor;
+    private Integer backgroundResId;
 
     @Nullable
     private Integer drawableResId;
@@ -75,17 +75,23 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
         result.directionsTexts.put(DragDirection.down, down);
         result.directionsTexts.put(DragDirection.left, left);
 
-        result.backgroundColor = backgroundColor;
+        result.backgroundResId = backgroundColor;
 
         return result;
     }
 
     @NotNull
     public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag) {
+        return newDrawableInstance(drawableResId, tag, null);
+    }
+
+    @NotNull
+    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag, @Nullable Integer backgroundColor) {
         final DirectionDragButtonDefImpl result = new DirectionDragButtonDefImpl();
 
         result.drawableResId = drawableResId;
         result.tag = tag;
+        result.backgroundResId = backgroundColor;
 
         return result;
 
@@ -129,8 +135,8 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     @Nullable
     @Override
-    public Integer getBackgroundColor() {
-        return this.backgroundColor;
+    public Integer getBackgroundResId() {
+        return this.backgroundResId;
     }
 
     @Nullable
@@ -149,5 +155,10 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     public void setLayoutMarginLeft(@Nullable Integer layoutMarginLeft) {
         this.layoutMarginLeft = layoutMarginLeft;
+    }
+
+
+    public void setBackgroundResId(int backgroundResId) {
+        this.backgroundResId = backgroundResId;
     }
 }
