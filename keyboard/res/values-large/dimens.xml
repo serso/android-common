@@ -20,6 +20,11 @@
 
 <resources>
     <dimen name="keyboard_button_text_size">30dp</dimen>
+
     <dimen name="keyboard_button_padding">15dp</dimen>
+    <dimen name="keyboard_preview_padding">15dp</dimen>
+    <dimen name="keyboard_preview_padding_left">30dp</dimen>
+    <dimen name="keyboard_preview_padding_right">30dp</dimen>
+
     <dimen name="keyboard_button_min_height">60dp</dimen>
 </resources>

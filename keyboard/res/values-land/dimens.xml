@@ -21,6 +21,11 @@
 <resources>
     <dimen name="key_height">46dip</dimen>
     <dimen name="keyboard_button_text_size">20dp</dimen>
+
     <dimen name="keyboard_button_padding">4dp</dimen>
+    <dimen name="keyboard_preview_padding">4dp</dimen>
+    <dimen name="keyboard_preview_padding_left">8dp</dimen>
+    <dimen name="keyboard_preview_padding_right">8dp</dimen>
+
     <dimen name="keyboard_button_min_height">40dp</dimen>
 </resources>

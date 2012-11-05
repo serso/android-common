@@ -27,16 +27,22 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     @Nullable
     private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
+    @NotNull
+    private AKeyboardButtonPreview preview;
+
     public DragAndroidKeyboardView(Context context) {
         super(context);
+        preview = new AKeyboardButtonPreview(this);
     }
 
     public DragAndroidKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        preview = new AKeyboardButtonPreview(this);
     }
 
     public DragAndroidKeyboardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        preview = new AKeyboardButtonPreview(this);
     }
 
     @Override
@@ -71,6 +77,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private void setKeyboard(@Nullable DragAKeyboardDef keyboard,
                              @Nullable LayoutInflater layoutInflater) {
         if (keyboard != null) {
+
             final DragAKeyboardDef.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
             final Context context = this.getContext();
@@ -79,6 +86,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             if (layoutInflater == null) {
                 layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             }
+
+            preview.createPreviewView(layoutInflater);
 
             final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
             this.removeAllViews();
@@ -131,9 +140,9 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     @Override
     public void onClick(View v) {
         if (v instanceof TextView) {
-            handleText(((TextView) v).getText(), v.getTag());
+            handleText(((TextView) v).getText(), v);
         } else {
-            handleText(null, v.getTag());
+            handleText(null, v);
         }
     }
 
@@ -142,33 +151,38 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         if (dragButton instanceof DirectionDragButton) {
             final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
-            return handleText(directionDragButton.getText(dragDirection), dragButton.getTag());
+            return handleText(directionDragButton.getText(dragDirection), dragButton);
         }
         return false;
     }
 
-    private boolean handleText(@Nullable CharSequence text, @Nullable Object tagObject) {
+    private boolean handleText(@Nullable CharSequence text, @NotNull View view) {
         // we need to check if there is something in the tag
+
+        final Object tagObject = view.getTag();
         if (tagObject instanceof String) {
             final String tag = ((String) tagObject);
 
-            if (handleTag(tag)) {
+            if (handleTag(view, tag)) {
                 return true;
             } else {
-                if (handleText(text)) return true;
+                if (handleText(view, text)) return true;
             }
         } else {
-            if (handleText(text)) return true;
+            if (handleText(view, text)) return true;
         }
 
 
         return false;
     }
 
-    private boolean handleTag(@NotNull String tag) {
+    private boolean handleTag(@NotNull View view, @NotNull String tag) {
         boolean action = tag.startsWith(DragKeyboardController.ACTION);
 
         if (action) {
+
+            preview.showText(view, null);
+
             if (keyboardActionListener != null) {
                 final String code = tag.substring(DragKeyboardController.ACTION.length());
                 try {
@@ -183,8 +197,10 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return false;
     }
 
-    private boolean handleText(@Nullable CharSequence text) {
+    private boolean handleText(@NotNull View view, @Nullable CharSequence text) {
         if (!StringUtils.isEmpty(text)) {
+            preview.showText(view, text);
+
             if (keyboardActionListener != null) {
                 keyboardActionListener.onText(text);
             }

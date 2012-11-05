@@ -14,7 +14,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 
     @Override
     protected DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context) {
-        final int notLetterBackgroundResId = R.drawable.metro_button_dark_gray;
+        final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
         final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
 
