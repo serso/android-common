@@ -14,7 +14,7 @@ public class RepeatHelper {
     // in ms
     private static final int MIN_REPEAT_INTERVAL = 100;
 
-    private static final int[] REPEAT_INTERVALS = new int[]{5 * MIN_REPEAT_INTERVAL, 4 * MIN_REPEAT_INTERVAL, 3 * MIN_REPEAT_INTERVAL, 2 * MIN_REPEAT_INTERVAL, MIN_REPEAT_INTERVAL};
+    private static final int[] REPEAT_INTERVALS = new int[]{3 * MIN_REPEAT_INTERVAL, (int)(2.5f * MIN_REPEAT_INTERVAL), 2 * MIN_REPEAT_INTERVAL, (int)(1.5f * MIN_REPEAT_INTERVAL), MIN_REPEAT_INTERVAL};
 
     @Nullable
     private View repeatView;

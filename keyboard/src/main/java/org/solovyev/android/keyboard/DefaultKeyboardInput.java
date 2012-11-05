@@ -31,23 +31,33 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     @Override
     public void commitTyped() {
         if (typedText.length() > 0) {
-            getCurrentInputConnection().commitText(typedText, typedText.length());
+            commitText(typedText, typedText.length());
             clearTypedText();
         }
     }
 
     @Override
     public void onText(@Nullable CharSequence text) {
-        final InputConnection inputConnection = getCurrentInputConnection();
-        inputConnection.beginBatchEdit();
+        final InputConnection ic = getCurrentInputConnection();
+        ic.beginBatchEdit();
         commitTyped();
-        inputConnection.commitText(text, 0);
-        inputConnection.endBatchEdit();
+        commitText(ic, text, 0);
+        ic.endBatchEdit();
+    }
+
+    public void commitText(@Nullable CharSequence text, int position) {
+        final InputConnection ic = getCurrentInputConnection();
+        commitText(ic, text, position);
     }
 
     @Override
     public void commitText(@Nullable String text, int position) {
-        getCurrentInputConnection().commitText(text, position);
+        final InputConnection ic = getCurrentInputConnection();
+        commitText(ic, text, position);
+    }
+
+    private void commitText(@NotNull InputConnection ic, @Nullable CharSequence text, int position) {
+        ic.commitText(text, position);
     }
 
     @NotNull
@@ -57,7 +67,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     }
 
     @NotNull
-    public InputConnection getCurrentInputConnection() {
+    private InputConnection getCurrentInputConnection() {
         InputConnection result = this.inputMethodService.getCurrentInputConnection();
         if (result == null ) {
             result = NoInputConnection.getInstance();
@@ -88,7 +98,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
             changed = true;
         } else if (length > 0) {
             clearTypedText();
-            ic.commitText("", 0);
+            commitText(ic, "", 0);
             changed = true;
         }
 
@@ -171,14 +181,14 @@ public class DefaultKeyboardInput implements AKeyboardInput {
         final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
         final CharSequence text = clipboardManager.getText();
         if (!StringUtils.isEmpty(text)) {
-            commitText(String.valueOf(text), 1);
+            commitText(text, 1);
         }
     }
 
     @Override
     public void handleCopy() {
-        final InputConnection inputConnection = getCurrentInputConnection();
-        AndroidKeyboardUtils.copyTextFromInputConnection(inputConnection, inputMethodService);
+        final InputConnection ic = getCurrentInputConnection();
+        AndroidKeyboardUtils.copyTextFromInputConnection(ic, inputMethodService);
     }
 
     @Override
