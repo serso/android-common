@@ -38,6 +38,12 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     private boolean allowRepeat = true;
 
+    @Nullable
+    private Integer keycode;
+
+    @NotNull
+    private final Map<DragDirection, Integer> directionKeycodes = new EnumMap<DragDirection, Integer>(DragDirection.class);
+
     private DirectionDragButtonDefImpl() {
     }
 
@@ -47,9 +53,9 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     }
 
     @NotNull
-    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text, @NotNull String tag) {
+    public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text, @NotNull Integer actionCode) {
         DirectionDragButtonDefImpl result = newInstance(text, null, null, null, null);
-        result.tag = tag;
+        result.keycode = actionCode;
         return result;
     }
 
@@ -83,16 +89,16 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     }
 
     @NotNull
-    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag) {
-        return newDrawableInstance(drawableResId, tag, null);
+    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull Integer actionCode) {
+        return newDrawableInstance(drawableResId, actionCode, null);
     }
 
     @NotNull
-    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull String tag, @Nullable Integer backgroundColor) {
+    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @NotNull Integer actionCode, @Nullable Integer backgroundColor) {
         final DirectionDragButtonDefImpl result = new DirectionDragButtonDefImpl();
 
         result.drawableResId = drawableResId;
-        result.tag = tag;
+        result.keycode = actionCode;
         result.backgroundResId = backgroundColor;
 
         return result;
@@ -108,6 +114,25 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     @Override
     public boolean allowRepeat() {
         return this.allowRepeat;
+    }
+
+    @Nullable
+    @Override
+    public Integer getKeycode() {
+        return this.keycode;
+    }
+
+    public void setKeycode(@Nullable Integer actionCode) {
+        this.keycode = actionCode;
+    }
+
+    @Override
+    public Integer getDirectionKeycode(@NotNull DragDirection dragDirection) {
+        return this.directionKeycodes.get(dragDirection);
+    }
+
+    public void setDirectionKeycode(@NotNull DragDirection direction, @Nullable Integer actionCode) {
+        directionKeycodes.put(direction, actionCode);
     }
 
     @Nullable
@@ -171,5 +196,9 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     public void setAllowRepeat(boolean allowRepeat) {
         this.allowRepeat = allowRepeat;
+    }
+
+    public void setTag(@Nullable String tag) {
+        this.tag = tag;
     }
 }

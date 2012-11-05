@@ -1,6 +1,7 @@
 package org.solovyev.android.keyboard;
 
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.drag.DirectionDragButtonDefImpl;
 
@@ -13,7 +14,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
 
     @Override
     protected DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context) {
-        final int operatorButtonColor = context.getResources().getColor(R.color.metro_button_blue_background);
+        final int operatorButtonColor = R.drawable.metro_dark_button;
         final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
 
         final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
@@ -21,7 +22,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         firstRow.add(DirectionDragButtonDefImpl.newInstance("8", "ln", null, "lg", "od:"));
         firstRow.add(DirectionDragButtonDefImpl.newInstance("9", "PI", null, "e", "ox:"));
         firstRow.add(DirectionDragButtonDefImpl.newInstance("*", "^", null, "^2", null, operatorButtonColor));
-        firstRow.add(DirectionDragButtonDefImpl.newInstance("C", CalculatorKeyboardController.CLEAR));
+        firstRow.add(DirectionDragButtonDefImpl.newInstance("C", CalculatorKeyboardController.KEYCODE_CLEAR));
         result.add(firstRow);
 
         final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
@@ -29,7 +30,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         secondRow.add(DirectionDragButtonDefImpl.newInstance("5", "t", null, "j", "E"));
         secondRow.add(DirectionDragButtonDefImpl.newInstance("6", null, null, null, "F"));
         secondRow.add(DirectionDragButtonDefImpl.newInstance("/", "%", null, null, null, operatorButtonColor));
-        secondRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, CalculatorKeyboardController.DELETE));
+        secondRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, Keyboard.KEYCODE_DELETE));
         result.add(secondRow);
 
         final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
@@ -37,7 +38,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("2", "cos", null, "acos", "B"));
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("3", "tan", null, "atan", "C"));
         thirdRow.add(DirectionDragButtonDefImpl.newInstance("+", null, null, "E", null, operatorButtonColor));
-        thirdRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, CalculatorKeyboardController.COPY));
+        thirdRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, CalculatorKeyboardController.KEYCODE_COPY));
         result.add(thirdRow);
 
         final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
@@ -45,7 +46,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("0", "00", null, "000", null));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("-", null, null, null, null, operatorButtonColor));
-        fourthRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.PASTE));
+        fourthRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.KEYCODE_PASTE));
         result.add(fourthRow);
 
         return result;

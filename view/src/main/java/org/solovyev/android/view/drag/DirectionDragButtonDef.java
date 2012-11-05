@@ -15,4 +15,10 @@ public interface DirectionDragButtonDef extends DragButtonDef {
 
     // todo serso: move to keyboard
     boolean allowRepeat();
+
+    @Nullable
+    Integer getKeycode();
+
+    @Nullable
+    Integer getDirectionKeycode(@NotNull DragDirection dragDirection);
 }

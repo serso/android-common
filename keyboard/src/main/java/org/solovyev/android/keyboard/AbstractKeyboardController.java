@@ -45,6 +45,8 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     protected static final int KEYCODE_PASTE = -802;
     protected static final int KEYCODE_CURSOR_LEFT = -803;
     protected static final int KEYCODE_CURSOR_RIGHT = -804;
+    protected static final int KEYCODE_PREV_KEYBOARD = -805;
+    protected static final int KEYCODE_NEXT_KEYBOARD = -806;
 
     /*
     **********************************************************************
@@ -236,9 +238,23 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
                 getKeyboardInput().handleCursorRight();
                 consumed = true;
                 break;
+            case KEYCODE_PREV_KEYBOARD:
+                handlePrevKeyboard();
+                consumed = true;
+                break;
+            case KEYCODE_NEXT_KEYBOARD:
+                handleNextKeyboard();
+                consumed = true;
+                break;
         }
 
         return consumed;
+    }
+
+    protected void handleNextKeyboard() {
+    }
+
+    protected void handlePrevKeyboard() {
     }
 
     protected abstract void handleShift();
