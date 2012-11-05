@@ -108,7 +108,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                         params.leftMargin = buttonMargin;
                     }
                     if (buttonDef.getLayoutMarginRight() != null) {
-                        params.rightMargin = buttonDef.getLayoutMarginRight() - buttonMargin;
+                        params.rightMargin = buttonDef.getLayoutMarginRight();
                     } else {
                         params.rightMargin = buttonMargin;
                     }

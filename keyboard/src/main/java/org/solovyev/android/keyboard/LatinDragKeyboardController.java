@@ -63,13 +63,15 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         fourthRow.add(DirectionDragButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.PASTE, notLetterBackgroundResId));
 
         // weight "eats" some margins => need to add them
-        // 6 buttons with 1 dp margin needed for both sides = > / 2f
-        int spaceMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), (6 - 1) * 2f/ 2f);
+        // 6 buttons with 1 dp margin needed for both sides + 1f for self margins= > / 2f
+        int spaceMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), ((4 - 1) * 1f + 1f)/ 2f);
 
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("-", null, null, null, null, notLetterBackgroundResId));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("-", null, null, null, null, notLetterBackgroundResId));
 
         final DirectionDragButtonDefImpl spaceButtonDef = DirectionDragButtonDefImpl.newInstance(" ", null, null, null, null, notLetterBackgroundResId);
+        spaceButtonDef.setLayoutMarginLeft(spaceMargin);
+        spaceButtonDef.setLayoutMarginRight(spaceMargin);
         spaceButtonDef.setWeight(4f);
 
         fourthRow.add(spaceButtonDef);
