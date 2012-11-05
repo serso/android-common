@@ -76,7 +76,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             final Context context = this.getContext();
             int buttonMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
 
-            if ( layoutInflater == null ) {
+            if (layoutInflater == null) {
                 layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             }
 
@@ -89,7 +89,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                 for (DirectionDragButtonDef buttonDef : rowDef.getButtonDefs()) {
 
                     Float weight = buttonDef.getLayoutWeight();
-                    if ( weight == null ) {
+                    if (weight == null) {
                         weight = 1f;
                     }
                     final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight);
@@ -104,7 +104,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                         params.rightMargin = buttonMargin;
                     }
 
-
+                    params.topMargin = buttonMargin;
                     params.bottomMargin = buttonMargin;
 
                     final Integer drawableResId = buttonDef.getDrawableResId();
@@ -130,8 +130,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     @Override
     public void onClick(View v) {
-        if ( v instanceof TextView) {
-             handleText(((TextView) v).getText(), v.getTag());
+        if (v instanceof TextView) {
+            handleText(((TextView) v).getText(), v.getTag());
         } else {
             handleText(null, v.getTag());
         }
@@ -139,7 +139,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     @Override
     public boolean processDragEvent(@NotNull DragDirection dragDirection, @NotNull DragButton dragButton, @NotNull Point2d startPoint2d, @NotNull MotionEvent motionEvent) {
-        if ( dragButton instanceof DirectionDragButton) {
+        if (dragButton instanceof DirectionDragButton) {
             final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
             return handleText(directionDragButton.getText(dragDirection), dragButton.getTag());
@@ -149,47 +149,49 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     private boolean handleText(@Nullable CharSequence text, @Nullable Object tagObject) {
         // we need to check if there is something in the tag
-        if ( tagObject instanceof String) {
+        if (tagObject instanceof String) {
             final String tag = ((String) tagObject);
 
-            boolean isAction = tag.startsWith(DragKeyboardController.ACTION);
-            boolean isText = tag.startsWith(DragKeyboardController.TEXT);
-
-            if (isAction || isText) {
-                if (keyboardActionListener != null) {
-                    if (isAction) {
-                        final String code = tag.substring(DragKeyboardController.ACTION.length());
-                        try {
-                            keyboardActionListener.onKey(Integer.valueOf(code), null);
-                        } catch (NumberFormatException e) {
-                            Log.e(DragAndroidKeyboardView.class.getSimpleName(), e.getMessage(), e);
-                        }
-                    } else {
-                        final String code = tag.substring(DragKeyboardController.TEXT.length());
-                        keyboardActionListener.onText(code);
-                    }
-                }
+            if (handleTag(tag)) {
                 return true;
             } else {
-                if (!StringUtils.isEmpty(text)) {
-                    if ( keyboardActionListener != null ) {
-                        keyboardActionListener.onText(text);
-                    }
-
-                    return true;
-                }
+                if (handleText(text)) return true;
             }
         } else {
-            if (!StringUtils.isEmpty(text)) {
-                if ( keyboardActionListener != null ) {
-                    keyboardActionListener.onText(text);
-                }
-
-                return true;
-            }
+            if (handleText(text)) return true;
         }
 
 
         return false;
     }
+
+    private boolean handleTag(@NotNull String tag) {
+        boolean action = tag.startsWith(DragKeyboardController.ACTION);
+
+        if (action) {
+            if (keyboardActionListener != null) {
+                final String code = tag.substring(DragKeyboardController.ACTION.length());
+                try {
+                    keyboardActionListener.onKey(Integer.valueOf(code), null);
+                } catch (NumberFormatException e) {
+                    Log.e(DragAndroidKeyboardView.class.getSimpleName(), e.getMessage(), e);
+                }
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean handleText(@Nullable CharSequence text) {
+        if (!StringUtils.isEmpty(text)) {
+            if (keyboardActionListener != null) {
+                keyboardActionListener.onText(text);
+            }
+
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboardDef> {
 
     protected static String ACTION = "action:";
-    protected static String TEXT = "text:";
 
     protected static String ENTER = ACTION + (int)'\n';
 
