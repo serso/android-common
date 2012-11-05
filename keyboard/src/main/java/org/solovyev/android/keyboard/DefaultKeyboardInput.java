@@ -8,6 +8,8 @@ import android.view.KeyEvent;
 import android.view.inputmethod.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.history.HistoryHelper;
+import org.solovyev.common.history.SimpleHistoryHelper;
 import org.solovyev.common.text.StringUtils;
 
 /**
@@ -18,6 +20,13 @@ import org.solovyev.common.text.StringUtils;
 public class DefaultKeyboardInput implements AKeyboardInput {
 
     public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
+
+    @NotNull
+    private final HistoryHelper<KeyboardInputHistoryState> history = new SimpleHistoryHelper<KeyboardInputHistoryState>(10);
+    {
+        history.addState(new KeyboardInputHistoryState("", 0));
+    }
+
     @NotNull
     private final InputMethodService inputMethodService;
 
@@ -58,6 +67,9 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
     private void commitText(@NotNull InputConnection ic, @Nullable CharSequence text, int position) {
         ic.commitText(text, position);
+        if (!StringUtils.isEmpty(text)) {
+            history.addState(new KeyboardInputHistoryState(AndroidKeyboardUtils.getTextFromInputConnection(ic), 0));
+        }
     }
 
     @NotNull
@@ -83,6 +95,30 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     @Override
     public void clearTypedText() {
         this.typedText.setLength(0);
+    }
+
+    @Override
+    public void undo() {
+        if (this.history.isUndoAvailable()) {
+            final KeyboardInputHistoryState state = this.history.undo(null);
+            restoreFromHistory(state);
+        }
+    }
+
+    private void restoreFromHistory(@Nullable KeyboardInputHistoryState state) {
+        if (state != null) {
+            final InputConnection ic = getCurrentInputConnection();
+            ic.deleteSurroundingText(MAX_INT, MAX_INT);
+            ic.commitText(state.getCharSequence(), 1);
+        }
+    }
+
+    @Override
+    public void redo() {
+        if (this.history.isRedoAvailable()) {
+            final KeyboardInputHistoryState state = this.history.redo(null);
+            restoreFromHistory(state);
+        }
     }
 
     @Override

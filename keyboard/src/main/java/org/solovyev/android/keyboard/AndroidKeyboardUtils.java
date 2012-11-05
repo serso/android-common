@@ -19,6 +19,16 @@ public final class AndroidKeyboardUtils {
     }
 
     public static void copyWholeTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {
+        String text = getTextFromInputConnection(ic);
+
+        if (!StringUtils.isEmpty(text)) {
+            final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboardManager.setText(text);
+        }
+    }
+
+    @NotNull
+    public static String getTextFromInputConnection(@NotNull InputConnection ic) {
         final CharSequence textAfter = ic.getTextAfterCursor(DefaultKeyboardInput.MAX_INT, 0);
         final CharSequence textBefore = ic.getTextBeforeCursor(DefaultKeyboardInput.MAX_INT, 0);
 
@@ -31,10 +41,7 @@ public final class AndroidKeyboardUtils {
             text += textAfter.toString();
         }
 
-        if (!StringUtils.isEmpty(text)) {
-            final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboardManager.setText(text);
-        }
+        return text;
     }
 
     static void copyTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {

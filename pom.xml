@@ -173,6 +173,12 @@
 
             <dependency>
                 <groupId>org.solovyev</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
                 <artifactId>common-text</artifactId>
                 <version>${common.version}</version>
             </dependency>

@@ -111,11 +111,19 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         fourthRow.add(spaceButtonDef);
 
         fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
-        fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
+        fourthRow.add(createHistoryButtonDef(notLetterBackgroundResId));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("0", "(", null, ")", null, notLetterBackgroundResId));
         result.add(fourthRow);
 
         return result;
+    }
+
+    @NotNull
+    private DirectionDragButtonDefImpl createHistoryButtonDef(int notLetterBackgroundResId) {
+        final DirectionDragButtonDefImpl historyButtonDef = DirectionDragButtonDefImpl.newInstance(null, "undo", null, "redo", null, notLetterBackgroundResId);
+        historyButtonDef.setDirectionKeycode(DragDirection.up, AbstractKeyboardController.KEYCODE_UNDO);
+        historyButtonDef.setDirectionKeycode(DragDirection.down, AbstractKeyboardController.KEYCODE_REDO);
+        return historyButtonDef;
     }
 
     @NotNull
@@ -187,7 +195,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         fourthRow.add(spaceButtonDef);
 
         fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
-        fourthRow.add(DirectionDragButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
+        fourthRow.add(createHistoryButtonDef(notLetterBackgroundResId));
         fourthRow.add(DirectionDragButtonDefImpl.newInstance("0", "(", null, ")", null, notLetterBackgroundResId));
         result.add(fourthRow);
 

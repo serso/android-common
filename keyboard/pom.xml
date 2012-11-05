@@ -25,6 +25,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+        <dependency>
+            <groupId>org.solovyev</groupId>
+            <artifactId>common-core</artifactId>
+            <type>jar</type>
+        </dependency>
+
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-view</artifactId>

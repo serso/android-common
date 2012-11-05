@@ -56,4 +56,15 @@ public interface AKeyboardInput {
     int getCursorCapsMode(int inputType);
 
     void clearTypedText();
+
+    /*
+    **********************************************************************
+    *
+    *                           HISTORY
+    *
+    **********************************************************************
+    */
+
+    void undo();
+    void redo();
 }
