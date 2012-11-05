@@ -126,7 +126,7 @@ public class AKeyboardButtonPreview {
 
         final int popupWidth = previewView.getMeasuredWidth();
         final int popupHeight = previewView.getMeasuredHeight();
-        final int popupMargin = 10;
+        final int popupMargin = 20;
 
         int popupX = params.x - popupWidth / 2;
         int popupY = params.y - popupHeight - popupMargin;
