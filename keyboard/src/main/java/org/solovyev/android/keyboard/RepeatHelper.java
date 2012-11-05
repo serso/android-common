@@ -14,7 +14,7 @@ public class RepeatHelper {
     // in ms
     private static final int MIN_REPEAT_INTERVAL = 100;
 
-    private static final int[] REPEAT_INTERVALS = new int[]{5 * MIN_REPEAT_INTERVAL, 4 * MIN_REPEAT_INTERVAL, 3 * MIN_REPEAT_INTERVAL, 2 * MIN_REPEAT_INTERVAL, MIN_REPEAT_INTERVAL};
+    private static final int[] REPEAT_INTERVALS = new int[]{5 * MIN_REPEAT_INTERVAL, 4 * MIN_REPEAT_INTERVAL, 3 * MIN_REPEAT_INTERVAL, 2 * MIN_REPEAT_INTERVAL, MIN_REPEAT_INTERVAL, MIN_REPEAT_INTERVAL / 2, MIN_REPEAT_INTERVAL / 4};
 
     @Nullable
     private View repeatView;
@@ -48,8 +48,8 @@ public class RepeatHelper {
         if (repeat) {
             lastTime = System.currentTimeMillis();
             if (repeatAllowed) {
-                repeatCounter++;
                 if ( repeatCounter < REPEAT_INTERVALS.length ) {
+                    repeatCounter++;
                     repeatInterval = REPEAT_INTERVALS [repeatCounter];
                 }
             }
