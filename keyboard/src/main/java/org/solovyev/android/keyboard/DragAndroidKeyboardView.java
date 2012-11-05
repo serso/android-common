@@ -25,13 +25,16 @@ import java.util.Map;
  * Date: 02.11.12
  * Time: 14:47
  */
-public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyboardView<DragAKeyboardDef>, View.OnClickListener, SimpleOnDragListener.DragProcessor {
+public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyboardView<DragAKeyboardDef>, SimpleOnDragListener.DragProcessor, View.OnTouchListener, View.OnClickListener {
 
     @Nullable
     private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
     @NotNull
     private AKeyboardButtonPreview preview;
+
+    @NotNull
+    private final RepeatHelper repeatHelper = new RepeatHelper();
 
     @NotNull
     private final Map<View, DirectionDragButtonDef> defs = new HashMap<View, DirectionDragButtonDef>();
@@ -129,13 +132,14 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                         final DirectionDragButton directionDragButton = (DirectionDragButton) layoutInflater.inflate(R.layout.drag_keyboard_drag_button, null);
                         directionDragButton.applyDef(buttonDef);
                         directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
+                        // we cannot use on touch listener here (in order to get repeat) as it will conflict with default DragButton logic
                         directionDragButton.setOnClickListener(this);
                         defs.put(directionDragButton, buttonDef);
                         rowLayout.addView(directionDragButton, params);
                     } else {
                         final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
                         AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
-                        imageButton.setOnClickListener(this);
+                        imageButton.setOnTouchListener(this);
                         defs.put(imageButton, buttonDef);
                         rowLayout.addView(imageButton, params);
                     }
@@ -148,12 +152,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public void onClick(View v) {
-        if (v instanceof TextView) {
-            handleText(((TextView) v).getText(), v);
-        } else {
-            handleText(null, v);
-        }
+    public boolean onTouchEvent(MotionEvent event) {
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -161,37 +161,39 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         if (dragButton instanceof DirectionDragButton) {
             final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
-            return handleText(directionDragButton.getText(dragDirection), dragButton);
+            return handleTextOrTag(directionDragButton.getText(dragDirection), dragButton, true);
         }
         return false;
     }
 
-    private boolean handleText(@Nullable CharSequence text, @NotNull View view) {
+    private boolean handleTextOrTag(@Nullable CharSequence text, @NotNull View view, boolean withPreview) {
         // we need to check if there is something in the tag
 
         final Object tagObject = view.getTag();
         if (tagObject instanceof String) {
             final String tag = ((String) tagObject);
 
-            if (handleTag(view, tag)) {
+            if (handleTag(view, tag, withPreview)) {
                 return true;
             } else {
-                if (handleText(view, text)) return true;
+                if (handleText(view, text, withPreview)) return true;
             }
         } else {
-            if (handleText(view, text)) return true;
+            if (handleText(view, text, withPreview)) return true;
         }
 
 
         return false;
     }
 
-    private boolean handleTag(@NotNull View view, @NotNull String tag) {
+    private boolean handleTag(@NotNull View view, @NotNull String tag, boolean withPreview) {
         boolean action = tag.startsWith(DragKeyboardController.ACTION);
 
         if (action) {
 
-            showPreview(view, null);
+            if (withPreview) {
+                showPreview(view, null);
+            }
 
             if (keyboardActionListener != null) {
                 final String code = tag.substring(DragKeyboardController.ACTION.length());
@@ -201,15 +203,19 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
                     Log.e(DragAndroidKeyboardView.class.getSimpleName(), e.getMessage(), e);
                 }
             }
+
             return true;
         }
 
         return false;
     }
 
-    private boolean handleText(@NotNull View view, @Nullable CharSequence text) {
+    private boolean handleText(@NotNull View view, @Nullable CharSequence text, boolean withPreview) {
         if (!StringUtils.isEmpty(text)) {
-            showPreview(view, text);
+
+            if (withPreview) {
+                showPreview(view, text);
+            }
 
             if (keyboardActionListener != null) {
                 keyboardActionListener.onText(text);
@@ -229,4 +235,41 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         }
     }
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        boolean withPreview = !repeatHelper.prepare(v);
+
+        if (repeatHelper.canGoFurther()) {
+            repeatHelper.goFurther(v, isRepeatAllowed(v));
+
+            if (v instanceof TextView) {
+                handleTextOrTag(((TextView) v).getText(), v, withPreview);
+            } else {
+                handleTextOrTag(null, v, withPreview);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean isRepeatAllowed(View v) {
+        boolean allowRepeat = false;
+
+        final DirectionDragButtonDef buttonDef = defs.get(v);
+        if ( buttonDef != null ) {
+            allowRepeat = buttonDef.allowRepeat();
+        }
+        return allowRepeat;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v instanceof TextView) {
+            handleTextOrTag(((TextView) v).getText(), v, true);
+        } else {
+            handleTextOrTag(null, v, true);
+        }
+    }
 }

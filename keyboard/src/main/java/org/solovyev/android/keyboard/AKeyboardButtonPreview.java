@@ -15,6 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.AndroidUtils;
 
 /**
  * User: serso
@@ -27,6 +28,10 @@ public class AKeyboardButtonPreview {
     private static final int MSG_REMOVE_PREVIEW = 2;
     private static final int MSG_REPEAT = 3;
     private static final int MSG_LONGPRESS = 4;
+
+    private static final long DELAY_AFTER_PREVIEW = 250;
+    private static final long DELAY_BEFORE_PREVIEW = 0;
+
 
     @NotNull
     private PopupWindow popup;
@@ -60,8 +65,6 @@ public class AKeyboardButtonPreview {
             }
         }
     };
-    private static final long DELAY_AFTER_PREVIEW = 500;
-    private static final long DELAY_BEFORE_PREVIEW = 0;
 
     public AKeyboardButtonPreview(@NotNull View popupParent) {
         this.popupParent = popupParent;
@@ -126,7 +129,7 @@ public class AKeyboardButtonPreview {
 
         final int popupWidth = previewView.getMeasuredWidth();
         final int popupHeight = previewView.getMeasuredHeight();
-        final int popupMargin = 20;
+        final int popupMargin = AndroidUtils.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
 
         int popupX = params.x - popupWidth / 2;
         int popupY = params.y - popupHeight - popupMargin;

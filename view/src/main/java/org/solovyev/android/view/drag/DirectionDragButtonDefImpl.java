@@ -36,6 +36,8 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     @Nullable
     private Integer layoutMarginRight;
 
+    private boolean allowRepeat = true;
+
     private DirectionDragButtonDefImpl() {
     }
 
@@ -103,6 +105,11 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
         return directionsTexts.get(dragDirection);
     }
 
+    @Override
+    public boolean allowRepeat() {
+        return this.allowRepeat;
+    }
+
     @Nullable
     @Override
     public Float getLayoutWeight() {
@@ -160,5 +167,9 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     public void setBackgroundResId(int backgroundResId) {
         this.backgroundResId = backgroundResId;
+    }
+
+    public void setAllowRepeat(boolean allowRepeat) {
+        this.allowRepeat = allowRepeat;
     }
 }

@@ -21,101 +21,129 @@ import org.solovyev.common.text.StringUtils;
 
 public class DragButton extends Button {
 
-	@Nullable
-	private Point2d startPoint = null;
+    @Nullable
+    private Point2d startPoint = null;
 
-	@Nullable
-	private org.solovyev.android.view.drag.OnDragListener onDragListener;
+    @Nullable
+    private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
-	public DragButton(@NotNull Context context, @NotNull AttributeSet attrs) {
-		super(context, attrs);
-		setOnTouchListener(new OnTouchListenerImpl());
-	}
+    @NotNull
+    private DragButton.OnTouchListenerImpl onTouchListener;
+
+    @NotNull
+    private final Handler uiHandler = new Handler();
+
+    public DragButton(@NotNull Context context, @NotNull AttributeSet attrs) {
+        super(context, attrs);
+        setOnTouchListener(new OnTouchListenerImpl());
+    }
 
     public DragButton(@NotNull Context context, @NotNull DragButtonDef dragButtonDef) {
         super(context);
+
         setOnTouchListener(new OnTouchListenerImpl());
 
         setText(dragButtonDef.getText());
     }
 
     public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
-		this.onDragListener = onDragListener;
-	}
+        this.onDragListener = onDragListener;
+    }
 
-	@Nullable
-	public org.solovyev.android.view.drag.OnDragListener getOnDragListener() {
-		return onDragListener;
-	}
+    @Nullable
+    public org.solovyev.android.view.drag.OnDragListener getOnDragListener() {
+        return onDragListener;
+    }
 
     public void applyDef(@NotNull DragButtonDef buttonDef) {
         AndroidViewUtils.applyButtonDef(this, buttonDef);
+    }
 
+    @Override
+    public void setOnTouchListener(OnTouchListener l) {
+        if (l instanceof OnTouchListenerImpl) {
+            this.onTouchListener = (OnTouchListenerImpl) l;
+            super.setOnTouchListener(l);
+        } else {
+            this.onTouchListener.nestedOnTouchListener = l;
+        }
     }
 
     /**
-	 * OnTouchListener implementation that fires onDrag()
-	 * 
-	 * @author serso
-	 * 
-	 */
-	private final class OnTouchListenerImpl implements OnTouchListener {
+     * OnTouchListener implementation that fires onDrag()
+     *
+     * @author serso
+     */
+    private final class OnTouchListenerImpl implements OnTouchListener {
 
-		@Override
-		public boolean onTouch(@NotNull View v, @NotNull MotionEvent event) {
-			// processing on touch event
+        @Nullable
+        private OnTouchListener nestedOnTouchListener;
 
-			// in order to avoid possible NPEs
-			final Point2d localStartPoint = startPoint;
-			final org.solovyev.android.view.drag.OnDragListener localOnDragListener = onDragListener;
+        @Override
+        public boolean onTouch(@NotNull View v, @NotNull MotionEvent event) {
+            // processing on touch event
 
-			if (localOnDragListener != null) {
-				// only if onDrag() listener specified
+            boolean consumed = false;
 
-				Log.d(String.valueOf(getId()), "onTouch() for: " + getId() + " . Motion event: " + event);
+            // in order to avoid possible NPEs
+            final Point2d localStartPoint = startPoint;
+            final org.solovyev.android.view.drag.OnDragListener localOnDragListener = onDragListener;
 
-				switch (event.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						// start tracking: set start point
-						startPoint = new Point2d(event.getX(), event.getY());
-						break;
+            if (localOnDragListener != null) {
+                // only if onDrag() listener specified
 
-					case MotionEvent.ACTION_UP:
-						// stop tracking
+                Log.d(String.valueOf(getId()), "onTouch() for: " + getId() + " . Motion event: " + event);
 
-						if (localStartPoint != null && localOnDragListener.onDrag(DragButton.this, new DragEvent(localStartPoint, event))) {
-							if (localOnDragListener.isSuppressOnClickEvent()) {
-								// prevent on click action
-								setPressed(false);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // start tracking: set start point
+                        startPoint = new Point2d(event.getX(), event.getY());
+                        break;
 
-								// sometimes setPressed(false); doesn't work so to prevent onClick action button disables
-								if (v instanceof Button) {
-									final Button button = (Button) v;
+                    case MotionEvent.ACTION_UP:
+                        // stop tracking
 
-									button.setEnabled(false);
+                        if (localStartPoint != null) {
+                            consumed = localOnDragListener.onDrag(DragButton.this, new DragEvent(localStartPoint, event));
 
-									new Handler().postDelayed(new Runnable() {
-										public void run() {
-											button.setEnabled(true);
-										}
-									}, 200);
-								}
-							}
-						}
+                            if (consumed) {
+                                if (localOnDragListener.isSuppressOnClickEvent()) {
+                                    // prevent on click action
+                                    setPressed(false);
 
-						startPoint = null;
-						break;
-				}
-			}
+                                    // sometimes setPressed(false); doesn't work so to prevent onClick action button disables
+                                    if (v instanceof Button) {
+                                        final Button button = (Button) v;
 
-			return false;
-		}
-	}
+                                        button.setEnabled(false);
+
+                                        uiHandler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                button.setEnabled(true);
+                                            }
+                                        }, 200);
+                                    }
+                                }
+                            }
+                        }
+
+                        startPoint = null;
+                        break;
+                }
+            }
+
+            if (nestedOnTouchListener != null && !consumed) {
+                return nestedOnTouchListener.onTouch(v, event);
+            } else {
+                return consumed;
+            }
+        }
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         CharSequence text = getText();
-        if ( !StringUtils.isEmpty(text)) {
+        if (!StringUtils.isEmpty(text)) {
             super.onDraw(canvas);
         } else {
             AndroidViewUtils.drawDrawables(canvas, this);
