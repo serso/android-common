@@ -3,6 +3,8 @@ package org.solovyev.android.keyboard;
 import android.app.Activity;
 import android.content.Context;
 import android.inputmethodservice.KeyboardView;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
@@ -13,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.AndroidUtils;
 import org.solovyev.android.view.AndroidViewUtils;
+import org.solovyev.android.view.VibratorContainer;
 import org.solovyev.android.view.drag.*;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.StringUtils;
@@ -39,19 +42,25 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     @NotNull
     private final Map<View, DirectionDragButtonDef> defs = new HashMap<View, DirectionDragButtonDef>();
 
+    @NotNull
+    private final VibratorContainer vibrator;
+
     public DragAndroidKeyboardView(Context context) {
         super(context);
         preview = new AKeyboardButtonPreview(this);
+        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
     }
 
     public DragAndroidKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
         preview = new AKeyboardButtonPreview(this);
+        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
     }
 
     public DragAndroidKeyboardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         preview = new AKeyboardButtonPreview(this);
+        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
     }
 
     @Override
@@ -161,6 +170,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         if (dragButton instanceof DirectionDragButton) {
             final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
+            vibrator.vibrate();
+
             return handleTextOrTag(directionDragButton.getText(dragDirection), dragButton, true);
         }
         return false;
@@ -237,18 +248,22 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        boolean withPreview = !repeatHelper.prepare(v);
+        boolean vibrate = !repeatHelper.prepare(v);
+        if ( vibrate ) {
+            vibrator.vibrate();
+        }
 
         if (repeatHelper.canGoFurther()) {
             repeatHelper.goFurther(v, isRepeatAllowed(v));
 
             if (v instanceof TextView) {
-                handleTextOrTag(((TextView) v).getText(), v, withPreview);
+                handleTextOrTag(((TextView) v).getText(), v, true);
             } else {
-                handleTextOrTag(null, v, withPreview);
+                handleTextOrTag(null, v, true);
             }
 
-            return true;
+            // return false
+            return false;
         }
 
         return false;
@@ -261,11 +276,13 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         if ( buttonDef != null ) {
             allowRepeat = buttonDef.allowRepeat();
         }
+
         return allowRepeat;
     }
 
     @Override
     public void onClick(View v) {
+        vibrator.vibrate();
         if (v instanceof TextView) {
             handleTextOrTag(((TextView) v).getText(), v, true);
         } else {

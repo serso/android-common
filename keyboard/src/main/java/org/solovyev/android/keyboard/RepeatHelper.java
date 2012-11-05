@@ -48,8 +48,8 @@ public class RepeatHelper {
         if (repeat) {
             lastTime = System.currentTimeMillis();
             if (repeatAllowed) {
+                repeatCounter++;
                 if ( repeatCounter < REPEAT_INTERVALS.length ) {
-                    repeatCounter++;
                     repeatInterval = REPEAT_INTERVALS [repeatCounter];
                 }
             }

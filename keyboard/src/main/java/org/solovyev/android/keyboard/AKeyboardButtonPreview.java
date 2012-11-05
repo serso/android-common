@@ -29,7 +29,7 @@ public class AKeyboardButtonPreview {
     private static final int MSG_REPEAT = 3;
     private static final int MSG_LONGPRESS = 4;
 
-    private static final long DELAY_AFTER_PREVIEW = 250;
+    private static final long DELAY_AFTER_PREVIEW = 400;
     private static final long DELAY_BEFORE_PREVIEW = 0;
 
 
