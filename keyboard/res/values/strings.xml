@@ -39,6 +39,8 @@
     <string name="select_language">Select input languages</string>
     <string name="general_category">General</string>
 
+	<!--Drag Keyboard-->
+
     <string name="en">English</string>
     <string name="ru">Russian</string>
 </resources>

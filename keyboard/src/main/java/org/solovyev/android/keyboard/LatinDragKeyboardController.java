@@ -119,9 +119,9 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 
     @NotNull
     private DragAKeyboardButtonDefImpl createHistoryButtonDef(int notLetterBackgroundResId) {
-        final DragAKeyboardButtonDefImpl historyButtonDef = DragAKeyboardButtonDefImpl.newInstance(null, "undo", null, null, "redo", notLetterBackgroundResId);
-        historyButtonDef.setDirectionKeycode(DragDirection.up, AbstractKeyboardController.KEYCODE_UNDO);
-        historyButtonDef.setDirectionKeycode(DragDirection.left, AbstractKeyboardController.KEYCODE_REDO);
+        final DragAKeyboardButtonDefImpl historyButtonDef = DragAKeyboardButtonDefImpl.newInstance(null, null, "↷", null, "↶", notLetterBackgroundResId);
+		historyButtonDef.setDirectionKeycode(DragDirection.left, AbstractKeyboardController.KEYCODE_UNDO);
+		historyButtonDef.setDirectionKeycode(DragDirection.right, AbstractKeyboardController.KEYCODE_REDO);
         return historyButtonDef;
     }
 

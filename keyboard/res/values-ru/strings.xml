@@ -1,0 +1,6 @@
+<resources>
+	<!--Drag Keyboard-->
+
+	<string name="en">Английская</string>
+	<string name="ru">Русская</string>
+</resources>
