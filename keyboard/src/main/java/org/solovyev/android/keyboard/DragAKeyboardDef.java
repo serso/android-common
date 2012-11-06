@@ -2,7 +2,6 @@ package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.view.drag.DirectionDragButtonDef;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,12 +23,12 @@ public class DragAKeyboardDef implements AKeyboardDef {
 
     @Override
     public void setImeOptions(@NotNull Resources resources, int imeOptions) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        keyboardDef.setImeOptions(resources, imeOptions);
     }
 
     @Override
     public void setShifted(boolean shifted) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        keyboardDef.setShifted(shifted);
     }
 
     @NotNull
@@ -57,17 +56,29 @@ public class DragAKeyboardDef implements AKeyboardDef {
         public List<RowDef> getRowDefs() {
             return Collections.unmodifiableList(rowDefs);
         }
-    }
+
+		public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+			for (RowDef rowDef : rowDefs) {
+				rowDef.setImeOptions(resources, imeOptions);
+			}
+		}
+
+		public void setShifted(boolean shifted) {
+			for (RowDef rowDef : rowDefs) {
+				rowDef.setShifted(shifted);
+			}
+		}
+	}
 
     public static final class RowDef {
 
         @NotNull
-        private final List<DirectionDragButtonDef> buttonDefs = new ArrayList<DirectionDragButtonDef>();
+        private final List<DragAKeyboardButtonDef> buttonDefs = new ArrayList<DragAKeyboardButtonDef>();
 
         public RowDef() {
         }
 
-        protected boolean add(@NotNull DirectionDragButtonDef dragButtonDef) {
+        protected boolean add(@NotNull DragAKeyboardButtonDef dragButtonDef) {
             return buttonDefs.add(dragButtonDef);
         }
 
@@ -76,8 +87,20 @@ public class DragAKeyboardDef implements AKeyboardDef {
         }
 
         @NotNull
-        public List<DirectionDragButtonDef> getButtonDefs() {
+        public List<DragAKeyboardButtonDef> getButtonDefs() {
             return Collections.unmodifiableList(buttonDefs);
         }
+
+		public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+			for (DragAKeyboardButtonDef buttonDef : buttonDefs) {
+				buttonDef.setImeOptions(resources, imeOptions);
+			}
+		}
+
+		public void setShifted(boolean shifted) {
+			for (DragAKeyboardButtonDef buttonDef : buttonDefs) {
+				buttonDef.setShifted(shifted);
+			}
+		}
     }
 }

@@ -39,7 +39,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private final RepeatHelper repeatHelper = new RepeatHelper();
 
     @NotNull
-    private final Map<View, DirectionDragButtonDef> defs = new HashMap<View, DirectionDragButtonDef>();
+    private final Map<View, DragAKeyboardButtonDef> defs = new HashMap<View, DragAKeyboardButtonDef>();
 
     @NotNull
     private final VibratorContainer vibrator;
@@ -114,7 +114,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             for (DragAKeyboardDef.RowDef rowDef : keyboardDef.getRowDefs()) {
                 final LinearLayout rowLayout = new LinearLayout(context);
                 rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-                for (DirectionDragButtonDef buttonDef : rowDef.getButtonDefs()) {
+                for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {
 
                     Float weight = buttonDef.getLayoutWeight();
                     if (weight == null) {
@@ -176,7 +176,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private Integer getKeycode(@Nullable DragDirection dragDirection,
                                @NotNull View view) {
         Integer keycode = null;
-        final DirectionDragButtonDef buttonDef = this.defs.get(view);
+        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
         if ( buttonDef != null ) {
             if (dragDirection != null) {
                 keycode = buttonDef.getDirectionKeycode(dragDirection);
@@ -263,7 +263,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private boolean isRepeatAllowed(View v) {
         boolean allowRepeat = false;
 
-        final DirectionDragButtonDef buttonDef = defs.get(v);
+        final DragAKeyboardButtonDef buttonDef = defs.get(v);
         if ( buttonDef != null ) {
             allowRepeat = buttonDef.allowRepeat();
         }
