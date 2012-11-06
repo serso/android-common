@@ -74,6 +74,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
     @Override
     public void closing() {
+		this.preview.hide();
     }
 
     @Override

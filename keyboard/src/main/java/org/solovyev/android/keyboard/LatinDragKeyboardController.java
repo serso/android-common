@@ -3,6 +3,8 @@ package org.solovyev.android.keyboard;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
+import android.text.InputType;
+import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.AndroidUtils;
 import org.solovyev.android.view.drag.DragDirection;
@@ -20,20 +22,25 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     private int currentKeyboard = 0;
 
     @NotNull
-    private List<DragAKeyboardDef.KeyboardDef> keyboardDefs = new ArrayList<DragAKeyboardDef.KeyboardDef>(2);
+    private List<DragAKeyboardDef.KeyboardDef> languageKeyboardDefs = new ArrayList<DragAKeyboardDef.KeyboardDef>(2);
+
+	@NotNull
+	private DragAKeyboardDef.KeyboardDef digitsKeyboard;
 
     @NotNull
     @Override
     protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
-        keyboardDefs.add(createEnglishKeyboard(inputMethodService));
-        keyboardDefs.add(createRussianKeyboard(inputMethodService));
+        languageKeyboardDefs.add(createEnglishKeyboard(inputMethodService));
+        languageKeyboardDefs.add(createRussianKeyboard(inputMethodService));
+
+		digitsKeyboard = createDigitsKeyboard(inputMethodService);
 
         return super.onInitializeInterface0(inputMethodService);
     }
 
     @Override
     protected DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context) {
-        return keyboardDefs.get(currentKeyboard);
+        return languageKeyboardDefs.get(currentKeyboard);
     }
 
     @NotNull
@@ -201,24 +208,144 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         return result;
     }
 
+	@NotNull
+	private DragAKeyboardDef.KeyboardDef createDigitsKeyboard(@NotNull Context context) {
+		final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
+
+		final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
+
+		final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
+		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("1", null));
+		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("2", null));
+		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("3", null));
+		firstRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, Keyboard.KEYCODE_DELETE, notLetterBackgroundResId));
+		result.add(firstRow);
+
+		final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
+		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("4", null));
+		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("5", null));
+		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("6", null));
+		secondRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, DragKeyboardController.KEYCODE_COPY, notLetterBackgroundResId));
+		result.add(secondRow);
+
+		final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
+		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("7", null));
+		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("8", null));
+		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("9", null));
+		thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, DragKeyboardController.KEYCODE_PASTE, notLetterBackgroundResId));
+		result.add(thirdRow);
+
+		final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
+		fourthRow.add(createHistoryButtonDef(notLetterBackgroundResId));
+		fourthRow.add(DragAKeyboardButtonDefImpl.newInstance("0", "(", null, ")", null, notLetterBackgroundResId));
+		fourthRow.add(DragAKeyboardButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
+		fourthRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_enter, DragKeyboardController.KEYCODE_ENTER, notLetterBackgroundResId));
+		result.add(fourthRow);
+
+		return result;
+	}
+
     @Override
     protected void handlePrevKeyboard() {
         super.handlePrevKeyboard();
         currentKeyboard -= 1;
         if ( currentKeyboard < 0 ) {
-            currentKeyboard = keyboardDefs.size() - 1;
+            currentKeyboard = languageKeyboardDefs.size() - 1;
         }
-        setCurrentKeyboard(new AKeyboardImpl<DragAKeyboardDef>("drag-keyboard", new DragAKeyboardDef(keyboardDefs.get(currentKeyboard))));
+        setCurrentKeyboard(getCurrentLanguageKeyboard());
     }
 
     @Override
     protected void handleNextKeyboard() {
         super.handleNextKeyboard();
         currentKeyboard += 1;
-        if ( currentKeyboard >= keyboardDefs.size() ) {
+        if ( currentKeyboard >= languageKeyboardDefs.size() ) {
             currentKeyboard = 0;
         }
 
-        setCurrentKeyboard(new AKeyboardImpl<DragAKeyboardDef>("drag-keyboard", new DragAKeyboardDef(keyboardDefs.get(currentKeyboard))));
+        setCurrentKeyboard(getCurrentLanguageKeyboard());
     }
+
+	private AKeyboardImpl<DragAKeyboardDef> getCurrentLanguageKeyboard() {
+		return createKeyboard(languageKeyboardDefs.get(currentKeyboard));
+	}
+
+	private AKeyboardImpl<DragAKeyboardDef> createKeyboard(@NotNull DragAKeyboardDef.KeyboardDef keyboardDef) {
+		return new AKeyboardImpl<DragAKeyboardDef>("drag-keyboard", new DragAKeyboardDef(keyboardDef));
+	}
+
+	@NotNull
+	@Override
+	public AKeyboardControllerState<DragAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+		final AKeyboardControllerState<DragAKeyboardDef> result;
+
+		// We are now going to initialize our state based on the type of
+		// text being edited.
+		switch (attribute.inputType & InputType.TYPE_MASK_CLASS) {
+			case InputType.TYPE_CLASS_NUMBER:
+			case InputType.TYPE_CLASS_DATETIME:
+				// Numbers and dates default to the symbols keyboard, with
+				// no extra features.
+				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard(digitsKeyboard));
+				break;
+
+			case InputType.TYPE_CLASS_PHONE:
+				// Phones will also default to the symbols keyboard, though
+				// often you will want to have a dedicated phone keyboard.
+				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard(digitsKeyboard));
+				break;
+
+			case InputType.TYPE_CLASS_TEXT:
+				// This is general text editing.  We will default to the
+				// normal alphabetic keyboard, and assume that we should
+				// be doing predictive text (showing candidates as the
+				// user types).
+				boolean prediction = true;
+				boolean completion = false;
+
+				// We now look for a few special variations of text that will
+				// modify our behavior.
+				int variation = attribute.inputType & InputType.TYPE_MASK_VARIATION;
+				if (variation == InputType.TYPE_TEXT_VARIATION_PASSWORD ||
+						variation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+					// Do not display predictions / what the user is typing
+					// when they are entering a password.
+					prediction = false;
+				}
+
+				if (variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+						|| variation == InputType.TYPE_TEXT_VARIATION_URI
+						|| variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
+					// Our predictions are not useful for e-mail addresses
+					// or URIs.
+					prediction = false;
+				}
+
+				if ((attribute.inputType & InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE) != 0) {
+					// If this is an auto-complete text view, then our predictions
+					// will not be shown and instead we will allow the editor
+					// to supply their own.  We only show the editor's
+					// candidates when in fullscreen mode, otherwise relying
+					// own it displaying its own UI.
+					prediction = false;
+					completion = getInputMethodService().isFullscreenMode();
+				}
+
+				result = AKeyboardControllerStateImpl.newInstance(prediction, completion, getCurrentLanguageKeyboard());
+
+				// We also want to look at the current state of the editor
+				// to decide whether our alphabetic keyboard should start out
+				// shifted.
+				updateShiftKeyState(attribute);
+				break;
+
+			default:
+				// For all unknown input types, default to the alphabetic
+				// keyboard with no special features.
+				updateShiftKeyState(attribute);
+				result = AKeyboardControllerStateImpl.newDefaultState(getCurrentLanguageKeyboard());
+		}
+
+		return result;
+	}
 }

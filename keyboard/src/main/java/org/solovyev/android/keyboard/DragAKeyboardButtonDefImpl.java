@@ -125,7 +125,7 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
 		return result;
 	}
 
-	public static DragAKeyboardButtonDef newInstance(@Nullable CharSequence text, int keycode) {
+	public static DragAKeyboardButtonDef newInstance(@Nullable CharSequence text, @Nullable Integer keycode) {
 		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
 		result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text);

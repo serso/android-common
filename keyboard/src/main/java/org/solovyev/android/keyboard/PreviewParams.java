@@ -72,6 +72,10 @@ public final class PreviewParams implements Parcelable {
 		synchronized (cache) {
 			final PreviewParams fromCache = cache.get(previewParams);
 			if (fromCache != null) {
+				synchronized (fromCache) {
+					fromCache.x = previewParams.x;
+					fromCache.y = previewParams.y;
+				}
 				return fromCache;
 			} else {
 				cache.put(previewParams, previewParams);
@@ -81,11 +85,15 @@ public final class PreviewParams implements Parcelable {
 	}
 
 	public int getX() {
-		return x;
+		synchronized (this) {
+			return x;
+		}
 	}
 
 	public int getY() {
-		return y;
+		synchronized (this) {
+			return y;
+		}
 	}
 
 	@Nullable

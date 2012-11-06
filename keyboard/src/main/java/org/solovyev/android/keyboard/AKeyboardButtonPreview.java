@@ -48,7 +48,7 @@ public class AKeyboardButtonPreview {
                     showText0((PreviewParams) msg.obj);
                     break;
                 case MSG_REMOVE_PREVIEW:
-                    previewView.setVisibility(View.INVISIBLE);
+                    hide();
                     break;
                 /*case MSG_REPEAT:
                     if (repeatKey()) {
@@ -156,4 +156,7 @@ public class AKeyboardButtonPreview {
 		}
 	}
 
+	public void hide() {
+		previewView.setVisibility(View.INVISIBLE);
+	}
 }
