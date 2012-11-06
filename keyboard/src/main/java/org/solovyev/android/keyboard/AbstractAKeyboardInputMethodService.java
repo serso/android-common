@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
  * a basic example for how you would get started writing an input method, to
  * be fleshed out as appropriate.
  */
-public abstract class AbstractInputMethodService extends InputMethodService {
+public abstract class AbstractAKeyboardInputMethodService extends InputMethodService {
 
     /*
     **********************************************************************
@@ -54,7 +54,7 @@ public abstract class AbstractInputMethodService extends InputMethodService {
     @NotNull
     private final AKeyboardController keyboardController;
 
-    protected AbstractInputMethodService(@NotNull AKeyboardController keyboardController) {
+    protected AbstractAKeyboardInputMethodService(@NotNull AKeyboardController keyboardController) {
         this.keyboardController = keyboardController;
     }
 

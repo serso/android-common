@@ -5,7 +5,7 @@ package org.solovyev.android.keyboard;
  * Date: 11/1/12
  * Time: 8:09 PM
  */
-public class LatinInputMethodService extends AbstractInputMethodService {
+public class LatinInputMethodService extends AbstractAKeyboardInputMethodService {
 
     public LatinInputMethodService() {
         super(new LatinKeyboardController());

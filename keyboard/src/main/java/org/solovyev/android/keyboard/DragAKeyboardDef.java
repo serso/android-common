@@ -44,7 +44,7 @@ public class DragAKeyboardDef implements AKeyboardDef {
         public KeyboardDef() {
         }
 
-        protected boolean add(RowDef object) {
+        public boolean add(RowDef object) {
             return rowDefs.add(object);
         }
 
@@ -78,7 +78,7 @@ public class DragAKeyboardDef implements AKeyboardDef {
         public RowDef() {
         }
 
-        protected boolean add(@NotNull DragAKeyboardButtonDef dragButtonDef) {
+        public boolean add(@NotNull DragAKeyboardButtonDef dragButtonDef) {
             return buttonDefs.add(dragButtonDef);
         }
 

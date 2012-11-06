@@ -39,16 +39,16 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	 */
 	private static final boolean PROCESS_HARD_KEYS = false;
 
-    protected static final int KEYCODE_CLEAR = -800;
-    protected static final int KEYCODE_COPY = -801;
-    protected static final int KEYCODE_ENTER = 10;
-    protected static final int KEYCODE_PASTE = -802;
-    protected static final int KEYCODE_CURSOR_LEFT = -803;
-    protected static final int KEYCODE_CURSOR_RIGHT = -804;
-    protected static final int KEYCODE_PREV_KEYBOARD = -805;
-    protected static final int KEYCODE_NEXT_KEYBOARD = -806;
-    protected static final int KEYCODE_UNDO = -807;
-    protected static final int KEYCODE_REDO = -808;
+    public static final int KEYCODE_CLEAR = -800;
+    public static final int KEYCODE_COPY = -801;
+    public static final int KEYCODE_ENTER = 10;
+    public static final int KEYCODE_PASTE = -802;
+    public static final int KEYCODE_CURSOR_LEFT = -803;
+    public static final int KEYCODE_CURSOR_RIGHT = -804;
+    public static final int KEYCODE_PREV_KEYBOARD = -805;
+    public static final int KEYCODE_NEXT_KEYBOARD = -806;
+    public static final int KEYCODE_UNDO = -807;
+    public static final int KEYCODE_REDO = -808;
 
     /*
     **********************************************************************
