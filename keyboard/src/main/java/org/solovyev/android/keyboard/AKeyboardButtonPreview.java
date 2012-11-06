@@ -3,8 +3,6 @@ package org.solovyev.android.keyboard;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,7 +30,6 @@ public class AKeyboardButtonPreview {
     private static final long DELAY_AFTER_PREVIEW = 400;
     private static final long DELAY_BEFORE_PREVIEW = 0;
 
-
     @NotNull
     private PopupWindow popup;
 
@@ -48,7 +45,7 @@ public class AKeyboardButtonPreview {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_SHOW_PREVIEW:
-                    showText0((Params) msg.obj);
+                    showText0((PreviewParams) msg.obj);
                     break;
                 case MSG_REMOVE_PREVIEW:
                     previewView.setVisibility(View.INVISIBLE);
@@ -82,30 +79,40 @@ public class AKeyboardButtonPreview {
         int x = location[0] + view.getWidth() / 2;
         int y = location[1];
 
-        final Params params;
+        final PreviewParams previewParams;
         if (text == null) {
             if (drawableResId != null) {
-                params = Params.newDrawableInstance(x, y, drawableResId);
+                previewParams = PreviewParams.newDrawableInstance(x, y, drawableResId);
             } else {
-                params = Params.newTextInstance(x, y, "");
+                previewParams = PreviewParams.newTextInstance(x, y, "");
                 Log.e(AKeyboardButtonPreview.class.getSimpleName(), "For view: " + view + " neither text nor drawable resource is specified!");
             }
         } else {
-            params = Params.newTextInstance(x, y, text.toString());
+            previewParams = PreviewParams.newTextInstance(x, y, text.toString());
         }
 
-        handler.sendMessageDelayed(handler.obtainMessage(MSG_SHOW_PREVIEW, params), DELAY_BEFORE_PREVIEW);
-    }
+		synchronized (handler) {
+			// remove all 'remove' runnable for current params
+			handler.removeMessages(MSG_REMOVE_PREVIEW, previewParams);
+			handler.removeMessages(MSG_SHOW_PREVIEW, previewParams);
 
-    private void showText0(@NotNull Params params) {
+			handler.sendMessageDelayed(handler.obtainMessage(MSG_SHOW_PREVIEW, previewParams), DELAY_BEFORE_PREVIEW);
+		}
+	}
+
+    private void showText0(@NotNull PreviewParams previewParams) {
+		synchronized (handler) {
+			handler.removeMessages(MSG_REMOVE_PREVIEW, previewParams);
+		}
+
         final PopupWindow popup = this.popup;
 
         boolean image = false;
 
         final TextView previewTextView = (TextView) previewView.findViewById(R.id.preview_text_view);
-        previewTextView.setText(params.text);
+        previewTextView.setText(previewParams.getText());
 
-        final Integer drawableResId = params.drawableResId;
+        final Integer drawableResId = previewParams.getDrawableResId();
         final ImageView previewImageView = (ImageView) previewView.findViewById(R.id.preview_image_view);
         if (drawableResId != null) {
             final Drawable drawable = previewView.getContext().getResources().getDrawable(drawableResId);
@@ -131,10 +138,8 @@ public class AKeyboardButtonPreview {
         final int popupHeight = previewView.getMeasuredHeight();
         final int popupMargin = AndroidUtils.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
 
-        int popupX = params.x - popupWidth / 2;
-        int popupY = params.y - popupHeight - popupMargin;
-
-        handler.removeMessages(MSG_REMOVE_PREVIEW);
+        int popupX = previewParams.getX() - popupWidth / 2;
+        int popupY = previewParams.getY() - popupHeight - popupMargin;
 
         if (popup.isShowing()) {
             popup.update(popupX, popupY, popupWidth, popupHeight);
@@ -146,71 +151,9 @@ public class AKeyboardButtonPreview {
 
         previewView.setVisibility(View.VISIBLE);
 
-        handler.sendMessageDelayed(handler.obtainMessage(MSG_REMOVE_PREVIEW), DELAY_AFTER_PREVIEW);
-    }
+		synchronized (handler) {
+			handler.sendMessageDelayed(handler.obtainMessage(MSG_REMOVE_PREVIEW, previewParams), DELAY_AFTER_PREVIEW);
+		}
+	}
 
-    public static final class Params implements Parcelable {
-
-        @NotNull
-        public static final Parcelable.Creator<Params> CREATOR = new Parcelable.Creator<Params>() {
-
-            @Override
-            public Params createFromParcel(@NotNull Parcel in) {
-                return new Params(in);
-            }
-
-            @Override
-            public Params[] newArray(int size) {
-                return new Params[size];
-            }
-        };
-
-
-        private int x;
-
-        private int y;
-
-        @Nullable
-        private String text;
-
-        @Nullable
-        private Integer drawableResId;
-
-        public Params(@NotNull Parcel in) {
-            this.x = in.readInt();
-            this.y = in.readInt();
-            this.text = in.readString();
-            this.drawableResId = in.readInt();
-        }
-
-        private Params(int x, int y, @Nullable String text, @Nullable Integer drawableResId) {
-            this.x = x;
-            this.y = y;
-            this.text = text;
-            this.drawableResId = drawableResId;
-        }
-
-        @NotNull
-        public static Params newTextInstance(int x, int y, @NotNull String text) {
-            return new Params(x, y, text, null);
-        }
-
-        @NotNull
-        public static Params newDrawableInstance(int x, int y, @NotNull Integer drawableResId) {
-            return new Params(x, y, null, drawableResId);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NotNull Parcel out, int flags) {
-            out.writeInt(x);
-            out.writeInt(y);
-            out.writeString(text);
-            out.writeInt(drawableResId == null ? 0 : drawableResId);
-        }
-    }
 }

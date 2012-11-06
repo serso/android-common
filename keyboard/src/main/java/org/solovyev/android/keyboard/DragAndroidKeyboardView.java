@@ -236,26 +236,16 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        boolean vibrate = !repeatHelper.prepare(v);
-        if ( vibrate ) {
-            vibrator.vibrate();
-        }
+    public boolean onTouch(@NotNull final View v, @NotNull MotionEvent event) {
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				repeatHelper.keyDown(v, isRepeatAllowed(v) ? new RepeatKeydownRunnable(v) : null);
+				return true;
 
-        if (repeatHelper.canGoFurther()) {
-            repeatHelper.goFurther(v, isRepeatAllowed(v));
-
-            final Integer keycode = getKeycode(null, v);
-
-            if (v instanceof TextView) {
-                handleTextOrCode(v, ((TextView) v).getText(), keycode, true);
-            } else {
-                handleTextOrCode(v, null, keycode, true);
-            }
-
-            // return false
-            return false;
-        }
+			case MotionEvent.ACTION_UP:
+				repeatHelper.keyUp(v);
+				return true;
+		}
 
         return false;
     }
@@ -283,4 +273,24 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
             handleTextOrCode(v, null, keycode, true);
         }
     }
+
+	private class RepeatKeydownRunnable implements Runnable {
+
+		private final View view;
+
+		public RepeatKeydownRunnable(@NotNull View view) {
+			this.view = view;
+		}
+
+		@Override
+		public void run() {
+			final Integer keycode = getKeycode(null, view);
+
+			if (view instanceof TextView) {
+				handleTextOrCode(view, ((TextView) view).getText(), keycode, true);
+			} else {
+				handleTextOrCode(view, null, keycode, true);
+			}
+		}
+	}
 }

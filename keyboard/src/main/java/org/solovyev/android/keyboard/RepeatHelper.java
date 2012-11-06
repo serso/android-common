@@ -1,5 +1,6 @@
 package org.solovyev.android.keyboard;
 
+import android.os.Handler;
 import android.view.View;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,9 +13,17 @@ import org.jetbrains.annotations.Nullable;
 public class RepeatHelper {
 
     // in ms
+    private static final int MAX_REPEAT_INTERVAL = 300;
     private static final int MIN_REPEAT_INTERVAL = 100;
+    private static final int STEPS = 20;
 
-    private static final int[] REPEAT_INTERVALS = new int[]{3 * MIN_REPEAT_INTERVAL, (int)(2.5f * MIN_REPEAT_INTERVAL), 2 * MIN_REPEAT_INTERVAL, (int)(1.5f * MIN_REPEAT_INTERVAL), MIN_REPEAT_INTERVAL};
+    private static final int[] REPEAT_INTERVALS = new int[STEPS];
+	static {
+		for (int i = 0; i < REPEAT_INTERVALS.length; i++) {
+			REPEAT_INTERVALS[i] = (STEPS - i) * (MAX_REPEAT_INTERVAL - MIN_REPEAT_INTERVAL) / (STEPS - 1);
+
+		}
+	}
 
     @Nullable
     private View repeatView;
@@ -27,36 +36,47 @@ public class RepeatHelper {
 
     private boolean repeat = false;
 
-    boolean prepare(@NotNull View v) {
-        repeat = repeatView == v && (System.currentTimeMillis() - lastTime) < 2 * REPEAT_INTERVALS[0];
-        if (!repeat) {
-            lastTime = System.currentTimeMillis();
-            repeatCounter = 0;
-            repeatInterval = REPEAT_INTERVALS[repeatCounter];
-            repeatView = v;
-        }
-        return repeat;
-    }
+	@NotNull
+	private final Handler uiHandler = new Handler();
 
-    public boolean canBeRepeated() {
-        final long currentTime = System.currentTimeMillis();
+	@Nullable
+	private Runnable repeatRunnable;
 
-        return currentTime - lastTime > repeatInterval;
-    }
+	public synchronized void keyUp(@NotNull View v) {
+		if (this.repeatView == v ) {
+			clean(null);
+		}
+	}
 
-    public void goFurther(@NotNull View v, boolean repeatAllowed) {
-        if (repeat) {
-            lastTime = System.currentTimeMillis();
-            if (repeatAllowed) {
-                repeatCounter++;
-                if ( repeatCounter < REPEAT_INTERVALS.length ) {
-                    repeatInterval = REPEAT_INTERVALS [repeatCounter];
-                }
-            }
-        }
-    }
+	public synchronized void keyDown(@NotNull View v, @Nullable final Runnable repeatRunnable) {
+		clean(v);
 
-    public boolean canGoFurther() {
-        return (repeat && canBeRepeated()) || !repeat;
-    }
+		if (repeatRunnable !=  null) {
+			this.repeatRunnable = new Runnable() {
+				@Override
+				public void run() {
+					repeatRunnable.run();
+
+					if (repeatCounter < REPEAT_INTERVALS.length) {
+						repeatInterval = REPEAT_INTERVALS[repeatCounter];
+					}
+					repeatCounter++;
+
+					uiHandler.postDelayed(this, repeatInterval);
+				}
+			};
+
+			this.uiHandler.postDelayed(this.repeatRunnable, 1);
+		}
+	}
+
+	private void clean(@Nullable View v) {
+		this.repeatView = v;
+		this.repeatCounter = 0;
+
+		if (this.repeatRunnable != null) {
+			this.uiHandler.removeCallbacks(this.repeatRunnable);
+			this.repeatRunnable = null;
+		}
+	}
 }
