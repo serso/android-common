@@ -16,6 +16,10 @@
 		<attr name="hTextPosition" format="float"/>
 	</declare-styleable>
 
+	<declare-styleable name="MultiSelectListPreference">
+		<attr name="separator" format="string"/>
+	</declare-styleable>
+
 	<declare-styleable name="Picker">
 		<attr name="orientation" format="integer">
 			<enum name="horizontal" value="0"/>

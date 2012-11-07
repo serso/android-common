@@ -22,7 +22,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     private int currentKeyboard = 0;
 
     @NotNull
-    private List<DragAKeyboardDef.KeyboardDef> languageKeyboardDefs = new ArrayList<DragAKeyboardDef.KeyboardDef>(2);
+	private final List<AKeyboard<DragAKeyboardDef>> languageKeyboardDefs = new ArrayList<AKeyboard<DragAKeyboardDef>>(2);
 
 	@NotNull
 	private DragAKeyboardDef.KeyboardDef digitsKeyboard;
@@ -30,8 +30,8 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     @NotNull
     @Override
     protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
-        languageKeyboardDefs.add(createEnglishKeyboard(inputMethodService));
-        languageKeyboardDefs.add(createRussianKeyboard(inputMethodService));
+        languageKeyboardDefs.add(createKeyboard("en", createEnglishKeyboard(inputMethodService)));
+        languageKeyboardDefs.add(createKeyboard("ru", createRussianKeyboard(inputMethodService)));
 
 		digitsKeyboard = createDigitsKeyboard(inputMethodService);
 
@@ -39,8 +39,8 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     }
 
     @Override
-    protected DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context) {
-        return languageKeyboardDefs.get(currentKeyboard);
+    protected DragAKeyboardDef createKeyboardDef(@NotNull Context context) {
+        return languageKeyboardDefs.get(currentKeyboard).getKeyboard();
     }
 
     @NotNull
@@ -266,12 +266,12 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         setCurrentKeyboard(getCurrentLanguageKeyboard());
     }
 
-	private AKeyboardImpl<DragAKeyboardDef> getCurrentLanguageKeyboard() {
-		return createKeyboard(languageKeyboardDefs.get(currentKeyboard));
+	private AKeyboard<DragAKeyboardDef> getCurrentLanguageKeyboard() {
+		return languageKeyboardDefs.get(currentKeyboard);
 	}
 
-	private AKeyboardImpl<DragAKeyboardDef> createKeyboard(@NotNull DragAKeyboardDef.KeyboardDef keyboardDef) {
-		return new AKeyboardImpl<DragAKeyboardDef>("drag-keyboard", new DragAKeyboardDef(keyboardDef));
+	private AKeyboardImpl<DragAKeyboardDef> createKeyboard(@NotNull String keyboardId, @NotNull DragAKeyboardDef.KeyboardDef keyboardDef) {
+		return new AKeyboardImpl<DragAKeyboardDef>(new DragAKeyboardDef(keyboardId, keyboardDef));
 	}
 
 	@NotNull
@@ -286,13 +286,13 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 			case InputType.TYPE_CLASS_DATETIME:
 				// Numbers and dates default to the symbols keyboard, with
 				// no extra features.
-				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard(digitsKeyboard));
+				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard("digits", digitsKeyboard));
 				break;
 
 			case InputType.TYPE_CLASS_PHONE:
 				// Phones will also default to the symbols keyboard, though
 				// often you will want to have a dedicated phone keyboard.
-				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard(digitsKeyboard));
+				result = AKeyboardControllerStateImpl.newDefaultState(createKeyboard("digits", digitsKeyboard));
 				break;
 
 			case InputType.TYPE_CLASS_TEXT:

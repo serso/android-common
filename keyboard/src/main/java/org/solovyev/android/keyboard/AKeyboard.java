@@ -11,9 +11,6 @@ import org.jetbrains.annotations.NotNull;
 public interface AKeyboard<K extends AKeyboardDef> {
 
     @NotNull
-    String getKeyboardId();
-
-    @NotNull
     K getKeyboard();
 
     void setImeOptions(@NotNull Resources resources, int imeOptions);

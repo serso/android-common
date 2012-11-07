@@ -27,7 +27,7 @@ public abstract class MapKeyboardController extends AbstractKeyboardController {
 
             final List<AKeyboard> keyboards = createKeyboard(inputMethodService);
             for (AKeyboard keyboard : keyboards) {
-                this.keyboards.put(keyboard.getKeyboardId(), keyboard);
+                this.keyboards.put(keyboard.getKeyboard().getKeyboardId(), keyboard);
             }
 
             return AKeyboardControllerStateImpl.newDefaultState(this.keyboards.get(getDefaultKeyboardId()));

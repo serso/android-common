@@ -13,4 +13,7 @@ public interface AKeyboardDef {
     void setImeOptions(@NotNull Resources resources, int imeOptions);
 
     void setShifted(boolean shifted);
+
+	@NotNull
+	String getKeyboardId();
 }

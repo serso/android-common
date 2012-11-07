@@ -65,7 +65,7 @@ public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKe
     }
 
     void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
-        final AbstractKeyboard keyboard = (AbstractKeyboard)getKeyboard();
+        final LatinKeyboard keyboard = (LatinKeyboard)getKeyboard();
         keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
         invalidateAllKeys();
     }

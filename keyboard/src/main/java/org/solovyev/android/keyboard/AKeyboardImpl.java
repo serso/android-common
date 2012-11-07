@@ -12,25 +12,15 @@ import org.jetbrains.annotations.NotNull;
 public class AKeyboardImpl<K extends AKeyboardDef> implements AKeyboard<K> {
 
     @NotNull
-    private final String keyboardId;
-
-    @NotNull
     private final K keyboard;
 
-    public AKeyboardImpl(@NotNull String keyboardId, @NotNull K keyboard) {
-        this.keyboardId = keyboardId;
+    public AKeyboardImpl(@NotNull K keyboard) {
         this.keyboard = keyboard;
     }
 
     @NotNull
     public static AKeyboard<AndroidAKeyboardDef> fromResource(@NotNull Context context, int keyboardRes) {
-        return new AKeyboardImpl<AndroidAKeyboardDef>(String.valueOf(keyboardRes), AndroidAKeyboardDef.newInstance(new AbstractKeyboard(context, keyboardRes)));
-    }
-
-    @NotNull
-    @Override
-    public String getKeyboardId() {
-        return keyboardId;
+        return new AKeyboardImpl<AndroidAKeyboardDef>(AndroidAKeyboardDef.newInstance(String.valueOf(keyboardRes), new LatinKeyboard(context, keyboardRes)));
     }
 
     @NotNull
@@ -50,19 +40,19 @@ public class AKeyboardImpl<K extends AKeyboardDef> implements AKeyboard<K> {
     }
 
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AKeyboardImpl)) return false;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AKeyboardImpl)) return false;
 
-        AKeyboardImpl aKeyboard = (AKeyboardImpl) o;
+		AKeyboardImpl aKeyboard = (AKeyboardImpl) o;
 
-        if (!keyboardId.equals(aKeyboard.keyboardId)) return false;
+		if (!keyboard.equals(aKeyboard.keyboard)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return keyboardId.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return keyboard.hashCode();
+	}
 }

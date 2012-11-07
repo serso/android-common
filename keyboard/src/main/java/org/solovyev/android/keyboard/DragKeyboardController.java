@@ -21,10 +21,10 @@ public abstract class DragKeyboardController extends AbstractAndroidKeyboardCont
     @NotNull
     @Override
     protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
-        return AKeyboardControllerStateImpl.newDefaultState(new AKeyboardImpl<DragAKeyboardDef>("drag-keyboard", new DragAKeyboardDef(createKeyboardDef(inputMethodService))));
+        return AKeyboardControllerStateImpl.newDefaultState(new AKeyboardImpl<DragAKeyboardDef>(createKeyboardDef(inputMethodService)));
     }
 
-    protected abstract DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context);
+    protected abstract DragAKeyboardDef createKeyboardDef(@NotNull Context context);
 
     @NotNull
     @Override

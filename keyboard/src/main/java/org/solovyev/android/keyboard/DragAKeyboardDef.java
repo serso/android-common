@@ -12,13 +12,14 @@ import java.util.List;
  * Date: 11/3/12
  * Time: 1:45 PM
  */
-public class DragAKeyboardDef implements AKeyboardDef {
+public class DragAKeyboardDef extends AbstractAKeyboardDef {
 
     @NotNull
     private final KeyboardDef keyboardDef;
 
-    public DragAKeyboardDef(@NotNull KeyboardDef keyboardDef) {
-        this.keyboardDef = keyboardDef;
+    public DragAKeyboardDef(@NotNull String keyboardId, @NotNull KeyboardDef keyboardDef) {
+		super(keyboardId);
+		this.keyboardDef = keyboardDef;
     }
 
     @Override

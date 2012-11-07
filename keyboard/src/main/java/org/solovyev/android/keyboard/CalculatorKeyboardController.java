@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class CalculatorKeyboardController extends DragKeyboardController {
 
     @Override
-    protected DragAKeyboardDef.KeyboardDef createKeyboardDef(@NotNull Context context) {
+    protected DragAKeyboardDef createKeyboardDef(@NotNull Context context) {
         final int operatorButtonColor = R.drawable.metro_dark_button;
         final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
 
@@ -48,6 +48,6 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         fourthRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.KEYCODE_PASTE));
         result.add(fourthRow);
 
-        return result;
+        return new DragAKeyboardDef("calculator", result);
     }
 }

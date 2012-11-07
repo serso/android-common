@@ -9,17 +9,18 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/3/12
  * Time: 1:06 PM
  */
-public class AndroidAKeyboardDef implements AKeyboardDef {
+public class AndroidAKeyboardDef extends AbstractAKeyboardDef {
 
     @NotNull
     private Keyboard keyboard;
 
-    private AndroidAKeyboardDef() {
-    }
+    private AndroidAKeyboardDef(@NotNull String keyboardId) {
+		super(keyboardId);
+	}
 
     @NotNull
-    public static AndroidAKeyboardDef newInstance(@NotNull Keyboard keyboard) {
-        final AndroidAKeyboardDef result = new AndroidAKeyboardDef();
+    public static AndroidAKeyboardDef newInstance(@NotNull String keyboardId, @NotNull Keyboard keyboard) {
+        final AndroidAKeyboardDef result = new AndroidAKeyboardDef(keyboardId);
         result.keyboard = keyboard;
         return result;
     }
@@ -32,8 +33,8 @@ public class AndroidAKeyboardDef implements AKeyboardDef {
     @Override
     public void setImeOptions(@NotNull Resources resources, int imeOptions) {
         // todo serso: refactor
-        if ( keyboard instanceof AbstractKeyboard) {
-            ((AbstractKeyboard) keyboard).setImeOptions(resources, imeOptions);
+        if ( keyboard instanceof LatinKeyboard) {
+            ((LatinKeyboard) keyboard).setImeOptions(resources, imeOptions);
         }
     }
 

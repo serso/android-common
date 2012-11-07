@@ -23,17 +23,17 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 
-public class AbstractKeyboard extends Keyboard {
+public class LatinKeyboard extends Keyboard {
 
     private Key mEnterKey;
     private Key mSpaceKey;
     
-    public AbstractKeyboard(Context context, int xmlLayoutResId) {
+    public LatinKeyboard(Context context, int xmlLayoutResId) {
         super(context, xmlLayoutResId);
     }
 
-    public AbstractKeyboard(Context context, int layoutTemplateResId,
-							CharSequence characters, int columns, int horizontalPadding) {
+    public LatinKeyboard(Context context, int layoutTemplateResId,
+						 CharSequence characters, int columns, int horizontalPadding) {
         super(context, layoutTemplateResId, characters, columns, horizontalPadding);
     }
 
