@@ -37,8 +37,4 @@ public abstract class DragKeyboardController extends AbstractAndroidKeyboardCont
     protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
         return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
     }
-
-    @Override
-    protected void handleShift() {
-    }
 }

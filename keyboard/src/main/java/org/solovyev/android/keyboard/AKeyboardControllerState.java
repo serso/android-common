@@ -25,4 +25,7 @@ public interface AKeyboardControllerState<K extends AKeyboard> {
 
 	@NotNull
 	AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock);
+
+    @NotNull
+    AKeyboardControllerState<K> copyForNewShift(boolean newState);
 }

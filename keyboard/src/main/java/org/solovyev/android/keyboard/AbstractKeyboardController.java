@@ -272,7 +272,12 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     protected void handlePrevKeyboard() {
     }
 
-    protected abstract void handleShift();
+    protected void handleShift() {
+        boolean newState = !this.state.isShifted();
+
+        this.state = this.state.copyForNewShift(newState);
+        this.state.getKeyboard().setShifted(newState);
+    }
 
 
     @NotNull
