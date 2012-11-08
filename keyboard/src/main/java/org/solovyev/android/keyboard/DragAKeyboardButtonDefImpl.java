@@ -11,174 +11,203 @@ import java.util.Map;
 
 public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
 
-	@NotNull
-	private DirectionDragButtonDefImpl directionDragButtonDef;
+    @NotNull
+    private DirectionDragButtonDefImpl directionDragButtonDef;
 
 
-	private boolean allowRepeat = true;
+    private boolean allowRepeat = true;
 
-	@Nullable
-	private Integer keycode;
+    @Nullable
+    private Integer keycode;
 
-	@NotNull
-	private final Map<DragDirection, Integer> directionKeycodes = new EnumMap<DragDirection, Integer>(DragDirection.class);
+    @NotNull
+    private final Map<DragDirection, Integer> directionKeycodes = new EnumMap<DragDirection, Integer>(DragDirection.class);
 
-	@Override
-	@Nullable
-	public CharSequence getText(@NotNull DragDirection dragDirection) {
-		return directionDragButtonDef.getText(dragDirection);
-	}
+    @Nullable
+    private Integer previewDrawableResId;
 
-	@Override
-	@Nullable
-	public Integer getDrawableResId() {
-		return directionDragButtonDef.getDrawableResId();
-	}
+    @Override
+    @Nullable
+    public CharSequence getText(@NotNull DragDirection dragDirection) {
+        return directionDragButtonDef.getText(dragDirection);
+    }
 
-	@Override
-	@Nullable
-	public CharSequence getText() {
-		return directionDragButtonDef.getText();
-	}
+    @Override
+    @Nullable
+    public Integer getDrawableResId() {
+        return directionDragButtonDef.getDrawableResId();
+    }
 
-	@Override
-	@Nullable
-	public Float getLayoutWeight() {
-		return directionDragButtonDef.getLayoutWeight();
-	}
+    @Override
+    @Nullable
+    public CharSequence getText() {
+        return directionDragButtonDef.getText();
+    }
 
-	@Override
-	@Nullable
-	public Integer getLayoutMarginLeft() {
-		return directionDragButtonDef.getLayoutMarginLeft();
-	}
+    @Override
+    @Nullable
+    public Float getLayoutWeight() {
+        return directionDragButtonDef.getLayoutWeight();
+    }
 
-	@Override
-	@Nullable
-	public Integer getLayoutMarginRight() {
-		return directionDragButtonDef.getLayoutMarginRight();
-	}
+    @Override
+    @Nullable
+    public Integer getLayoutMarginLeft() {
+        return directionDragButtonDef.getLayoutMarginLeft();
+    }
 
-	@Override
-	@Nullable
-	public String getTag() {
-		return directionDragButtonDef.getTag();
-	}
+    @Override
+    @Nullable
+    public Integer getLayoutMarginRight() {
+        return directionDragButtonDef.getLayoutMarginRight();
+    }
 
-	@Override
-	@Nullable
-	public Integer getBackgroundResId() {
-		return directionDragButtonDef.getBackgroundResId();
-	}
+    @Override
+    @Nullable
+    public String getTag() {
+        return directionDragButtonDef.getTag();
+    }
 
-	@Override
-	public boolean allowRepeat() {
-		return this.allowRepeat;
-	}
+    @Override
+    @Nullable
+    public Integer getBackgroundResId() {
+        return directionDragButtonDef.getBackgroundResId();
+    }
 
-	@Nullable
-	@Override
-	public Integer getKeycode() {
-		return this.keycode;
-	}
+    @Override
+    public boolean allowRepeat() {
+        return this.allowRepeat;
+    }
 
-	public void setKeycode(@Nullable Integer actionCode) {
-		this.keycode = actionCode;
-	}
+    @Nullable
+    @Override
+    public Integer getKeycode() {
+        return this.keycode;
+    }
 
-	@Override
-	public Integer getDirectionKeycode(@NotNull DragDirection dragDirection) {
-		return this.directionKeycodes.get(dragDirection);
-	}
+    @Nullable
+    @Override
+    public Integer getPreviewDrawableResId() {
+        return this.previewDrawableResId;
+    }
 
-	public void setDirectionKeycode(@NotNull DragDirection direction, @Nullable Integer actionCode) {
-		directionKeycodes.put(direction, actionCode);
-	}
+    public void setKeycode(@Nullable Integer actionCode) {
+        this.keycode = actionCode;
+    }
 
-	public void setAllowRepeat(boolean allowRepeat) {
-		this.allowRepeat = allowRepeat;
-	}
+    @Override
+    public Integer getDirectionKeycode(@NotNull DragDirection dragDirection) {
+        return this.directionKeycodes.get(dragDirection);
+    }
 
-	@NotNull
-	public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text,
-														 @Nullable CharSequence up,
-														 @Nullable CharSequence right,
-														 @Nullable CharSequence down,
-														 @Nullable CharSequence left) {
-		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
+    public void setDirectionKeycode(@NotNull DragDirection direction, @Nullable Integer actionCode) {
+        directionKeycodes.put(direction, actionCode);
+    }
 
-		result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text, up, right, down, left);
+    public void setAllowRepeat(boolean allowRepeat) {
+        this.allowRepeat = allowRepeat;
+    }
 
-		return result;
-	}
+    @NotNull
+    public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text,
+                                                         @Nullable CharSequence up,
+                                                         @Nullable CharSequence right,
+                                                         @Nullable CharSequence down,
+                                                         @Nullable CharSequence left) {
+        final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
-	public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text,
-													 @Nullable CharSequence up,
-													 @Nullable CharSequence right,
-													 @Nullable CharSequence down,
-													 @Nullable CharSequence left,
-													 int drawableResId) {
-		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
+        result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text, up, right, down, left);
 
-		result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text, up, right, down, left, drawableResId);
+        return result;
+    }
 
-		return result;
-	}
+    public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text,
+                                                         @Nullable CharSequence up,
+                                                         @Nullable CharSequence right,
+                                                         @Nullable CharSequence down,
+                                                         @Nullable CharSequence left,
+                                                         int drawableResId) {
+        final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
-	public static DragAKeyboardButtonDef newInstance(@Nullable CharSequence text, @Nullable Integer keycode) {
-		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
+        result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text, up, right, down, left, drawableResId);
 
-		result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text);
-		result.keycode = keycode;
+        return result;
+    }
 
-		return result;
-	}
+    public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text, @Nullable Integer keycode) {
+        final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
-	public static DragAKeyboardButtonDef newDrawableInstance(int drawableResId, int keycode) {
-		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
+        result.directionDragButtonDef = DirectionDragButtonDefImpl.newInstance(text);
+        result.keycode = keycode;
 
-		result.directionDragButtonDef = DirectionDragButtonDefImpl.newDrawableInstance(drawableResId);
-		result.keycode = keycode;
+        return result;
+    }
 
-		return result;
-	}
+    public static DragAKeyboardButtonDefImpl newDrawableInstance(int drawableResId, int keycode) {
+        final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
-	public static DragAKeyboardButtonDef newDrawableInstance(int drawableResId,
-															 int keycode,
-															 int backgroundResId) {
-		final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
+        result.directionDragButtonDef = DirectionDragButtonDefImpl.newDrawableInstance(drawableResId);
+        result.keycode = keycode;
 
-		result.directionDragButtonDef = DirectionDragButtonDefImpl.newDrawableInstance(drawableResId, backgroundResId);
-		result.keycode = keycode;
+        return result;
+    }
 
-		return result;
-	}
+    public static DragAKeyboardButtonDefImpl newDrawableInstance(int drawableResId,
+                                                             int keycode,
+                                                             int backgroundResId) {
+        final DragAKeyboardButtonDefImpl result = new DragAKeyboardButtonDefImpl();
 
-	public void setWeight(@Nullable Float weight) {
-		directionDragButtonDef.setWeight(weight);
-	}
+        result.directionDragButtonDef = DirectionDragButtonDefImpl.newDrawableInstance(drawableResId, backgroundResId);
+        result.keycode = keycode;
 
-	public void setLayoutMarginRight(@Nullable Integer layoutMarginRight) {
-		directionDragButtonDef.setLayoutMarginRight(layoutMarginRight);
-	}
+        return result;
+    }
 
-	public void setLayoutMarginLeft(@Nullable Integer layoutMarginLeft) {
-		directionDragButtonDef.setLayoutMarginLeft(layoutMarginLeft);
-	}
+    public void setWeight(@Nullable Float weight) {
+        directionDragButtonDef.setWeight(weight);
+    }
 
-	public void setBackgroundResId(int backgroundResId) {
-		directionDragButtonDef.setBackgroundResId(backgroundResId);
-	}
+    public void setLayoutMarginRight(@Nullable Integer layoutMarginRight) {
+        directionDragButtonDef.setLayoutMarginRight(layoutMarginRight);
+    }
 
-	public void setTag(@Nullable String tag) {
-		directionDragButtonDef.setTag(tag);
-	}
+    public void setLayoutMarginLeft(@Nullable Integer layoutMarginLeft) {
+        directionDragButtonDef.setLayoutMarginLeft(layoutMarginLeft);
+    }
 
-	@Override
-	public void setImeOptions(@NotNull Resources resources, int imeOptions) {
-	}
+    public void setBackgroundResId(int backgroundResId) {
+        directionDragButtonDef.setBackgroundResId(backgroundResId);
+    }
 
-	@Override
-	public void setShifted(boolean shifted) {
-	}
+    public void setTag(@Nullable String tag) {
+        directionDragButtonDef.setTag(tag);
+    }
+
+    public void setText(@Nullable CharSequence text) {
+        directionDragButtonDef.setText(text);
+    }
+
+    public void setBackgroundResId(@Nullable Integer backgroundResId) {
+        directionDragButtonDef.setBackgroundResId(backgroundResId);
+    }
+
+    public void setDrawableResId(@Nullable Integer drawableResId) {
+        directionDragButtonDef.setDrawableResId(drawableResId);
+    }
+
+    public void setDirectionText(@NotNull DragDirection key, @Nullable CharSequence text) {
+        directionDragButtonDef.setDirectionText(key, text);
+    }
+
+    @Override
+    public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+    }
+
+    @Override
+    public void setShifted(boolean shifted) {
+    }
+
+    public void setPreviewDrawableResId(@Nullable Integer previewDrawableResId) {
+        this.previewDrawableResId = previewDrawableResId;
+    }
 }

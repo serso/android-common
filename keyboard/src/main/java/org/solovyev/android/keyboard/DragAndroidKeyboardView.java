@@ -228,9 +228,15 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     private void showPreview(@NotNull View view, @Nullable CharSequence text) {
-        final DirectionDragButtonDef buttonDef = defs.get(view);
+        final DragAKeyboardButtonDef buttonDef = defs.get(view);
         if (buttonDef != null) {
-            preview.showPreview(view, text, buttonDef.getDrawableResId());
+
+			Integer drawableResId = buttonDef.getPreviewDrawableResId();
+			if (drawableResId == null) {
+				drawableResId = buttonDef.getDrawableResId();
+			}
+
+			preview.showPreview(view, text, drawableResId);
         } else {
             preview.showPreview(view, text, null);
         }

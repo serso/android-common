@@ -14,6 +14,9 @@ public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
 	Integer getKeycode();
 
 	@Nullable
+	Integer getPreviewDrawableResId();
+
+	@Nullable
 	Integer getDirectionKeycode(@NotNull DragDirection dragDirection);
 
 	void setImeOptions(@NotNull Resources resources, int imeOptions);

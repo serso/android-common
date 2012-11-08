@@ -156,4 +156,20 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 	public void setTag(@Nullable String tag) {
 		this.tag = tag;
 	}
+
+	public void setText(@Nullable CharSequence text) {
+		this.text = text;
+	}
+
+	public void setBackgroundResId(@Nullable Integer backgroundResId) {
+		this.backgroundResId = backgroundResId;
+	}
+
+	public void setDrawableResId(@Nullable Integer drawableResId) {
+		this.drawableResId = drawableResId;
+	}
+
+	public void setDirectionText(@NotNull DragDirection key, @Nullable CharSequence text) {
+		directionsTexts.put(key, text);
+	}
 }
