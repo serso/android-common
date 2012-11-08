@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public class CalculatorKeyboardController extends DragKeyboardController {
 
     @Override
-    protected DragAKeyboardDef createKeyboardDef(@NotNull Context context) {
+    protected DragAKeyboard createKeyboardDef(@NotNull Context context) {
         final int operatorButtonColor = R.drawable.metro_dark_button;
-        final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
+        final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
 
-        final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef firstRow = new DragAKeyboard.RowDef();
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("7", "i", null, "!", "ob:"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("8", "ln", null, "lg", "od:"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("9", "PI", null, "e", "ox:"));
@@ -24,7 +24,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("C", CalculatorKeyboardController.KEYCODE_CLEAR));
         result.add(firstRow);
 
-        final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef secondRow = new DragAKeyboard.RowDef();
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("4", "x", null, "y", "D"));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("5", "t", null, "j", "E"));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("6", null, null, null, "F"));
@@ -32,7 +32,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         secondRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, Keyboard.KEYCODE_DELETE));
         result.add(secondRow);
 
-        final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef thirdRow = new DragAKeyboard.RowDef();
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("1", "sin", null, "asin", "A"));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("2", "cos", null, "acos", "B"));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("3", "tan", null, "atan", "C"));
@@ -40,7 +40,7 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, CalculatorKeyboardController.KEYCODE_COPY));
         result.add(thirdRow);
 
-        final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef fourthRow = new DragAKeyboard.RowDef();
         fourthRow.add(DragAKeyboardButtonDefImpl.newInstance("()", "(", null, ")", null));
         fourthRow.add(DragAKeyboardButtonDefImpl.newInstance("0", "00", null, "000", null));
         fourthRow.add(DragAKeyboardButtonDefImpl.newInstance(".", ",", null, null, null));
@@ -48,6 +48,6 @@ public class CalculatorKeyboardController extends DragKeyboardController {
         fourthRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, CalculatorKeyboardController.KEYCODE_PASTE));
         result.add(fourthRow);
 
-        return new DragAKeyboardDef("calculator", result);
+        return new DragAKeyboard("calculator", result);
     }
 }

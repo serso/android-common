@@ -9,18 +9,18 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/3/12
  * Time: 1:06 PM
  */
-public class AndroidAKeyboardDef extends AbstractAKeyboardDef {
+public class AndroidAKeyboard extends AbstractAKeyboard {
 
     @NotNull
     private Keyboard keyboard;
 
-    private AndroidAKeyboardDef(@NotNull String keyboardId) {
+    private AndroidAKeyboard(@NotNull String keyboardId) {
 		super(keyboardId);
 	}
 
     @NotNull
-    public static AndroidAKeyboardDef newInstance(@NotNull String keyboardId, @NotNull Keyboard keyboard) {
-        final AndroidAKeyboardDef result = new AndroidAKeyboardDef(keyboardId);
+    public static AndroidAKeyboard newInstance(@NotNull String keyboardId, @NotNull Keyboard keyboard) {
+        final AndroidAKeyboard result = new AndroidAKeyboard(keyboardId);
         result.keyboard = keyboard;
         return result;
     }

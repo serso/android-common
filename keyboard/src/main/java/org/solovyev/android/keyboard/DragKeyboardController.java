@@ -10,25 +10,25 @@ import org.jetbrains.annotations.NotNull;
  * Date: 02.11.12
  * Time: 14:42
  */
-public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboardDef> {
+public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboard> {
 
     @NotNull
     @Override
-    protected AKeyboardViewWithSuggestions<DragAKeyboardDef> createKeyboardView0(@NotNull Context context) {
-        return new AKeyboardViewWithSuggestionsImpl<DragAKeyboardDef, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
+    protected AKeyboardViewWithSuggestions<DragAKeyboard> createKeyboardView0(@NotNull Context context) {
+        return new AKeyboardViewWithSuggestionsImpl<DragAKeyboard, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
     }
 
     @NotNull
     @Override
-    protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
-        return AKeyboardControllerStateImpl.newDefaultState(new AKeyboardImpl<DragAKeyboardDef>(createKeyboardDef(inputMethodService)));
+    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+        return AKeyboardControllerStateImpl.newDefaultState(createKeyboardDef(inputMethodService));
     }
 
-    protected abstract DragAKeyboardDef createKeyboardDef(@NotNull Context context);
+    protected abstract DragAKeyboard createKeyboardDef(@NotNull Context context);
 
     @NotNull
     @Override
-    public AKeyboardControllerState<DragAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+    public AKeyboardControllerState<DragAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
         return getState();
     }
 

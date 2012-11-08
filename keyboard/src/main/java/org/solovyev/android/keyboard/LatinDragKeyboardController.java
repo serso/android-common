@@ -22,14 +22,14 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     private int currentKeyboard = 0;
 
     @NotNull
-	private final List<AKeyboard<DragAKeyboardDef>> languageKeyboardDefs = new ArrayList<AKeyboard<DragAKeyboardDef>>(2);
+	private final List<DragAKeyboard> languageKeyboardDefs = new ArrayList<DragAKeyboard>(2);
 
 	@NotNull
-	private DragAKeyboardDef.KeyboardDef digitsKeyboard;
+	private DragAKeyboard.KeyboardDef digitsKeyboard;
 
     @NotNull
     @Override
-    protected AKeyboardControllerState<DragAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
         languageKeyboardDefs.add(createKeyboard("en", createEnglishKeyboard(inputMethodService)));
         languageKeyboardDefs.add(createKeyboard("ru", createRussianKeyboard(inputMethodService)));
 
@@ -39,17 +39,17 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     }
 
     @Override
-    protected DragAKeyboardDef createKeyboardDef(@NotNull Context context) {
-        return languageKeyboardDefs.get(currentKeyboard).getKeyboard();
+    protected DragAKeyboard createKeyboardDef(@NotNull Context context) {
+        return languageKeyboardDefs.get(currentKeyboard);
     }
 
     @NotNull
-    private DragAKeyboardDef.KeyboardDef createRussianKeyboard(@NotNull Context context) {
+    private DragAKeyboard.KeyboardDef createRussianKeyboard(@NotNull Context context) {
         final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
-        final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
+        final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
 
-        final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef firstRow = new DragAKeyboard.RowDef();
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("й", "Й", null, "1", "!"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("ц", "Ц", null, "2", "@"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("у", "У", null, "3", "#"));
@@ -64,7 +64,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("ъ", "Ъ", null, "0", ")"));
         result.add(firstRow);
 
-        final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef secondRow = new DragAKeyboard.RowDef();
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("ф", "Ф", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("ы", "Ы", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("в", "В", null, null, null));
@@ -80,7 +80,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 
         result.add(secondRow);
 
-        final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef thirdRow = new DragAKeyboard.RowDef();
         thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, DragKeyboardController.KEYCODE_COPY, notLetterBackgroundResId));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("я", "Я", null, null, null));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("ч", "Ч", null, null, null));
@@ -95,7 +95,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_enter, DragKeyboardController.KEYCODE_ENTER, notLetterBackgroundResId));
         result.add(thirdRow);
 
-        final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef fourthRow = new DragAKeyboard.RowDef();
         fourthRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, DragKeyboardController.KEYCODE_PASTE, notLetterBackgroundResId));
 
         // weight "eats" some margins => need to add them
@@ -133,12 +133,12 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     }
 
     @NotNull
-    private DragAKeyboardDef.KeyboardDef createEnglishKeyboard(@NotNull Context context) {
+    private DragAKeyboard.KeyboardDef createEnglishKeyboard(@NotNull Context context) {
         final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
-        final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
+        final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
 
-        final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef firstRow = new DragAKeyboard.RowDef();
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("q", "Q", null, "1", "!"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("w", "W", null, "2", "@"));
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("e", "E", null, "3", "#"));
@@ -151,7 +151,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         firstRow.add(DragAKeyboardButtonDefImpl.newInstance("p", "P", null, "0", ")"));
         result.add(firstRow);
 
-        final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef secondRow = new DragAKeyboard.RowDef();
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("a", "A", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("s", "S", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("d", "D", null, null, null));
@@ -166,7 +166,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 
         result.add(secondRow);
 
-        final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef thirdRow = new DragAKeyboard.RowDef();
         thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, DragKeyboardController.KEYCODE_COPY, notLetterBackgroundResId));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("z", "Z", null, null, null));
         thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("x", "X", null, null, null));
@@ -179,7 +179,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_enter, DragKeyboardController.KEYCODE_ENTER, notLetterBackgroundResId));
         result.add(thirdRow);
 
-        final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
+        final DragAKeyboard.RowDef fourthRow = new DragAKeyboard.RowDef();
         fourthRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, DragKeyboardController.KEYCODE_PASTE, notLetterBackgroundResId));
 
         // weight "eats" some margins => need to add them
@@ -209,33 +209,33 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     }
 
 	@NotNull
-	private DragAKeyboardDef.KeyboardDef createDigitsKeyboard(@NotNull Context context) {
+	private DragAKeyboard.KeyboardDef createDigitsKeyboard(@NotNull Context context) {
 		final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
-		final DragAKeyboardDef.KeyboardDef result = new DragAKeyboardDef.KeyboardDef();
+		final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
 
-		final DragAKeyboardDef.RowDef firstRow = new DragAKeyboardDef.RowDef();
+		final DragAKeyboard.RowDef firstRow = new DragAKeyboard.RowDef();
 		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("1", null));
 		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("2", null));
 		firstRow.add(DragAKeyboardButtonDefImpl.newInstance("3", null));
 		firstRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_delete, Keyboard.KEYCODE_DELETE, notLetterBackgroundResId));
 		result.add(firstRow);
 
-		final DragAKeyboardDef.RowDef secondRow = new DragAKeyboardDef.RowDef();
+		final DragAKeyboard.RowDef secondRow = new DragAKeyboard.RowDef();
 		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("4", null));
 		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("5", null));
 		secondRow.add(DragAKeyboardButtonDefImpl.newInstance("6", null));
 		secondRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_copy, DragKeyboardController.KEYCODE_COPY, notLetterBackgroundResId));
 		result.add(secondRow);
 
-		final DragAKeyboardDef.RowDef thirdRow = new DragAKeyboardDef.RowDef();
+		final DragAKeyboard.RowDef thirdRow = new DragAKeyboard.RowDef();
 		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("7", null));
 		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("8", null));
 		thirdRow.add(DragAKeyboardButtonDefImpl.newInstance("9", null));
 		thirdRow.add(DragAKeyboardButtonDefImpl.newDrawableInstance(R.drawable.kb_paste, DragKeyboardController.KEYCODE_PASTE, notLetterBackgroundResId));
 		result.add(thirdRow);
 
-		final DragAKeyboardDef.RowDef fourthRow = new DragAKeyboardDef.RowDef();
+		final DragAKeyboard.RowDef fourthRow = new DragAKeyboard.RowDef();
 		fourthRow.add(createHistoryButtonDef(notLetterBackgroundResId));
 		fourthRow.add(DragAKeyboardButtonDefImpl.newInstance("0", "(", null, ")", null, notLetterBackgroundResId));
 		fourthRow.add(DragAKeyboardButtonDefImpl.newInstance(".", ",", null, null, null, notLetterBackgroundResId));
@@ -266,18 +266,19 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         setCurrentKeyboard(getCurrentLanguageKeyboard());
     }
 
-	private AKeyboard<DragAKeyboardDef> getCurrentLanguageKeyboard() {
+	private DragAKeyboard getCurrentLanguageKeyboard() {
 		return languageKeyboardDefs.get(currentKeyboard);
 	}
 
-	private AKeyboardImpl<DragAKeyboardDef> createKeyboard(@NotNull String keyboardId, @NotNull DragAKeyboardDef.KeyboardDef keyboardDef) {
-		return new AKeyboardImpl<DragAKeyboardDef>(new DragAKeyboardDef(keyboardId, keyboardDef));
+	@NotNull
+	private DragAKeyboard createKeyboard(@NotNull String keyboardId, @NotNull DragAKeyboard.KeyboardDef keyboardDef) {
+		return new DragAKeyboard(keyboardId, keyboardDef);
 	}
 
 	@NotNull
 	@Override
-	public AKeyboardControllerState<DragAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
-		final AKeyboardControllerState<DragAKeyboardDef> result;
+	public AKeyboardControllerState<DragAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+		final AKeyboardControllerState<DragAKeyboard> result;
 
 		// We are now going to initialize our state based on the type of
 		// text being edited.

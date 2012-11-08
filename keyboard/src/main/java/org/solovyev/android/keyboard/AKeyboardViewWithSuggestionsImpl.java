@@ -15,7 +15,7 @@ import java.util.List;
  * Date: 11/1/12
  * Time: 10:04 PM
  */
-public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboardDef, KV extends View & AndroidKeyboardView<K>> extends AKeyboardViewImpl<K, KV> implements AKeyboardViewWithSuggestions<K> {
+public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboard, KV extends View & AndroidKeyboardView<K>> extends AKeyboardViewImpl<K, KV> implements AKeyboardViewWithSuggestions<K> {
 
 	@Nullable
 	private CandidateView candidateView;

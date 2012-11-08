@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/3/12
  * Time: 11:41 PM
  */
-public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKeyboardView<AndroidAKeyboardDef> {
+public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKeyboardView<AndroidAKeyboard> {
 
     public KeyboardViewAKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +28,7 @@ public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKe
     }
 
     @Override
-    public void setKeyboard(@NotNull AndroidAKeyboardDef keyboard) {
+    public void setKeyboard(@NotNull AndroidAKeyboard keyboard) {
         super.setKeyboard(keyboard.getKeyboard());
     }
 

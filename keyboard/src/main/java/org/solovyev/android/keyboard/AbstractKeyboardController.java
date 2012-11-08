@@ -20,7 +20,7 @@ import org.solovyev.common.text.StringUtils;
  * Date: 02.11.12
  * Time: 11:33
  */
-public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implements AKeyboardController {
+public abstract class AbstractKeyboardController<K extends AKeyboard> implements AKeyboardController {
 
     /*
     **********************************************************************
@@ -59,10 +59,10 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     */
 
 	@NotNull
-	private AKeyboardControllerState<KD> state;
+	private AKeyboardControllerState<K> state;
 
 	@NotNull
-	private AKeyboardView<KD> keyboardView;
+	private AKeyboardView<K> keyboardView;
 
 	@NotNull
 	private AKeyboardInput keyboardInput;
@@ -109,25 +109,30 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     @Override
 	public final void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
-		this.keyboardInput = new DefaultKeyboardInput(inputMethodService);
+		this.state = onInitializeInterface0(inputMethodService);
+		this.keyboardInput = createKeyboardInput0(inputMethodService);
         this.keyboardView = createKeyboardView0(inputMethodService);
-        this.state = onInitializeInterface0(inputMethodService);
     }
 
-    @NotNull
-    protected abstract AKeyboardControllerState<KD> onInitializeInterface0(@NotNull InputMethodService inputMethodService);
+	@NotNull
+	protected abstract AKeyboardControllerState<K> onInitializeInterface0(@NotNull InputMethodService inputMethodService);
+
+	@NotNull
+	protected DefaultKeyboardInput createKeyboardInput0(@NotNull InputMethodService inputMethodService) {
+		return new DefaultKeyboardInput(inputMethodService);
+	}
+
+	@NotNull
+	protected abstract AKeyboardView<K> createKeyboardView0(@NotNull Context context);
 
     @NotNull
     @Override
     public final AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
         keyboardView.createAndroidKeyboardView(context, layoutInflater);
-        keyboardView.setKeyboard(getCurrentKeyboard().getKeyboard());
+        keyboardView.setKeyboard(getCurrentKeyboard());
         keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
         return keyboardView;
     }
-
-    @NotNull
-    protected abstract AKeyboardView<KD> createKeyboardView0(@NotNull Context context);
 
     @Override
     public View onCreateCandidatesView() {
@@ -168,7 +173,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
     @Override
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         // Apply the selected keyboard to the input view.
-        keyboardView.setKeyboard(getCurrentKeyboard().getKeyboard());
+        keyboardView.setKeyboard(getCurrentKeyboard());
         keyboardView.closing();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -271,26 +276,26 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 
 
     @NotNull
-	protected AKeyboard<? extends KD> getCurrentKeyboard() {
+	protected K getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
 
-	protected void setCurrentKeyboard(@NotNull AKeyboard<? extends KD> keyboard) {
+	protected void setCurrentKeyboard(@NotNull K keyboard) {
 		this.state = this.state.copyForNewKeyboard(keyboard);
-		this.keyboardView.setKeyboard(keyboard.getKeyboard());
+		this.keyboardView.setKeyboard(keyboard);
 	}
 
 	@NotNull
-	protected AKeyboardControllerState<KD> getState() {
+	protected AKeyboardControllerState<K> getState() {
 		return state;
 	}
 
-	protected void setState(@NotNull AKeyboardControllerState<KD> state) {
+	protected void setState(@NotNull AKeyboardControllerState<K> state) {
 		this.state = state;
 	}
 
 	@NotNull
-    protected AKeyboardView<KD> getKeyboardView() {
+    protected AKeyboardView<K> getKeyboardView() {
 		return keyboardView;
 	}
 
@@ -307,7 +312,7 @@ public abstract class AbstractKeyboardController<KD extends AKeyboardDef> implem
 	}
 
 	@NotNull
-	public abstract AKeyboardControllerState<KD> onStartInput0(@NotNull EditorInfo attribute, boolean restarting);
+	public abstract AKeyboardControllerState<K> onStartInput0(@NotNull EditorInfo attribute, boolean restarting);
 
 	@Override
 	public void onText(@Nullable CharSequence text) {

@@ -12,33 +12,33 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 9:22 PM
  */
-final class LatinKeyboardController extends AbstractAndroidKeyboardController<AndroidAKeyboardDef> {
+final class LatinKeyboardController extends AbstractAndroidKeyboardController<AndroidAKeyboard> {
 
 	private long lastShiftTime;
 
 	@NotNull
-	private AKeyboard<AndroidAKeyboardDef> qwertyKeyboard;
+	private AndroidAKeyboard qwertyKeyboard;
 
 	@NotNull
-	private AKeyboard<AndroidAKeyboardDef> symbolsKeyboard;
+	private AndroidAKeyboard symbolsKeyboard;
 
 	@NotNull
-	private AKeyboard<AndroidAKeyboardDef> symbolsShiftedKeyboard;
+	private AndroidAKeyboard symbolsShiftedKeyboard;
 
     @NotNull
     @Override
-    protected AKeyboardControllerState<AndroidAKeyboardDef> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
-        qwertyKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.qwerty);
-        symbolsKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols);
-        symbolsShiftedKeyboard = AKeyboardImpl.fromResource(inputMethodService, R.xml.symbols_shift);
+    protected AKeyboardControllerState<AndroidAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+        qwertyKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.qwerty));
+        symbolsKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols));
+        symbolsShiftedKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols_shift));
 
         return AKeyboardControllerStateImpl.newDefaultState(qwertyKeyboard);
     }
 
     @NotNull
 	@Override
-	public AKeyboardControllerState<AndroidAKeyboardDef> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
-		final AKeyboardControllerState<AndroidAKeyboardDef> result;
+	public AKeyboardControllerState<AndroidAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+		final AKeyboardControllerState<AndroidAKeyboard> result;
 
 		// We are now going to initialize our state based on the type of
 		// text being edited.
@@ -124,7 +124,7 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
             switch (primaryCode) {
                 case Keyboard.KEYCODE_MODE_CHANGE:
 
-                    AKeyboard<? extends AndroidAKeyboardDef> current = getCurrentKeyboard();
+                    AndroidAKeyboard current = getCurrentKeyboard();
                     if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
                         current = qwertyKeyboard;
                     } else {
@@ -153,24 +153,24 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 
     @NotNull
 	@Override
-	public AKeyboardViewWithSuggestions createKeyboardView0(@NotNull Context context) {
-		return new AKeyboardViewWithSuggestionsImpl(R.layout.latin_keyboard, this, getInputMethodService());
+	public AKeyboardViewWithSuggestions<AndroidAKeyboard> createKeyboardView0(@NotNull Context context) {
+		return new AKeyboardViewWithSuggestionsImpl<AndroidAKeyboard, KeyboardViewAKeyboardView>(R.layout.latin_keyboard, this, getInputMethodService());
 	}
 
 	public void handleShift() {
 
-		final AKeyboard currentKeyboard = getCurrentKeyboard();
+		final AndroidAKeyboard currentKeyboard = getCurrentKeyboard();
 		if (qwertyKeyboard == currentKeyboard) {
 			// Alphabet keyboard
 			checkToggleCapsLock();
 			getKeyboardView().setShifted(getState().isCapsLock() || !getKeyboardView().isShifted());
 		} else if (currentKeyboard == symbolsKeyboard) {
 			symbolsKeyboard.setShifted(true);
-			getKeyboardView().setKeyboard(symbolsShiftedKeyboard.getKeyboard());
+			getKeyboardView().setKeyboard(symbolsShiftedKeyboard);
 			symbolsShiftedKeyboard.setShifted(true);
 		} else if (currentKeyboard == symbolsShiftedKeyboard) {
 			symbolsShiftedKeyboard.setShifted(false);
-			getKeyboardView().setKeyboard(symbolsKeyboard.getKeyboard());
+			getKeyboardView().setKeyboard(symbolsKeyboard);
 			symbolsKeyboard.setShifted(false);
 		}
 	}

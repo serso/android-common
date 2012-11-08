@@ -2,12 +2,12 @@ package org.solovyev.android.keyboard;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractAKeyboardDef implements AKeyboardDef {
+public abstract class AbstractAKeyboard implements AKeyboard {
 
 	@NotNull
 	private final String keyboardId;
 
-	protected AbstractAKeyboardDef(@NotNull String keyboardId) {
+	protected AbstractAKeyboard(@NotNull String keyboardId) {
 		this.keyboardId = keyboardId;
 	}
 
@@ -20,9 +20,9 @@ public abstract class AbstractAKeyboardDef implements AKeyboardDef {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof AbstractAKeyboardDef)) return false;
+		if (!(o instanceof AbstractAKeyboard)) return false;
 
-		AbstractAKeyboardDef that = (AbstractAKeyboardDef) o;
+		AbstractAKeyboard that = (AbstractAKeyboard) o;
 
 		if (!keyboardId.equals(that.keyboardId)) return false;
 

@@ -18,7 +18,7 @@ import java.util.List;
  * Date: 11/3/12
  * Time: 1:11 PM
  */
-public abstract class AbstractAndroidKeyboardController<K extends AKeyboardDef> extends AbstractKeyboardController<K> {
+public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> extends AbstractKeyboardController<K> {
 
     @Override
     public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {

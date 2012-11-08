@@ -27,7 +27,7 @@ import java.util.Map;
  * Date: 02.11.12
  * Time: 14:47
  */
-public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyboardView<DragAKeyboardDef>, SimpleOnDragListener.DragProcessor, View.OnTouchListener, View.OnClickListener {
+public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyboardView<DragAKeyboard>, SimpleOnDragListener.DragProcessor, View.OnTouchListener, View.OnClickListener {
 
     @Nullable
     private KeyboardView.OnKeyboardActionListener keyboardActionListener;
@@ -68,7 +68,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public void setKeyboard(@NotNull DragAKeyboardDef keyboard) {
+    public void setKeyboard(@NotNull DragAKeyboard keyboard) {
         setKeyboard(keyboard, null);
     }
 
@@ -92,11 +92,11 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return false;
     }
 
-    private void setKeyboard(@Nullable DragAKeyboardDef keyboard,
+    private void setKeyboard(@Nullable DragAKeyboard keyboard,
                              @Nullable LayoutInflater layoutInflater) {
         if (keyboard != null) {
 
-            final DragAKeyboardDef.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
+            final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
             final Context context = this.getContext();
             int buttonMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
@@ -112,7 +112,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
             this.defs.clear();
 
-            for (DragAKeyboardDef.RowDef rowDef : keyboardDef.getRowDefs()) {
+            for (DragAKeyboard.RowDef rowDef : keyboardDef.getRowDefs()) {
                 final LinearLayout rowLayout = new LinearLayout(context);
                 rowLayout.setOrientation(LinearLayout.HORIZONTAL);
                 for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {

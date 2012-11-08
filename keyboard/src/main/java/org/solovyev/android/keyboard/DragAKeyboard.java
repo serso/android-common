@@ -12,12 +12,12 @@ import java.util.List;
  * Date: 11/3/12
  * Time: 1:45 PM
  */
-public class DragAKeyboardDef extends AbstractAKeyboardDef {
+public class DragAKeyboard extends AbstractAKeyboard {
 
     @NotNull
     private final KeyboardDef keyboardDef;
 
-    public DragAKeyboardDef(@NotNull String keyboardId, @NotNull KeyboardDef keyboardDef) {
+    public DragAKeyboard(@NotNull String keyboardId, @NotNull KeyboardDef keyboardDef) {
 		super(keyboardId);
 		this.keyboardDef = keyboardDef;
     }

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 10:01 PM
  */
-public interface AKeyboardView<K extends AKeyboardDef> {
+public interface AKeyboardView<K extends AKeyboard> {
 
     void setKeyboard(@NotNull K keyboard);
 

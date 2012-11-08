@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/1/12
  * Time: 9:32 PM
  */
-public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKeyboardControllerState<K> {
+public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeyboardControllerState<K> {
 
     private boolean shifted;
 
@@ -18,13 +18,13 @@ public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKe
     private boolean prediction;
 
 	@NotNull
-	private AKeyboard<? extends K> keyboard;
+	private K keyboard;
 
     private AKeyboardControllerStateImpl() {
     }
 
     @NotNull
-    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newDefaultState(@NotNull AKeyboard<? extends K> keyboard) {
+    public static <K extends AKeyboard> AKeyboardControllerState<K> newDefaultState(@NotNull K keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
@@ -37,7 +37,7 @@ public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKe
     }
 
     @NotNull
-    public static <K extends AKeyboardDef> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @NotNull AKeyboard<? extends K> keyboard) {
+    public static <K extends AKeyboard> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @NotNull K keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
@@ -71,13 +71,13 @@ public class AKeyboardControllerStateImpl<K extends AKeyboardDef> implements AKe
 
 	@Override
 	@NotNull
-	public AKeyboard<? extends K> getKeyboard() {
+	public K getKeyboard() {
 		return keyboard;
 	}
 
 	@NotNull
 	@Override
-	public AKeyboardControllerState<K> copyForNewKeyboard(@NotNull AKeyboard<? extends K> keyboard) {
+	public AKeyboardControllerState<K> copyForNewKeyboard(@NotNull K keyboard) {
 		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 		result.capsLock = this.capsLock;
 		result.prediction = this.prediction;

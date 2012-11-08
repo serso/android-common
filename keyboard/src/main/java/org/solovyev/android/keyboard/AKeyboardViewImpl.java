@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * Date: 02.11.12
  * Time: 14:44
  */
-public class AKeyboardViewImpl<K extends AKeyboardDef, KV extends View & AndroidKeyboardView<K>> implements AKeyboardView<K> {
+public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKeyboardView<K>> implements AKeyboardView<K> {
 
     @Nullable
     private KV keyboardView;

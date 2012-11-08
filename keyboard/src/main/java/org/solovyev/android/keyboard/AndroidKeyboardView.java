@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Date: 11/3/12
  * Time: 11:27 PM
  */
-public interface AndroidKeyboardView<K extends AKeyboardDef> {
+public interface AndroidKeyboardView<K extends AKeyboard> {
 
     void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener);
 
