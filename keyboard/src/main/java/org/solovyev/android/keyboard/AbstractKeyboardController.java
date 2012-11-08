@@ -159,7 +159,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     @Override
     public void onFinishInput() {
         keyboardInput.clearTypedText();
-        keyboardView.closing();
+        keyboardView.close();
     }
 
     /*
@@ -174,7 +174,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     public void onStartInputView(EditorInfo attribute, boolean restarting) {
         // Apply the selected keyboard to the input view.
         keyboardView.setKeyboard(getCurrentKeyboard());
-        keyboardView.closing();
+        keyboardView.close();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
@@ -272,13 +272,17 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     protected void handlePrevKeyboard() {
     }
 
-    protected void handleShift() {
+    private void handleShift() {
         boolean newState = !this.state.isShifted();
 
-        this.state = this.state.copyForNewShift(newState);
-        this.state.getKeyboard().setShifted(newState);
+        setShifted(newState);
     }
 
+    protected void setShifted(boolean shifted) {
+        this.state = this.state.copyForNewShift(shifted);
+        this.state.getKeyboard().setShifted(shifted);
+        this.keyboardView.reloadAndroidKeyboardView();
+    }
 
     @NotNull
 	protected K getCurrentKeyboard() {
@@ -313,7 +317,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	public void handleClose() {
 		keyboardInput.commitTyped();
 		inputMethodService.requestHideSelf(0);
-		keyboardView.closing();
+		keyboardView.close();
 	}
 
 	@NotNull
@@ -343,7 +347,8 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
                 caps = keyboardInput.getCursorCapsMode(attr.inputType);
 			}
 
-			keyboardView.setShifted(state.isCapsLock() || caps != 0);
+            boolean shifted = state.isCapsLock() || caps != 0;
+            setShifted(shifted);
 		}
 	}
 
@@ -371,9 +376,8 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 				// However, our keyboard could be showing a pop-up window
 				// that back should dismiss, so we first allow it to do that.
 				if (event.getRepeatCount() == 0) {
-					if (keyboardView.handleBack()) {
-						return true;
-					}
+					keyboardView.dismiss();
+					return true;
 				}
 				break;
 
@@ -509,7 +513,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 
 	protected void handleCharacter(int primaryCode, int[] keyCodes) {
 		if (inputMethodService.isInputViewShown()) {
-			if (keyboardView.isShifted()) {
+			if (state.isShifted()) {
 				primaryCode = Character.toUpperCase(primaryCode);
 			}
 		}

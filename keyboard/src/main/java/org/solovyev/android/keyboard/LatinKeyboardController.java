@@ -163,7 +163,8 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 		if (qwertyKeyboard == currentKeyboard) {
 			// Alphabet keyboard
 			checkToggleCapsLock();
-			getKeyboardView().setShifted(getState().isCapsLock() || !getKeyboardView().isShifted());
+            boolean shifted = getState().isCapsLock() || !getState().isShifted();
+            setShifted(shifted);
 		} else if (currentKeyboard == symbolsKeyboard) {
 			symbolsKeyboard.setShifted(true);
 			getKeyboardView().setKeyboard(symbolsShiftedKeyboard);

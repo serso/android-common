@@ -93,9 +93,9 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     }
 
     @Override
-    public void closing() {
+    public void close() {
         if (this.keyboardView != null) {
-            this.keyboardView.closing();
+            this.keyboardView.close();
         }
     }
 
@@ -104,27 +104,9 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     }
 
     @Override
-    public boolean handleBack() {
+    public void dismiss() {
         if (this.keyboardView != null) {
-            return this.keyboardView.handleBack();
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean isShifted() {
-        if (this.keyboardView != null) {
-            return this.keyboardView.isShifted();
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public void setShifted(boolean shifted) {
-        if (this.keyboardView != null) {
-            this.keyboardView.setShifted(shifted);
+            this.keyboardView.dismiss();
         }
     }
 
@@ -132,6 +114,13 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     public View getAndroidKeyboardView() {
         assert keyboardView != null;
         return keyboardView;
+    }
+
+    @Override
+    public void reloadAndroidKeyboardView() {
+        if (this.keyboardView != null) {
+            this.keyboardView.reload();
+        }
     }
 
 }

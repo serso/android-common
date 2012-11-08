@@ -18,15 +18,11 @@ public interface AKeyboardView<K extends AKeyboard> {
 
     void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener);
 
-    void closing();
+    void close();
+
+    void dismiss();
 
     void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype);
-
-    boolean handleBack();
-
-    boolean isShifted();
-
-    void setShifted(boolean shifted);
 
 	boolean isExtractViewShown();
 
@@ -34,4 +30,6 @@ public interface AKeyboardView<K extends AKeyboard> {
 
     @NotNull
     View getAndroidKeyboardView();
+
+    void reloadAndroidKeyboardView();
 }

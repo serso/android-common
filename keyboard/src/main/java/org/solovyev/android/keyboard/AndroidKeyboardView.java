@@ -14,11 +14,9 @@ public interface AndroidKeyboardView<K extends AKeyboard> {
 
     void setKeyboard(@NotNull K keyboard);
 
-    void closing();
+    void close();
 
-    boolean handleBack();
+    void dismiss();
 
-    boolean isShifted();
-
-    boolean setShifted(boolean shifted);
+    void reload();
 }

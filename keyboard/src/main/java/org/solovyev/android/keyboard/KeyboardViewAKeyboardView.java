@@ -33,23 +33,18 @@ public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKe
     }
 
     @Override
-    public void closing() {
+    public void close() {
         super.closing();
     }
 
     @Override
-    public boolean handleBack() {
-        return super.handleBack();
+    public void dismiss() {
+        super.handleBack();
     }
 
     @Override
-    public boolean isShifted() {
-        return super.isShifted();
-    }
-
-    @Override
-    public boolean setShifted(boolean shifted) {
-        return super.setShifted(shifted);
+    public void reload() {
+        setKeyboard(getKeyboard());
     }
 
     static final int KEYCODE_OPTIONS = -100;

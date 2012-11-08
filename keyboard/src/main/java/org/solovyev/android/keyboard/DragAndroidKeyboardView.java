@@ -44,6 +44,9 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     @NotNull
     private final VibratorContainer vibrator;
 
+    @Nullable
+    private DragAKeyboard keyboard;
+
     public DragAndroidKeyboardView(Context context) {
         super(context);
         preview = new AKeyboardButtonPreview(this);
@@ -73,90 +76,95 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public void closing() {
+    public void close() {
 		this.preview.hide();
     }
 
     @Override
-    public boolean handleBack() {
-        return false;
+    public void dismiss() {
+        this.preview.hide();
     }
 
     @Override
-    public boolean isShifted() {
-        return false;
-    }
-
-    @Override
-    public boolean setShifted(boolean shifted) {
-        return false;
+    public void reload() {
+        if (keyboard != null) {
+            reloadView(keyboard, null);
+        }
     }
 
     private void setKeyboard(@Nullable DragAKeyboard keyboard,
                              @Nullable LayoutInflater layoutInflater) {
         if (keyboard != null) {
+            this.keyboard = keyboard;
+            reloadView(keyboard, layoutInflater);
+        }
+    }
 
-            final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
+    private void reloadView(@NotNull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
+        final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
-            final Context context = this.getContext();
-            int buttonMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
+        final Context context = this.getContext();
+        int buttonMargin = AndroidUtils.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
 
-            if (layoutInflater == null) {
-                layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            }
+        if (layoutInflater == null) {
+            layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        }
 
-            preview.createPreviewView(layoutInflater);
+        preview.createPreviewView(layoutInflater);
 
-            final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
-            this.removeAllViews();
+        final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
+        this.removeAllViews();
 
-            this.defs.clear();
+        this.defs.clear();
 
-            for (DragAKeyboard.RowDef rowDef : keyboardDef.getRowDefs()) {
-                final LinearLayout rowLayout = new LinearLayout(context);
-                rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-                for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {
+        for (DragAKeyboard.RowDef rowDef : keyboardDef.getRowDefs()) {
+            final LinearLayout rowLayout = new LinearLayout(context);
+            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+            for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {
 
-                    Float weight = buttonDef.getLayoutWeight();
-                    if (weight == null) {
-                        weight = 1f;
-                    }
-                    final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight);
-                    if (buttonDef.getLayoutMarginLeft() != null) {
-                        params.leftMargin = buttonDef.getLayoutMarginLeft();
-                    } else {
-                        params.leftMargin = buttonMargin;
-                    }
-                    if (buttonDef.getLayoutMarginRight() != null) {
-                        params.rightMargin = buttonDef.getLayoutMarginRight();
-                    } else {
-                        params.rightMargin = buttonMargin;
-                    }
-
-                    params.topMargin = buttonMargin;
-                    params.bottomMargin = buttonMargin;
-
-                    final Integer drawableResId = buttonDef.getDrawableResId();
-                    if (drawableResId == null) {
-                        final DirectionDragButton directionDragButton = (DirectionDragButton) layoutInflater.inflate(R.layout.drag_keyboard_drag_button, null);
-                        directionDragButton.applyDef(buttonDef);
-                        directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
-                        // we cannot use on touch listener here (in order to get repeat) as it will conflict with default DragButton logic
-                        directionDragButton.setOnClickListener(this);
-                        defs.put(directionDragButton, buttonDef);
-                        rowLayout.addView(directionDragButton, params);
-                    } else {
-                        final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
-                        AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
-                        imageButton.setOnTouchListener(this);
-                        defs.put(imageButton, buttonDef);
-                        rowLayout.addView(imageButton, params);
-                    }
+                Float weight = buttonDef.getLayoutWeight();
+                if (weight == null) {
+                    weight = 1f;
                 }
-                final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
-                params.gravity = Gravity.CENTER_HORIZONTAL;
-                this.addView(rowLayout, params);
+                final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight);
+
+                Integer layoutMarginLeft = buttonDef.getLayoutMarginLeft();
+                if (layoutMarginLeft != null) {
+                    params.leftMargin = layoutMarginLeft;
+                } else {
+                    params.leftMargin = buttonMargin;
+                }
+
+                Integer layoutMarginRight = buttonDef.getLayoutMarginRight();
+                if (layoutMarginRight != null) {
+                    params.rightMargin = layoutMarginRight;
+                } else {
+                    params.rightMargin = buttonMargin;
+                }
+
+                params.topMargin = buttonMargin;
+                params.bottomMargin = buttonMargin;
+
+                final Integer drawableResId = buttonDef.getDrawableResId();
+                if (drawableResId == null) {
+                    final DirectionDragButton directionDragButton = (DirectionDragButton) layoutInflater.inflate(R.layout.drag_keyboard_drag_button, null);
+                    directionDragButton.applyDef(buttonDef);
+                    directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
+                    // we cannot use on touch listener here (in order to get repeat) as it will conflict with default DragButton logic
+                    directionDragButton.setOnClickListener(this);
+                    defs.put(directionDragButton, buttonDef);
+                    rowLayout.addView(directionDragButton, params);
+                } else {
+                    final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
+                    AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
+                    imageButton.setOnTouchListener(this);
+                    defs.put(imageButton, buttonDef);
+                    rowLayout.addView(imageButton, params);
+                }
             }
+            final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
+            params.gravity = Gravity.CENTER_HORIZONTAL;
+            this.addView(rowLayout, params);
         }
     }
 
