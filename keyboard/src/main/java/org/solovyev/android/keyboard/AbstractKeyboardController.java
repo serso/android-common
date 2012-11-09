@@ -213,6 +213,10 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
         boolean consumed = false;
 
         switch (primaryCode) {
+            case Keyboard.KEYCODE_MODE_CHANGE:
+                handleModeChange();
+                consumed = true;
+                break;
             case Keyboard.KEYCODE_DELETE:
                 handleBackspace();
                 consumed = true;
@@ -264,6 +268,9 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
         }
 
         return consumed;
+    }
+
+    protected void handleModeChange() {
     }
 
     protected void handleNextKeyboard() {

@@ -2,7 +2,6 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
-import android.inputmethodservice.Keyboard;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
@@ -116,34 +115,21 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 		setCurrentKeyboard(qwertyKeyboard);
 	}
 
-	@Override
-	public boolean handleSpecialKey(int primaryCode) {
-        boolean consumed = super.handleSpecialKey(primaryCode);
+    @Override
+    protected void handleModeChange() {
+        super.handleModeChange();
 
-        if (!consumed) {
-            switch (primaryCode) {
-                case Keyboard.KEYCODE_MODE_CHANGE:
-
-                    AndroidAKeyboard current = getCurrentKeyboard();
-                    if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
-                        current = qwertyKeyboard;
-                    } else {
-                        current = symbolsKeyboard;
-                    }
-                    setCurrentKeyboard(current);
-                    if (current == symbolsKeyboard) {
-                        current.setShifted(false);
-                    }
-
-                    consumed = true;
-
-                    break;
-
-            }
+        AndroidAKeyboard current = getCurrentKeyboard();
+        if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
+            current = qwertyKeyboard;
+        } else {
+            current = symbolsKeyboard;
         }
-
-        return consumed;
-	}
+        setCurrentKeyboard(current);
+        if (current == symbolsKeyboard) {
+            current.setShifted(false);
+        }
+    }
 
     @NotNull
     @Override
