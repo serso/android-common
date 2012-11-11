@@ -179,7 +179,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
             final Integer keycode = getKeycode(dragDirection, dragButton);
 
-            return handleTextOrCode(dragButton, directionDragButton.getText(dragDirection), keycode, true);
+            return handleTextOrCode(dragButton, directionDragButton.getText(dragDirection), keycode, true, dragDirection);
         }
         return false;
     }
@@ -187,7 +187,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private Integer getKeycode(@Nullable DragDirection dragDirection,
                                @NotNull View view) {
         Integer keycode = null;
-        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
+        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);        DragAn
         if ( buttonDef != null ) {
             if (dragDirection != null) {
                 keycode = buttonDef.getDirectionKeycode(dragDirection);
@@ -199,19 +199,27 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return keycode;
     }
 
-    private boolean handleTextOrCode(@NotNull View view, @Nullable CharSequence text, @Nullable Integer keycode, boolean withPreview) {
+    private boolean handleTextOrCode(@NotNull View view,
+                                     @Nullable CharSequence text,
+                                     @Nullable Integer keycode,
+                                     boolean withPreview,
+                                     @Nullable DragDirection dragDirection) {
         // we need to check if there is something in the tag
 
         if (keycode != null) {
-            return handleKeycode(view, keycode, withPreview);
+            return handleKeycode(view, text, keycode, withPreview, dragDirection);
         } else {
-            return handleText(view, text, withPreview);
+            return handleText(view, text, withPreview, dragDirection);
         }
     }
 
-    private boolean handleKeycode(@NotNull View view, @NotNull Integer keycode, boolean withPreview) {
+    private boolean handleKeycode(@NotNull View view,
+                                  @Nullable CharSequence text,
+                                  @NotNull Integer keycode,
+                                  boolean withPreview,
+                                  @Nullable DragDirection dragDirection) {
         if (withPreview) {
-            showPreview(view, null);
+            showPreview(view, text, dragDirection);
         }
 
         if (keyboardActionListener != null) {
@@ -221,11 +229,11 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return true;
     }
 
-    private boolean handleText(@NotNull View view, @Nullable CharSequence text, boolean withPreview) {
+    private boolean handleText(@NotNull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
         if (!StringUtils.isEmpty(text)) {
 
             if (withPreview) {
-                showPreview(view, text);
+                showPreview(view, text, dragDirection);
             }
 
             if (keyboardActionListener != null) {
@@ -237,16 +245,36 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return false;
     }
 
-    private void showPreview(@NotNull View view, @Nullable CharSequence text) {
+    private void showPreview(@NotNull View view,
+                             @Nullable CharSequence text,
+                             @Nullable DragDirection direction) {
+
         final DragAKeyboardButtonDef buttonDef = defs.get(view);
+
         if (buttonDef != null) {
 
-			Integer drawableResId = buttonDef.getPreviewDrawableResId();
-			if (drawableResId == null) {
-				drawableResId = buttonDef.getDrawableResId();
+            CharSequence previewText;
+            if ( direction != null ) {
+                previewText = buttonDef.getPreviewDirectionText(direction);
+            } else {
+                previewText = buttonDef.getPreviewText();
+            }
+
+			Integer previewDrawableResId = null;
+
+            if (direction == null) {
+                previewDrawableResId = buttonDef.getPreviewDrawableResId();
+            }
+
+            if (previewDrawableResId == null) {
+				previewDrawableResId = buttonDef.getDrawableResId();
 			}
 
-			preview.showPreview(view, text, drawableResId);
+            if ( previewText == null && previewDrawableResId == null ) {
+                previewText = text;
+            }
+
+			preview.showPreview(view, previewText, previewDrawableResId);
         } else {
             preview.showPreview(view, text, null);
         }
@@ -256,7 +284,12 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     public boolean onTouch(@NotNull final View v, @NotNull MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				repeatHelper.keyDown(v, isRepeatAllowed(v) ? new RepeatKeydownRunnable(v) : null);
+                if ( isRepeatAllowed(v) ) {
+                    repeatHelper.keyDown(v, new RepeatKeydownRunnable(v));
+                } else {
+                    repeatHelper.keyDown(v, null);
+                    doKeydown(v);
+                }
 				return true;
 
 			case MotionEvent.ACTION_UP:
@@ -285,9 +318,9 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         final Integer keycode = getKeycode(null, v);
 
         if (v instanceof TextView) {
-            handleTextOrCode(v, ((TextView) v).getText(), keycode, true);
+            handleTextOrCode(v, ((TextView) v).getText(), keycode, true, null);
         } else {
-            handleTextOrCode(v, null, keycode, true);
+            handleTextOrCode(v, null, keycode, true, null);
         }
     }
 
@@ -299,15 +332,19 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 			this.view = view;
 		}
 
-		@Override
-		public void run() {
-			final Integer keycode = getKeycode(null, view);
+        @Override
+        public void run() {
+            doKeydown(view);
+        }
+    }
 
-			if (view instanceof TextView) {
-				handleTextOrCode(view, ((TextView) view).getText(), keycode, true);
-			} else {
-				handleTextOrCode(view, null, keycode, true);
-			}
-		}
-	}
+    private void doKeydown(@NotNull View view) {
+        final Integer keycode = getKeycode(null, view);
+
+        if (view instanceof TextView) {
+            handleTextOrCode(view, ((TextView) view).getText(), keycode, true, null);
+        } else {
+            handleTextOrCode(view, null, keycode, true, null);
+        }
+    }
 }

@@ -22,4 +22,10 @@ public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
 	void setImeOptions(@NotNull Resources resources, int imeOptions);
 
 	void setShifted(boolean shifted);
+
+    @Nullable
+    CharSequence getPreviewText();
+
+    @Nullable
+    CharSequence getPreviewDirectionText(@NotNull DragDirection direction);
 }

@@ -143,25 +143,6 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 		return new AKeyboardViewWithSuggestionsImpl<AndroidAKeyboard, KeyboardViewAKeyboardView>(R.layout.latin_keyboard, this, getInputMethodService());
 	}
 
-	public void handleShift() {
-
-		final AndroidAKeyboard currentKeyboard = getCurrentKeyboard();
-		if (qwertyKeyboard == currentKeyboard) {
-			// Alphabet keyboard
-			checkToggleCapsLock();
-            boolean shifted = getState().isCapsLock() || !getState().isShifted();
-            setShifted(shifted);
-		} else if (currentKeyboard == symbolsKeyboard) {
-			symbolsKeyboard.setShifted(true);
-			getKeyboardView().setKeyboard(symbolsShiftedKeyboard);
-			symbolsShiftedKeyboard.setShifted(true);
-		} else if (currentKeyboard == symbolsShiftedKeyboard) {
-			symbolsShiftedKeyboard.setShifted(false);
-			getKeyboardView().setKeyboard(symbolsKeyboard);
-			symbolsKeyboard.setShifted(false);
-		}
-	}
-
 	private void checkToggleCapsLock() {
 		long now = System.currentTimeMillis();
 		if (lastShiftTime + 800 > now) {

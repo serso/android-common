@@ -26,6 +26,13 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
     @Nullable
     private Integer previewDrawableResId;
 
+    @Nullable
+    private CharSequence previewText;
+
+    @NotNull
+    private final Map<DragDirection, CharSequence> previewDirectionTexts = new EnumMap<DragDirection, CharSequence>(DragDirection.class);
+
+
     @Override
     @Nullable
     public CharSequence getText(@NotNull DragDirection dragDirection) {
@@ -199,12 +206,33 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
         directionDragButtonDef.setDirectionText(key, text);
     }
 
+    public void setPreviewText(@Nullable CharSequence previewText) {
+        this.previewText = previewText;
+    }
+
+    public void setPreviewDirectionText(@NotNull DragDirection direction,
+                                        @Nullable CharSequence charSequence) {
+        previewDirectionTexts.put(direction, charSequence);
+    }
+
     @Override
     public void setImeOptions(@NotNull Resources resources, int imeOptions) {
     }
 
     @Override
     public void setShifted(boolean shifted) {
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPreviewText() {
+        return this.previewText;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPreviewDirectionText(@NotNull DragDirection direction) {
+        return this.previewDirectionTexts.get(direction);
     }
 
     public void setPreviewDrawableResId(@Nullable Integer previewDrawableResId) {
