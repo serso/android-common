@@ -157,7 +157,19 @@ public class MultiSelectListPreference<T> extends ListPreference {
 		}
 	}
 
-	public static class ListMapper<T> implements org.solovyev.common.text.Mapper<List<T>> {
+    @NotNull
+    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@NotNull org.solovyev.common.text.Mapper<T> nestedMapper) {
+        return new ListMapper<T>(DEFAULT_SEPARATOR, nestedMapper);
+    }
+
+    @NotNull
+    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@NotNull org.solovyev.common.text.Mapper<T> nestedMapper,
+                                                                             @NotNull String separator) {
+        return new ListMapper<T>(separator, nestedMapper);
+    }
+
+
+	private static class ListMapper<T> implements org.solovyev.common.text.Mapper<List<T>> {
 
 		@NotNull
 		private final String separator;
