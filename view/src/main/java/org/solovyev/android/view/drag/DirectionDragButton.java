@@ -286,28 +286,25 @@ public class DirectionDragButton extends DragButton {
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionDragButton);
 
-		final int N = a.getIndexCount();
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < a.getIndexCount(); i++) {
 			int attr = a.getIndex(i);
 
-			final String attrValue = a.getString(attr);
-
-			if (!StringUtils.isEmpty(attrValue)) {
+			if (a.hasValue(attr)) {
 				switch (attr) {
 					case R.styleable.DirectionDragButton_directionTextColor:
 						this.directionTextColor = a.getColor(attr, DEFAULT_DIRECTION_TEXT_COLOR);
 						break;
 					case R.styleable.DirectionDragButton_directionTextScale:
-						this.directionTextScale = attrValue;
+                        this.directionTextScale = a.getString(attr);
 						break;
 					case R.styleable.DirectionDragButton_directionTextAlpha:
-						this.directionTextAlpha = Integer.valueOf(attrValue);
+						this.directionTextAlpha = a.getInt(attr, DEFAULT_DIRECTION_TEXT_ALPHA);
 						break;
 					default:
 						// try drag direction text
 						for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
 							if (guiDragDirection.getAttributeId() == attr) {
-								this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, attrValue));
+								this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, a.getString(attr)));
 								break;
 							}
 						}
