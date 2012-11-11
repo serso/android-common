@@ -22,12 +22,12 @@ import org.solovyev.android.AndroidUtils;
  */
 public class AKeyboardButtonPreview {
 
+    private static final String TAG = AKeyboardButtonPreview.class.getSimpleName();
+
     private static final int MSG_SHOW_PREVIEW = 1;
     private static final int MSG_REMOVE_PREVIEW = 2;
-    private static final int MSG_REPEAT = 3;
-    private static final int MSG_LONGPRESS = 4;
 
-    private static final long DELAY_AFTER_PREVIEW = 400;
+    private static final long DELAY_AFTER_PREVIEW = 200;
     private static final long DELAY_BEFORE_PREVIEW = 0;
 
     @NotNull
@@ -36,7 +36,6 @@ public class AKeyboardButtonPreview {
     @NotNull
     private final View popupParent;
 
-    @NotNull
     private View previewView;
 
     @NotNull
@@ -45,20 +44,13 @@ public class AKeyboardButtonPreview {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_SHOW_PREVIEW:
+                    Log.d(TAG, "Show preview for " + msg.obj);
                     showText0((PreviewParams) msg.obj);
                     break;
                 case MSG_REMOVE_PREVIEW:
+                    Log.d(TAG, "Hide preview for " + msg.obj);
                     hide();
                     break;
-                /*case MSG_REPEAT:
-                    if (repeatKey()) {
-                        Message repeat = Message.obtain(this, MSG_REPEAT);
-                        sendMessageDelayed(repeat, REPEAT_INTERVAL);
-                    }
-                    break;
-                case MSG_LONGPRESS:
-                    openPopupIfRequired((MotionEvent) msg.obj);
-                    break;*/
             }
         }
     };
@@ -68,6 +60,8 @@ public class AKeyboardButtonPreview {
     }
 
     public void createPreviewView(@NotNull LayoutInflater layoutInflater) {
+        Log.d(TAG, "Creating preview view and popup window...");
+
         previewView = layoutInflater.inflate(R.layout.drag_keyboard_preview, null);
         previewView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         popup = new PopupWindow(previewView);
@@ -157,6 +151,8 @@ public class AKeyboardButtonPreview {
 	}
 
 	public void hide() {
-		previewView.setVisibility(View.INVISIBLE);
-	}
+        if (previewView != null) {
+            previewView.setVisibility(View.INVISIBLE);
+        }
+    }
 }

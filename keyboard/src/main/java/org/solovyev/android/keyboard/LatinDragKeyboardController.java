@@ -158,7 +158,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("f", "F", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("g", "G", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("h", "H", null, null, null));
-        secondRow.add(DragAKeyboardButtonDefImpl.newInstance("j", "H", null, null, null));
+        secondRow.add(DragAKeyboardButtonDefImpl.newInstance("j", "J", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("k", "K", null, null, null));
         secondRow.add(DragAKeyboardButtonDefImpl.newInstance("l", "L", null, null, null));
 

@@ -139,4 +139,14 @@ public final class PreviewParams implements Parcelable {
 		result = 31 * result + (drawableResId != null ? drawableResId.hashCode() : 0);
 		return result;
 	}
+
+    @Override
+    public String toString() {
+        return "PreviewParams{" +
+                "x=" + x +
+                ", y=" + y +
+                ", text='" + text + '\'' +
+                ", drawableResId=" + drawableResId +
+                '}';
+    }
 }

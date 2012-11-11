@@ -285,10 +285,12 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
         setShifted(newState);
     }
 
-    protected void setShifted(boolean shifted) {
-        this.state = this.state.copyForNewShift(shifted);
-        this.state.getKeyboard().setShifted(shifted);
-        this.keyboardView.reloadAndroidKeyboardView();
+    protected final void setShifted(boolean shifted) {
+        if ( shifted != this.state.isShifted() ) {
+            this.state = this.state.copyForNewShift(shifted);
+            this.state.getKeyboard().setShifted(shifted);
+            this.keyboardView.reloadAndroidKeyboardView();
+        }
     }
 
     @NotNull

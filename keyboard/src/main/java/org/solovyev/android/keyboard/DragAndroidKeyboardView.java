@@ -101,6 +101,8 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     private void reloadView(@NotNull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
+        dismiss();
+
         final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
         final Context context = this.getContext();
