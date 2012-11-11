@@ -187,7 +187,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     private Integer getKeycode(@Nullable DragDirection dragDirection,
                                @NotNull View view) {
         Integer keycode = null;
-        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);        DragAn
+        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
         if ( buttonDef != null ) {
             if (dragDirection != null) {
                 keycode = buttonDef.getDirectionKeycode(dragDirection);
