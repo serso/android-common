@@ -151,7 +151,9 @@ public class DragButton extends Button {
         if (!StringUtils.isEmpty(text)) {
             super.onDraw(canvas);
         } else {
-            AndroidViewUtils.drawDrawables(canvas, this);
+            if (!AndroidViewUtils.drawDrawables(canvas, this)) {
+                super.onDraw(canvas);
+            }
         }
     }
 
@@ -167,7 +169,7 @@ public class DragButton extends Button {
                 textBackup = null;
             } else {
                 textBackup = this.getText();
-                setText(" ");
+                setText(null);
             }
             this.showText = showText;
         }

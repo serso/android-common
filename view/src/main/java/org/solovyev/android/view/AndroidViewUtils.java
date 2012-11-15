@@ -19,7 +19,7 @@ public final class AndroidViewUtils {
         throw new AssertionError();
     }
 
-    public static void drawDrawables(Canvas canvas, @NotNull TextView textView) {
+    public static boolean drawDrawables(Canvas canvas, @NotNull TextView textView) {
         final int compoundPaddingLeft = textView.getCompoundPaddingLeft();
         final int compoundPaddingTop = textView.getCompoundPaddingTop();
         final int compoundPaddingRight = textView.getCompoundPaddingRight();
@@ -48,8 +48,11 @@ public final class AndroidViewUtils {
                         scrollY + textView.getPaddingTop() + vspace / 2);
                 topDr.draw(canvas);
                 canvas.restore();
+                return true;
             }
         }
+
+        return false;
     }
 
     public static void applyButtonDef(@NotNull Button button, @NotNull ButtonDef buttonDef) {
