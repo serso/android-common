@@ -161,13 +161,15 @@ public class DragButton extends Button {
     }
 
     public void setShowText(boolean showText) {
-        if ( showText ) {
-            setText(textBackup);
-            textBackup = null;
-        } else {
-            textBackup = this.getText();
-            setText(" ");
+        if (this.showText != showText) {
+            if ( showText ) {
+                setText(textBackup);
+                textBackup = null;
+            } else {
+                textBackup = this.getText();
+                setText(" ");
+            }
+            this.showText = showText;
         }
-        this.showText = showText;
     }
 }
