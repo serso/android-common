@@ -30,8 +30,13 @@ public class DragButton extends Button {
     @NotNull
     private DragButton.OnTouchListenerImpl onTouchListener;
 
+    private boolean showText = true;
+
     @NotNull
     private final Handler uiHandler = new Handler();
+
+    @Nullable
+    private CharSequence textBackup;
 
     public DragButton(@NotNull Context context, @NotNull AttributeSet attrs) {
         super(context, attrs);
@@ -148,5 +153,21 @@ public class DragButton extends Button {
         } else {
             AndroidViewUtils.drawDrawables(canvas, this);
         }
+    }
+
+
+    public boolean isShowText() {
+        return showText;
+    }
+
+    public void setShowText(boolean showText) {
+        if ( showText ) {
+            setText(textBackup);
+            textBackup = null;
+        } else {
+            textBackup = this.getText();
+            setText(" ");
+        }
+        this.showText = showText;
     }
 }
