@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.solovyev.android</groupId>
         <artifactId>android-common</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.6-SNAPSHOT</version>
     </parent>
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>android-common-keyboard</artifactId>
 	<name>Android Common Library Keyboard</name>
-	<version>1.0.5</version>
+	<version>1.0.6-SNAPSHOT</version>
 
 	<packaging>apklib</packaging>
 
