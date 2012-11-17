@@ -6,7 +6,7 @@ import com.actionbarsherlock.view.MenuItem;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.menu.AMenuItem;
 import org.solovyev.android.menu.MenuHelper;
-import org.solovyev.android.sherlock.SherlockUtils;
+import org.solovyev.android.sherlock.AndroidSherlockUtils;
 
 /**
  * User: serso
@@ -55,7 +55,7 @@ public final class SherlockMenuHelper implements MenuHelper<Menu, MenuItem> {
 
     @Override
     public void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull Menu menu) {
-        SherlockUtils.getSupportMenuInflater(activity).inflate(layoutId, menu);
+        AndroidSherlockUtils.getSupportMenuInflater(activity).inflate(layoutId, menu);
     }
 
     @NotNull

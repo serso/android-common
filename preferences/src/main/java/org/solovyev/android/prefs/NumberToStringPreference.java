@@ -19,7 +19,7 @@ public class NumberToStringPreference<N extends Number> extends AbstractPreferen
     public NumberToStringPreference(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
         super(key, defaultValue);
 
-        this.mapper = new NumberMapper<N>(clazz);
+        this.mapper = NumberMapper.getMapper(clazz);
     }
 
     @Override

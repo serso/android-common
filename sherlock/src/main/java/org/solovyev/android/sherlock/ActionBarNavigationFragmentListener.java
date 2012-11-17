@@ -34,7 +34,7 @@ public class ActionBarNavigationFragmentListener<T extends Fragment> implements 
         assert  items.size() == itemLabels.size();
         this.activity = activity;
         this.items = items;
-        this.adapter = SherlockUtils.newSherlockDefaultAdapter(activity, itemLabels);
+        this.adapter = AndroidSherlockUtils.newSherlockDefaultAdapter(activity, itemLabels);
     }
 
     @NotNull

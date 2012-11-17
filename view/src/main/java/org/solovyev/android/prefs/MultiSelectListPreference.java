@@ -148,12 +148,12 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 		@Override
 		public String formatValue(@Nullable List<String> value) throws IllegalArgumentException {
-			return CollectionTransformations.formatValue(value, separator, new StringMapper());
+			return CollectionTransformations.formatValue(value, separator, StringMapper.getInstance());
 		}
 
 		@Override
 		public List<String> parseValue(@Nullable String value) throws IllegalArgumentException {
-			return CollectionTransformations.split(value, separator);
+			return CollectionTransformations.split(value, separator, StringMapper.getInstance());
 		}
 	}
 

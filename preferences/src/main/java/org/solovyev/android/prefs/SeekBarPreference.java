@@ -26,7 +26,7 @@ public class SeekBarPreference extends AbstractDialogPreference<Integer> impleme
     private int max = 0;
 
     public SeekBarPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, "50", true, new NumberMapper<Integer>(Integer.class));
+        super(context, attrs, "50", true, NumberMapper.getMapper(Integer.class));
 
         max = attrs.getAttributeIntValue(androidns, "max", 100);
     }

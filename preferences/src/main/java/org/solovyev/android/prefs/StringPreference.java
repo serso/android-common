@@ -36,7 +36,7 @@ public class StringPreference<T> extends AbstractPreference<T> {
 
 	@NotNull
 	public static StringPreference<String> newInstance(@NotNull String id, @Nullable String defaultValue) {
-		return new StringPreference<String>(id, defaultValue, new StringMapper());
+		return new StringPreference<String>(id, defaultValue, StringMapper.getInstance());
 	}
 
 	@NotNull

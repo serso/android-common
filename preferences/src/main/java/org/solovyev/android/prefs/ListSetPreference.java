@@ -12,7 +12,7 @@ public class ListSetPreference<T> extends CollectionSetPreference<List<T>, T> {
 
 	@NotNull
 	public static ListSetPreference<String> newInstance(@NotNull String id, @NotNull List<String> defaultValue) {
-		return new ListSetPreference<String>(id, defaultValue, new StringMapper());
+		return new ListSetPreference<String>(id, defaultValue, StringMapper.getInstance());
 	}
 
 	@NotNull

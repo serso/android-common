@@ -6,13 +6,16 @@
 
 package org.solovyev.android;
 
-import android.app.Activity;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -36,12 +39,24 @@ import java.util.List;
 /**
  * This class contains static methods for working with some android classes
  */
+@SuppressWarnings("UnusedDeclaration")
 public final class AndroidUtils {
 
-	// not intended for instantiation
+    // not intended for instantiation
 	private AndroidUtils() {
 		throw new AssertionError();
 	}
+
+    /*
+    **********************************************************************
+    *
+    *                           CONSTANTS
+    *
+    **********************************************************************
+    */
+
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
 
     /*
     **********************************************************************
@@ -216,7 +231,7 @@ public final class AndroidUtils {
 	/**
 	 * Interface to process view. See AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor<android.view.View>) for more details
 	 *
-	 * @see AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor<android.view.View>)
+	 * @see AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor)
 	 * @param <V> view type
 	 */
 	public static interface ViewProcessor<V> {
@@ -300,5 +315,52 @@ public final class AndroidUtils {
         return debug;
     }
 
+    public static void showDialog(@NotNull DialogFragment dialogFragment,
+                                  @NotNull String fragmentTag,
+                                  @NotNull FragmentManager fm) {
+        final FragmentTransaction ft = fm.beginTransaction();
+
+        Fragment prev = fm.findFragmentByTag(fragmentTag);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        dialogFragment.show(ft, fragmentTag);
+    }
+
+    public static boolean isUiThread() {
+        return Looper.myLooper() == Looper.getMainLooper();
+    }
+
+    @NotNull
+    public static Parcelable.Creator<String> getStringParcelableCreator() {
+        return StringParcelableCreator.getInstance();
+    }
+
+    private static final class StringParcelableCreator implements Parcelable.Creator<String> {
+
+        @NotNull
+        private final static Parcelable.Creator<String> instance = new StringParcelableCreator();
+
+        @NotNull
+        public static Parcelable.Creator<String> getInstance() {
+            return instance;
+        }
+
+        private StringParcelableCreator() {
+        }
+
+        @Override
+        public String createFromParcel(Parcel in) {
+            return in.readString();
+        }
+
+        @Override
+        public String[] newArray(int size) {
+            return new String[size];
+        }
+    }
 }
 

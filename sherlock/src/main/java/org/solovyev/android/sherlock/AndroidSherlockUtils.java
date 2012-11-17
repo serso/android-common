@@ -1,7 +1,10 @@
 package org.solovyev.android.sherlock;
 
 import android.app.Activity;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.*;
 import com.actionbarsherlock.view.MenuInflater;
 import org.jetbrains.annotations.NotNull;
@@ -14,9 +17,9 @@ import java.util.List;
  * Date: 8/13/12
  * Time: 2:04 AM
  */
-public final class SherlockUtils {
+public final class AndroidSherlockUtils {
 
-    private SherlockUtils() {
+    private AndroidSherlockUtils() {
         throw new AssertionError("Not intended for instantiation!");
     }
 
@@ -86,5 +89,20 @@ public final class SherlockUtils {
         }
 
         throw new IllegalArgumentException(activity.getClass() + " is not supported!");
+    }
+
+    public static void showDialog(@NotNull DialogFragment dialogFragment,
+                                  @NotNull String fragmentTag,
+                                  @NotNull FragmentManager fm) {
+        final FragmentTransaction ft = fm.beginTransaction();
+
+        Fragment prev = fm.findFragmentByTag(fragmentTag);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        dialogFragment.show(ft, fragmentTag);
     }
 }
