@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.solovyev.android</groupId>
         <artifactId>android-common</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7-SNAPSHOT</version>
     </parent>
 
     <groupId>org.solovyev.android</groupId>
     <artifactId>android-common-samples-test</artifactId>
     <name>Android Common Library Samples (Test)</name>
-    <version>1.0.6</version>
+    <version>1.0.7-SNAPSHOT</version>
 
     <packaging>apk</packaging>
 
