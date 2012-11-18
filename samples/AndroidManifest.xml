@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="16" android:versionName="1.0.5-SNAPSHOT" package="org.solovyev.android.samples">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="16" android:versionName="1.0.5" package="org.solovyev.android.samples">
 
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="8"/>
 
@@ -25,31 +25,25 @@
         <activity android:name=".view.SamplesViewActivity"/>
         <activity android:name=".keyboard.SamplesKeyboardActivity"/>
 
-        <service android:name="org.solovyev.android.keyboard.LatinInputMethodService"
-                 android:label="Latin Input"
-                 android:permission="android.permission.BIND_INPUT_METHOD">
+        <service android:label="Latin Input" android:name="org.solovyev.android.keyboard.LatinInputMethodService" android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
-            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
-        <service android:name="org.solovyev.android.keyboard.CalculatorDragInputMethodService"
-                 android:label="Calculator Drag Input"
-                 android:permission="android.permission.BIND_INPUT_METHOD">
+        <service android:label="Calculator Drag Input" android:name="org.solovyev.android.keyboard.CalculatorDragInputMethodService" android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
-            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
-        <service android:name="org.solovyev.android.keyboard.LatinDragInputMethodService"
-                 android:label="Latin Drag Input"
-                 android:permission="android.permission.BIND_INPUT_METHOD">
+        <service android:label="Latin Drag Input" android:name="org.solovyev.android.keyboard.LatinDragInputMethodService" android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
-            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
     </application>

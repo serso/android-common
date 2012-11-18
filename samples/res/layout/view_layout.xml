@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:picker="http://schemas.android.com/apk/res-auto"
-              xmlns:drag="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+    xmlns:picker="http://schemas.android.com/apk/res-auto"
+    xmlns:drag="http://schemas.android.com/apk/res-auto"
+    a:layout_width="match_parent"
+    a:layout_height="match_parent"
+    a:orientation="vertical">
 
-    <org.solovyev.android.view.Picker android:id="@+id/vertical_picker"
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"/>
+    <LinearLayout
+        a:layout_width="match_parent"
+        a:layout_height="wrap_content"
+        a:orientation="horizontal">
 
-    <org.solovyev.android.view.Picker android:id="@+id/horizontal_picker"
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      picker:orientation="horizontal"/>
+        <org.solovyev.android.view.Picker
+            a:id="@+id/vertical_picker"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content" />
 
+        <org.solovyev.android.view.Picker
+            a:id="@+id/horizontal_picker"
+            a:layout_width="wrap_content"
+            a:layout_height="wrap_content"
+            picker:orientation="horizontal" />
+
+    </LinearLayout>
 
     <org.solovyev.android.view.drag.DirectionDragButton
-            android:id="@+id/drag_button"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_weight="0"
-            android:layout_gravity="center"
-            style="@style/metro_button_dark_style"
-            android:text="Try!"
-            drag:directionTextScale="0.7"
-            drag:directionTextColor="@color/metro_button_dark_text_color"
-            drag:textUp="Up"
-            drag:textDown="Down"
-            drag:textLeft="Left"
-            drag:textRight="Right"/>
+        a:id="@+id/drag_button"
+        a:layout_width="150dp"
+        a:layout_height="100dp"
+        a:layout_weight="0"
+        a:layout_gravity="center"
+        style="@style/metro_button_dark_style"
+        a:text="Try!"
+        drag:directionTextScale="0.7"
+        drag:directionTextColor="@color/metro_button_dark_text_color"
+        drag:textUp="Up"
+        drag:textDown="Down"
+        drag:textLeft="Left"
+        drag:textRight="Right" />
 
 </LinearLayout>

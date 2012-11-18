@@ -114,20 +114,7 @@ public class DragButton extends Button {
                             if (consumed) {
                                 if (localOnDragListener.isSuppressOnClickEvent()) {
                                     // prevent on click action
-                                    setPressed(false);
-
-                                    // sometimes setPressed(false); doesn't work so to prevent onClick action button disables
-                                    if (v instanceof Button) {
-                                        final Button button = (Button) v;
-
-                                        button.setEnabled(false);
-
-                                        uiHandler.postDelayed(new Runnable() {
-                                            public void run() {
-                                                button.setEnabled(true);
-                                            }
-                                        }, 200);
-                                    }
+                                    v.setPressed(false);
                                 }
                             }
                         }

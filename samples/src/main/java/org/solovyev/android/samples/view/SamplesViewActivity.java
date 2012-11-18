@@ -3,6 +3,7 @@ package org.solovyev.android.samples.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.samples.R;
@@ -39,10 +40,16 @@ public class SamplesViewActivity extends Activity implements Picker.OnChangedLis
 		dragButton.setOnDragListener(new SimpleOnDragListener(new SimpleOnDragListener.DragProcessor() {
 			@Override
 			public boolean processDragEvent(@NotNull DragDirection dragDirection, @NotNull DragButton dragButton, @NotNull Point2d startPoint2d, @NotNull MotionEvent motionEvent) {
-				Toast.makeText(SamplesViewActivity.this, "Drag button clicked: " + ((DirectionDragButton) dragButton).getText(dragDirection), Toast.LENGTH_SHORT).show();
+				Toast.makeText(SamplesViewActivity.this, "Button dragged: " + ((DirectionDragButton) dragButton).getText(dragDirection), Toast.LENGTH_SHORT).show();
 				return true;
 			}
 		}, SimpleOnDragListener.getDefaultPreferences(this)));
+        dragButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SamplesViewActivity.this, "Button clicked: " + dragButton.getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
 	}
 
 	@Override
