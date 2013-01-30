@@ -17,7 +17,7 @@ import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.android.view.VibratorContainer;
 import org.solovyev.android.view.drag.*;
 import org.solovyev.common.math.Point2d;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -230,7 +230,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     private boolean handleText(@NotNull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
-        if (!JStrings.isEmpty(text)) {
+        if (!Strings.isEmpty(text)) {
 
             if (withPreview) {
                 showPreview(view, text, dragDirection);

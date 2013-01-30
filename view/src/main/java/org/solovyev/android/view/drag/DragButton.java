@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.common.math.Point2d;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 public class DragButton extends Button {
 
@@ -135,7 +135,7 @@ public class DragButton extends Button {
     @Override
     protected void onDraw(Canvas canvas) {
         CharSequence text = getText();
-        if (!JStrings.isEmpty(text)) {
+        if (!Strings.isEmpty(text)) {
             super.onDraw(canvas);
         } else {
             if (!AndroidViewUtils.drawDrawables(canvas, this)) {

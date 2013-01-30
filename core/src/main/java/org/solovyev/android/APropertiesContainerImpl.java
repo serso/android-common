@@ -3,7 +3,7 @@ package org.solovyev.android;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.JObject;
-import org.solovyev.common.clone.JCloneables;
+import org.solovyev.common.clone.Cloneables;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class APropertiesContainerImpl extends JObject implements APropertiesCont
     public APropertiesContainerImpl clone() {
         final APropertiesContainerImpl clone = (APropertiesContainerImpl) super.clone();
 
-        clone.properties = JCloneables.cloneMap(this.properties);
+        clone.properties = Cloneables.cloneMap(this.properties);
 
         return clone;
     }

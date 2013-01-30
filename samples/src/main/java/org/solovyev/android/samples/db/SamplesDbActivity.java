@@ -16,7 +16,7 @@ import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.samples.SamplesApplication;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +75,7 @@ public class SamplesDbActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 final String itemName = addButtonName.getText().toString();
-                if (JStrings.isEmpty(itemName)) {
+                if (Strings.isEmpty(itemName)) {
                     Toast.makeText(SamplesDbActivity.this, getString(R.string.name_is_empty), Toast.LENGTH_SHORT).show();
                 } else {
                     addItem(itemName);
@@ -87,7 +87,7 @@ public class SamplesDbActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 final String itemName = removeItemName.getText().toString();
-                if (JStrings.isEmpty(itemName)) {
+                if (Strings.isEmpty(itemName)) {
                     Toast.makeText(SamplesDbActivity.this, getString(R.string.name_is_empty), Toast.LENGTH_SHORT).show();
                 } else {
                     removeItem(itemName);
@@ -132,7 +132,7 @@ public class SamplesDbActivity extends ListActivity {
                     result = new ArrayList<DbItemListItem>();
 
                     final List<DbItem> dbItems;
-                    if (JStrings.isEmpty(filter)) {
+                    if (Strings.isEmpty(filter)) {
                         dbItems = getDbItemService().getAllDbItems(context);
                     } else {
                         // NOTE: filter can be applied to Adapter. Usage here only in academical purposes

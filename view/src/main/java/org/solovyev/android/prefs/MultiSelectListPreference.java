@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.text.StringCollections;
 import org.solovyev.common.text.StringMapper;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 			final String attrValue = a.getString(attr);
 
-			if (!JStrings.isEmpty(attrValue)) {
+			if (!Strings.isEmpty(attrValue)) {
 				switch (attr) {
 					case R.styleable.MultiSelectListPreference_separator:
 						separator = attrValue;

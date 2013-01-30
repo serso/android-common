@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
 import org.solovyev.android.samples.R;
-import org.solovyev.common.JObjects;
+import org.solovyev.common.Objects;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -92,7 +92,7 @@ public class SamplesMenuActivity extends ListActivity {
 
         @Override
         public int compare(MenuListItem lhs, MenuListItem rhs) {
-            int result = JObjects.comparePreparedObjects(lhs.getSortOrder(), rhs.getSortOrder());
+            int result = Objects.compare(lhs.getSortOrder(), rhs.getSortOrder());
             if (sortAsc) {
                 return result;
             } else {

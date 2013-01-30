@@ -5,7 +5,7 @@ import android.os.Build;
 import android.text.ClipboardManager;
 import android.view.inputmethod.InputConnection;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 /**
  * User: serso
@@ -21,7 +21,7 @@ public final class AndroidKeyboardUtils {
     public static void copyWholeTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {
         String text = getTextFromInputConnection(ic);
 
-        if (!JStrings.isEmpty(text)) {
+        if (!Strings.isEmpty(text)) {
             final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboardManager.setText(text);
         }
@@ -47,7 +47,7 @@ public final class AndroidKeyboardUtils {
     static void copyTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             CharSequence text = ic.getSelectedText(0);
-            if (!JStrings.isEmpty(text)) {
+            if (!Strings.isEmpty(text)) {
                 final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 clipboardManager.setText(text);
             } else {

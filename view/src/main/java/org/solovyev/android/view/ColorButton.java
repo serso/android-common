@@ -35,7 +35,7 @@ import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.FontSizeAdjuster;
 import org.solovyev.common.math.Point2d;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 /**
  * NOTE: copied from com.android.calculator2.ColorButton
@@ -80,7 +80,7 @@ public class ColorButton extends Button {
 
 			final String attrValue = a.getString(attr);
 
-			if (!JStrings.isEmpty(attrValue)) {
+			if (!Strings.isEmpty(attrValue)) {
 				switch (attr) {
 					case R.styleable.DragButton_hTextPosition:
 						this.hTextPosition = Float.valueOf(attrValue);
@@ -169,7 +169,7 @@ public class ColorButton extends Button {
 		}
 
 		CharSequence text = getText();
-		if ( !JStrings.isEmpty(text) && textPosition != null) {
+		if ( !Strings.isEmpty(text) && textPosition != null) {
             if (showText) {
                 canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
             }

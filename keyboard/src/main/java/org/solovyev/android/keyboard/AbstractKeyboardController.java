@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.inputmethod.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.text.JStrings;
+import org.solovyev.common.text.Strings;
 
 /**
  * User: Solovyev_S
@@ -195,7 +195,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 
             if (isWordSeparator(primaryCode)) {
                 // Handle separator
-                if (!JStrings.isEmpty(getKeyboardInput().getTypedText())) {
+                if (!Strings.isEmpty(getKeyboardInput().getTypedText())) {
                     getKeyboardInput().commitTyped();
                 }
                 sendKey(primaryCode);
@@ -370,7 +370,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 		// If the current selection in the text view changes, we should
 		// clear whatever candidate text we have.
 		final CharSequence text = keyboardInput.getTypedText();
-		if (!JStrings.isEmpty(text) && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
+		if (!Strings.isEmpty(text) && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
 			keyboardInput.clearTypedText();
 			updateCandidates();
             keyboardInput.finishComposingText();
@@ -399,7 +399,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 				// composing text for the user, we want to modify that instead
 				// of let the application to the delete itself.
 				final CharSequence text = keyboardInput.getTypedText();
-				if (!JStrings.isEmpty(text)) {
+				if (!Strings.isEmpty(text)) {
 					onKey(Keyboard.KEYCODE_DELETE, null);
 					return true;
 				}
