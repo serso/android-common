@@ -6,7 +6,7 @@ import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,7 +100,7 @@ public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> ext
     protected void updateCandidates() {
         if (!getState().isCompletion()) {
             final CharSequence text = getKeyboardInput().getTypedText();
-            if (!StringUtils.isEmpty(text)) {
+            if (!JStrings.isEmpty(text)) {
                 final List<String> list = new ArrayList<String>();
                 list.add(text.toString());
                 setSuggestions(list, true, true);
@@ -133,7 +133,7 @@ public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> ext
             keyboardInput.commitCompletion(ci);
             keyboardView.clearCandidateView();
             updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
-        } else if (!StringUtils.isEmpty(text)) {
+        } else if (!JStrings.isEmpty(text)) {
             // If we were generating candidate suggestions for the current
             // text, we would commit one of them here.  But for this sample,
             // we will just commit the current text.

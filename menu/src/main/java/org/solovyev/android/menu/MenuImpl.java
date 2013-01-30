@@ -9,7 +9,7 @@ package org.solovyev.android.menu;
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
 	}
 
 	private MenuImpl(T... menuItems) {
-		this(CollectionsUtils.asList(menuItems));
+		this(JCollections.asList(menuItems));
 	}
 
 	private MenuImpl(@NotNull List<? extends T> menuItems) {

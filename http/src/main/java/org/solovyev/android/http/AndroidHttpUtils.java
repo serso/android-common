@@ -9,7 +9,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.collections.CollectionsUtils;
+import org.solovyev.common.collections.JCollections;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class AndroidHttpUtils {
     }
 
     public static <R> R execute(@NotNull HttpTransaction<R> httpTransaction) throws IOException {
-        return CollectionsUtils.getFirstListElement(execute(Arrays.asList(httpTransaction)));
+        return JCollections.getFirstListElement(execute(Arrays.asList(httpTransaction)));
     }
 
     @NotNull

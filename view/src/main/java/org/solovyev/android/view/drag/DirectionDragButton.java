@@ -17,9 +17,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.math.Point2d;
-import org.solovyev.common.text.CollectionTransformations;
+import org.solovyev.common.text.StringCollections;
+import org.solovyev.common.text.JStrings;
 import org.solovyev.common.text.NumberParser;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -202,7 +203,7 @@ public class DirectionDragButton extends DragButton {
 
 			float selfHeight = paint.ascent() + paint.descent();
 
-			basePaint.measureText(StringUtils.getNotEmpty(baseText, "|"));
+			basePaint.measureText(JStrings.getNotEmpty(baseText, "|"));
 
 			result.setY(h / 2 - selfHeight / 2);
 
@@ -218,7 +219,7 @@ public class DirectionDragButton extends DragButton {
 
 			float selfHeight = paint.ascent() + paint.descent();
 
-			basePaint.measureText(StringUtils.getNotEmpty(baseText, "|"));
+			basePaint.measureText(JStrings.getNotEmpty(baseText, "|"));
 
 			if (direction < 0) {
 				result.setY(h / 2 + h / 3 - selfHeight / 2);
@@ -267,7 +268,7 @@ public class DirectionDragButton extends DragButton {
                       @NotNull DirectionDragButtonDef directionDragButtonDef) {
         for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
             final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
-            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, StringUtils.getNotEmpty(directionText, "")));
+            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, JStrings.getNotEmpty(directionText, "")));
         }
 
         this.initialized = true;
@@ -278,7 +279,7 @@ public class DirectionDragButton extends DragButton {
 
         for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
             final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
-            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, StringUtils.getNotEmpty(directionText, "")));
+            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, JStrings.getNotEmpty(directionText, "")));
         }
     }
 
@@ -434,7 +435,7 @@ public class DirectionDragButton extends DragButton {
 
 	@NotNull
 	private Map<GuiDragDirection, Float> getDirectionTextScales() {
-		final List<Float> scales = CollectionTransformations.split(getDirectionTextScale(), ";", NumberParser.getParser(Float.class));
+		final List<Float> scales = StringCollections.split(getDirectionTextScale(), ";", NumberParser.of(Float.class));
 
 		final Map<GuiDragDirection, Float> result = new HashMap<GuiDragDirection, Float>();
 		for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {

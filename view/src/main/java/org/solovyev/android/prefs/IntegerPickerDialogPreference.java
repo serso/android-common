@@ -22,7 +22,7 @@ import org.solovyev.common.text.NumberIntervalMapper;
 public class IntegerPickerDialogPreference extends NumberPickerDialogPreference<Integer>{
 
     public IntegerPickerDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, new NumberIntervalMapper<Integer>(Integer.class));
+        super(context, attrs, NumberIntervalMapper.of(Integer.class));
     }
 
     @NotNull

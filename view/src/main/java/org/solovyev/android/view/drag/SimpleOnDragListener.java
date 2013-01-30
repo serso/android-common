@@ -15,7 +15,7 @@ import org.solovyev.android.view.R;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.IntervalImpl;
-import org.solovyev.common.math.MathUtils;
+import org.solovyev.common.math.Maths;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
@@ -55,10 +55,10 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 		// init end point
 		final Point2d endPoint = new Point2d(motionEvent.getX(), motionEvent.getY());
 
-		final float distance = MathUtils.getDistance(startPoint, endPoint);
+		final float distance = Maths.getDistance(startPoint, endPoint);
 
 		final MutableObject<Boolean> right = new MutableObject<Boolean>();
-		final double angle = Math.toDegrees(MathUtils.getAngle(startPoint, MathUtils.sum(startPoint, axis), endPoint, right));
+		final double angle = Math.toDegrees(Maths.getAngle(startPoint, Maths.sum(startPoint, axis), endPoint, right));
 		Log.d(String.valueOf(dragButton.getId()), "Angle: " + angle);
 		Log.d(String.valueOf(dragButton.getId()), "Is right?: " + right.getObject());
 
@@ -117,11 +117,11 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 		final Point2d endPoint = new Point2d(motionEvent.getX(), motionEvent.getY());
 
 		Log.d(String.valueOf(dragButton.getId()), "Start point: " + startPoint + ", End point: " + endPoint);
-		Log.d(String.valueOf(dragButton.getId()), "Distance: " + MathUtils.getDistance(startPoint, endPoint));
+		Log.d(String.valueOf(dragButton.getId()), "Distance: " + Maths.getDistance(startPoint, endPoint));
 		final MutableObject<Boolean> right = new MutableObject<Boolean>();
-		Log.d(String.valueOf(dragButton.getId()), "Angle: " + Math.toDegrees(MathUtils.getAngle(startPoint, MathUtils.sum(startPoint, axis), endPoint, right)));
+		Log.d(String.valueOf(dragButton.getId()), "Angle: " + Math.toDegrees(Maths.getAngle(startPoint, Maths.sum(startPoint, axis), endPoint, right)));
 		Log.d(String.valueOf(dragButton.getId()), "Is right angle? " + right);
-		Log.d(String.valueOf(dragButton.getId()), "Axis: " + axis + " Vector: " + MathUtils.subtract(endPoint, startPoint));
+		Log.d(String.valueOf(dragButton.getId()), "Axis: " + axis + " Vector: " + Maths.subtract(endPoint, startPoint));
 		Log.d(String.valueOf(dragButton.getId()), "Total time: " + (motionEvent.getEventTime() - motionEvent.getDownTime()) + " ms");
 	}
 
@@ -162,7 +162,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 	@NotNull
 	private static Preferences getPreferences0(@Nullable final SharedPreferences preferences, @NotNull Context context) {
 
-		final Mapper<Interval<Float>> mapper = new NumberIntervalMapper<Float>(Float.class);
+		final Mapper<Interval<Float>> mapper = NumberIntervalMapper.of(Float.class);
 
 		final Preferences result = new Preferences();
 

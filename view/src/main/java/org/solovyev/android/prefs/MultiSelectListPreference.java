@@ -11,9 +11,9 @@ import android.util.AttributeSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
-import org.solovyev.common.text.CollectionTransformations;
+import org.solovyev.common.text.StringCollections;
 import org.solovyev.common.text.StringMapper;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 			final String attrValue = a.getString(attr);
 
-			if (!StringUtils.isEmpty(attrValue)) {
+			if (!JStrings.isEmpty(attrValue)) {
 				switch (attr) {
 					case R.styleable.MultiSelectListPreference_separator:
 						separator = attrValue;
@@ -148,12 +148,12 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 		@Override
 		public String formatValue(@Nullable List<String> value) throws IllegalArgumentException {
-			return CollectionTransformations.formatValue(value, separator, StringMapper.getInstance());
+			return StringCollections.formatValue(value, separator, StringMapper.getInstance());
 		}
 
 		@Override
 		public List<String> parseValue(@Nullable String value) throws IllegalArgumentException {
-			return CollectionTransformations.split(value, separator, StringMapper.getInstance());
+			return StringCollections.split(value, separator, StringMapper.getInstance());
 		}
 	}
 
@@ -184,12 +184,12 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 		@Override
 		public String formatValue(@Nullable List<T> value) throws IllegalArgumentException {
-			return CollectionTransformations.formatValue(value, separator, nestedMapper);
+			return StringCollections.formatValue(value, separator, nestedMapper);
 		}
 
 		@Override
 		public List<T> parseValue(@Nullable String value) throws IllegalArgumentException {
-			return CollectionTransformations.split(value, separator, nestedMapper);
+			return StringCollections.split(value, separator, nestedMapper);
 		}
 	}
 }

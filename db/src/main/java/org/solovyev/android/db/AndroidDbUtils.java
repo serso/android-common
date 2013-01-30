@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -139,7 +139,7 @@ public final class AndroidDbUtils {
             result.append("?");
         } else if (objects.size() > 1) {
             result.append("?");
-            result.append(StringUtils.repeat(", ?", objects.size() - 1));
+            result.append(JStrings.repeat(", ?", objects.size() - 1));
         } else {
             result.append("'foo'");
         }

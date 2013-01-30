@@ -19,7 +19,7 @@ import org.solovyev.common.text.NumberIntervalMapper;
 public class FloatRangeSeekBarPreference extends RangeSeekBarPreference<Float> {
 
 	public FloatRangeSeekBarPreference(@NotNull Context context, AttributeSet attrs) {
-		super(context, attrs, new NumberIntervalMapper<Float>(Float.class));
+		super(context, attrs, NumberIntervalMapper.of(Float.class));
 	}
 
     @NotNull

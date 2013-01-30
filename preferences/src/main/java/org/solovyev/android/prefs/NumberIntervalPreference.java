@@ -19,7 +19,7 @@ public class NumberIntervalPreference<N extends Number & Comparable<N>> extends 
 
     public NumberIntervalPreference(@NotNull String key, @Nullable Interval<N> defaultValue, @NotNull Class<N> clazz) {
         super(key, defaultValue);
-        this.mapper = new NumberIntervalMapper<N>(clazz);
+        this.mapper = NumberIntervalMapper.of(clazz);
 
     }
 

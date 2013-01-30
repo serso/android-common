@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.common.history.HistoryHelper;
 import org.solovyev.common.history.SimpleHistoryHelper;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 /**
  * User: Solovyev_S
@@ -22,7 +22,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
 
     @NotNull
-    private final HistoryHelper<KeyboardInputHistoryState> history = new SimpleHistoryHelper<KeyboardInputHistoryState>(10);
+    private final HistoryHelper<KeyboardInputHistoryState> history = SimpleHistoryHelper.newInstance(10);
     {
         history.addState(new KeyboardInputHistoryState("", 0));
     }
@@ -67,7 +67,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
     private void commitText(@NotNull InputConnection ic, @Nullable CharSequence text, int position) {
         ic.commitText(text, position);
-        if (!StringUtils.isEmpty(text)) {
+        if (!JStrings.isEmpty(text)) {
             history.addState(new KeyboardInputHistoryState(AndroidKeyboardUtils.getTextFromInputConnection(ic), 0));
         }
     }
@@ -148,7 +148,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
     @Override
     public int translateKeyDown(int unicodeChar) {
-        if (!StringUtils.isEmpty(typedText)) {
+        if (!JStrings.isEmpty(typedText)) {
             char accent = typedText.charAt(typedText.length() - 1);
             int composed = KeyEvent.getDeadChar(accent, unicodeChar);
 
@@ -216,7 +216,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     public void handlePaste() {
         final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
         final CharSequence text = clipboardManager.getText();
-        if (!StringUtils.isEmpty(text)) {
+        if (!JStrings.isEmpty(text)) {
             commitText(text, 1);
         }
     }

@@ -35,7 +35,7 @@ public class DoublePickerDialogPreference extends NumberPickerDialogPreference<D
     }
 
     public DoublePickerDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, new NumberIntervalMapper<Double>(Double.class));
+        super(context, attrs, NumberIntervalMapper.of(Double.class));
     }
 
     private static class DoubleFormatter implements Formatter<Double> {

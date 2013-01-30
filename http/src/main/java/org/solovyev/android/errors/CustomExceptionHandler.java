@@ -10,7 +10,7 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.HTTP;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.text.StringUtils;
+import org.solovyev.common.text.JStrings;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 				}
 			}
 		} catch (Throwable anyException) {
-			Log.e(TAG, StringUtils.fromStackTrace(anyException.getStackTrace()));
+			Log.e(TAG, JStrings.fromStackTrace(anyException.getStackTrace()));
 		} finally {
 			defaultUEH.uncaughtException(t, e);
 		}
@@ -103,7 +103,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 			}
 		} catch (Exception e) {
 			// unable to save to the file - strange
-			Log.e(TAG, StringUtils.fromStackTrace(e.getStackTrace()));
+			Log.e(TAG, JStrings.fromStackTrace(e.getStackTrace()));
 		}
 	}
 
