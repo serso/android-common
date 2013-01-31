@@ -40,29 +40,29 @@ import org.solovyev.common.text.StringMapper;
  * This class provides methods for mapping real java objects to String and vice versa.
  * @param <T>
  */
-public class StringPreference<T> extends AbstractPreference<T> {
+public final class StringPreference<T> extends AbstractPreference<T> {
 
 	@NotNull
 	private final Mapper<T> mapper;
 
-	public StringPreference(@NotNull String id, @Nullable T defaultValue, @NotNull Mapper<T> mapper) {
-		super(id, defaultValue);
+	public StringPreference(@NotNull String key, @Nullable T defaultValue, @NotNull Mapper<T> mapper) {
+		super(key, defaultValue);
 		this.mapper = mapper;
 	}
 
 	@NotNull
-	public static StringPreference<String> newInstance(@NotNull String id, @Nullable String defaultValue) {
-		return new StringPreference<String>(id, defaultValue, StringMapper.getInstance());
+	public static StringPreference<String> of(@NotNull String key, @Nullable String defaultValue) {
+		return new StringPreference<String>(key, defaultValue, StringMapper.getInstance());
 	}
 
 	@NotNull
-	public static <T> StringPreference<T> newInstance(@NotNull String id, @Nullable String defaultValue, @NotNull Mapper<T> parser) {
-		return new StringPreference<T>(id, parser.parseValue(defaultValue), parser);
+	public static <T> StringPreference<T> ofTypedValue(@NotNull String key, @Nullable String defaultValue, @NotNull Mapper<T> mapper) {
+		return new StringPreference<T>(key, mapper.parseValue(defaultValue), mapper);
 	}
 
 	@NotNull
-	public static <T extends Enum> StringPreference<T> newInstance(@NotNull String id, @Nullable T defaultValue, @NotNull Class<T> enumType) {
-		return new StringPreference<T>(id, defaultValue, new EnumMapper<T>(enumType));
+	public static <T extends Enum> StringPreference<T> ofEnum(@NotNull String key, @Nullable T defaultValue, @NotNull Class<T> enumType) {
+		return new StringPreference<T>(key, defaultValue, EnumMapper.of(enumType));
 	}
 
 	@Override

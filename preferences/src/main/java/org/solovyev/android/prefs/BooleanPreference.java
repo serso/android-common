@@ -33,11 +33,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class BooleanPreference extends AbstractPreference<Boolean>{
 
-	public BooleanPreference(@NotNull String key, @Nullable Boolean defaultValue) {
+	private BooleanPreference(@NotNull String key, @Nullable Boolean defaultValue) {
 		super(key, defaultValue);
 	}
 
-	@Override
+    @NotNull
+    public static BooleanPreference of(@NotNull String key, @Nullable Boolean defaultValue) {
+        return new BooleanPreference(key, defaultValue);
+    }
+
+    @Override
 	protected Boolean getPersistedValue(@NotNull SharedPreferences preferences) {
 		return preferences.getBoolean(getKey(), false);
 	}

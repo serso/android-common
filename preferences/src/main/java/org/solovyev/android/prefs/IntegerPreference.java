@@ -33,11 +33,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class IntegerPreference extends AbstractPreference<Integer> {
 
-	public IntegerPreference(@NotNull String key, @Nullable Integer defaultValue) {
+	private IntegerPreference(@NotNull String key, @Nullable Integer defaultValue) {
 		super(key, defaultValue);
 	}
 
-	@Override
+    @NotNull
+    public static IntegerPreference of(@NotNull String key, @Nullable Integer defaultValue) {
+        return new IntegerPreference(key, defaultValue);
+    }
+
+    @Override
 	protected Integer getPersistedValue(@NotNull SharedPreferences preferences) {
 		return preferences.getInt(getKey(), -1);
 	}

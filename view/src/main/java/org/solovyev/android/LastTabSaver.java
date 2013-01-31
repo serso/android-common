@@ -60,7 +60,7 @@ public class LastTabSaver implements TabHost.OnTabChangeListener {
 	 */
 	public LastTabSaver(@NotNull TabActivity tabActivity, @NotNull String defaultTabId) {
 		this.tabActivity = tabActivity;
-		this.preference = StringPreference.newInstance(getPreferenceKey(), defaultTabId);
+		this.preference = StringPreference.of(getPreferenceKey(), defaultTabId);
 
 		final TabHost tabHost = tabActivity.getTabHost();
 		tabHost.setCurrentTabByTag(this.getLastOpenedTabId());

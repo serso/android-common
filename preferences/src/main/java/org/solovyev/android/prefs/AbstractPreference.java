@@ -38,15 +38,39 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class AbstractPreference<T> implements Preference<T> {
 
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
+
 	@NotNull
 	private final String key;
 
 	private final T defaultValue;
 
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
 	protected AbstractPreference(@NotNull String key, @Nullable T defaultValue) {
 		this.key = key;
 		this.defaultValue = defaultValue;
 	}
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
 	@NotNull
 	public String getKey() {
@@ -97,6 +121,25 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 	public boolean isSet(@NotNull SharedPreferences preferences) {
 		return preferences.contains(this.key);
 	}
+
+    @Override
+    public final boolean tryPutDefault(@NotNull SharedPreferences preferences) {
+        final boolean result;
+
+        if (isSet(preferences)) {
+            result = false;
+        } else {
+            putDefault(preferences);
+            result = true;
+        }
+
+        return result;
+    }
+
+    @Override
+    public final boolean isSameKey(@NotNull String key) {
+        return this.key.equals(key);
+    }
 
     /*
     **********************************************************************

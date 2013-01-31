@@ -54,6 +54,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-preferences</artifactId>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <scope>provided</scope>

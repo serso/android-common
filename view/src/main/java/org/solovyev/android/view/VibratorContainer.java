@@ -38,8 +38,8 @@ import org.solovyev.android.prefs.Preference;
 public class VibratorContainer implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static class Preferences {
-        public static final Preference<Boolean> hapticFeedbackEnabled = new BooleanPreference("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", false);
-        public static final Preference<Long> hapticFeedbackDuration = new NumberToStringPreference<Long>("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L, Long.class);
+        public static final Preference<Boolean> hapticFeedbackEnabled = BooleanPreference.of("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", false);
+        public static final Preference<Long> hapticFeedbackDuration = NumberToStringPreference.of("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L, Long.class);
     }
 
 	private final float vibrationTimeScale;

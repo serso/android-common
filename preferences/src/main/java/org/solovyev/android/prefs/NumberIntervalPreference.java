@@ -34,15 +34,20 @@ import org.solovyev.common.text.NumberIntervalMapper;
  * Date: 8/8/12
  * Time: 11:53 PM
  */
-public class NumberIntervalPreference<N extends Number & Comparable<N>> extends AbstractPreference<Interval<N>> {
+public final class NumberIntervalPreference<N extends Number & Comparable<N>> extends AbstractPreference<Interval<N>> {
 
     @NotNull
     private final Mapper<Interval<N>> mapper;
 
-    public NumberIntervalPreference(@NotNull String key, @Nullable Interval<N> defaultValue, @NotNull Class<N> clazz) {
+    private NumberIntervalPreference(@NotNull String key, @Nullable Interval<N> defaultValue, @NotNull Class<N> clazz) {
         super(key, defaultValue);
         this.mapper = NumberIntervalMapper.of(clazz);
 
+    }
+
+    @NotNull
+    public static <N extends Number & Comparable<N>> NumberIntervalPreference<N> of(@NotNull String key, @Nullable Interval<N> defaultValue, @NotNull Class<N> clazz) {
+        return new NumberIntervalPreference<N>(key, defaultValue, clazz);
     }
 
     @Override

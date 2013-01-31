@@ -25,6 +25,7 @@ package org.solovyev.android.samples;
 import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.solovyev.android.prefs.AbstractPreferenceTest;
 
 /**
  * User: serso
@@ -36,6 +37,7 @@ public class AllTests extends TestSuite {
     public static Test suite() {
         return new TestSuiteBuilder(AllTests.class)
                 .includeAllPackagesUnderHere()
+                .includePackages(AbstractPreferenceTest.class.getPackage().getName())
                 .build();
     }
 }

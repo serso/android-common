@@ -33,11 +33,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class LongPreference extends AbstractPreference<Long> {
 
-	public LongPreference(@NotNull String key, @Nullable Long defaultValue) {
+	private LongPreference(@NotNull String key, @Nullable Long defaultValue) {
 		super(key, defaultValue);
 	}
 
-	@Override
+    @NotNull
+    public static LongPreference of(@NotNull String key, @Nullable Long defaultValue) {
+        return new LongPreference(key, defaultValue);
+    }
+
+    @Override
 	protected Long getPersistedValue(@NotNull SharedPreferences preferences) {
 		return preferences.getLong(getKey(), -1);
 	}

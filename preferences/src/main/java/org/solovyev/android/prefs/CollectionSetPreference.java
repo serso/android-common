@@ -35,7 +35,7 @@ public abstract class CollectionSetPreference<C extends Collection<T>, T> extend
 	@NotNull
 	private final Mapper<T> mapper;
 
-	public CollectionSetPreference(@NotNull String id, @NotNull C defaultValue, @NotNull Mapper<T> mapper) {
+	protected CollectionSetPreference(@NotNull String id, @NotNull C defaultValue, @NotNull Mapper<T> mapper) {
 		super(id, defaultValue);
 		this.mapper = mapper;
 	}
@@ -58,7 +58,7 @@ public abstract class CollectionSetPreference<C extends Collection<T>, T> extend
 	@Override
 	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull C values) {
 
-		final Set<String> result = new HashSet<String>(10);
+		final Set<String> result = new HashSet<String>(values.size());
 		for (T value : values) {
 			result.add(mapper.formatValue(value));
 		}

@@ -89,4 +89,16 @@ public interface Preference<T> {
      */
 	boolean isSet(@NotNull SharedPreferences preferences);
 
+    /**
+     * Method applies default value to preference only if explicit value is not set
+     * @param preferences preferences container
+     * @return true if default values have been applied, false otherwise
+     */
+    boolean tryPutDefault(@NotNull SharedPreferences preferences);
+
+    /**
+     * @param key preference key
+     * @return true if current preferences has the same key
+     */
+    boolean isSameKey(@NotNull String key);
 }

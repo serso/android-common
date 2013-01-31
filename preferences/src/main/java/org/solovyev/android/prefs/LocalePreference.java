@@ -40,12 +40,22 @@ public class LocalePreference implements Preference<Locale> {
     @NotNull
     private final StringPreference<Locale> stringPreference;
 
-    public LocalePreference(@NotNull String id, @Nullable Locale defaultValue, @NotNull Mapper<Locale> localeMapper) {
+    private LocalePreference(@NotNull String id, @Nullable Locale defaultValue, @NotNull Mapper<Locale> localeMapper) {
         this.stringPreference = new StringPreference<Locale>(id, defaultValue, localeMapper);
     }
 
-    public LocalePreference(@NotNull String id, @Nullable Locale defaultValue) {
+    private LocalePreference(@NotNull String id, @Nullable Locale defaultValue) {
         this.stringPreference = new StringPreference<Locale>(id, defaultValue, DefaultLocaleMapper.getInstance());
+    }
+
+    @NotNull
+    public static LocalePreference of(@NotNull String id, @Nullable Locale defaultValue, @NotNull Mapper<Locale> localeMapper) {
+        return new LocalePreference(id, defaultValue, localeMapper);
+    }
+
+    @NotNull
+    public static LocalePreference of(@NotNull String id, @Nullable Locale defaultValue) {
+        return new LocalePreference(id, defaultValue);
     }
 
     @Override
@@ -83,6 +93,24 @@ public class LocalePreference implements Preference<Locale> {
     public boolean isSet(@NotNull SharedPreferences preferences) {
         return stringPreference.isSet(preferences);
     }
+
+    @Override
+    public boolean tryPutDefault(@NotNull SharedPreferences preferences) {
+        return stringPreference.tryPutDefault(preferences);
+    }
+
+    @Override
+    public boolean isSameKey(@NotNull String key) {
+        return stringPreference.isSameKey(key);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
 
     private static final class DefaultLocaleMapper implements Mapper<Locale> {
 

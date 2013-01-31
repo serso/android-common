@@ -27,33 +27,33 @@ import org.solovyev.common.text.EnumMapper;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.StringMapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ListSetPreference<T> extends CollectionSetPreference<List<T>, T> {
+public class HashSetPreference<T> extends CollectionSetPreference<Set<T>, T> {
+
+    private HashSetPreference(@NotNull String id, @NotNull Set<T> defaultValue, @NotNull Mapper<T> mapper) {
+        super(id, defaultValue, mapper);
+    }
 
 	@NotNull
-	public static ListSetPreference<String> newInstance(@NotNull String id, @NotNull List<String> defaultValue) {
-		return new ListSetPreference<String>(id, defaultValue, StringMapper.getInstance());
+	public static HashSetPreference<String> ofStrings(@NotNull String key, @NotNull Set<String> defaultValue) {
+		return new HashSetPreference<String>(key, defaultValue, StringMapper.getInstance());
 	}
 
 	@NotNull
-	public static <T> ListSetPreference<T> newInstance(@NotNull String id, @NotNull List<T> defaultValue, @NotNull Mapper<T> parser) {
-		return new ListSetPreference<T>(id, defaultValue, parser);
+	public static <T> HashSetPreference<T> ofTypedValues(@NotNull String key, @NotNull Set<T> defaultValue, @NotNull Mapper<T> parser) {
+		return new HashSetPreference<T>(key, defaultValue, parser);
 	}
 
 	@NotNull
-	public static <T extends Enum> ListSetPreference<T> newInstance(@NotNull String id, @NotNull List<T> defaultValue, @NotNull Class<T> enumType) {
-		return new ListSetPreference<T>(id, defaultValue, new EnumMapper<T>(enumType));
-	}
-
-	public ListSetPreference(@NotNull String id, @NotNull List<T> defaultValue, @NotNull Mapper<T> mapper) {
-		super(id, defaultValue, mapper);
+	public static <T extends Enum> HashSetPreference<T> ofEnums(@NotNull String id, @NotNull Set<T> defaultValue, @NotNull Class<T> enumType) {
+		return new HashSetPreference<T>(id, defaultValue, new EnumMapper<T>(enumType));
 	}
 
 	@NotNull
 	@Override
-	protected List<T> createCollection(int size) {
-		return new ArrayList<T>(size);
+	protected Set<T> createCollection(int size) {
+		return new HashSet<T>(size);
 	}
 }

@@ -38,10 +38,15 @@ public class NumberToStringPreference<N extends Number> extends AbstractPreferen
     @NotNull
     private final Mapper<N> mapper;
 
-    public NumberToStringPreference(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
+    private NumberToStringPreference(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
         super(key, defaultValue);
 
         this.mapper = NumberMapper.of(clazz);
+    }
+
+    @NotNull
+    public static <N extends Number> NumberToStringPreference<N> of(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
+        return new NumberToStringPreference<N>(key, defaultValue, clazz);
     }
 
     @Override

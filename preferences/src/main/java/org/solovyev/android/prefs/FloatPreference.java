@@ -33,11 +33,16 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FloatPreference extends AbstractPreference<Float> {
 
-	protected FloatPreference(@NotNull String key, @Nullable Float defaultValue) {
+	private FloatPreference(@NotNull String key, @Nullable Float defaultValue) {
 		super(key, defaultValue);
 	}
 
-	@Override
+    @NotNull
+    public static FloatPreference of(@NotNull String key, @Nullable Float defaultValue) {
+        return new FloatPreference(key, defaultValue);
+    }
+
+    @Override
 	protected Float getPersistedValue(@NotNull SharedPreferences preferences) {
 		return preferences.getFloat(getKey(), -1f);
 	}
