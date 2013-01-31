@@ -32,7 +32,9 @@ import org.jetbrains.annotations.NotNull;
  */
 
 /**
- * Menu for activity
+ * Menu for activity.
+ * Note: this class is parametrised by Menu and MenuItem for support menu from ActionSherlockBar library
+ *
  * @param <M> menu type (may differ from android.view.Menu, e.g. in Android Sherlock Library)
  * @param <MI> menu item type (may differ from android.view.MenuItem, e.g. in Android Sherlock Library)
  */

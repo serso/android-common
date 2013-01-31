@@ -31,9 +31,18 @@ import org.jetbrains.annotations.Nullable;
  * Date: 12/18/11
  * Time: 1:30 PM
  */
-public interface AMenu<T extends LabeledMenuItem<D>, D> {
-	@Nullable
-	T itemAt(int i);
+
+/**
+ * Context menu.
+ * Note: if you want android menu (menu for Activity or Fragment) use {@link ActivityMenu}
+ *
+ * @param <MI> menu item
+ * @param <D> data to be passed to menu item
+ */
+public interface AMenu<MI extends LabeledMenuItem<D>, D> {
+
+    @Nullable
+    MI itemAt(int i);
 
 	@NotNull
 	CharSequence[] getMenuCaptions(@NotNull final Context context);

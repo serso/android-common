@@ -38,8 +38,15 @@ import java.util.List;
  */
 
 /**
- * Activity menu implementation based on the list. Allows to use filter in order
+ * Activity menu implementation. Allows to use filter in order
  * to change displayed menu items.
+ *
+ * Currently there are two strategies of creating menu:
+ * 1. From Android resource file
+ * 2. Programatically
+ *
+ * In spite of the strategies menu can be filtered with {@link JPredicate}.
+ * Note: different strategies are used for creating menu with or without filter.
  */
 public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
 
@@ -77,6 +84,17 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     **********************************************************************
     */
 
+    /**
+     * Creates simple menu from list of menu items.
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     *
+     * @param menuItems menu items
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
                                                        @NotNull MenuHelper<M, MI> menuHelper) {
@@ -89,6 +107,21 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return result;
     }
 
+    /**
+     * Creates simple menu from list of menu items which can be filtered before displaying on screen.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     * Note 2: filter is applied only in {@link ListActivityMenu#onPrepareOptionsMenu(android.app.Activity, M)} method.
+     * {@link ListActivityMenu#onCreateOptionsMenu(android.app.Activity, M)} does nothing in that case.
+     * Note 3: filter should be persistent, i.e. should always return same values for same objects (as filtering might be called at any point in time)
+     *
+     * @param menuItems menu items
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
                                                        @NotNull MenuHelper<M, MI> menuHelper,
@@ -102,21 +135,64 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return result;
     }
 
+    /**
+     * Creates simple menu from enum class which can be filtered before displaying on screen.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     * Note 2: filter is applied only in {@link ListActivityMenu#onPrepareOptionsMenu(android.app.Activity, M)} method.
+     * {@link ListActivityMenu#onCreateOptionsMenu(android.app.Activity, M)} does nothing in that case.
+     * Note 3: filter should be persistent, i.e. should always return same values for same objects (as filtering might be called at any point in time)
+     *
+     * @param enumMenuClass enum class representing menu. Should implement {@link LabeledMenuItem} interface
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
-    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromList(
+    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromEnum(
             @NotNull Class<E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper,
             @NotNull JPredicate<AMenuItem<MI>> filter) {
         return fromList(toList(enumMenuClass), menuHelper, filter);
     }
 
+    /**
+     * Creates simple menu from enum class.
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     *
+     * @param enumMenuClass enum class representing menu. Should implement {@link LabeledMenuItem} interface
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
-    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromList(
+    public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromEnum(
             @NotNull Class<E> enumMenuClass,
             @NotNull MenuHelper<M, MI> menuHelper) {
         return fromList(toList(enumMenuClass), menuHelper);
     }
 
+    /**
+     * Creates simple menu from Android resource which can be filtered before displaying on screen.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     * Note 2: filter is applied only in {@link ListActivityMenu#onPrepareOptionsMenu(android.app.Activity, M)} method.
+     * {@link ListActivityMenu#onCreateOptionsMenu(android.app.Activity, M)} does nothing in that case.
+     * Note 3: filter should be persistent, i.e. should always return same values for same objects (as filtering might be called at any point in time)
+     *
+     * @param menuResId id of android resource menu
+     * @param menuItems menu items which are bound by identifiers to menu items from resource and handle clicks on them
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param filter applied filter
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
                                                          @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
@@ -131,6 +207,19 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return result;
     }
 
+    /**
+     * Creates simple menu from Android resource.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     *
+     * @param menuResId id of android resource menu
+     * @param menuItems menu items which are bound by identifiers to menu items from resource and handle clicks on them
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
                                                          @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
@@ -144,6 +233,23 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return result;
     }
 
+    /**
+     * Creates simple menu from Android resource which can be filtered before displaying on screen.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     * Note 2: filter is applied only in {@link ListActivityMenu#onPrepareOptionsMenu(android.app.Activity, M)} method.
+     * {@link ListActivityMenu#onCreateOptionsMenu(android.app.Activity, M)} does nothing in that case.
+     * Note 3: filter should be persistent, i.e. should always return same values for same objects (as filtering might be called at any point in time)
+     *
+     * @param menuResId id of android resource menu
+     * @param enumMenuClass enum class representing menu. Should implement {@link IdentifiableMenuItem} interface in order to handle clicks
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param filter applied filter
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
@@ -153,7 +259,19 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return fromResource(menuResId, toList(enumMenuClass), menuHelper, filter);
     }
 
-
+    /**
+     * Creates simple menu from Android resource.
+     *
+     * Note: you need to add method calls of {@link ActivityMenu} in your Activity or Fragment
+     *
+     * @param menuResId id of android resource menu
+     * @param enumMenuClass enum class representing menu. Should implement {@link IdentifiableMenuItem} interface in order to handle clicks
+     * @param menuHelper menu helper. See {@link AndroidMenuHelper}
+     * @param <M> menu type
+     * @param <MI> menu item type
+     *
+     * @return constructed menu
+     */
     @NotNull
     public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
