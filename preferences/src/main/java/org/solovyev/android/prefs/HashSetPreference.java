@@ -48,7 +48,7 @@ public class HashSetPreference<T> extends CollectionSetPreference<Set<T>, T> {
 
 	@NotNull
 	public static <T extends Enum> HashSetPreference<T> ofEnums(@NotNull String id, @NotNull Set<T> defaultValue, @NotNull Class<T> enumType) {
-		return new HashSetPreference<T>(id, defaultValue, new EnumMapper<T>(enumType));
+		return new HashSetPreference<T>(id, defaultValue, EnumMapper.of(enumType));
 	}
 
 	@NotNull

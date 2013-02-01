@@ -49,7 +49,7 @@ public abstract class AbstractEnumPickerDialogPreference<T extends Enum & Labele
                                                  @Nullable String defaultStringValue,
                                                  boolean needValueText,
                                                  @NotNull Class<T> enumClass) {
-        super(context, attrs, defaultStringValue, needValueText, new EnumMapper<T>(enumClass));
+        super(context, attrs, defaultStringValue, needValueText, EnumMapper.of(enumClass));
         this.enumClass = enumClass;
     }
 
