@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.view;
 
 import android.graphics.drawable.Drawable;
 import org.jetbrains.annotations.NotNull;

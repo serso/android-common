@@ -2,7 +2,7 @@ package org.solovyev.android.listeners;
 
 import android.os.Handler;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AndroidUtils;
+import org.solovyev.android.AThreads;
 import org.solovyev.common.listeners.AbstractJEventListener;
 import org.solovyev.common.listeners.JEvent;
 
@@ -18,7 +18,7 @@ public abstract class AbstractUiThreadJEventListener<E extends JEvent> extends A
 
     protected AbstractUiThreadJEventListener(@NotNull Class<E> eventType) {
         super(eventType);
-        uiHandler = AndroidUtils.newUiHandler();
+        uiHandler = AThreads.newUiHandler();
     }
 
     @Override

@@ -35,7 +35,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.AndroidUtils;
+import org.solovyev.android.AViews;
 
 /**
  * User: serso
@@ -152,7 +152,7 @@ public class AKeyboardButtonPreview {
 
         final int popupWidth = previewView.getMeasuredWidth();
         final int popupHeight = previewView.getMeasuredHeight();
-        final int popupMargin = AndroidUtils.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
+        final int popupMargin = AViews.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
 
         int popupX = previewParams.getX() - popupWidth / 2;
         int popupY = previewParams.getY() - popupHeight - popupMargin;

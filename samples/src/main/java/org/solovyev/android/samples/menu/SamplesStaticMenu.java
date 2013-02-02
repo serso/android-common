@@ -27,7 +27,7 @@ import android.content.Context;
 import android.view.MenuItem;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AndroidUtils;
+import org.solovyev.android.AActivities;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.samples.R;
 
@@ -52,7 +52,7 @@ public enum SamplesStaticMenu implements LabeledMenuItem<MenuItem>  {
     restart_activity(R.string.restart_activity) {
         @Override
         public void onClick(@NotNull MenuItem data, @NotNull Context context) {
-            AndroidUtils.restartActivity((Activity) context);
+            AActivities.restartActivity((Activity) context);
         }
     };
 
