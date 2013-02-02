@@ -51,7 +51,7 @@ import java.util.List;
 public class SamplesHttpActivity extends ListActivity {
 
     @NotNull
-    private RemoteFileService remoteFileService;
+    private ImageLoader imageLoader;
 
     @NotNull
     private static final String fetchDataUri = "http://se.solovyev.org/other/acl/data.txt";
@@ -120,11 +120,11 @@ public class SamplesHttpActivity extends ListActivity {
         setContentView(R.layout.http_layout);
 
         // should be one instance in application if several threads are working with it
-        this.remoteFileService = new HttpRemoteFileService(this, "acl-samples");
+        this.imageLoader = new ImageLoaderImpl(this, "acl-samples");
 
         final List<HttpListItem> listItems = new ArrayList<HttpListItem>();
         for (String imageName : imageNames) {
-            listItems.add(new HttpListItem(uriPrefix + imageName, this.remoteFileService));
+            listItems.add(new HttpListItem(uriPrefix + imageName, this.imageLoader));
         }
         ListItemArrayAdapter.createAndAttach(getListView(), this, listItems);
 

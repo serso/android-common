@@ -35,25 +35,25 @@ import java.util.List;
 * Date: 12/18/11
 * Time: 1:31 PM
 */
-public class MenuImpl<T extends LabeledMenuItem<D>, D> implements AMenu<T, D> {
+public class ListContextMenu<T extends LabeledMenuItem<D>, D> implements ContextMenu<T, D> {
 
 	private final List<? extends T> menuItems;
 
 	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(T... menuItems) {
-		return new MenuImpl<T, D>(menuItems);
+	public static <T extends LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(T... menuItems) {
+		return new ListContextMenu<T, D>(menuItems);
 	}
 
 	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull List<? extends T> menuItems) {
-		return new MenuImpl<T, D>(menuItems);
+	public static <T extends LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@NotNull List<? extends T> menuItems) {
+		return new ListContextMenu<T, D>(menuItems);
 	}
 
-	private MenuImpl(T... menuItems) {
+	private ListContextMenu(T... menuItems) {
 		this(Collections.asList(menuItems));
 	}
 
-	private MenuImpl(@NotNull List<? extends T> menuItems) {
+	private ListContextMenu(@NotNull List<? extends T> menuItems) {
 		this.menuItems = new ArrayList<T>(menuItems);
 	}
 

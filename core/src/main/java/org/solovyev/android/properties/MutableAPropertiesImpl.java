@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.properties;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,22 +37,22 @@ import java.util.Map;
  * Date: 8/21/12
  * Time: 2:18 PM
  */
-public class APropertiesContainerImpl extends JObject implements APropertiesContainer {
+public class MutableAPropertiesImpl extends JObject implements MutableAProperties {
 
     @NotNull
     private Map<String, AProperty> properties = new HashMap<String, AProperty>();
 
-    public APropertiesContainerImpl() {
+    public MutableAPropertiesImpl() {
     }
 
     @NotNull
-    public static APropertiesContainer copyOf(@NotNull APropertiesContainer propertiesContainer) {
+    public static MutableAProperties copyOf(@NotNull MutableAProperties propertiesContainer) {
         return propertiesContainer.clone();
     }
 
     @NotNull
-    public static APropertiesContainer newInstance(@NotNull Collection<AProperty> properties) {
-        final APropertiesContainerImpl result = new APropertiesContainerImpl();
+    public static MutableAProperties newInstance(@NotNull Collection<AProperty> properties) {
+        final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties) {
             result.setProperty(property);
@@ -62,8 +62,8 @@ public class APropertiesContainerImpl extends JObject implements APropertiesCont
     }
 
     @NotNull
-    public static APropertiesContainer newInstance(@NotNull Map<String, AProperty> properties) {
-        final APropertiesContainerImpl result = new APropertiesContainerImpl();
+    public static MutableAProperties newInstance(@NotNull Map<String, AProperty> properties) {
+        final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties.values()) {
             result.setProperty(property);
@@ -74,8 +74,8 @@ public class APropertiesContainerImpl extends JObject implements APropertiesCont
 
     @NotNull
     @Override
-    public APropertiesContainerImpl clone() {
-        final APropertiesContainerImpl clone = (APropertiesContainerImpl) super.clone();
+    public MutableAPropertiesImpl clone() {
+        final MutableAPropertiesImpl clone = (MutableAPropertiesImpl) super.clone();
 
         clone.properties = Cloneables.cloneMap(this.properties);
 
@@ -98,7 +98,7 @@ public class APropertiesContainerImpl extends JObject implements APropertiesCont
     }
 
     @Override
-    public void setPropertiesFrom(@NotNull APropertiesContainer that) {
+    public void setPropertiesFrom(@NotNull MutableAProperties that) {
         for (AProperty property : that.getProperties().values()) {
               setProperty(property);
         }

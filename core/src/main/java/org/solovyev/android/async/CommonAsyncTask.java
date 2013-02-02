@@ -66,7 +66,8 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
         super.onPreExecute();
         final Context context = getContext();
         if (context != null && mask) {
-            dialog = ProgressDialog.show(context, "Loading...", "Loading...", true, false);
+            final String loading = context.getString(org.solovyev.android.core.R.string.acl_loading);
+            dialog = ProgressDialog.show(context, loading, loading, true, false);
         }
     }
 

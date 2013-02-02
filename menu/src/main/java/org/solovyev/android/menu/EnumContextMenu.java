@@ -20,25 +20,38 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.menu;
 
-import android.os.Parcelable;
+import android.content.Context;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JCloneable;
-
-import java.io.Serializable;
 
 /**
  * User: serso
- * Date: 5/30/12
- * Time: 7:16 PM
+ * Date: 12/18/11
+ * Time: 1:34 PM
  */
-public interface AProperty extends Parcelable, JCloneable<AProperty>, Serializable {
+public class EnumContextMenu<T extends Enum & LabeledMenuItem<D>, D> implements ContextMenu<T, D> {
 
-    @NotNull
-    String getName();
+	@NotNull
+	private final ContextMenu<T, D> menu;
 
-    @Nullable
-    String getValue();
+	@NotNull
+	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@NotNull Class<T> enumClass) {
+		return new EnumContextMenu<T, D>(enumClass);
+	}
+
+	private EnumContextMenu(Class<T> enumClass) {
+		this.menu = ListContextMenu.newInstance(enumClass.getEnumConstants());
+	}
+
+	@Override
+	public T itemAt(int i) {
+		return this.menu.itemAt(i);
+	}
+
+	@NotNull
+	@Override
+	public CharSequence[] getMenuCaptions(@NotNull final Context context) {
+		return this.menu.getMenuCaptions(context);
+	}
 }

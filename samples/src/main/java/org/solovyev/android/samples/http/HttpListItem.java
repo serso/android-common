@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.http.RemoteFileService;
+import org.solovyev.android.http.ImageLoader;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.ViewFromLayoutBuilder;
@@ -43,11 +43,11 @@ public class HttpListItem implements ListItem {
     private String uri;
 
     @NotNull
-    private RemoteFileService remoteFileService;
+    private ImageLoader imageLoader;
 
-    public HttpListItem(@NotNull String uri, @NotNull RemoteFileService remoteFileService) {
+    public HttpListItem(@NotNull String uri, @NotNull ImageLoader imageLoader) {
         this.uri = uri;
-        this.remoteFileService = remoteFileService;
+        this.imageLoader = imageLoader;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class HttpListItem implements ListItem {
     private void fillView(@NotNull Context context, @NotNull View root) {
         final ImageView icon = (ImageView) root.findViewById(R.id.http_item_icon);
 
-        remoteFileService.loadImage(uri, icon, R.drawable.icon);
+        imageLoader.loadImage(uri, icon, R.drawable.icon);
 
         final TextView text = (TextView) root.findViewById(R.id.http_item_text);
         text.setText(uri);

@@ -25,7 +25,7 @@ package org.solovyev.android.db.properties;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AProperty;
+import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.DbExec;
 
 /**

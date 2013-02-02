@@ -20,41 +20,26 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.properties;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.JCloneable;
 
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * User: serso
- * Date: 8/21/12
- * Time: 2:18 PM
+ * Date: 8/22/12
+ * Time: 1:45 AM
  */
-public interface APropertiesContainer extends APropertiesProvider, JCloneable<APropertiesContainer>, Serializable {
-
-    @NotNull
-    @Override
-    APropertiesContainer clone();
-
-    @NotNull
-    AProperty setProperty(@NotNull String name, @NotNull String value);
-
-    void setProperty(@NotNull AProperty property);
+public interface AProperties {
 
     @Nullable
-    AProperty removeProperty(@NotNull String name);
+    AProperty getProperty(@NotNull String name);
 
-    void clearProperties();
+    @Nullable
+    String getPropertyValue(@NotNull String name);
 
     @NotNull
-    Map<String, AProperty> getProperties();
-
-    void setPropertiesFrom(@NotNull APropertiesContainer that);
-
-    void setPropertiesFrom(@NotNull Collection<AProperty> properties);
+    Collection<AProperty> getPropertiesCollection();
 }

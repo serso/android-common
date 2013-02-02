@@ -23,7 +23,7 @@
 package org.solovyev.android.db.properties;
 
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AProperty;
+import org.solovyev.android.properties.AProperty;
 
 import java.util.Collection;
 import java.util.List;

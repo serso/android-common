@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.captcha;
 
 import android.os.Parcel;
 import android.os.Parcelable;

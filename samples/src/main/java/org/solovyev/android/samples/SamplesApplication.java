@@ -26,6 +26,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
+import org.solovyev.android.App;
 import org.solovyev.android.db.CommonSQLiteOpenHelper;
 import org.solovyev.android.db.SQLiteOpenHelperConfiguration;
 import org.solovyev.android.samples.db.DbItemDao;
@@ -56,6 +57,8 @@ public class SamplesApplication extends Application implements Locator {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        App.init(this);
 
         sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
         dbItemService = new DbItemServiceImpl();

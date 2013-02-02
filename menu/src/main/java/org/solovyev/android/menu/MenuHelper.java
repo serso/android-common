@@ -30,6 +30,12 @@ import org.jetbrains.annotations.NotNull;
  * Date: 8/4/12
  * Time: 2:49 PM
  */
+
+/**
+ * Helper class to provide support for Android and Sherlock menu
+ * @param <M>
+ * @param <MI>
+ */
 public interface MenuHelper<M, MI> {
 
     int size(@NotNull M menu);

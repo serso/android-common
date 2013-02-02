@@ -28,10 +28,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.os.Build;
-import android.os.Looper;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.os.*;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -244,7 +241,16 @@ public final class AndroidUtils {
 		}
 	}
 
-	/**
+    @NotNull
+    public static Handler newUiHandler() {
+        if ( !AndroidUtils.isUiThread() ) {
+            throw new AssertionError("Must be called on UI thread!");
+        }
+
+        return new Handler();
+    }
+
+    /**
 	 * Interface to process view. See AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor<android.view.View>) for more details
 	 *
 	 * @see AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor)

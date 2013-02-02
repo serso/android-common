@@ -39,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <MI> menu item
  * @param <D> data to be passed to menu item
  */
-public interface AMenu<MI extends LabeledMenuItem<D>, D> {
+public interface ContextMenu<MI extends LabeledMenuItem<D>, D> {
 
     @Nullable
     MI itemAt(int i);

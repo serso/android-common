@@ -20,35 +20,25 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.properties;
 
+import android.os.Parcelable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.JCloneable;
+
+import java.io.Serializable;
 
 /**
  * User: serso
- * Date: 5/28/12
- * Time: 11:26 PM
+ * Date: 5/30/12
+ * Time: 7:16 PM
  */
-public class ResolvedCaptcha {
+public interface AProperty extends Parcelable, JCloneable<AProperty>, Serializable {
 
     @NotNull
-    private final String captchaSid;
+    String getName();
 
-    @NotNull
-    private final String captchaKey;
-
-    public ResolvedCaptcha(@NotNull String captchaSid, @NotNull String captchaKey) {
-        this.captchaSid = captchaSid;
-        this.captchaKey = captchaKey;
-    }
-
-    @NotNull
-    public String getCaptchaSid() {
-        return captchaSid;
-    }
-
-    @NotNull
-    public String getCaptchaKey() {
-        return captchaKey;
-    }
+    @Nullable
+    String getValue();
 }

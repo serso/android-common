@@ -189,6 +189,12 @@
                 <version>${common.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-listeners</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
             <!-- Other -->
 
             <dependency>

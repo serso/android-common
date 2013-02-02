@@ -24,8 +24,8 @@ package org.solovyev.android.db.properties;
 
 import android.database.Cursor;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AProperty;
-import org.solovyev.android.APropertyImpl;
+import org.solovyev.android.properties.AProperty;
+import org.solovyev.android.properties.APropertyImpl;
 import org.solovyev.common.Converter;
 
 /**

@@ -20,26 +20,35 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android.http;
+package org.solovyev.android.captcha;
 
-import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * User: serso
- * Date: 6/2/12
- * Time: 11:18 PM
+ * Date: 5/28/12
+ * Time: 11:26 PM
  */
-public interface RemoteFileService {
+public class ResolvedCaptcha {
 
-    void loadImage(@NotNull String uri,
-                   @NotNull ImageView imageView,
-                   @Nullable Integer defaultImageId);
+    @NotNull
+    private final String captchaSid;
 
-    void loadImage(@NotNull String uri,
-                   @NotNull OnImageLoadedListener imageLoadedListener);
+    @NotNull
+    private final String captchaKey;
 
-    void loadImage(@NotNull String uri);
+    public ResolvedCaptcha(@NotNull String captchaSid, @NotNull String captchaKey) {
+        this.captchaSid = captchaSid;
+        this.captchaKey = captchaKey;
+    }
 
+    @NotNull
+    public String getCaptchaSid() {
+        return captchaSid;
+    }
+
+    @NotNull
+    public String getCaptchaKey() {
+        return captchaKey;
+    }
 }

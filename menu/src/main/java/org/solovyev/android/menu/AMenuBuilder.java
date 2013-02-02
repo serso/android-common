@@ -44,19 +44,19 @@ public class AMenuBuilder<T extends LabeledMenuItem<D>, D>{
 	private final AlertDialog.Builder menuBuilder;
 
 	@NotNull
-	private final AMenu<T, D> menu;
+	private final ContextMenu<T, D> menu;
 
 	@NotNull
 	public static <T extends Enum & LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
-		return new AMenuBuilder<T, D>(context, EnumMenu.<T, D>newInstance(enumClass));
+		return new AMenuBuilder<T, D>(context, EnumContextMenu.<T, D>newInstance(enumClass));
 	}
 
 	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull AMenu<T, D> menu) {
+	public static <T extends LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
 		return new AMenuBuilder<T, D>(context, menu);
 	}
 
-	private AMenuBuilder(@NotNull Context context, @NotNull AMenu<T, D> menu) {
+	private AMenuBuilder(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
 		this.context = context;
 		this.menuBuilder = new AlertDialog.Builder(context);
 		this.menu = menu;

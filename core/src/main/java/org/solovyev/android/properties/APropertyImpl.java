@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.properties;
 
 import android.os.Parcel;
 import org.jetbrains.annotations.NotNull;
@@ -34,31 +34,75 @@ import org.solovyev.common.JObject;
  */
 public class APropertyImpl extends JObject implements AProperty {
 
+    /*
+    **********************************************************************
+    *
+    *                           STATIC
+    *
+    **********************************************************************
+    */
+
+    public static Creator<APropertyImpl> CREATOR = new Creator<APropertyImpl>() {
+        @Override
+        public APropertyImpl createFromParcel(@NotNull Parcel in) {
+            return fromParcel(in);
+        }
+
+        @Override
+        public APropertyImpl[] newArray(int size) {
+            return new APropertyImpl[size];
+        }
+    };
+
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
+
     @NotNull
     private String name;
 
     @Nullable
     private String value;
 
-    public APropertyImpl() {
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    private APropertyImpl() {
     }
 
-    private APropertyImpl(@NotNull String name, String value) {
+    private APropertyImpl(@NotNull String name, @Nullable String value) {
         this.name = name;
         this.value = value;
     }
 
     @NotNull
-    public static AProperty fromParcel(@NotNull Parcel in) {
+    private static APropertyImpl fromParcel(@NotNull Parcel in) {
         final String name = in.readString();
         final String value = in.readString();
-        return newInstance(name, value);
+        return (APropertyImpl)newInstance(name, value);
     }
 
     @NotNull
     public static AProperty newInstance(@NotNull String name, @Nullable String value) {
         return new APropertyImpl(name, value);
     }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
     @NotNull
     @Override

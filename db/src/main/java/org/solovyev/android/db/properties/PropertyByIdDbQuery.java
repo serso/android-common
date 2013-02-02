@@ -27,7 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.AProperty;
+import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.AbstractDbQuery;
 import org.solovyev.android.db.ListMapper;
 

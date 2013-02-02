@@ -20,38 +20,41 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android.menu;
+package org.solovyev.android.properties;
 
-import android.content.Context;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.solovyev.common.JCloneable;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * User: serso
- * Date: 12/18/11
- * Time: 1:34 PM
+ * Date: 8/21/12
+ * Time: 2:18 PM
  */
-public class EnumMenu<T extends Enum & LabeledMenuItem<D>, D> implements AMenu<T, D> {
+public interface MutableAProperties extends AProperties, JCloneable<MutableAProperties>, Serializable {
 
-	@NotNull
-	private final AMenu<T, D> menu;
+    @NotNull
+    @Override
+    MutableAProperties clone();
 
-	@NotNull
-	public static <T extends Enum & LabeledMenuItem<D>, D> AMenu<T, D> newInstance(@NotNull Class<T> enumClass) {
-		return new EnumMenu<T, D>(enumClass);
-	}
+    @NotNull
+    AProperty setProperty(@NotNull String name, @NotNull String value);
 
-	private EnumMenu(Class<T> enumClass) {
-		this.menu = MenuImpl.newInstance(enumClass.getEnumConstants());
-	}
+    void setProperty(@NotNull AProperty property);
 
-	@Override
-	public T itemAt(int i) {
-		return this.menu.itemAt(i);
-	}
+    @Nullable
+    AProperty removeProperty(@NotNull String name);
 
-	@NotNull
-	@Override
-	public CharSequence[] getMenuCaptions(@NotNull final Context context) {
-		return this.menu.getMenuCaptions(context);
-	}
+    void clearProperties();
+
+    @NotNull
+    Map<String, AProperty> getProperties();
+
+    void setPropertiesFrom(@NotNull MutableAProperties that);
+
+    void setPropertiesFrom(@NotNull Collection<AProperty> properties);
 }
