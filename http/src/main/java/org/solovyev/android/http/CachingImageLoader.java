@@ -30,6 +30,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.AThreads;
 import org.solovyev.android.FileCache;
 
 import java.io.*;
@@ -43,9 +44,9 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ImageLoaderImpl implements ImageLoader {
+public class CachingImageLoader implements ImageLoader {
 
-    private static final String TAG = ImageLoaderImpl.class.getSimpleName();
+    private static final String TAG = CachingImageLoader.class.getSimpleName();
 
     @NotNull
     private final MemoryCache memoryCache = new MemoryCache();
@@ -59,7 +60,7 @@ public class ImageLoaderImpl implements ImageLoader {
     @NotNull
     private final ExecutorService executorService;
 
-    public ImageLoaderImpl(@NotNull Context context, @NotNull String cacheFileName) {
+    public CachingImageLoader(@NotNull Context context, @NotNull String cacheFileName) {
         fileCache = new FileCache(context, cacheFileName);
         executorService = Executors.newFixedThreadPool(5);
     }
@@ -253,7 +254,7 @@ public class ImageLoaderImpl implements ImageLoader {
         @Nullable
         private final Integer defaultImageId;
 
-        private ImageViewImageLoadedListener(@NotNull ImageView imageView, Integer defaultImageId) {
+        private ImageViewImageLoadedListener(@NotNull ImageView imageView, @Nullable Integer defaultImageId) {
             this.imageView = imageView;
             this.defaultImageId = defaultImageId;
         }
@@ -261,7 +262,7 @@ public class ImageLoaderImpl implements ImageLoader {
         @Override
         public void onImageLoaded(@Nullable final Bitmap image) {
             final Activity activity = (Activity) imageView.getContext();
-            activity.runOnUiThread(new Runnable() {
+            AThreads.tryRunOnUiThread(activity, new Runnable() {
                 @Override
                 public void run() {
                     if (image != null) {
@@ -278,7 +279,7 @@ public class ImageLoaderImpl implements ImageLoader {
         @Override
         public void setDefaultImage() {
             final Activity activity = (Activity) imageView.getContext();
-            activity.runOnUiThread(new Runnable() {
+            AThreads.tryRunOnUiThread(activity, new Runnable() {
                 @Override
                 public void run() {
                     if (defaultImageId != null) {

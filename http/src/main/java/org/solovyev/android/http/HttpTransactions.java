@@ -43,9 +43,9 @@ import java.util.List;
  * Date: 5/28/12
  * Time: 2:17 PM
  */
-public class AndroidHttpUtils {
+public class HttpTransactions {
 
-    private AndroidHttpUtils() {
+    private HttpTransactions() {
         throw new AssertionError();
     }
 

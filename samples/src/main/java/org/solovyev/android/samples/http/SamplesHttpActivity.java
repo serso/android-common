@@ -120,7 +120,7 @@ public class SamplesHttpActivity extends ListActivity {
         setContentView(R.layout.http_layout);
 
         // should be one instance in application if several threads are working with it
-        this.imageLoader = new ImageLoaderImpl(this, "acl-samples");
+        this.imageLoader = new CachingImageLoader(this, "acl-samples");
 
         final List<HttpListItem> listItems = new ArrayList<HttpListItem>();
         for (String imageName : imageNames) {
@@ -139,7 +139,7 @@ public class SamplesHttpActivity extends ListActivity {
                     protected String doWork(@NotNull List<String> strings) {
                         assert strings.size() == 1;
                         try {
-                            return AndroidHttpUtils.execute(new FetchHttpData(strings.get(0)));
+                            return HttpTransactions.execute(new FetchHttpData(strings.get(0)));
                         } catch (IOException e) {
                             throwException(e);
                         }

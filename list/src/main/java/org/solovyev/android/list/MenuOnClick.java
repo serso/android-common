@@ -25,7 +25,7 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.menu.AMenuBuilder;
+import org.solovyev.android.menu.ContextMenuBuilder;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.menu.ListContextMenu;
 
@@ -48,7 +48,7 @@ public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
     @Override
     public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
         if (!menuItems.isEmpty()) {
-            AMenuBuilder.newInstance(context, ListContextMenu.newInstance(menuItems)).create(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
+            ContextMenuBuilder.newInstance(context, ListContextMenu.newInstance(menuItems)).create(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
         }
     }
 

@@ -35,7 +35,7 @@ import org.solovyev.android.DialogOnActivityDestroyedListener;
  * Date: 12/19/11
  * Time: 10:54 AM
  */
-public class AMenuBuilder<T extends LabeledMenuItem<D>, D>{
+public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D>{
 
 	@NotNull
 	private final Context context;
@@ -47,16 +47,16 @@ public class AMenuBuilder<T extends LabeledMenuItem<D>, D>{
 	private final ContextMenu<T, D> menu;
 
 	@NotNull
-	public static <T extends Enum & LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
-		return new AMenuBuilder<T, D>(context, EnumContextMenu.<T, D>newInstance(enumClass));
+	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
+		return new ContextMenuBuilder<T, D>(context, EnumContextMenu.<T, D>newInstance(enumClass));
 	}
 
 	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> AMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
-		return new AMenuBuilder<T, D>(context, menu);
+	public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
+		return new ContextMenuBuilder<T, D>(context, menu);
 	}
 
-	private AMenuBuilder(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
+	private ContextMenuBuilder(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
 		this.context = context;
 		this.menuBuilder = new AlertDialog.Builder(context);
 		this.menu = menu;

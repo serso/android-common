@@ -60,7 +60,7 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
         for (Input param : params) {
             final DownloadFileHttpTransaction<?> downloadFileHttpTransaction = new DownloadFileHttpTransaction<Object>(param.getUri(), param.getMethod(), param.getFileConverter());
             try {
-                result.add(AndroidHttpUtils.execute(downloadFileHttpTransaction));
+                result.add(HttpTransactions.execute(downloadFileHttpTransaction));
             } catch (IOException e) {
                 throw new RuntimeIoException(e);
             }
