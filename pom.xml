@@ -34,6 +34,7 @@
         <module>samples</module>
         <module>samples-test</module>
         <module>sherlock</module>
+        <module>security</module>
         <module>all</module>
     </modules>
     <name>Android Common Library</name>
@@ -150,6 +151,13 @@
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-security</artifactId>
+                <version>1.0.7-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-view</artifactId>
                 <version>1.0.7-SNAPSHOT</version>
                 <type>apklib</type>
@@ -192,6 +200,12 @@
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-listeners</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-security</artifactId>
                 <version>${common.version}</version>
             </dependency>
 

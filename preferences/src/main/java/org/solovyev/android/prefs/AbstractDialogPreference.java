@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.common.equals.EqualsUtils;
+import org.solovyev.common.Objects;
 import org.solovyev.common.text.Mapper;
 
 /**
@@ -209,7 +209,7 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
     private T getPersistedValue() {
         String persistedString = getPersistedString(defaultStringValue);
 
-        if (EqualsUtils.areEqual(persistedString, defaultStringValue)) {
+        if (Objects.areEqual(persistedString, defaultStringValue)) {
             return defaultValue;
         } else {
             return getMapper().parseValue(persistedString);

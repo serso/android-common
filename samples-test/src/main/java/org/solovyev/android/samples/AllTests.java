@@ -26,6 +26,7 @@ import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.solovyev.android.prefs.AbstractPreferenceTest;
+import org.solovyev.android.security.AndroidStringCiphererTest;
 
 /**
  * User: serso
@@ -37,6 +38,7 @@ public class AllTests extends TestSuite {
     public static Test suite() {
         return new TestSuiteBuilder(AllTests.class)
                 .includeAllPackagesUnderHere()
+                .includePackages(AndroidStringCiphererTest.class.getPackage().getName())
                 .includePackages(AbstractPreferenceTest.class.getPackage().getName())
                 .build();
     }

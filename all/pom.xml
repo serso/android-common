@@ -107,6 +107,12 @@
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-security</artifactId>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-view</artifactId>
             <type>apklib</type>
         </dependency>
