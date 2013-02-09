@@ -51,6 +51,13 @@
             <artifactId>common-security</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-security</artifactId>
+            <type>apklib</type>
+        </dependency>
+
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>

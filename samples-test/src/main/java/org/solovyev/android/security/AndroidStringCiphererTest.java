@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.solovyev.common.security.Cipherer;
 import org.solovyev.common.security.CiphererException;
 import org.solovyev.common.security.SecretKeyProvider;
+import org.solovyev.common.security.SecurityService;
 import org.solovyev.common.text.Strings;
 
 import javax.crypto.SecretKey;
@@ -14,10 +15,9 @@ import java.util.Random;
 public class AndroidStringCiphererTest extends AndroidTestCase {
 
     public void testEncryptDecrypt() throws Exception {
-        final SecretKeyProvider secretKeyProvider = ASecurity.newAndroidAesSecretKeyProvider();
-        final Cipherer<String, String> cipherer = ASecurity.newAndroidAesStringCipherer();
+        final SecurityService<String, String> securityService = ASecurity.newAndroidAesStringSecurityService();
 
-        doRandomCiphererTest(secretKeyProvider, cipherer);
+        doRandomCiphererTest(securityService.getSecretKeyProvider(), securityService.getCipherer());
     }
 
     protected static <E> void doRandomCiphererTest(SecretKeyProvider secretKeyProvider, Cipherer<E, String> cipherer) throws CiphererException {

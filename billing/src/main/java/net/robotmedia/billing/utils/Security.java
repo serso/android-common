@@ -98,9 +98,7 @@ public class Security {
 		synchronized (obfuscatorLock) {
 			if (obfuscator == null) {
 
-				final String installationId = Installation.id(context);
-				final String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-				final String password = installationId + deviceId + context.getPackageName();
+                final String password = generatePassword(context);
 
 				obfuscator = new AESObfuscator(salt, password);
 			}
@@ -109,7 +107,14 @@ public class Security {
 		}
 	}
 
-	/**
+    @NotNull
+    public static String generatePassword(@NotNull Context context) {
+        final String installationId = Installation.id(context);
+        final String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return installationId + deviceId + context.getPackageName();
+    }
+
+    /**
 	 * Method unobfuscates the string using AES algorithm with specified salt.
 	 *
 	 * @param context context

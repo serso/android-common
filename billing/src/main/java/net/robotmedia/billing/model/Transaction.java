@@ -25,10 +25,12 @@ package net.robotmedia.billing.model;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.solovyev.common.JCloneable;
+import org.solovyev.common.JObject;
 
 import java.util.Date;
 
-public class Transaction implements Cloneable {
+public class Transaction extends JObject implements JCloneable<Transaction> {
 
 	public static enum PurchaseState {
 		// Responses to requestPurchase or restoreTransactions.
@@ -111,21 +113,29 @@ public class Transaction implements Cloneable {
 		this.developerPayload = developerPayload;
 	}
 
-	@NotNull
-	public Transaction clone() {
-		Transaction clone;
+    @NotNull
+    public JSONObject toJson() throws JSONException {
+        final JSONObject json = new JSONObject();
 
-		try {
-			clone = (Transaction) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new AssertionError(e);
-		}
+        json.put(PURCHASE_STATE, this.purchaseState.id);
+        json.put(PRODUCT_ID, this.productId);
+        json.put(PACKAGE_NAME, this.packageName);
+        json.put(PURCHASE_TIME, this.purchaseTime);
+        json.put(ORDER_ID, this.orderId);
+        json.put(NOTIFICATION_ID, this.notificationId);
+        json.put(DEVELOPER_PAYLOAD, this.developerPayload);
 
-		return clone;
-	}
 
+        return json;
+    }
 
-	@Override
+    @NotNull
+    @Override
+    public Transaction clone() {
+        return (Transaction) super.clone();
+    }
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

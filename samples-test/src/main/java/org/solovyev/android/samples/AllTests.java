@@ -25,6 +25,7 @@ package org.solovyev.android.samples;
 import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import net.robotmedia.billing.utils.ObfuscateUtilsTest;
 import org.solovyev.android.prefs.AbstractPreferenceTest;
 import org.solovyev.android.security.AndroidStringCiphererTest;
 
@@ -38,6 +39,7 @@ public class AllTests extends TestSuite {
     public static Test suite() {
         return new TestSuiteBuilder(AllTests.class)
                 .includeAllPackagesUnderHere()
+                .includePackages(ObfuscateUtilsTest.class.getPackage().getName())
                 .includePackages(AndroidStringCiphererTest.class.getPackage().getName())
                 .includePackages(AbstractPreferenceTest.class.getPackage().getName())
                 .build();

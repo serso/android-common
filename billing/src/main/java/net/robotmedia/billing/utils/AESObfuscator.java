@@ -43,9 +43,9 @@ public class AESObfuscator {
 	private static final String KEYGEN_ALGORITHM = "PBEWITHSHAAND256BITAES-CBC-BC";
 	private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
-	private static final byte[] IV = {16, 74, 71, -80, 32, 101, -47, 72, 117, -14, 0, -29, 70, 65, -12, 74};
+    public static final byte[] IV = {16, 74, 71, -80, 32, 101, -47, 72, 117, -14, 0, -29, 70, 65, -12, 74};
 
-	private static final String header = "net.robotmedia.billing.utils.AESObfuscator-1|";
+	public static final String header = "net.robotmedia.billing.utils.AESObfuscator-1|";
 
 	@NotNull
 	private final Cipher encryptor;
@@ -82,7 +82,10 @@ public class AESObfuscator {
 
 		try {
 			// Header is appended as an integrity check
-			return Base64.encode(encryptor.doFinal((header + source).getBytes(UTF8)));
+            final String in = header + source;
+            byte[] inBytes = in.getBytes(UTF8);
+            byte[] encrypted = encryptor.doFinal(inBytes);
+            return Base64.encode(encrypted);
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("Invalid environment", e);
 		} catch (GeneralSecurityException e) {
