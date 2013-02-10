@@ -10,17 +10,19 @@ import org.solovyev.common.text.StringEncoder;
 public final class ASecurity extends Security {
 
     private static final String PROVIDER = "BC";
-    private static final String CIPHERER_ALGORITHM = "AES";
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
     private static final int PBE_ITERATION_COUNT = 1024;
     private static final String PBE_ALGORITHM = "PBEWITHSHAAND256BITAES-CBC-BC";
     private static final int PBE_KEY_LENGTH = 256;
-    private static final int PBE_SALT_LENGTH = 20;
+
     private static final String HASH_ALGORITHM = "SHA-512";
-    private static final int IV_LENGTH = 16;
+
     private static final int SALT_LENGTH = 20;
-    private static final String RANDOM_ALGORITHM = "SHA1PRNG";
+
+    // Initial vector
+    private static final int IV_LENGTH = 16;
+    private static final String IV_RANDOM_ALGORITHM = "SHA1PRNG";
 
     private ASecurity() {
         throw new AssertionError();
@@ -28,7 +30,7 @@ public final class ASecurity extends Security {
 
     @NotNull
     public static Cipherer<byte[], byte[]> newAndroidAesByteCipherer() {
-        return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newSha1PrngRandom(IV_LENGTH));
+        return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newRandom(IV_RANDOM_ALGORITHM, IV_LENGTH));
     }
 
     @NotNull
@@ -38,7 +40,7 @@ public final class ASecurity extends Security {
 
     @NotNull
     public static SecretKeyProvider newAndroidAesSecretKeyProvider() {
-        return Security.newPbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, CIPHERER_ALGORITHM, PROVIDER, PBE_KEY_LENGTH, PBE_SALT_LENGTH);
+        return Security.newPbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, CIPHERER_ALGORITHM_AES, PROVIDER, PBE_KEY_LENGTH, SALT_LENGTH);
     }
 
     @NotNull
@@ -53,7 +55,7 @@ public final class ASecurity extends Security {
 
     @NotNull
     public static SaltGenerator newAndroidSaltGenerator() {
-        return Security.newSaltGenerator(RANDOM_ALGORITHM, SALT_LENGTH);
+        return Security.newSaltGenerator(IV_RANDOM_ALGORITHM, SALT_LENGTH);
     }
 
     @NotNull
