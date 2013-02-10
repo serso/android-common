@@ -3,6 +3,7 @@ package net.robotmedia.billing.utils;
 import android.test.AndroidTestCase;
 import junit.framework.Assert;
 import net.robotmedia.billing.model.Transaction;
+import net.robotmedia.billing.security.BillingSecurity;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.common.security.SecurityService;
 import org.solovyev.common.text.Strings;
@@ -32,9 +33,9 @@ public class ObfuscateUtilsTest extends AndroidTestCase {
     }
 
     public void testObfuscation() throws Exception {
-        final SecurityService<Transaction, Transaction, byte[]> ss = ObfuscateUtils.getObfuscationSecurityService();
+        final SecurityService<Transaction, Transaction, byte[]> ss = BillingSecurity.getObfuscationSecurityService(AESObfuscator.IV, AESObfuscator.SECURITY_PREFIX);
 
-        final String password = Security.generatePassword(getContext());
+        final String password = BillingSecurity.generatePassword(getContext());
 
         final SecretKey sk = ss.getSecretKeyProvider().getSecretKey(password, salt);
 

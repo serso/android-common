@@ -23,8 +23,8 @@
 package net.robotmedia.billing.utils;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.util.Log;
+import net.robotmedia.billing.security.BillingSecurity;
 import net.robotmedia.billing.utils.AESObfuscator.ValidationException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -98,7 +98,7 @@ public class Security {
 		synchronized (obfuscatorLock) {
 			if (obfuscator == null) {
 
-                final String password = generatePassword(context);
+                final String password = BillingSecurity.generatePassword(context);
 
 				obfuscator = new AESObfuscator(salt, password);
 			}
@@ -106,13 +106,6 @@ public class Security {
 			return obfuscator;
 		}
 	}
-
-    @NotNull
-    public static String generatePassword(@NotNull Context context) {
-        final String installationId = Installation.id(context);
-        final String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        return installationId + deviceId + context.getPackageName();
-    }
 
     /**
 	 * Method unobfuscates the string using AES algorithm with specified salt.

@@ -30,8 +30,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import net.robotmedia.billing.model.Transaction;
 import net.robotmedia.billing.model.TransactionManager;
+import net.robotmedia.billing.security.BillingSecurity;
 import net.robotmedia.billing.security.DefaultSignatureValidator;
 import net.robotmedia.billing.security.ISignatureValidator;
+import net.robotmedia.billing.utils.AESObfuscator;
 import net.robotmedia.billing.utils.Compatibility;
 import net.robotmedia.billing.utils.ObfuscateUtils;
 import net.robotmedia.billing.utils.Security;
@@ -40,12 +42,28 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.solovyev.common.security.CiphererException;
+import org.solovyev.common.security.SecurityService;
 
+import javax.crypto.SecretKey;
 import java.util.*;
 
 public class BillingController {
 
-	public static enum BillingStatus {
+    @Nullable
+    private static SecretKey secretKey;
+
+    @NotNull
+    public static SecretKey getSecretKey(@NotNull Context context) throws CiphererException {
+        if ( secretKey == null ) {
+            final byte[] salt = getSalt();
+            final String password = BillingSecurity.generatePassword(context);
+            secretKey = getTransactionObfuscator().getSecretKeyProvider().getSecretKey(password, salt);
+        }
+        return secretKey;
+    }
+
+    public static enum BillingStatus {
 		UNKNOWN,
 		SUPPORTED,
 		UNSUPPORTED
@@ -102,6 +120,9 @@ public class BillingController {
 	// synchronized field
 	@NotNull
 	private static final Map<Long, IBillingRequest> pendingRequests = new HashMap<Long, IBillingRequest>();
+
+    @Nullable
+    private static SecurityService<Transaction, Transaction, byte[]> transactionObfuscator;
 
 	/**
 	 * Adds the specified notification to the set of manual confirmations of the
@@ -254,7 +275,7 @@ public class BillingController {
 		return transactions;
 	}
 
-	/**
+    /**
 	 * Lists all transactions of the specified item, stored locally.
 	 *
 	 * @param context   context
@@ -598,4 +619,12 @@ public class BillingController {
 	public static void unregisterObserver(@NotNull IBillingObserver billingObserver) {
 		BillingObserverRegistry.unregisterObserver(billingObserver);
 	}
+
+    @NotNull
+    static SecurityService<Transaction, Transaction, byte[]> getTransactionObfuscator() {
+        if ( transactionObfuscator == null ) {
+            transactionObfuscator = BillingSecurity.getObfuscationSecurityService(AESObfuscator.IV, AESObfuscator.SECURITY_PREFIX);
+        }
+        return transactionObfuscator;
+    }
 }

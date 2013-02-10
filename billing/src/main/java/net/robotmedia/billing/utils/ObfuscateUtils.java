@@ -26,12 +26,7 @@ import android.content.Context;
 import net.robotmedia.billing.model.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.security.ASecurity;
-import org.solovyev.common.security.*;
-import org.solovyev.common.text.StringDecoder;
-import org.solovyev.common.text.StringEncoder;
 
-import javax.crypto.SecretKey;
 import java.util.List;
 
 /**
@@ -83,85 +78,4 @@ public final class ObfuscateUtils {
 		t.developerPayload = Security.unobfuscate(context, salt, t.developerPayload);
 	}
 
-    @NotNull
-    public static Cipherer<Transaction, Transaction> getObfuscator() {
-        final Cipherer<byte[], byte[]> byteCipherer = ASecurity.newAndroidAesByteCipherer(AESObfuscator.IV);
-        final Cipherer<String, String> stringCipherer = TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), BillingBase64StringDecoder.getInstance(), BillingBase64StringEncoder.getInstance());
-        return TransactionObfuscator.newInstance(PrefixStringObfuscator.newInstance(AESObfuscator.header, stringCipherer));
-    }
-
-    @NotNull
-    public static SecurityService<Transaction, Transaction, byte[]> getObfuscationSecurityService() {
-        return ASecurity.newSecurityService(getObfuscator(), ASecurity.newAndroidAesSecretKeyProvider(), ASecurity.newAndroidSaltGenerator(), getHashProvider());
-    }
-
-    @NotNull
-    private static HashProvider<Transaction, byte[]> getHashProvider() {
-        final HashProvider<byte[], byte[]> hashProvider = ASecurity.newAndroidSha512ByteHashProvider();
-        return TypedHashProvider.newByteHashCodeInstance(hashProvider);
-    }
-
-    private static class TransactionObfuscator implements Cipherer<Transaction, Transaction> {
-
-        @NotNull
-        private Cipherer<String, String> stringCipherer;
-
-        private TransactionObfuscator(@NotNull Cipherer<String, String> stringCipherer) {
-            this.stringCipherer = stringCipherer;
-        }
-
-        @NotNull
-        private static Cipherer<Transaction, Transaction> newInstance(@NotNull Cipherer<String, String> stringCipherer) {
-            return new TransactionObfuscator(stringCipherer);
-        }
-
-        @NotNull
-        @Override
-        public Transaction encrypt(@NotNull SecretKey secret, @NotNull Transaction decrypted) throws CiphererException {
-            decrypted.orderId = stringCipherer.encrypt(secret, decrypted.orderId);
-            decrypted.productId = stringCipherer.encrypt(secret, decrypted.productId);
-            decrypted.developerPayload = stringCipherer.encrypt(secret, decrypted.developerPayload);
-            return decrypted;
-        }
-
-        @NotNull
-        @Override
-        public Transaction decrypt(@NotNull SecretKey secret, @NotNull Transaction encrypted) throws CiphererException {
-            encrypted.orderId = stringCipherer.decrypt(secret, encrypted.orderId);
-            encrypted.productId = stringCipherer.decrypt(secret, encrypted.productId);
-            encrypted.developerPayload = stringCipherer.decrypt(secret, encrypted.developerPayload);
-            return encrypted;
-        }
-    }
-
-    private static class PrefixStringObfuscator implements Cipherer<String, String> {
-
-        @NotNull
-        private final String prefix;
-
-        @NotNull
-        private Cipherer<String, String> stringCipherer;
-
-        private PrefixStringObfuscator(@NotNull String prefix, @NotNull Cipherer<String, String> stringCipherer) {
-            this.prefix = prefix;
-            this.stringCipherer = stringCipherer;
-        }
-
-        private static PrefixStringObfuscator newInstance(@NotNull String prefix, @NotNull Cipherer<String, String> stringCipherer) {
-            return new PrefixStringObfuscator(prefix, stringCipherer);
-        }
-
-        @NotNull
-        @Override
-        public String encrypt(@NotNull SecretKey secret, @NotNull String decrypted) throws CiphererException {
-            return stringCipherer.encrypt(secret, prefix + decrypted);
-        }
-
-        @NotNull
-        @Override
-        public String decrypt(@NotNull SecretKey secret, @NotNull String encrypted) throws CiphererException {
-            String decrypted = stringCipherer.decrypt(secret, encrypted);
-            return decrypted.substring(prefix.length(), decrypted.length());
-        }
-    }
 }

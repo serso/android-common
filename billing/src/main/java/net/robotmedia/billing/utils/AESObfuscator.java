@@ -45,7 +45,7 @@ public class AESObfuscator {
 
     public static final byte[] IV = {16, 74, 71, -80, 32, 101, -47, 72, 117, -14, 0, -29, 70, 65, -12, 74};
 
-	public static final String header = "net.robotmedia.billing.utils.AESObfuscator-1|";
+	public static final String SECURITY_PREFIX = "net.robotmedia.billing.utils.AESObfuscator-1|";
 
 	@NotNull
 	private final Cipher encryptor;
@@ -82,7 +82,7 @@ public class AESObfuscator {
 
 		try {
 			// Header is appended as an integrity check
-            final String in = header + source;
+            final String in = SECURITY_PREFIX + source;
             byte[] inBytes = in.getBytes(UTF8);
             byte[] encrypted = encryptor.doFinal(inBytes);
             return Base64.encode(encrypted);
@@ -104,12 +104,12 @@ public class AESObfuscator {
             String result = new String(decryptedBytes, UTF8);
 			// Check for presence of header. This serves as a final integrity check, for cases
 			// where the block size is correct during decryption.
-			int headerIndex = result.indexOf(header);
+			int headerIndex = result.indexOf(SECURITY_PREFIX);
 			if (headerIndex != 0) {
 				throw new ValidationException("Header not found (invalid data or key)" + ":" +
 						obfuscated);
 			}
-			return result.substring(header.length(), result.length());
+			return result.substring(SECURITY_PREFIX.length(), result.length());
 		} catch (Base64DecoderException e) {
 			throw new ValidationException(e.getMessage() + ":" + obfuscated);
 		} catch (IllegalBlockSizeException e) {
