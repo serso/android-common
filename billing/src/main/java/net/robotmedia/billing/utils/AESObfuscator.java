@@ -99,7 +99,9 @@ public class AESObfuscator {
 		}
 
 		try {
-			String result = new String(decryptor.doFinal(Base64.decode(obfuscated)), UTF8);
+            final byte[] encryptedBytes = Base64.decode(obfuscated);
+            final byte[] decryptedBytes = decryptor.doFinal(encryptedBytes);
+            String result = new String(decryptedBytes, UTF8);
 			// Check for presence of header. This serves as a final integrity check, for cases
 			// where the block size is correct during decryption.
 			int headerIndex = result.indexOf(header);

@@ -4,7 +4,6 @@ import android.test.AndroidTestCase;
 import junit.framework.Assert;
 import net.robotmedia.billing.model.Transaction;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.common.Bytes;
 import org.solovyev.common.security.SecurityService;
 import org.solovyev.common.text.Strings;
 
@@ -33,36 +32,40 @@ public class ObfuscateUtilsTest extends AndroidTestCase {
     }
 
     public void testObfuscation() throws Exception {
-        final SecurityService<Transaction, Transaction> ss = ObfuscateUtils.getObfuscationSecurityService();
+        final SecurityService<Transaction, Transaction, byte[]> ss = ObfuscateUtils.getObfuscationSecurityService();
 
         final String password = Security.generatePassword(getContext());
-        final String hexSalt = Bytes.toHex(salt);
 
-        final SecretKey sk = ss.getSecretKeyProvider().getSecretKey(password, hexSalt);
+        final SecretKey sk = ss.getSecretKeyProvider().getSecretKey(password, salt);
 
         for (int i = 0; i < TEST_COUNT; i++) {
             final Transaction transaction = generateRandomTransaction();
 
+            // old obfuscation
             final Transaction obfuscated1 = transaction.clone();
             ObfuscateUtils.obfuscate(getContext(), obfuscated1, salt);
-
             Assert.assertFalse(transaction.equals(obfuscated1));
 
-            final Transaction unobfuscated1 = obfuscated1.clone();
-            ObfuscateUtils.unobfuscate(getContext(), unobfuscated1, salt);
-            Assert.assertEquals(transaction, unobfuscated1);
+            // old deobfuscation
+            final Transaction deobfuscated1 = obfuscated1.clone();
+            ObfuscateUtils.unobfuscate(getContext(), deobfuscated1, salt);
+            Assert.assertEquals(transaction, deobfuscated1);
 
+            // new deobfuscation on old obfuscation
+            Transaction deobfuscated2 = obfuscated1.clone();
+            deobfuscated2 = ss.getCipherer().decrypt(sk, deobfuscated2);
+            Assert.assertEquals(transaction, deobfuscated2);
+
+            // new obfuscation
             Transaction obfuscated2 = transaction.clone();
             obfuscated2 = ss.getCipherer().encrypt(sk, obfuscated2);
+            Assert.assertFalse(transaction.equals(obfuscated2));
+            Assert.assertEquals(obfuscated1, obfuscated2);
 
-            final Transaction unobfuscated3 = obfuscated2.clone();
-            ObfuscateUtils.unobfuscate(getContext(), unobfuscated3, salt);
-            Assert.assertEquals(transaction, unobfuscated3);
-
-            Transaction unobfuscated2 = obfuscated1.clone();
-            unobfuscated2 = ss.getCipherer().decrypt(sk, unobfuscated2);
-            Assert.assertEquals(unobfuscated1, unobfuscated2);
-
+            // new deobfuscation on new obfuscation
+            Transaction deobfuscated3 = obfuscated2.clone();
+            deobfuscated3 = ss.getCipherer().decrypt(sk, deobfuscated3);
+            Assert.assertEquals(transaction, deobfuscated3);
         }
 
 

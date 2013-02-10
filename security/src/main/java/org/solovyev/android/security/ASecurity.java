@@ -42,8 +42,13 @@ public final class ASecurity extends Security {
     }
 
     @NotNull
-    public static HashProvider newAndroidSha512HashProvider() {
-        return Security.newMessageDigestHashProvider(HASH_ALGORITHM, PROVIDER);
+    public static HashProvider<byte[], byte[]> newAndroidSha512ByteHashProvider() {
+        return Security.newHashProvider(HASH_ALGORITHM, PROVIDER);
+    }
+
+    @NotNull
+    public static HashProvider<String, String> newAndroidSha512StringHashProvider() {
+        return TypedHashProvider.newInstance(newAndroidSha512ByteHashProvider(), StringDecoder.getInstance(), ABase64StringEncoder.getInstance());
     }
 
     @NotNull
@@ -62,17 +67,17 @@ public final class ASecurity extends Security {
     }
 
     @NotNull
-    public static SecurityService<byte[], byte[]> newAndroidAesByteSecurityService() {
-        return newSecurityService(newAndroidAesByteCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512HashProvider());
+    public static SecurityService<byte[], byte[], byte[]> newAndroidAesByteSecurityService() {
+        return newSecurityService(newAndroidAesByteCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512ByteHashProvider());
     }
 
     @NotNull
-    public static SecurityService<byte[], byte[]> newAndroidAesByteSecurityService(final byte[] initialVector) {
-        return newSecurityService(newAndroidAesByteCipherer(initialVector), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512HashProvider());
+    public static SecurityService<byte[], byte[], byte[]> newAndroidAesByteSecurityService(final byte[] initialVector) {
+        return newSecurityService(newAndroidAesByteCipherer(initialVector), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512ByteHashProvider());
     }
 
     @NotNull
-    public static SecurityService<String, String> newAndroidAesStringSecurityService() {
-        return newSecurityService(newAndroidAesStringCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512HashProvider());
+    public static SecurityService<String, String, String> newAndroidAesStringSecurityService() {
+        return newSecurityService(newAndroidAesStringCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512StringHashProvider());
     }
 }

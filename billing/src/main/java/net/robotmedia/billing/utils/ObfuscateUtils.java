@@ -27,10 +27,7 @@ import net.robotmedia.billing.model.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.security.ASecurity;
-import org.solovyev.common.security.Cipherer;
-import org.solovyev.common.security.CiphererException;
-import org.solovyev.common.security.SecurityService;
-import org.solovyev.common.security.TypedCipherer;
+import org.solovyev.common.security.*;
 import org.solovyev.common.text.StringDecoder;
 import org.solovyev.common.text.StringEncoder;
 
@@ -94,8 +91,14 @@ public final class ObfuscateUtils {
     }
 
     @NotNull
-    public static SecurityService<Transaction, Transaction> getObfuscationSecurityService() {
-        return ASecurity.newSecurityService(getObfuscator(), ASecurity.newAndroidAesSecretKeyProvider(), ASecurity.newAndroidSaltGenerator(), ASecurity.newAndroidSha512HashProvider());
+    public static SecurityService<Transaction, Transaction, byte[]> getObfuscationSecurityService() {
+        return ASecurity.newSecurityService(getObfuscator(), ASecurity.newAndroidAesSecretKeyProvider(), ASecurity.newAndroidSaltGenerator(), getHashProvider());
+    }
+
+    @NotNull
+    private static HashProvider<Transaction, byte[]> getHashProvider() {
+        final HashProvider<byte[], byte[]> hashProvider = ASecurity.newAndroidSha512ByteHashProvider();
+        return TypedHashProvider.newByteHashCodeInstance(hashProvider);
     }
 
     private static class TransactionObfuscator implements Cipherer<Transaction, Transaction> {
