@@ -88,20 +88,29 @@ public final class AndroidUtils {
 
 
     /**
-	 * Method returns version of current application.
-	 *
-	 * @param context	context
-	 * @param appPackageName full name of the package of an app, 'com.example.app' for example.
-	 * @return version number we are currently in, if for some reason package info was not found and thus versionCode could not be found -1 is returned
-	 */
-	public static int getAppVersionCode(@NotNull Context context, @NotNull String appPackageName) {
-		try {
-			return context.getPackageManager().getPackageInfo(appPackageName, 0).versionCode;
-		} catch (PackageManager.NameNotFoundException e) {
-			// App not installed!
-		}
-		return -1;
-	}
+     * Method returns version of application identified by it's package name.
+     *
+     * @param context        context
+     * @param appPackageName full name of the package of an app, 'com.example.app' for example.
+     * @return version number of application
+     * @throws PackageManager.NameNotFoundException
+     *          if application is not found
+     */
+    public static int getAppVersionCode(@NotNull Context context, @NotNull String appPackageName) throws PackageManager.NameNotFoundException {
+        return context.getPackageManager().getPackageInfo(appPackageName, 0).versionCode;
+    }
+
+    /**
+     * @param context context
+     * @return version number of current application
+     */
+    public static int getAppVersionCode(@NotNull Context context) {
+        try {
+            return getAppVersionCode(context, context.getPackageName());
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new AssertionError(e);
+        }
+    }
 
     public static boolean isPhoneModel(@NotNull APhoneModel phoneModel) {
         final String model = Build.MODEL;

@@ -25,7 +25,6 @@ package org.solovyev.android.http;
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.RuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.common.Converter;
 
@@ -62,7 +61,7 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
             try {
                 result.add(HttpTransactions.execute(downloadFileHttpTransaction));
             } catch (IOException e) {
-                throw new RuntimeIoException(e);
+                throw new HttpRuntimeIoException(e);
             }
         }
 
@@ -79,7 +78,7 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
 
     @Override
     protected void onFailurePostExecute(@NotNull Exception e) {
-        if ( e instanceof RuntimeIoException ) {
+        if ( e instanceof HttpRuntimeIoException) {
             // no internet connection => ok
         } else {
             defaultOnFailurePostExecute(e);

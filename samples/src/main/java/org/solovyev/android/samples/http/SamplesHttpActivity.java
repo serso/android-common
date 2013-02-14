@@ -34,7 +34,7 @@ import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.AThreads;
-import org.solovyev.android.RuntimeIoException;
+import org.solovyev.android.http.HttpRuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.http.*;
 import org.solovyev.android.list.ListItemArrayAdapter;
@@ -187,7 +187,7 @@ public class SamplesHttpActivity extends ListActivity {
             try {
                 return EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
-                throw new RuntimeIoException(e);
+                throw new HttpRuntimeIoException(e);
             }
         }
 

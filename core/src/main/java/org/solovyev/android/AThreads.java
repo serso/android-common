@@ -40,6 +40,14 @@ public final class AThreads {
         throw new AssertionError();
     }
 
+    /**
+     * Method tries to run <var>runnable</var> on UI thread. Run can be failed if:
+     * 1. Specified <var>activity</var> is null
+     * 2. Specified <var>activity</var> is finishing
+     *
+     * @param activity activity bound to runnable
+     * @param runnable runnable to bve executed
+     */
     public static void tryRunOnUiThread(@Nullable final Activity activity, @NotNull final Runnable runnable) {
         if (activity != null && !activity.isFinishing()) {
             if (isUiThread()) {
@@ -58,10 +66,17 @@ public final class AThreads {
         }
     }
 
+    /**
+     *
+     * @return true if current thread is UI thread (= main application thread)
+     */
     public static boolean isUiThread() {
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
+    /**
+     * @return new instance of {@link Handler} which runs on UI thread
+     */
     @NotNull
     public static Handler newUiHandler() {
         if ( !isUiThread() ) {

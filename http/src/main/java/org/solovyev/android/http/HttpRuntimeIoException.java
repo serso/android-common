@@ -20,7 +20,7 @@
  * Site:  http://se.solovyev.org
  */
 
-package org.solovyev.android;
+package org.solovyev.android.http;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,9 +31,9 @@ import java.io.IOException;
  * Date: 5/28/12
  * Time: 11:41 PM
  */
-public class RuntimeIoException extends RuntimeException {
+public class HttpRuntimeIoException extends RuntimeException {
 
-    public RuntimeIoException(@NotNull IOException e) {
+    public HttpRuntimeIoException(@NotNull IOException e) {
         super(e);
     }
 }

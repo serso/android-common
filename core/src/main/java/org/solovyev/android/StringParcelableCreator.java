@@ -41,7 +41,7 @@ final class StringParcelableCreator implements Parcelable.Creator<String> {
         return instance;
     }
 
-    StringParcelableCreator() {
+    private StringParcelableCreator() {
     }
 
     @Override
