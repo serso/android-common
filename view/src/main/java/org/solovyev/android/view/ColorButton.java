@@ -34,7 +34,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.FontSizeAdjuster;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
 
@@ -109,10 +108,6 @@ public class ColorButton extends Button {
 		getPaint().setColor(getCurrentTextColor());
 
 		animationStart = -1;
-
-		if (context instanceof FontSizeAdjuster) {
-			((FontSizeAdjuster) context).adjustFontSize(this);
-		}
 	}
 
 
