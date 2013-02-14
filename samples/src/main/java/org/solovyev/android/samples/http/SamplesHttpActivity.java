@@ -22,6 +22,7 @@
 
 package org.solovyev.android.samples.http;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.AThreads;
 import org.solovyev.android.RuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.http.*;
@@ -148,13 +150,25 @@ public class SamplesHttpActivity extends ListActivity {
                     }
 
                     @Override
-                    protected void onSuccessPostExecute(@Nullable String result) {
-                        Toast.makeText(getContext(), getString(R.string.http_response) + " " + result, Toast.LENGTH_SHORT).show();
+                    protected void onSuccessPostExecute(@Nullable final String result) {
+                        final Activity activity = (Activity) getContext();
+                        AThreads.tryRunOnUiThread(activity, new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(activity, getString(R.string.http_response) + " " + result, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
-                    protected void onFailurePostExecute(@NotNull Exception e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    protected void onFailurePostExecute(@NotNull final Exception e) {
+                        final Activity activity = (Activity) getContext();
+                        AThreads.tryRunOnUiThread(activity, new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }.execute(fetchDataUri);
             }

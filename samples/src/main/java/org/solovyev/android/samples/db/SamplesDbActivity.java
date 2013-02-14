@@ -33,11 +33,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.solovyev.android.App;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.list.ListItemArrayAdapter;
+import org.solovyev.android.samples.Locator;
 import org.solovyev.android.samples.R;
-import org.solovyev.android.samples.SamplesApplication;
 import org.solovyev.common.text.Strings;
 
 import java.util.ArrayList;
@@ -260,6 +261,6 @@ public class SamplesDbActivity extends ListActivity {
 
     @NotNull
     private DbItemService getDbItemService() {
-        return SamplesApplication.getLocator().getDbItemService();
+        return ((Locator) App.getLocator()).getDbItemService();
     }
 }

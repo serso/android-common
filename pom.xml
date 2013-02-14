@@ -20,6 +20,7 @@
     <version>1.0.7-SNAPSHOT</version>
 
     <modules>
+        <module>app</module>
         <module>preferences</module>
         <module>db</module>
         <module>menu</module>
@@ -166,6 +167,13 @@
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-keyboard</artifactId>
+                <version>1.0.7-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-app</artifactId>
                 <version>1.0.7-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>

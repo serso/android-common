@@ -24,7 +24,8 @@ package org.solovyev.android.samples.db;
 
 import android.content.Context;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.samples.SamplesApplication;
+import org.solovyev.android.App;
+import org.solovyev.android.samples.Locator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,6 +110,6 @@ public class DbItemServiceImpl implements DbItemService {
 
     @NotNull
     private DbItemDao getDbItemDao() {
-        return SamplesApplication.getLocator().getDbItemDao();
+        return ((Locator) App.getLocator()).getDbItemDao();
     }
 }

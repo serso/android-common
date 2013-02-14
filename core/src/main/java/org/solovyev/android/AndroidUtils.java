@@ -38,8 +38,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * User: serso
@@ -105,27 +103,10 @@ public final class AndroidUtils {
 		return -1;
 	}
 
-    public static enum PhoneModel {
-		samsung_galaxy_s_2(	"GT-I9100","GT-I9100M","GT-I9100P","GT-I9100T","SC-02C","SHW-M250K","SHW-M250L","SHW-M250S"),
-		samsung_galaxy_s("GT-I9000","GT-I9000B","GT-I9000M","GT-I9000T","SGH-I897");
-
-		@NotNull
-		private final List<String> values;
-
-		PhoneModel(@NotNull String... values) {
-			this.values = Arrays.asList(values);
-		}
-
-		@NotNull
-		public List<String> getValues() {
-			return values;
-		}
-	}
-
-	public static boolean isPhoneModel( @NotNull PhoneModel phoneModel ) {
-		final String model = Build.MODEL;
-		return model != null && phoneModel.getValues().contains(model);
-	}
+    public static boolean isPhoneModel(@NotNull APhoneModel phoneModel) {
+        final String model = Build.MODEL;
+        return model != null && phoneModel.getModels().contains(model);
+    }
 
     public static boolean isDebuggable(@NotNull Context context) {
         if (debug == null) {

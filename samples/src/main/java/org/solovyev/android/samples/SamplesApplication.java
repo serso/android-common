@@ -42,16 +42,12 @@ import org.solovyev.android.samples.db.SqliteDbItemDao;
 public class SamplesApplication extends Application implements Locator {
 
     @NotNull
-    private static SamplesApplication instance;
-
-    @NotNull
     private CommonSQLiteOpenHelper sqliteOpenHelper;
 
     @NotNull
     private DbItemService dbItemService;
 
     public SamplesApplication() {
-        instance = this;
     }
 
     @Override
@@ -62,11 +58,6 @@ public class SamplesApplication extends Application implements Locator {
 
         sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
         dbItemService = new DbItemServiceImpl();
-    }
-
-    @NotNull
-    public static Locator getLocator() {
-        return instance;
     }
 
     @NotNull
