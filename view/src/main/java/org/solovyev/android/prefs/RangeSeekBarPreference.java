@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.view.AbstractRangeSeekBar;
 import org.solovyev.android.view.NumberRangeSeekBar;
 import org.solovyev.common.interval.Interval;
-import org.solovyev.common.interval.IntervalImpl;
+import org.solovyev.common.interval.Intervals;
 import org.solovyev.common.text.NumberIntervalMapper;
 
 /**
@@ -97,7 +97,7 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 
 	@Override
 	public void rangeSeekBarValuesChanged(T minValue, T maxValue, boolean changeComplete) {
-		final Interval<T> interval = IntervalImpl.newClosed(minValue, maxValue);
+		final Interval<T> interval = Intervals.newClosedInterval(minValue, maxValue);
 
 		if (changeComplete) {
 			persistValue(interval);

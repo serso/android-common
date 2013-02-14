@@ -27,7 +27,7 @@ import org.solovyev.android.prefs.NumberToStringPreference;
 import org.solovyev.android.prefs.Preference;
 import org.solovyev.android.prefs.StringPreference;
 import org.solovyev.common.interval.Interval;
-import org.solovyev.common.interval.IntervalImpl;
+import org.solovyev.common.interval.Intervals;
 
 /**
  * User: serso
@@ -39,6 +39,6 @@ public final class Preferences {
     public static final Preference<Integer> integerNumber = NumberToStringPreference.of("integer_number", 5, Integer.class);
     public static final Preference<Double> doubleNumber = NumberToStringPreference.of("double_number", 0.5d, Double.class);
     public static final Preference<Country> country = StringPreference.ofEnum("country", Country.russia, Country.class);
-    public static final Preference<Interval<Float>> floatInterval = NumberIntervalPreference.of("float_interval", IntervalImpl.newClosed(35f, 350f), Float.class);
-    public static final Preference<Interval<Integer>> integerInterval = NumberIntervalPreference.of("integer_interval", IntervalImpl.newClosed(35, 350), Integer.class);
+    public static final Preference<Interval<Float>> floatInterval = NumberIntervalPreference.of("float_interval", Intervals.newClosedInterval(35f, 350f), Float.class);
+    public static final Preference<Interval<Integer>> integerInterval = NumberIntervalPreference.of("integer_interval", Intervals.newClosedInterval(35, 350), Integer.class);
 }

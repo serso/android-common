@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.interval.Interval;
-import org.solovyev.common.interval.IntervalImpl;
+import org.solovyev.common.interval.Intervals;
 import org.solovyev.common.math.Maths;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Mapper;
@@ -254,7 +254,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
                     newRightLimit = rightLimit;
                 }
 
-                return IntervalImpl.newClosed(newLeftLimit, newRightLimit);
+                return Intervals.newClosedInterval(newLeftLimit, newRightLimit);
             }
         }
 
