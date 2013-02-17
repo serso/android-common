@@ -40,11 +40,11 @@ import org.jetbrains.annotations.Nullable;
  * Date: 2/2/13
  * Time: 5:57 PM
  */
-public final class AViews {
+public final class Views {
 
     private static final boolean AT_LEAST_API_5 = Build.VERSION.SDK_INT >= 5;
 
-    private AViews() {
+    private Views() {
         throw new AssertionError();
     }
 
@@ -226,7 +226,7 @@ public final class AViews {
      * Interface to process view. See AndroidUtils#processViews(android.view.View, AndroidUtils.ViewProcessor<android.view.View>) for more details
      *
      * @param <V> view type
-     * @see AViews#processViews(android.view.View, ViewProcessor
+     * @see Views#processViews(android.view.View, ViewProcessor
      */
     public static interface ViewProcessor<V> {
         void process(@NotNull V view);

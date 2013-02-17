@@ -112,7 +112,7 @@ public final class AndroidUtils {
         }
     }
 
-    public static boolean isPhoneModel(@NotNull APhoneModel phoneModel) {
+    public static boolean isPhoneModel(@NotNull DeviceModel phoneModel) {
         final String model = Build.MODEL;
         return model != null && phoneModel.getModels().contains(model);
     }

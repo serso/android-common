@@ -32,9 +32,9 @@ import org.jetbrains.annotations.NotNull;
  * Date: 2/2/13
  * Time: 6:03 PM
  */
-public final class AActivities {
+public final class Activities {
 
-    private AActivities() {
+    private Activities() {
         throw new AssertionError();
     }
 

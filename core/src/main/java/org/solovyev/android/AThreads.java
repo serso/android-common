@@ -79,10 +79,6 @@ public final class AThreads {
      */
     @NotNull
     public static Handler newUiHandler() {
-        if ( !isUiThread() ) {
-            throw new AssertionError("Must be called on UI thread!");
-        }
-
-        return new Handler();
+        return new Handler(Looper.getMainLooper());
     }
 }

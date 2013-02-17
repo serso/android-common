@@ -33,6 +33,11 @@ import java.util.concurrent.TimeUnit;
  * Date: 12/1/12
  * Time: 4:11 PM
  */
+
+/**
+ * Implementation of {@link org.solovyev.common.threads.DelayedExecutor} for Android OS,
+ * execution is done on the main application thread (UI thread)
+ */
 public class UiThreadExecutor implements DelayedExecutor {
 
     @NotNull

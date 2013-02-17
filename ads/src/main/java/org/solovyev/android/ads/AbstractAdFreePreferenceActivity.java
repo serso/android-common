@@ -39,7 +39,7 @@ import net.robotmedia.billing.helper.DefaultBillingObserver;
 import net.robotmedia.billing.model.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.AActivities;
+import org.solovyev.android.Activities;
 
 /**
  * User: serso
@@ -181,7 +181,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
                     case PURCHASED:
                         adFreePreference.setEnabled(false);
                         // restart activity to disable ads
-                        AActivities.restartActivity(this);
+                        Activities.restartActivity(this);
                         break;
                     case CANCELLED:
                         adFreePreference.setEnabled(true);

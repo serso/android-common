@@ -34,7 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.AViews;
+import org.solovyev.android.Views;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.android.view.VibratorContainer;
 import org.solovyev.android.view.drag.*;
@@ -128,7 +128,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
         final Context context = this.getContext();
-        int buttonMargin = AViews.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
+        int buttonMargin = Views.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
 
         if (layoutInflater == null) {
             layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
