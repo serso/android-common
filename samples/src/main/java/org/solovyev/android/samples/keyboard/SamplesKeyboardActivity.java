@@ -37,6 +37,6 @@ public class SamplesKeyboardActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.keyboard_layout);
+        setContentView(R.layout.acl_keyboard_layout);
     }
 }

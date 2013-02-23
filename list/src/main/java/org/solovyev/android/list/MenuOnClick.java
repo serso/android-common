@@ -23,6 +23,7 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 import org.jetbrains.annotations.NotNull;
 import org.solovyev.android.menu.ContextMenuBuilder;
@@ -41,14 +42,19 @@ public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
     @NotNull
     private final List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems;
 
-    protected MenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems) {
+    @NotNull
+    private final String menuName;
+
+    protected MenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems,
+                          @NotNull String menuName) {
         this.menuItems = menuItems;
+        this.menuName = menuName;
     }
 
     @Override
     public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
         if (!menuItems.isEmpty()) {
-            ContextMenuBuilder.newInstance(context, ListContextMenu.newInstance(menuItems)).create(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
+            ContextMenuBuilder.newInstance((FragmentActivity)context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
         }
     }
 

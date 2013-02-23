@@ -86,7 +86,7 @@ public class SamplesDbActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.db_layout);
+        setContentView(R.layout.acl_db_layout);
 
         addItemButton = (Button) findViewById(R.id.add_item_button);
         addButtonName = (EditText) findViewById(R.id.add_item_name);
@@ -137,7 +137,7 @@ public class SamplesDbActivity extends ListActivity {
             }
         });
 
-        ListItemArrayAdapter.createAndAttach(getListView(), this, new ArrayList<ListItem>());
+        ListItemArrayAdapter.createAndAttach(this, new ArrayList<ListItem>());
 
         loadDbItems(null);
     }

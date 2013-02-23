@@ -44,6 +44,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-core</artifactId>
             <type>apklib</type>

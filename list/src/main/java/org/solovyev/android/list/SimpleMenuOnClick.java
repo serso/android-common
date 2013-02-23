@@ -38,8 +38,10 @@ public class SimpleMenuOnClick<T> extends MenuOnClick<T> {
     @NotNull
     private final T data;
 
-    public SimpleMenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> labeledMenuItems, @NotNull T data) {
-        super(labeledMenuItems);
+    public SimpleMenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> labeledMenuItems,
+                             @NotNull T data,
+                             @NotNull String menuName) {
+        super(labeledMenuItems, menuName);
         this.data = data;
     }
 

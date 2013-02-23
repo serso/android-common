@@ -141,7 +141,7 @@ public final class Views {
             if (deviceModel.contains("M1") || deviceModel.contains("MIONE") || deviceModel.contains("MI-ONE")) {
                 // Xiaomi Phone MiOne => do not allow to center and wrap tabs
                 result = false;
-                Log.i(AndroidUtils.class.getName(), "Device model doesn't support center and wrap of tabs: " + Build.MODEL);
+                Log.i(Android.class.getName(), "Device model doesn't support center and wrap of tabs: " + Build.MODEL);
             }
         }
 
@@ -152,7 +152,7 @@ public final class Views {
                 if (buildId.contains("MIUI")) {
                     // fix for MIUI ROM
                     result = false;
-                    Log.i(AndroidUtils.class.getName(), "Device build doesn't support center and wrap of tabs: " + Build.DISPLAY);
+                    Log.i(Android.class.getName(), "Device build doesn't support center and wrap of tabs: " + Build.DISPLAY);
                 }
             }
         }

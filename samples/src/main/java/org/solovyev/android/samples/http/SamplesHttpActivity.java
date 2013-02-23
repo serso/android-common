@@ -119,7 +119,7 @@ public class SamplesHttpActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.http_layout);
+        setContentView(R.layout.acl_http_layout);
 
         // should be one instance in application if several threads are working with it
         this.imageLoader = new CachingImageLoader(this, "acl-samples");
@@ -128,7 +128,7 @@ public class SamplesHttpActivity extends ListActivity {
         for (String imageName : imageNames) {
             listItems.add(new HttpListItem(uriPrefix + imageName, this.imageLoader));
         }
-        ListItemArrayAdapter.createAndAttach(getListView(), this, listItems);
+        ListItemArrayAdapter.createAndAttach(this, listItems);
 
 
         final Button fetchDataButton = (Button) findViewById(R.id.fetch_data_button);

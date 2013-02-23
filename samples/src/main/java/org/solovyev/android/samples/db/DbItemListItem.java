@@ -68,7 +68,7 @@ public class DbItemListItem implements ListItem {
     @NotNull
     @Override
     public View build(@NotNull Context context) {
-        final TextView view = TextViewBuilder.newInstance(R.layout.db_list_item, getTag()).build(context);
+        final TextView view = TextViewBuilder.newInstance(R.layout.acl_db_list_item, getTag()).build(context);
 
         fillView(context, view);
 

@@ -22,25 +22,34 @@
 
 package org.solovyev.android.view;
 
-import org.solovyev.android.ActivityDestroyerController;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentActivity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.solovyev.android.DialogOnActivityDestroyedListener;
-import org.solovyev.android.view.R;
+import org.solovyev.android.DialogFragmentShower;
+import org.solovyev.common.Builder;
 
 /**
  * User: serso
  * Date: 4/29/12
  * Time: 1:25 PM
  */
-public class ConfirmationDialogBuilder implements DialogBuilder<AlertDialog> {
+public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> {
+
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
     @NotNull
-    private final Context context;
+    private final FragmentActivity fragmentActivity;
+
+    @NotNull
+    private final String fragmentTag;
 
     private final int messageResId;
 
@@ -56,10 +65,32 @@ public class ConfirmationDialogBuilder implements DialogBuilder<AlertDialog> {
     @Nullable
     private DialogInterface.OnClickListener negativeHandler;
 
-    public ConfirmationDialogBuilder(@NotNull Context context, int messageResId) {
-        this.context = context;
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
+
+    private ConfirmationDialogBuilder(@NotNull FragmentActivity fragmentActivity, @NotNull String fragmentTag, int messageResId) {
+        this.fragmentActivity = fragmentActivity;
+        this.fragmentTag = fragmentTag;
         this.messageResId = messageResId;
     }
+
+    @NotNull
+    public static ConfirmationDialogBuilder newInstance(@NotNull FragmentActivity fragmentActivity, @NotNull String fragmentTag, int messageResId) {
+        return new ConfirmationDialogBuilder(fragmentActivity, fragmentTag, messageResId);
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
 
     @NotNull
     public ConfirmationDialogBuilder setTitleResId(int titleResId) {
@@ -93,8 +124,8 @@ public class ConfirmationDialogBuilder implements DialogBuilder<AlertDialog> {
 
     @NotNull
     @Override
-    public AlertDialog build() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public DialogFragmentShower build() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity);
 
         builder.setTitle(titleResId);
         builder.setMessage(messageResId);
@@ -116,11 +147,6 @@ public class ConfirmationDialogBuilder implements DialogBuilder<AlertDialog> {
             }
         });
 
-
-        final  AlertDialog result = builder.create();
-        if ( context instanceof Activity) {
-            ActivityDestroyerController.getInstance().put((Activity)context, new DialogOnActivityDestroyedListener(result));
-        }
-        return result;
+        return new DialogFragmentShower(fragmentActivity, fragmentTag, builder);
     }
 }

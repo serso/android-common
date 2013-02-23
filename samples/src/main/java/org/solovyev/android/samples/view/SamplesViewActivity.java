@@ -48,7 +48,7 @@ public class SamplesViewActivity extends Activity implements Picker.OnChangedLis
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.view_layout);
+		setContentView(R.layout.acl_view_layout);
 
 		final Picker verticalPicker = (Picker) findViewById(R.id.vertical_picker);
 		verticalPicker.setRange(new IntegerRange(1, 10, 1, 1, null));

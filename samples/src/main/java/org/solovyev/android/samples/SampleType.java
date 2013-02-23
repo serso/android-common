@@ -92,7 +92,7 @@ public enum SampleType implements ListItem {
     @NotNull
     @Override
     public View build(@NotNull Context context) {
-        final TextView textView = TextViewBuilder.newInstance(R.layout.sample_list_item, getTag()).build(context);
+        final TextView textView = TextViewBuilder.newInstance(R.layout.acl_sample_list_item, getTag()).build(context);
 
         fillView(textView);
 

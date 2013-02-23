@@ -49,10 +49,10 @@ import java.io.IOException;
  * This class contains static methods for working with some android classes
  */
 @SuppressWarnings("UnusedDeclaration")
-public final class AndroidUtils {
+public final class Android {
 
     // not intended for instantiation
-	private AndroidUtils() {
+	private Android() {
 		throw new AssertionError();
 	}
 
@@ -122,21 +122,6 @@ public final class AndroidUtils {
             debug = 0 != (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE);
         }
         return debug;
-    }
-
-    public static void showDialog(@NotNull DialogFragment dialogFragment,
-                                  @NotNull String fragmentTag,
-                                  @NotNull FragmentManager fm) {
-        final FragmentTransaction ft = fm.beginTransaction();
-
-        Fragment prev = fm.findFragmentByTag(fragmentTag);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        dialogFragment.show(ft, fragmentTag);
     }
 
     @NotNull

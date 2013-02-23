@@ -83,7 +83,7 @@ public class HttpListItem implements ListItem {
     @NotNull
     @Override
     public View build(@NotNull Context context) {
-        final View root = ViewFromLayoutBuilder.newInstance(R.layout.http_list_item).build(context);
+        final View root = ViewFromLayoutBuilder.newInstance(R.layout.acl_http_list_item).build(context);
         root.setTag(getTag());
         fillView(context, root);
         return root;

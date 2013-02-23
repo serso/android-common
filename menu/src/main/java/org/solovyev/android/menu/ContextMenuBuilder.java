@@ -22,68 +22,95 @@
 
 package org.solovyev.android.menu;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentActivity;
 import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.ActivityDestroyerController;
-import org.solovyev.android.DialogOnActivityDestroyedListener;
+import org.solovyev.android.DialogFragmentShower;
+import org.solovyev.common.BuilderWithData;
 
 /**
  * User: serso
  * Date: 12/19/11
  * Time: 10:54 AM
  */
-public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D>{
+public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements BuilderWithData<DialogFragmentShower, D> {
 
-	@NotNull
-	private final Context context;
+    /*
+    **********************************************************************
+    *
+    *                           FIELDS
+    *
+    **********************************************************************
+    */
 
-	@NotNull
-	private final AlertDialog.Builder menuBuilder;
+    @NotNull
+    private final FragmentActivity fragmentActivity;
 
-	@NotNull
-	private final ContextMenu<T, D> menu;
+    @NotNull
+    private final String fragmentTag;
 
-	@NotNull
-	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull Class<T> enumClass) {
-		return new ContextMenuBuilder<T, D>(context, EnumContextMenu.<T, D>newInstance(enumClass));
-	}
+    @NotNull
+    private final AlertDialog.Builder menuBuilder;
 
-	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
-		return new ContextMenuBuilder<T, D>(context, menu);
-	}
+    @NotNull
+    private final ContextMenu<T, D> menu;
 
-	private ContextMenuBuilder(@NotNull Context context, @NotNull ContextMenu<T, D> menu) {
-		this.context = context;
-		this.menuBuilder = new AlertDialog.Builder(context);
-		this.menu = menu;
-	}
+    /*
+    **********************************************************************
+    *
+    *                           CONSTRUCTORS
+    *
+    **********************************************************************
+    */
 
-	@NotNull
-	public AlertDialog.Builder getMenuBuilder() {
-		return menuBuilder;
-	}
-
-	@NotNull
-	public AlertDialog create(@NotNull final D data) {
-		menuBuilder.setItems(menu.getMenuCaptions(context), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-				final LabeledMenuItem<D> menuItem = menu.itemAt(item);
-				if (menuItem != null) {
-					menuItem.onClick(data, context);
-                }
-			}
-		});
-
-        final AlertDialog result = menuBuilder.create();
-        if ( context instanceof Activity) {
-            ActivityDestroyerController.getInstance().put((Activity)context, new DialogOnActivityDestroyedListener(result));
-        }
-        return result;
+    @NotNull
+    public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull FragmentActivity fragmentActivity,
+                                                                                                @NotNull String fragmentTag,
+                                                                                                @NotNull Class<T> enumClass) {
+        return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, EnumContextMenu.<T, D>newInstance(enumClass));
     }
 
+    @NotNull
+    public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull FragmentActivity fragmentActivity,
+                                                                                         @NotNull String fragmentTag,
+                                                                                         @NotNull ContextMenu<T, D> menu) {
+        return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, menu);
+    }
 
+    private ContextMenuBuilder(@NotNull FragmentActivity fragmentActivity,
+                               @NotNull String fragmentTag,
+                               @NotNull ContextMenu<T, D> menu) {
+        this.fragmentActivity = fragmentActivity;
+        this.fragmentTag = fragmentTag;
+        this.menuBuilder = new AlertDialog.Builder(fragmentActivity);
+        this.menu = menu;
+    }
+
+    /*
+    **********************************************************************
+    *
+    *                           METHODS
+    *
+    **********************************************************************
+    */
+
+    @NotNull
+    public AlertDialog.Builder getMenuBuilder() {
+        return menuBuilder;
+    }
+
+    @NotNull
+    public DialogFragmentShower build(@NotNull final D data) {
+        menuBuilder.setItems(menu.getMenuCaptions(fragmentActivity), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                final LabeledMenuItem<D> menuItem = menu.itemAt(item);
+                if (menuItem != null) {
+                    menuItem.onClick(data, fragmentActivity);
+                }
+            }
+        });
+
+        return new DialogFragmentShower(fragmentActivity, fragmentTag, menuBuilder);
+    }
 }

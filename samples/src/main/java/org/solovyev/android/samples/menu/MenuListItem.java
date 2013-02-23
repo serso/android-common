@@ -63,7 +63,7 @@ public class MenuListItem implements ListItem {
 
     @Override
     public OnClickAction getOnLongClickAction() {
-        return new SimpleMenuOnClick<MenuListItem>(Arrays.asList(MenuItemMenu.values()), this);
+        return new SimpleMenuOnClick<MenuListItem>(Arrays.asList(MenuItemMenu.values()), this, String.valueOf(captionResId));
     }
 
     @NotNull
@@ -80,7 +80,7 @@ public class MenuListItem implements ListItem {
     @NotNull
     @Override
     public View build(@NotNull Context context) {
-        final TextView view = TextViewBuilder.newInstance(R.layout.menu_list_item, getTag()).build(context);
+        final TextView view = TextViewBuilder.newInstance(R.layout.acl_menu_list_item, getTag()).build(context);
 
         fillView(context, view);
 
