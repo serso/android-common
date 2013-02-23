@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class ListItemArrayAdapter<LI extends ListItem> extends ListAdapter<LI> {
 
-    private ListItemArrayAdapter(@NotNull Context context,
+    protected ListItemArrayAdapter(@NotNull Context context,
                                 @NotNull List<? extends LI> listItems) {
         super(context, 0, 0, castList(listItems));
     }
