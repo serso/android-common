@@ -51,8 +51,8 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
     private int version;
 
     public CommonSQLiteOpenHelper(@NotNull Context context, @NotNull SQLiteOpenHelperConfiguration configuration) {
-        super(context, configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
-        this.context = context;
+        super(context.getApplicationContext(), configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
+        this.context = context.getApplicationContext();
         this.databaseName = configuration.getName();
         this.version = configuration.getVersion();
     }
