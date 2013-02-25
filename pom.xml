@@ -36,6 +36,7 @@
         <module>samples-test</module>
         <module>sherlock</module>
         <module>security</module>
+        <module>network</module>
         <module>all</module>
     </modules>
     <name>Android Common Library</name>
@@ -174,6 +175,13 @@
             <dependency>
                 <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-app</artifactId>
+                <version>1.0.7-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-network</artifactId>
                 <version>1.0.7-SNAPSHOT</version>
                 <type>apklib</type>
             </dependency>
