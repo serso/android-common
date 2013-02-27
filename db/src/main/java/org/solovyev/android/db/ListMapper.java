@@ -49,9 +49,9 @@ public class ListMapper<T> implements Converter<Cursor, List<T>> {
         final List<T> result = new ArrayList<T>();
 
         if (cursor.moveToFirst()) {
-            while (!cursor.isLast()) {
-                cursor.moveToNext();
+            while (!cursor.isAfterLast()) {
                 result.add(elementMapper.convert(cursor));
+                cursor.moveToNext();
             }
         }
 
