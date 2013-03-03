@@ -23,7 +23,7 @@
 package org.solovyev.android.db.properties;
 
 import android.database.Cursor;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.properties.APropertyImpl;
 import org.solovyev.common.Converter;
@@ -35,20 +35,20 @@ import org.solovyev.common.Converter;
  */
 public class APropertyMapper implements Converter<Cursor, AProperty> {
 
-    @NotNull
+    @Nonnull
     private static final APropertyMapper instance = new APropertyMapper();
 
     private APropertyMapper() {
     }
 
-    @NotNull
+    @Nonnull
     public static APropertyMapper getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public AProperty convert(@NotNull Cursor cursor) {
+    public AProperty convert(@Nonnull Cursor cursor) {
         final String id = cursor.getString(0);
         final String name = cursor.getString(1);
         final String value = cursor.getString(2);

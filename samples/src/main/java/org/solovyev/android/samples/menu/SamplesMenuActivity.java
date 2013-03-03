@@ -28,8 +28,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.Toast;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.Fragments;
 import org.solovyev.android.list.ListItemArrayAdapter;
 import org.solovyev.android.menu.*;
@@ -104,7 +104,7 @@ public class SamplesMenuActivity extends FragmentActivity {
         */
 
         @Override
-        public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater inflater) {
+        public void onCreateOptionsMenu(@Nonnull Menu menu, @Nonnull MenuInflater inflater) {
             if (this.menu == null) {
                 // create menu
                 final List<LabeledMenuItem<MenuItem>> menuItems = new ArrayList<LabeledMenuItem<MenuItem>>();
@@ -157,7 +157,7 @@ public class SamplesMenuActivity extends FragmentActivity {
             }
 
             @Override
-            public void onClick(@NotNull MenuItem data, @NotNull Context context) {
+            public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
                 final SamplesListFragment a = SamplesListFragment.this;
 
                 a.ascSort = !a.ascSort;
@@ -175,18 +175,18 @@ public class SamplesMenuActivity extends FragmentActivity {
             }
 
             @Override
-            public void onClick(@NotNull MenuItem data, @NotNull Context context) {
+            public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
                 Toast.makeText(context, getString(R.string.asc_sort_menu_item_text), Toast.LENGTH_LONG).show();
             }
         }
 
         @Override
-        public boolean onOptionsItemSelected(@NotNull MenuItem item) {
+        public boolean onOptionsItemSelected(@Nonnull MenuItem item) {
             return menu.onOptionsItemSelected(this.getActivity(), item);
         }
 
         @Override
-        public void onPrepareOptionsMenu(@NotNull Menu menu) {
+        public void onPrepareOptionsMenu(@Nonnull Menu menu) {
             this.menu.onPrepareOptionsMenu(this.getActivity(), menu);
         }
     }

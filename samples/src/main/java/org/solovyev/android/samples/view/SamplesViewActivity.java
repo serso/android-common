@@ -27,7 +27,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.IntegerRange;
 import org.solovyev.android.view.Picker;
@@ -61,7 +61,7 @@ public class SamplesViewActivity extends Activity implements Picker.OnChangedLis
 		final DirectionDragButton dragButton = (DirectionDragButton) findViewById(R.id.drag_button);
 		dragButton.setOnDragListener(new SimpleOnDragListener(new SimpleOnDragListener.DragProcessor() {
 			@Override
-			public boolean processDragEvent(@NotNull DragDirection dragDirection, @NotNull DragButton dragButton, @NotNull Point2d startPoint2d, @NotNull MotionEvent motionEvent) {
+			public boolean processDragEvent(@Nonnull DragDirection dragDirection, @Nonnull DragButton dragButton, @Nonnull Point2d startPoint2d, @Nonnull MotionEvent motionEvent) {
 				Toast.makeText(SamplesViewActivity.this, "Button dragged: " + ((DirectionDragButton) dragButton).getText(dragDirection), Toast.LENGTH_SHORT).show();
 				return true;
 			}
@@ -75,7 +75,7 @@ public class SamplesViewActivity extends Activity implements Picker.OnChangedLis
 	}
 
 	@Override
-	public void onChanged(@NotNull Picker picker, @NotNull Object value) {
+	public void onChanged(@Nonnull Picker picker, @Nonnull Object value) {
 		switch (picker.getId()) {
 			case R.id.vertical_picker:
 				Toast.makeText(this, "Vertical picker new value: " + value, Toast.LENGTH_SHORT).show();

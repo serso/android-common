@@ -22,7 +22,7 @@
 
 package net.robotmedia.billing.model;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.solovyev.common.JCloneable;
@@ -70,8 +70,8 @@ public class Transaction extends JObject implements JCloneable<Transaction> {
 
 	static final String PURCHASE_TIME = "purchaseTime";
 
-	@NotNull
-	public static Transaction newInstance(@NotNull JSONObject json) throws JSONException {
+	@Nonnull
+	public static Transaction newInstance(@Nonnull JSONObject json) throws JSONException {
 		final Transaction transaction = new Transaction();
 
 		final int response = json.getInt(PURCHASE_STATE);
@@ -113,7 +113,7 @@ public class Transaction extends JObject implements JCloneable<Transaction> {
 		this.developerPayload = developerPayload;
 	}
 
-    @NotNull
+    @Nonnull
     public JSONObject toJson() throws JSONException {
         final JSONObject json = new JSONObject();
 
@@ -129,7 +129,7 @@ public class Transaction extends JObject implements JCloneable<Transaction> {
         return json;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Transaction clone() {
         return (Transaction) super.clone();

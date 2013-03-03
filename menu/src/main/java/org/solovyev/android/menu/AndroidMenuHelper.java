@@ -25,7 +25,7 @@ package org.solovyev.android.menu;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -34,10 +34,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
 
-    @NotNull
+    @Nonnull
     private static final AndroidMenuHelper instance = new AndroidMenuHelper();
 
-    @NotNull
+    @Nonnull
     public static MenuHelper<Menu, MenuItem> getInstance() {
         return instance;
     }
@@ -46,18 +46,18 @@ public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
     }
 
     @Override
-    public int size(@NotNull Menu menu) {
+    public int size(@Nonnull Menu menu) {
         return menu.size();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public MenuItem add(@NotNull Menu menu, int groupId, int itemId, int orderId, @NotNull String caption) {
+    public MenuItem add(@Nonnull Menu menu, int groupId, int itemId, int orderId, @Nonnull String caption) {
         return menu.add(groupId, itemId, orderId, caption);
     }
 
     @Override
-    public void setOnMenuItemClickListener(@NotNull final MenuItem menuItem, @NotNull final AMenuItem<MenuItem> onMenuItemClick, @NotNull final Activity activity) {
+    public void setOnMenuItemClickListener(@Nonnull final MenuItem menuItem, @Nonnull final AMenuItem<MenuItem> onMenuItemClick, @Nonnull final Activity activity) {
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -68,18 +68,18 @@ public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
     }
 
     @Override
-    public void removeItem(@NotNull Menu menu, @NotNull Integer menuItemId) {
+    public void removeItem(@Nonnull Menu menu, @Nonnull Integer menuItemId) {
         menu.removeItem(menuItemId);
     }
 
     @Override
-    public void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull Menu menu) {
+    public void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull Menu menu) {
         activity.getMenuInflater().inflate(layoutId, menu);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Integer getItemId(@NotNull MenuItem item) {
+    public Integer getItemId(@Nonnull MenuItem item) {
         return item.getItemId();
     }
 }

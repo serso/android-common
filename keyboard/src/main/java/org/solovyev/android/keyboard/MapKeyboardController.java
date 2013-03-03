@@ -24,7 +24,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,12 +37,12 @@ import java.util.Map;
  */
 public abstract class MapKeyboardController extends AbstractKeyboardController {
 
-	@NotNull
+	@Nonnull
 	private final Map<String, AKeyboard> keyboards = new HashMap<String, AKeyboard>();
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardControllerState onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+    protected AKeyboardControllerState onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
         synchronized (this.keyboards) {
 
             this.keyboards.clear();
@@ -56,9 +56,9 @@ public abstract class MapKeyboardController extends AbstractKeyboardController {
         }
     }
 
-    @NotNull
-	protected abstract List<AKeyboard> createKeyboard(@NotNull Context context);
+    @Nonnull
+	protected abstract List<AKeyboard> createKeyboard(@Nonnull Context context);
 
-	@NotNull
+	@Nonnull
 	protected abstract String getDefaultKeyboardId();
 }

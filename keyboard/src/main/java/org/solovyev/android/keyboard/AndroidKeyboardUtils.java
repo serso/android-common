@@ -26,7 +26,7 @@ import android.content.Context;
 import android.os.Build;
 import android.text.ClipboardManager;
 import android.view.inputmethod.InputConnection;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.text.Strings;
 
 /**
@@ -40,7 +40,7 @@ public final class AndroidKeyboardUtils {
         throw new AssertionError();
     }
 
-    public static void copyWholeTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {
+    public static void copyWholeTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
         String text = getTextFromInputConnection(ic);
 
         if (!Strings.isEmpty(text)) {
@@ -49,8 +49,8 @@ public final class AndroidKeyboardUtils {
         }
     }
 
-    @NotNull
-    public static String getTextFromInputConnection(@NotNull InputConnection ic) {
+    @Nonnull
+    public static String getTextFromInputConnection(@Nonnull InputConnection ic) {
         final CharSequence textAfter = ic.getTextAfterCursor(DefaultKeyboardInput.MAX_INT, 0);
         final CharSequence textBefore = ic.getTextBeforeCursor(DefaultKeyboardInput.MAX_INT, 0);
 
@@ -66,7 +66,7 @@ public final class AndroidKeyboardUtils {
         return text;
     }
 
-    static void copyTextFromInputConnection(@NotNull InputConnection ic, @NotNull Context context) {
+    static void copyTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
             CharSequence text = ic.getSelectedText(0);
             if (!Strings.isEmpty(text)) {

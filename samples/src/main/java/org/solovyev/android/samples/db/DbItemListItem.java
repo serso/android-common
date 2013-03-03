@@ -25,7 +25,7 @@ package org.solovyev.android.samples.db;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.TextViewBuilder;
@@ -37,10 +37,10 @@ import org.solovyev.android.view.TextViewBuilder;
  */
 public class DbItemListItem implements ListItem {
 
-    @NotNull
+    @Nonnull
     private final DbItem dbItem;
 
-    public DbItemListItem(@NotNull DbItem dbItem) {
+    public DbItemListItem(@Nonnull DbItem dbItem) {
         this.dbItem = dbItem;
     }
 
@@ -54,9 +54,9 @@ public class DbItemListItem implements ListItem {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View updateView(@NotNull Context context, @NotNull View view) {
+    public View updateView(@Nonnull Context context, @Nonnull View view) {
         if (this.getTag().equals(view.getTag())) {
             fillView(context, (TextView) view);
             return view;
@@ -65,9 +65,9 @@ public class DbItemListItem implements ListItem {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View build(@NotNull Context context) {
+    public View build(@Nonnull Context context) {
         final TextView view = TextViewBuilder.newInstance(R.layout.acl_db_list_item, getTag()).build(context);
 
         fillView(context, view);
@@ -75,12 +75,12 @@ public class DbItemListItem implements ListItem {
         return view;
     }
 
-    @NotNull
+    @Nonnull
     private String getTag() {
         return "db_list_item";
     }
 
-    private void fillView(@NotNull Context context, @NotNull TextView view) {
+    private void fillView(@Nonnull Context context, @Nonnull TextView view) {
         view.setText(dbItem.getName());
     }
 

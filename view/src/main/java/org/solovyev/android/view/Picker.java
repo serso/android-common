@@ -38,8 +38,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A view for selecting a number
@@ -49,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
 public class Picker<T> extends LinearLayout {
 
     public static interface OnChangedListener<T> {
-        void onChanged(@NotNull Picker picker, @NotNull T value);
+        void onChanged(@Nonnull Picker picker, @Nonnull T value);
     }
 
     public static interface Range<T> {
@@ -58,18 +58,18 @@ public class Picker<T> extends LinearLayout {
 
         int getCount();
 
-        @NotNull
+        @Nonnull
         String getStringValueAt(int position);
 
-        @NotNull
+        @Nonnull
         T getValueAt(int position);
     }
 
 
-    @NotNull
+    @Nonnull
     private final Handler uiHandler =  new Handler();
 
-    @NotNull
+    @Nonnull
     private final Runnable runnable = new Runnable() {
         public void run() {
             if (increment) {
@@ -82,10 +82,10 @@ public class Picker<T> extends LinearLayout {
         }
     };
 
-    @NotNull
+    @Nonnull
     private final TextView text;
 
-    @NotNull
+    @Nonnull
     private Range<T> range;
 
     /**
@@ -103,10 +103,10 @@ public class Picker<T> extends LinearLayout {
 
     private boolean decrement;
 
-    @NotNull
+    @Nonnull
     private final PickerButton incrementButton;
 
-    @NotNull
+    @Nonnull
     private final PickerButton decrementButton;
 
     /**
@@ -210,7 +210,7 @@ public class Picker<T> extends LinearLayout {
         this.onChangedListener = listener;
     }
 
-    public void setRange(@NotNull Range<T> range) {
+    public void setRange(@Nonnull Range<T> range) {
         this.range = range;
         this.current = range.getStartPosition();
 

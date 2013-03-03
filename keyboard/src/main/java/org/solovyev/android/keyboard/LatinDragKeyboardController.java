@@ -27,7 +27,7 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.Views;
 import org.solovyev.android.view.drag.DragDirection;
 
@@ -43,15 +43,15 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 
     private int currentKeyboard = 0;
 
-    @NotNull
+    @Nonnull
 	private final List<DragAKeyboard> languageKeyboardDefs = new ArrayList<DragAKeyboard>(2);
 
-	@NotNull
+	@Nonnull
 	private DragAKeyboard.KeyboardDef digitsKeyboard;
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
         languageKeyboardDefs.add(createKeyboard("en", createEnglishKeyboard(inputMethodService)));
         languageKeyboardDefs.add(createKeyboard("ru", createRussianKeyboard(inputMethodService)));
 
@@ -61,12 +61,12 @@ public class LatinDragKeyboardController extends DragKeyboardController {
     }
 
     @Override
-    protected DragAKeyboard createKeyboardDef(@NotNull Context context) {
+    protected DragAKeyboard createKeyboardDef(@Nonnull Context context) {
         return languageKeyboardDefs.get(currentKeyboard);
     }
 
-    @NotNull
-    private DragAKeyboard.KeyboardDef createRussianKeyboard(@NotNull Context context) {
+    @Nonnull
+    private DragAKeyboard.KeyboardDef createRussianKeyboard(@Nonnull Context context) {
         final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
         final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
@@ -146,7 +146,7 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     private DragAKeyboardButtonDefImpl createHistoryButtonDef(int notLetterBackgroundResId) {
         final DragAKeyboardButtonDefImpl historyButtonDef = DragAKeyboardButtonDefImpl.newInstance(null, null, "↷", null, "↶", notLetterBackgroundResId);
 		historyButtonDef.setDirectionKeycode(DragDirection.left, AbstractKeyboardController.KEYCODE_UNDO);
@@ -154,8 +154,8 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         return historyButtonDef;
     }
 
-    @NotNull
-    private DragAKeyboard.KeyboardDef createEnglishKeyboard(@NotNull Context context) {
+    @Nonnull
+    private DragAKeyboard.KeyboardDef createEnglishKeyboard(@Nonnull Context context) {
         final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
         final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
@@ -230,8 +230,8 @@ public class LatinDragKeyboardController extends DragKeyboardController {
         return result;
     }
 
-	@NotNull
-	private DragAKeyboard.KeyboardDef createDigitsKeyboard(@NotNull Context context) {
+	@Nonnull
+	private DragAKeyboard.KeyboardDef createDigitsKeyboard(@Nonnull Context context) {
 		final int notLetterBackgroundResId = R.drawable.metro_dark_button_gray;
 
 		final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
@@ -292,14 +292,14 @@ public class LatinDragKeyboardController extends DragKeyboardController {
 		return languageKeyboardDefs.get(currentKeyboard);
 	}
 
-	@NotNull
-	private DragAKeyboard createKeyboard(@NotNull String keyboardId, @NotNull DragAKeyboard.KeyboardDef keyboardDef) {
+	@Nonnull
+	private DragAKeyboard createKeyboard(@Nonnull String keyboardId, @Nonnull DragAKeyboard.KeyboardDef keyboardDef) {
 		return new DragAKeyboard(keyboardId, keyboardDef);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public AKeyboardControllerState<DragAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+	public AKeyboardControllerState<DragAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
 		final AKeyboardControllerState<DragAKeyboard> result;
 
 		// We are now going to initialize our state based on the type of

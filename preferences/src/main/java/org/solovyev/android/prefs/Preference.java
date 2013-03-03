@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -45,7 +45,7 @@ public interface Preference<T> {
      *
      * @return android preference key
      */
-	@NotNull
+	@Nonnull
 	String getKey();
 
     /**
@@ -59,7 +59,7 @@ public interface Preference<T> {
      * @param preferences application preferences
      * @return value from preference, default value if no value in preference was found
      */
-	T getPreference(@NotNull SharedPreferences preferences);
+	T getPreference(@Nonnull SharedPreferences preferences);
 
     /**
      * NOTE: this method SHOULD not throw any runtime exceptions BUT return default value if any error occurred
@@ -67,38 +67,38 @@ public interface Preference<T> {
      * @param preferences application preferences
      * @return value from preference, default value if no value in preference was found or error occurred
      */
-    T getPreferenceNoError(@NotNull SharedPreferences preferences);
+    T getPreferenceNoError(@Nonnull SharedPreferences preferences);
 
     /**
      * Method puts (saves) preference represented by <code>value</code> in <code>preferences</code> container
      * @param preferences preferences container
      * @param value value to be saved
      */
-	void putPreference(@NotNull SharedPreferences preferences, @Nullable T value);
+	void putPreference(@Nonnull SharedPreferences preferences, @Nullable T value);
 
     /**
      * Method saves default value in <code>preferences</code> container.
      * Should behave exactly as <code>p.putPreference(preferences, p.getDefaultValue())</code>
      * @param preferences preferences container
      */
-	void putDefault(@NotNull SharedPreferences preferences);
+	void putDefault(@Nonnull SharedPreferences preferences);
 
     /**
      * @param preferences preferences container
      * @return true if any value is saved in preferences container, false - otherwise
      */
-	boolean isSet(@NotNull SharedPreferences preferences);
+	boolean isSet(@Nonnull SharedPreferences preferences);
 
     /**
      * Method applies default value to preference only if explicit value is not set
      * @param preferences preferences container
      * @return true if default values have been applied, false otherwise
      */
-    boolean tryPutDefault(@NotNull SharedPreferences preferences);
+    boolean tryPutDefault(@Nonnull SharedPreferences preferences);
 
     /**
      * @param key preference key
      * @return true if current preferences has the same key
      */
-    boolean isSameKey(@NotNull String key);
+    boolean isSameKey(@Nonnull String key);
 }

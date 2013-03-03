@@ -24,7 +24,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,27 +33,27 @@ import org.jetbrains.annotations.NotNull;
  */
 public class AndroidAKeyboard extends AbstractAKeyboard {
 
-    @NotNull
+    @Nonnull
     private Keyboard keyboard;
 
-    private AndroidAKeyboard(@NotNull String keyboardId) {
+    private AndroidAKeyboard(@Nonnull String keyboardId) {
 		super(keyboardId);
 	}
 
-    @NotNull
-    public static AndroidAKeyboard newInstance(@NotNull String keyboardId, @NotNull Keyboard keyboard) {
+    @Nonnull
+    public static AndroidAKeyboard newInstance(@Nonnull String keyboardId, @Nonnull Keyboard keyboard) {
         final AndroidAKeyboard result = new AndroidAKeyboard(keyboardId);
         result.keyboard = keyboard;
         return result;
     }
 
-    @NotNull
+    @Nonnull
     public Keyboard getKeyboard() {
         return keyboard;
     }
 
     @Override
-    public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+    public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
         // todo serso: refactor
         if ( keyboard instanceof LatinKeyboard) {
             ((LatinKeyboard) keyboard).setImeOptions(resources, imeOptions);

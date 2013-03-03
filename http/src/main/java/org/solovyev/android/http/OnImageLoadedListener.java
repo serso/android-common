@@ -23,7 +23,7 @@
 package org.solovyev.android.http;
 
 import android.graphics.Bitmap;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
 * User: serso

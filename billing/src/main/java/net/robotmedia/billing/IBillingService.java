@@ -22,7 +22,7 @@
 
 package net.robotmedia.billing;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,9 +31,9 @@ import org.jetbrains.annotations.NotNull;
  */
 interface IBillingService {
 
-	void runRequestOrQueue(@NotNull IBillingRequest request);
+	void runRequestOrQueue(@Nonnull IBillingRequest request);
 
-	@NotNull
+	@Nonnull
 	String getPackageName();
 
 }

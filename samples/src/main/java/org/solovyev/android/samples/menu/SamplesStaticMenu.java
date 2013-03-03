@@ -26,7 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.MenuItem;
 import android.widget.Toast;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.Activities;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.samples.R;
@@ -44,14 +44,14 @@ public enum SamplesStaticMenu implements LabeledMenuItem<MenuItem>  {
     
     show_text(R.string.show_text) {
         @Override
-        public void onClick(@NotNull MenuItem data, @NotNull Context context) {
+        public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
             Toast.makeText(context, context.getString(R.string.show_text_text), Toast.LENGTH_SHORT).show();
         }
     },
 
     restart_activity(R.string.restart_activity) {
         @Override
-        public void onClick(@NotNull MenuItem data, @NotNull Context context) {
+        public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
             Activities.restartActivity((Activity) context);
         }
     };
@@ -63,9 +63,9 @@ public enum SamplesStaticMenu implements LabeledMenuItem<MenuItem>  {
     }
 
 
-    @NotNull
+    @Nonnull
     @Override
-    public String getCaption(@NotNull Context context) {
+    public String getCaption(@Nonnull Context context) {
         return context.getString(captionResId);
     }
 }

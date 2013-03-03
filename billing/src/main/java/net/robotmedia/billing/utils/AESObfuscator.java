@@ -22,8 +22,8 @@
 
 package net.robotmedia.billing.utils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -47,13 +47,13 @@ public class AESObfuscator {
 
 	public static final String SECURITY_PREFIX = "net.robotmedia.billing.utils.AESObfuscator-1|";
 
-	@NotNull
+	@Nonnull
 	private final Cipher encryptor;
 
-	@NotNull
+	@Nonnull
 	private final Cipher decryptor;
 
-	public AESObfuscator(@NotNull byte[] salt, String password) {
+	public AESObfuscator(@Nonnull byte[] salt, String password) {
 		try {
 			// get algorithm by name
 			final SecretKeyFactory factory = SecretKeyFactory.getInstance(KEYGEN_ALGORITHM);

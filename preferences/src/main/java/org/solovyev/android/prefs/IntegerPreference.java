@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -33,22 +33,22 @@ import org.jetbrains.annotations.Nullable;
  */
 public class IntegerPreference extends AbstractPreference<Integer> {
 
-	private IntegerPreference(@NotNull String key, @Nullable Integer defaultValue) {
+	private IntegerPreference(@Nonnull String key, @Nullable Integer defaultValue) {
 		super(key, defaultValue);
 	}
 
-    @NotNull
-    public static IntegerPreference of(@NotNull String key, @Nullable Integer defaultValue) {
+    @Nonnull
+    public static IntegerPreference of(@Nonnull String key, @Nullable Integer defaultValue) {
         return new IntegerPreference(key, defaultValue);
     }
 
     @Override
-	protected Integer getPersistedValue(@NotNull SharedPreferences preferences) {
+	protected Integer getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getInt(getKey(), -1);
 	}
 
 	@Override
-	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull Integer value) {
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull Integer value) {
 		editor.putInt(getKey(), value);
 	}
 

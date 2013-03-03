@@ -22,7 +22,7 @@
 
 package org.solovyev.android.view.drag;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.EventListener;
 
@@ -41,6 +41,6 @@ public interface OnDragListener extends EventListener{
 	 *
 	 * @return 'true' if drag event occurred, 'false' otherwise
 	 */
-	boolean onDrag(@NotNull DragButton dragButton, @NotNull DragEvent event);
+	boolean onDrag(@Nonnull DragButton dragButton, @Nonnull DragEvent event);
 
 }

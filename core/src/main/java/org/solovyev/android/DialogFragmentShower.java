@@ -26,8 +26,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 * User: serso
@@ -36,18 +36,18 @@ import org.jetbrains.annotations.Nullable;
 */
 public class DialogFragmentShower {
 
-    @NotNull
+    @Nonnull
     private final FragmentActivity fragmentActivity;
 
-    @NotNull
+    @Nonnull
     private final String fragmentTag;
 
-    @NotNull
+    @Nonnull
     private final AlertDialog.Builder menuBuilder;
 
-    public DialogFragmentShower(@NotNull FragmentActivity fragmentActivity,
-                                @NotNull String fragmentTag,
-                                @NotNull AlertDialog.Builder menuBuilder) {
+    public DialogFragmentShower(@Nonnull FragmentActivity fragmentActivity,
+                                @Nonnull String fragmentTag,
+                                @Nonnull AlertDialog.Builder menuBuilder) {
         this.fragmentActivity = fragmentActivity;
         this.fragmentTag = fragmentTag;
         this.menuBuilder = menuBuilder;
@@ -65,7 +65,7 @@ public class DialogFragmentShower {
         @Nullable
         private final AlertDialog.Builder menuBuilder;
 
-        private AlertDialogFragment(@NotNull AlertDialog.Builder menuBuilder) {
+        private AlertDialogFragment(@Nonnull AlertDialog.Builder menuBuilder) {
             this.menuBuilder = menuBuilder;
         }
 

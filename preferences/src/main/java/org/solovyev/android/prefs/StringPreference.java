@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.EnumMapper;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.StringMapper;
@@ -42,36 +42,36 @@ import org.solovyev.common.text.StringMapper;
  */
 public final class StringPreference<T> extends AbstractPreference<T> {
 
-	@NotNull
+	@Nonnull
 	private final Mapper<T> mapper;
 
-	public StringPreference(@NotNull String key, @Nullable T defaultValue, @NotNull Mapper<T> mapper) {
+	public StringPreference(@Nonnull String key, @Nullable T defaultValue, @Nonnull Mapper<T> mapper) {
 		super(key, defaultValue);
 		this.mapper = mapper;
 	}
 
-	@NotNull
-	public static StringPreference<String> of(@NotNull String key, @Nullable String defaultValue) {
+	@Nonnull
+	public static StringPreference<String> of(@Nonnull String key, @Nullable String defaultValue) {
 		return new StringPreference<String>(key, defaultValue, StringMapper.getInstance());
 	}
 
-	@NotNull
-	public static <T> StringPreference<T> ofTypedValue(@NotNull String key, @Nullable String defaultValue, @NotNull Mapper<T> mapper) {
+	@Nonnull
+	public static <T> StringPreference<T> ofTypedValue(@Nonnull String key, @Nullable String defaultValue, @Nonnull Mapper<T> mapper) {
 		return new StringPreference<T>(key, mapper.parseValue(defaultValue), mapper);
 	}
 
-	@NotNull
-	public static <T extends Enum> StringPreference<T> ofEnum(@NotNull String key, @Nullable T defaultValue, @NotNull Class<T> enumType) {
+	@Nonnull
+	public static <T extends Enum> StringPreference<T> ofEnum(@Nonnull String key, @Nullable T defaultValue, @Nonnull Class<T> enumType) {
 		return new StringPreference<T>(key, defaultValue, EnumMapper.of(enumType));
 	}
 
 	@Override
-	protected T getPersistedValue(@NotNull SharedPreferences preferences) {
+	protected T getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return mapper.parseValue(preferences.getString(getKey(), null));
 	}
 
 	@Override
-	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull T value) {
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull T value) {
 		editor.putString(getKey(), mapper.formatValue(value));
 	}
 }

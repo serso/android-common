@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,5 +32,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface AMenuItem<T> {
 
-    void onClick(@NotNull T data, @NotNull Context context);
+    void onClick(@Nonnull T data, @Nonnull Context context);
 }

@@ -30,8 +30,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Objects;
 import org.solovyev.common.text.Mapper;
 
@@ -48,13 +48,13 @@ import org.solovyev.common.text.Mapper;
  */
 public abstract class AbstractDialogPreference<T> extends DialogPreference {
 
-    @NotNull
+    @Nonnull
     protected final static String localNameSpace = "http://schemas.android.com/apk/res-auto";
 
-    @NotNull
+    @Nonnull
     protected final static String androidns = "http://schemas.android.com/apk/res/android";
 
-    @NotNull
+    @Nonnull
     private static final String TAG = AbstractDialogPreference.class.getSimpleName();
 
     @Nullable
@@ -66,7 +66,7 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
     @Nullable
     private View preferenceView;
 
-    @NotNull
+    @Nonnull
     private final Context context;
 
     @Nullable
@@ -83,10 +83,10 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
 
     private final boolean needValueText;
 
-    @NotNull
+    @Nonnull
     private final Mapper<T> mapper;
 
-    public AbstractDialogPreference(Context context, AttributeSet attrs, @Nullable String defaultStringValue, boolean needValueText, @NotNull Mapper<T> mapper) {
+    public AbstractDialogPreference(Context context, AttributeSet attrs, @Nullable String defaultStringValue, boolean needValueText, @Nonnull Mapper<T> mapper) {
         super(context, attrs);
         this.context = context;
         this.defaultStringValue = defaultStringValue;
@@ -121,7 +121,7 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     protected final LinearLayout onCreateDialogView() {
         if (shouldPersist()) {
             value = getPersistedValue();
@@ -195,15 +195,15 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
      * @return view which changes the preference value
      * @param context context
      */
-    @NotNull
-    protected abstract View createPreferenceView(@NotNull Context context);
+    @Nonnull
+    protected abstract View createPreferenceView(@Nonnull Context context);
 
     /**
      *
      * @param v view to be filled with initial data (the one which has been created with {@link #createPreferenceView} method)
      * @param value current preference value
      */
-    protected abstract void initPreferenceView(@NotNull View v, @Nullable T value);
+    protected abstract void initPreferenceView(@Nonnull View v, @Nullable T value);
 
     @Nullable
     private T getPersistedValue() {
@@ -246,13 +246,13 @@ public abstract class AbstractDialogPreference<T> extends DialogPreference {
         return valueText;
     }
 
-    protected void updateValueText(@NotNull String text) {
+    protected void updateValueText(@Nonnull String text) {
         if (valueTextView != null) {
             valueTextView.setText(text);
         }
     }
 
-    @NotNull
+    @Nonnull
     private Mapper<T> getMapper() {
         return this.mapper;
     }

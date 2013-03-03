@@ -28,8 +28,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -66,7 +66,7 @@ public class Compatibility {
 	}
 
     @Nullable
-    private static Method initMethod(@NotNull Class<? extends Context> clazz) {
+    private static Method initMethod(@Nonnull Class<? extends Context> clazz) {
         Method result;
 
         try {
@@ -82,8 +82,8 @@ public class Compatibility {
         return result;
     }
 
-    public static void startIntentSender(@NotNull Context context,
-										 @NotNull IntentSender intentSender,
+    public static void startIntentSender(@Nonnull Context context,
+										 @Nonnull IntentSender intentSender,
 										 @Nullable Intent intent) {
         if (context instanceof Activity) {
             startIntentSender0(context, intentSender, intent, activityMethod);
@@ -92,8 +92,8 @@ public class Compatibility {
         }
     }
 
-    private static void startIntentSender0(@NotNull Context context,
-                                           @NotNull IntentSender intentSender,
+    private static void startIntentSender0(@Nonnull Context context,
+                                           @Nonnull IntentSender intentSender,
                                            @Nullable Intent intent,
                                            @Nullable Method method) {
         if (method != null) {
@@ -113,7 +113,7 @@ public class Compatibility {
         }
     }
 
-    public static boolean isStartIntentSenderSupported(@NotNull Context context) {
+    public static boolean isStartIntentSenderSupported(@Nonnull Context context) {
         if (context instanceof Activity) {
             return activityMethod != null;
         } else {

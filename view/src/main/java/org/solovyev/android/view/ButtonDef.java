@@ -22,7 +22,7 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * User: serso

@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,11 +32,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EnumContextMenu<T extends Enum & LabeledMenuItem<D>, D> implements ContextMenu<T, D> {
 
-	@NotNull
+	@Nonnull
 	private final ContextMenu<T, D> menu;
 
-	@NotNull
-	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@NotNull Class<T> enumClass) {
+	@Nonnull
+	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@Nonnull Class<T> enumClass) {
 		return new EnumContextMenu<T, D>(enumClass);
 	}
 
@@ -49,9 +49,9 @@ public class EnumContextMenu<T extends Enum & LabeledMenuItem<D>, D> implements 
 		return this.menu.itemAt(i);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public CharSequence[] getMenuCaptions(@NotNull final Context context) {
+	public CharSequence[] getMenuCaptions(@Nonnull final Context context) {
 		return this.menu.getMenuCaptions(context);
 	}
 }

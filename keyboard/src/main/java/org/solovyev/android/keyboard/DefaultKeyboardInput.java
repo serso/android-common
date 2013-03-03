@@ -28,8 +28,8 @@ import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.KeyEvent;
 import android.view.inputmethod.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.history.HistoryHelper;
 import org.solovyev.common.history.SimpleHistoryHelper;
 import org.solovyev.common.text.Strings;
@@ -43,19 +43,19 @@ public class DefaultKeyboardInput implements AKeyboardInput {
 
     public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
 
-    @NotNull
+    @Nonnull
     private final HistoryHelper<KeyboardInputHistoryState> history = SimpleHistoryHelper.newInstance(10);
     {
         history.addState(new KeyboardInputHistoryState("", 0));
     }
 
-    @NotNull
+    @Nonnull
     private final InputMethodService inputMethodService;
 
-    @NotNull
+    @Nonnull
     private final StringBuilder typedText = new StringBuilder(100);
 
-    public DefaultKeyboardInput(@NotNull InputMethodService inputMethodService) {
+    public DefaultKeyboardInput(@Nonnull InputMethodService inputMethodService) {
         this.inputMethodService = inputMethodService;
     }
 
@@ -87,20 +87,20 @@ public class DefaultKeyboardInput implements AKeyboardInput {
         commitText(ic, text, position);
     }
 
-    private void commitText(@NotNull InputConnection ic, @Nullable CharSequence text, int position) {
+    private void commitText(@Nonnull InputConnection ic, @Nullable CharSequence text, int position) {
         ic.commitText(text, position);
         if (!Strings.isEmpty(text)) {
             history.addState(new KeyboardInputHistoryState(AndroidKeyboardUtils.getTextFromInputConnection(ic), 0));
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public EditorInfo getCurrentInputEditorInfo() {
         return inputMethodService.getCurrentInputEditorInfo();
     }
 
-    @NotNull
+    @Nonnull
     private InputConnection getCurrentInputConnection() {
         InputConnection result = this.inputMethodService.getCurrentInputConnection();
         if (result == null ) {
@@ -164,7 +164,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     }
 
     @Override
-    public void sendKeyEvent(@NotNull KeyEvent keyEvent) {
+    public void sendKeyEvent(@Nonnull KeyEvent keyEvent) {
         getCurrentInputConnection().sendKeyEvent(keyEvent);
     }
 
@@ -184,7 +184,7 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     }
 
     @Override
-    public void commitCompletion(@NotNull CompletionInfo completionInfo) {
+    public void commitCompletion(@Nonnull CompletionInfo completionInfo) {
         getCurrentInputConnection().commitCompletion(completionInfo);
     }
 
@@ -205,12 +205,12 @@ public class DefaultKeyboardInput implements AKeyboardInput {
         }
     }
 
-    private int getSelectionEnd(@NotNull InputConnection ic, int selectionStart) {
+    private int getSelectionEnd(@Nonnull InputConnection ic, int selectionStart) {
         final CharSequence selectedText = ic.getSelectedText(0);
         return selectionStart + (selectedText == null ? 0 : selectedText.length());
     }
 
-    private int getSelectionStart(@NotNull InputConnection ic) {
+    private int getSelectionStart(@Nonnull InputConnection ic) {
         return ic.getTextBeforeCursor(MAX_INT, 0).length();
     }
 
@@ -285,10 +285,10 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     
     private static final class NoInputConnection implements InputConnection {
 
-        @NotNull
+        @Nonnull
         private static final InputConnection instance = new NoInputConnection();
 
-        @NotNull
+        @Nonnull
         public static InputConnection getInstance() {
             return instance;
         }

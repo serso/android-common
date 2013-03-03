@@ -26,8 +26,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -51,12 +51,12 @@ public class ViewFromLayoutBuilder<V extends View> implements ViewBuilder<V> {
         this.wholeLayout = wholeLayout;
     }
 
-    @NotNull
+    @Nonnull
     public static <V extends View> ViewFromLayoutBuilder<V> newInstance(int layoutId, int viewId) {
         return new ViewFromLayoutBuilder<V>(layoutId, viewId, false);
     }
 
-    @NotNull
+    @Nonnull
     public static <V extends View> ViewFromLayoutBuilder<V> newInstance(int layoutId) {
         return new ViewFromLayoutBuilder<V>(layoutId, 0, true);
     }
@@ -65,9 +65,9 @@ public class ViewFromLayoutBuilder<V extends View> implements ViewBuilder<V> {
         this.layoutInflater = layoutInflater;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public V build(@NotNull Context context) {
+    public V build(@Nonnull Context context) {
 
         LayoutInflater li = layoutInflater;
         if (li == null) {

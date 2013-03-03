@@ -23,8 +23,8 @@
 package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.drag.DirectionDragButtonDefImpl;
 import org.solovyev.android.view.drag.DragDirection;
 
@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
 
-    @NotNull
+    @Nonnull
     private DirectionDragButtonDefImpl directionDragButtonDef;
 
 
@@ -42,7 +42,7 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
     @Nullable
     private Integer keycode;
 
-    @NotNull
+    @Nonnull
     private final Map<DragDirection, Integer> directionKeycodes = new EnumMap<DragDirection, Integer>(DragDirection.class);
 
     @Nullable
@@ -51,13 +51,13 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
     @Nullable
     private CharSequence previewText;
 
-    @NotNull
+    @Nonnull
     private final Map<DragDirection, CharSequence> previewDirectionTexts = new EnumMap<DragDirection, CharSequence>(DragDirection.class);
 
 
     @Override
     @Nullable
-    public CharSequence getText(@NotNull DragDirection dragDirection) {
+    public CharSequence getText(@Nonnull DragDirection dragDirection) {
         return directionDragButtonDef.getText(dragDirection);
     }
 
@@ -125,11 +125,11 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
     }
 
     @Override
-    public Integer getDirectionKeycode(@NotNull DragDirection dragDirection) {
+    public Integer getDirectionKeycode(@Nonnull DragDirection dragDirection) {
         return this.directionKeycodes.get(dragDirection);
     }
 
-    public void setDirectionKeycode(@NotNull DragDirection direction, @Nullable Integer actionCode) {
+    public void setDirectionKeycode(@Nonnull DragDirection direction, @Nullable Integer actionCode) {
         directionKeycodes.put(direction, actionCode);
     }
 
@@ -137,7 +137,7 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
         this.allowRepeat = allowRepeat;
     }
 
-    @NotNull
+    @Nonnull
     public static DragAKeyboardButtonDefImpl newInstance(@Nullable CharSequence text,
                                                          @Nullable CharSequence up,
                                                          @Nullable CharSequence right,
@@ -224,7 +224,7 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
         directionDragButtonDef.setDrawableResId(drawableResId);
     }
 
-    public void setDirectionText(@NotNull DragDirection key, @Nullable CharSequence text) {
+    public void setDirectionText(@Nonnull DragDirection key, @Nullable CharSequence text) {
         directionDragButtonDef.setDirectionText(key, text);
     }
 
@@ -232,13 +232,13 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
         this.previewText = previewText;
     }
 
-    public void setPreviewDirectionText(@NotNull DragDirection direction,
+    public void setPreviewDirectionText(@Nonnull DragDirection direction,
                                         @Nullable CharSequence charSequence) {
         previewDirectionTexts.put(direction, charSequence);
     }
 
     @Override
-    public void setImeOptions(@NotNull Resources resources, int imeOptions) {
+    public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
     }
 
     @Override
@@ -253,7 +253,7 @@ public class DragAKeyboardButtonDefImpl implements DragAKeyboardButtonDef {
 
     @Nullable
     @Override
-    public CharSequence getPreviewDirectionText(@NotNull DragDirection direction) {
+    public CharSequence getPreviewDirectionText(@Nonnull DragDirection direction) {
         return this.previewDirectionTexts.get(direction);
     }
 

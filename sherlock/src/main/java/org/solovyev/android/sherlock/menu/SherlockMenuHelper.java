@@ -25,7 +25,7 @@ package org.solovyev.android.sherlock.menu;
 import android.app.Activity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.menu.AMenuItem;
 import org.solovyev.android.menu.MenuHelper;
 import org.solovyev.android.sherlock.AndroidSherlockUtils;
@@ -37,10 +37,10 @@ import org.solovyev.android.sherlock.AndroidSherlockUtils;
  */
 public final class SherlockMenuHelper implements MenuHelper<Menu, MenuItem> {
 
-    @NotNull
+    @Nonnull
     private static final SherlockMenuHelper instance = new SherlockMenuHelper();
 
-    @NotNull
+    @Nonnull
     public static MenuHelper<Menu, MenuItem> getInstance() {
         return instance;
     }
@@ -49,18 +49,18 @@ public final class SherlockMenuHelper implements MenuHelper<Menu, MenuItem> {
     }
 
     @Override
-    public int size(@NotNull Menu menu) {
+    public int size(@Nonnull Menu menu) {
         return menu.size();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public MenuItem add(@NotNull Menu menu, int groupId, int itemId, int orderId, @NotNull String caption) {
+    public MenuItem add(@Nonnull Menu menu, int groupId, int itemId, int orderId, @Nonnull String caption) {
         return menu.add(groupId, itemId, orderId, caption);
     }
 
     @Override
-    public void setOnMenuItemClickListener(@NotNull final MenuItem menuItem, @NotNull final AMenuItem<MenuItem> onMenuItemClick, @NotNull final Activity activity) {
+    public void setOnMenuItemClickListener(@Nonnull final MenuItem menuItem, @Nonnull final AMenuItem<MenuItem> onMenuItemClick, @Nonnull final Activity activity) {
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -71,18 +71,18 @@ public final class SherlockMenuHelper implements MenuHelper<Menu, MenuItem> {
     }
 
     @Override
-    public void removeItem(@NotNull Menu menu, @NotNull Integer menuItemId) {
+    public void removeItem(@Nonnull Menu menu, @Nonnull Integer menuItemId) {
         menu.removeItem(menuItemId);
     }
 
     @Override
-    public void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull Menu menu) {
+    public void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull Menu menu) {
         AndroidSherlockUtils.getSupportMenuInflater(activity).inflate(layoutId, menu);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Integer getItemId(@NotNull MenuItem item) {
+    public Integer getItemId(@Nonnull MenuItem item) {
         return item.getItemId();
     }
 

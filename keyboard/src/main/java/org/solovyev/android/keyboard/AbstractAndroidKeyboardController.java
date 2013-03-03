@@ -26,8 +26,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Strings;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.List;
 public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> extends AbstractKeyboardController<K> {
 
     @Override
-    public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {
+    public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
 
         updateCandidates();
@@ -51,7 +51,7 @@ public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> ext
         getKeyboardView().setCompletions(Collections.<CompletionInfo>emptyList());
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public AKeyboardViewWithSuggestions<K> getKeyboardView() {
         return (AKeyboardViewWithSuggestions<K>) super.getKeyboardView();
@@ -75,11 +75,11 @@ public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> ext
         return changed;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected abstract AKeyboardViewWithSuggestions<K> createKeyboardView0(@NotNull Context context);
+    protected abstract AKeyboardViewWithSuggestions<K> createKeyboardView0(@Nonnull Context context);
 
-    public void setSuggestions(@NotNull List<String> suggestions,
+    public void setSuggestions(@Nonnull List<String> suggestions,
                                boolean completions,
                                boolean typedWordValid) {
         final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();

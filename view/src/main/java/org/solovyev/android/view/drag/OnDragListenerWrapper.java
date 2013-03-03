@@ -22,7 +22,7 @@
 
 package org.solovyev.android.view.drag;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
 * User: serso
@@ -31,10 +31,10 @@ import org.jetbrains.annotations.NotNull;
 */
 public class OnDragListenerWrapper implements OnDragListener {
 
-	@NotNull
+	@Nonnull
 	private final OnDragListener onDragListener;
 
-	public OnDragListenerWrapper(@NotNull OnDragListener onDragListener) {
+	public OnDragListenerWrapper(@Nonnull OnDragListener onDragListener) {
 		this.onDragListener = onDragListener;
 	}
 
@@ -44,7 +44,7 @@ public class OnDragListenerWrapper implements OnDragListener {
 	}
 
 	@Override
-	public boolean onDrag(@NotNull DragButton dragButton, @NotNull DragEvent event) {
+	public boolean onDrag(@Nonnull DragButton dragButton, @Nonnull DragEvent event) {
 		return this.onDragListener.onDrag(dragButton, event);
 	}
 }

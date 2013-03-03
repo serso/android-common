@@ -60,8 +60,10 @@
             <artifactId>common-listeners</artifactId>
         </dependency>
 
+
+
         <dependency>
-            <groupId>com.intellij</groupId>
+            <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
         </dependency>
 

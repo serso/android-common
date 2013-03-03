@@ -24,7 +24,7 @@ package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.StringTokenizer;
 
@@ -37,18 +37,18 @@ public class BatchDbTransaction {
 
     private static final String TAG = "BatchDbOperation";
 
-    @NotNull
+    @Nonnull
     private final String sqls;
 
-    @NotNull
+    @Nonnull
     private final String delimiters;
 
-    public BatchDbTransaction(@NotNull String sqls, @NotNull String delimiters) {
+    public BatchDbTransaction(@Nonnull String sqls, @Nonnull String delimiters) {
         this.sqls = sqls;
         this.delimiters = delimiters;
     }
 
-    public void batchQuery(@NotNull SQLiteDatabase db) {
+    public void batchQuery(@Nonnull SQLiteDatabase db) {
         try {
             db.beginTransaction();
 

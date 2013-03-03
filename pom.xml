@@ -257,6 +257,15 @@
                 <version>7.0.3</version>
             </dependency>
 
+            <!--
+                FindBugs Annotations
+            -->
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>annotations</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.pivotallabs</groupId>
                 <artifactId>robolectric</artifactId>
@@ -270,19 +279,27 @@
     <build>
 
         <plugins>
+
             <plugin>
                 <groupId>com.electriccloud</groupId>
                 <artifactId>javac2-maven-plugin</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2</version>
                 <executions>
                     <execution>
-                        <id>@NotNull Instrumentation</id>
+                        <id>instrument-notnull-src</id>
+                        <!--compile phase instead of process-classes because of proguard.
+                            @NotNull instrumentation will be done now after compilation and before proguard-->
+                        <phase>compile</phase>
                         <goals>
                             <goal>instrument</goal>
                         </goals>
-                        <!--compile phase instead of process-classes because of proguard.
-                        @NotNull instrumentation will be done now after compilation and before proguard-->
-                        <phase>compile</phase>
+                    </execution>
+                    <execution>
+                        <id>instrument-notnull-test</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>testInstrument</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

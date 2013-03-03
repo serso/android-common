@@ -22,7 +22,7 @@
 
 package org.solovyev.android.samples.db;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,14 +31,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DbItemImpl implements DbItem {
 
-    @NotNull
+    @Nonnull
     private String name;
 
-    public DbItemImpl(@NotNull String name) {
+    public DbItemImpl(@Nonnull String name) {
         this.name = name;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getName() {
         return this.name;

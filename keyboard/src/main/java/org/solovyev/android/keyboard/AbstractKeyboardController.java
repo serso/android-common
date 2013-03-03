@@ -33,8 +33,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Strings;
 
 /**
@@ -80,24 +80,24 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     **********************************************************************
     */
 
-	@NotNull
+	@Nonnull
 	private AKeyboardControllerState<K> state;
 
-	@NotNull
+	@Nonnull
 	private AKeyboardView<K> keyboardView;
 
-	@NotNull
+	@Nonnull
 	private AKeyboardInput keyboardInput;
 
-	@NotNull
+	@Nonnull
 	private InputMethodService inputMethodService;
 
 	private long metaState;
 
-	@NotNull
+	@Nonnull
 	private InputMethodManager inputMethodManager;
 
-    @NotNull
+    @Nonnull
 	private AKeyboardConfiguration configuration;
 
     /*
@@ -120,36 +120,36 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     */
 
     @Override
-    public final void onCreate(@NotNull Context context) {
+    public final void onCreate(@Nonnull Context context) {
         this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         this.configuration = onCreate0(context);
     }
 
-    @NotNull
-    protected abstract AKeyboardConfiguration onCreate0(@NotNull Context context);
+    @Nonnull
+    protected abstract AKeyboardConfiguration onCreate0(@Nonnull Context context);
 
     @Override
-	public final void onInitializeInterface(@NotNull InputMethodService inputMethodService) {
+	public final void onInitializeInterface(@Nonnull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
 		this.state = onInitializeInterface0(inputMethodService);
 		this.keyboardInput = createKeyboardInput0(inputMethodService);
         this.keyboardView = createKeyboardView0(inputMethodService);
     }
 
-	@NotNull
-	protected abstract AKeyboardControllerState<K> onInitializeInterface0(@NotNull InputMethodService inputMethodService);
+	@Nonnull
+	protected abstract AKeyboardControllerState<K> onInitializeInterface0(@Nonnull InputMethodService inputMethodService);
 
-	@NotNull
-	protected DefaultKeyboardInput createKeyboardInput0(@NotNull InputMethodService inputMethodService) {
+	@Nonnull
+	protected DefaultKeyboardInput createKeyboardInput0(@Nonnull InputMethodService inputMethodService) {
 		return new DefaultKeyboardInput(inputMethodService);
 	}
 
-	@NotNull
-	protected abstract AKeyboardView<K> createKeyboardView0(@NotNull Context context);
+	@Nonnull
+	protected abstract AKeyboardView<K> createKeyboardView0(@Nonnull Context context);
 
-    @NotNull
+    @Nonnull
     @Override
-    public final AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+    public final AKeyboardView createKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
         keyboardView.createAndroidKeyboardView(context, layoutInflater);
         keyboardView.setKeyboard(getCurrentKeyboard());
         keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
@@ -162,7 +162,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     }
 
     @Override
-    public void onStartInput(@NotNull EditorInfo attribute, boolean restarting) {
+    public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
         if (!restarting) {
             // Clear shift states.
             metaState = 0;
@@ -204,7 +204,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
         }
     }
 
-	@NotNull
+	@Nonnull
 	protected InputMethodService getInputMethodService() {
 		return inputMethodService;
 	}
@@ -319,31 +319,31 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     protected void setShifted0(boolean shifted) {
     }
 
-    @NotNull
+    @Nonnull
 	protected K getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
 
-	protected void setCurrentKeyboard(@NotNull K keyboard) {
+	protected void setCurrentKeyboard(@Nonnull K keyboard) {
 		this.state = this.state.copyForNewKeyboard(keyboard);
 		this.keyboardView.setKeyboard(keyboard);
 	}
 
-	@NotNull
+	@Nonnull
 	protected AKeyboardControllerState<K> getState() {
 		return state;
 	}
 
-	protected void setState(@NotNull AKeyboardControllerState<K> state) {
+	protected void setState(@Nonnull AKeyboardControllerState<K> state) {
 		this.state = state;
 	}
 
-	@NotNull
+	@Nonnull
     protected AKeyboardView<K> getKeyboardView() {
 		return keyboardView;
 	}
 
-	@NotNull
+	@Nonnull
 	protected AKeyboardInput getKeyboardInput() {
 		return keyboardInput;
 	}
@@ -355,8 +355,8 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 		keyboardView.close();
 	}
 
-	@NotNull
-	public abstract AKeyboardControllerState<K> onStartInput0(@NotNull EditorInfo attribute, boolean restarting);
+	@Nonnull
+	public abstract AKeyboardControllerState<K> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting);
 
 	@Override
 	public void onText(@Nullable CharSequence text) {
@@ -403,7 +403,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     }
 
     @Override
-	public boolean onKeyDown(int keyCode, @NotNull KeyEvent event) {
+	public boolean onKeyDown(int keyCode, @Nonnull KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
 				// The InputMethodService already takes care of the back
@@ -485,7 +485,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	 * InputConnection.  It is only needed when using the
 	 * PROCESS_HARD_KEYS option.
 	 */
-	private boolean translateKeyDown(int keyCode, @NotNull KeyEvent event) {
+	private boolean translateKeyDown(int keyCode, @Nonnull KeyEvent event) {
 		metaState = MetaKeyKeyListener.handleKeyDown(metaState, keyCode, event);
 		int unicodeChar = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(metaState));
 
@@ -570,7 +570,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	}
 
 	@Override
-	public void onCurrentInputMethodSubtypeChanged(@NotNull InputMethodSubtype subtype) {
+	public void onCurrentInputMethodSubtypeChanged(@Nonnull InputMethodSubtype subtype) {
 		keyboardView.setSubtypeOnSpaceKey(subtype);
 	}
 

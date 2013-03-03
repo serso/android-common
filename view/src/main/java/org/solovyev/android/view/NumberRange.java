@@ -22,8 +22,8 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Formatter;
 
 /**
@@ -36,22 +36,22 @@ public abstract class NumberRange<N extends Number & Comparable<N>> implements P
     @Nullable
     private Formatter<N> formatter;
 
-    @NotNull
+    @Nonnull
     private final N min;
 
-    @NotNull
+    @Nonnull
     private final N max;
 
-    @NotNull
+    @Nonnull
     private final N step;
 
     private final int startPosition;
 
     private int count = -1;
 
-    public NumberRange(@NotNull N min,
-                       @NotNull N max,
-                       @NotNull N step,
+    public NumberRange(@Nonnull N min,
+                       @Nonnull N max,
+                       @Nonnull N step,
                        int startPosition,
                        @Nullable Formatter<N> formatter) {
         assert min.compareTo(max) <= 0;
@@ -80,9 +80,9 @@ public abstract class NumberRange<N extends Number & Comparable<N>> implements P
         return count;
     }
 
-    protected abstract int getCount(@NotNull N min, @NotNull N max, @NotNull N step);
+    protected abstract int getCount(@Nonnull N min, @Nonnull N max, @Nonnull N step);
 
-    @NotNull
+    @Nonnull
     @Override
     public String getStringValueAt(int position) {
         int count = getCount();
@@ -94,12 +94,12 @@ public abstract class NumberRange<N extends Number & Comparable<N>> implements P
         return formatter == null ? number.toString() : formatter.formatValue(number);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public N getValueAt(int position) {
         return getValueAt(position, min, max, step);
     }
 
-    @NotNull
-    protected abstract N getValueAt(int position, @NotNull N min, @NotNull N max, @NotNull N step);
+    @Nonnull
+    protected abstract N getValueAt(int position, @Nonnull N min, @Nonnull N max, @Nonnull N step);
 }

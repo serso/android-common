@@ -29,7 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.*;
 import com.actionbarsherlock.view.MenuInflater;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 
 import java.util.List;
@@ -45,8 +45,8 @@ public final class AndroidSherlockUtils {
         throw new AssertionError("Not intended for instantiation!");
     }
 
-    @NotNull
-    public static ActionBar getSupportActionBar(@NotNull Activity activity) {
+    @Nonnull
+    public static ActionBar getSupportActionBar(@Nonnull Activity activity) {
         if (activity instanceof SherlockActivity) {
             return ((SherlockActivity) activity).getSupportActionBar();
         }
@@ -67,7 +67,7 @@ public final class AndroidSherlockUtils {
 
     }
 
-    public static ActionBar getSupportActionBar(@NotNull Fragment fragment) {
+    public static ActionBar getSupportActionBar(@Nonnull Fragment fragment) {
         if (fragment instanceof SherlockFragment) {
             return ((SherlockFragment) fragment).getSherlockActivity().getSupportActionBar();
         }
@@ -84,16 +84,16 @@ public final class AndroidSherlockUtils {
     }
 
 
-    @NotNull
-    public static ListAdapter<String> newSherlockDefaultAdapter(@NotNull SherlockFragmentActivity activity,
-                                                                @NotNull List<String> items) {
+    @Nonnull
+    public static ListAdapter<String> newSherlockDefaultAdapter(@Nonnull SherlockFragmentActivity activity,
+                                                                @Nonnull List<String> items) {
         final ListAdapter<String> result = new ListAdapter<String>(activity, com.actionbarsherlock.R.layout.sherlock_spinner_item, items);
         result.setDropDownViewResource(com.actionbarsherlock.R.layout.sherlock_spinner_dropdown_item);
         return result;
     }
 
-    @NotNull
-    public static MenuInflater getSupportMenuInflater(@NotNull Activity activity) {
+    @Nonnull
+    public static MenuInflater getSupportMenuInflater(@Nonnull Activity activity) {
         if (activity instanceof SherlockActivity) {
             return ((SherlockActivity) activity).getSupportMenuInflater();
         }
@@ -113,9 +113,9 @@ public final class AndroidSherlockUtils {
         throw new IllegalArgumentException(activity.getClass() + " is not supported!");
     }
 
-    public static void showDialog(@NotNull DialogFragment dialogFragment,
-                                  @NotNull String fragmentTag,
-                                  @NotNull FragmentManager fm) {
+    public static void showDialog(@Nonnull DialogFragment dialogFragment,
+                                  @Nonnull String fragmentTag,
+                                  @Nonnull FragmentManager fm) {
         final FragmentTransaction ft = fm.beginTransaction();
 
         Fragment prev = fm.findFragmentByTag(fragmentTag);

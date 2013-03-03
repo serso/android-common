@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -33,22 +33,22 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FloatPreference extends AbstractPreference<Float> {
 
-	private FloatPreference(@NotNull String key, @Nullable Float defaultValue) {
+	private FloatPreference(@Nonnull String key, @Nullable Float defaultValue) {
 		super(key, defaultValue);
 	}
 
-    @NotNull
-    public static FloatPreference of(@NotNull String key, @Nullable Float defaultValue) {
+    @Nonnull
+    public static FloatPreference of(@Nonnull String key, @Nullable Float defaultValue) {
         return new FloatPreference(key, defaultValue);
     }
 
     @Override
-	protected Float getPersistedValue(@NotNull SharedPreferences preferences) {
+	protected Float getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getFloat(getKey(), -1f);
 	}
 
 	@Override
-	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull Float value) {
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull Float value) {
 		editor.putFloat(getKey(), value);
 	}
 }

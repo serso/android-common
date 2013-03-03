@@ -30,8 +30,8 @@ import android.content.res.TypedArray;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.text.StringCollections;
 import org.solovyev.common.text.StringMapper;
@@ -50,10 +50,10 @@ import java.util.List;
  */
 public class MultiSelectListPreference<T> extends ListPreference {
 
-	@NotNull
+	@Nonnull
 	private static final String DEFAULT_SEPARATOR = ";";
 
-	@NotNull
+	@Nonnull
 	private final org.solovyev.common.text.Mapper<List<String>> mapper;
 
 	private boolean[] checkedIndices;
@@ -96,14 +96,14 @@ public class MultiSelectListPreference<T> extends ListPreference {
 	}
 
 	@Override
-	public void setEntries(@NotNull CharSequence[] entries) {
+	public void setEntries(@Nonnull CharSequence[] entries) {
 		super.setEntries(entries);
 
 		checkedIndices = new boolean[entries.length];
 	}
 
 	@Override
-	protected void onPrepareDialogBuilder(@NotNull Builder builder) {
+	protected void onPrepareDialogBuilder(@Nonnull Builder builder) {
 		final CharSequence[] entries = getEntries();
 		final CharSequence[] entryValues = getEntryValues();
 
@@ -161,10 +161,10 @@ public class MultiSelectListPreference<T> extends ListPreference {
 
 	public static class Mapper implements org.solovyev.common.text.Mapper<List<String>> {
 
-		@NotNull
+		@Nonnull
 		private final String separator;
 
-		public Mapper(@NotNull String separator) {
+		public Mapper(@Nonnull String separator) {
 			this.separator = separator;
 		}
 
@@ -179,27 +179,27 @@ public class MultiSelectListPreference<T> extends ListPreference {
 		}
 	}
 
-    @NotNull
-    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@NotNull org.solovyev.common.text.Mapper<T> nestedMapper) {
+    @Nonnull
+    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@Nonnull org.solovyev.common.text.Mapper<T> nestedMapper) {
         return new ListMapper<T>(DEFAULT_SEPARATOR, nestedMapper);
     }
 
-    @NotNull
-    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@NotNull org.solovyev.common.text.Mapper<T> nestedMapper,
-                                                                             @NotNull String separator) {
+    @Nonnull
+    public static <T> org.solovyev.common.text.Mapper<List<T>> newListMapper(@Nonnull org.solovyev.common.text.Mapper<T> nestedMapper,
+                                                                             @Nonnull String separator) {
         return new ListMapper<T>(separator, nestedMapper);
     }
 
 
 	private static class ListMapper<T> implements org.solovyev.common.text.Mapper<List<T>> {
 
-		@NotNull
+		@Nonnull
 		private final String separator;
 
-		@NotNull
+		@Nonnull
 		private final org.solovyev.common.text.Mapper<T> nestedMapper;
 
-		public ListMapper(@NotNull String separator, @NotNull org.solovyev.common.text.Mapper<T> nestedMapper) {
+		public ListMapper(@Nonnull String separator, @Nonnull org.solovyev.common.text.Mapper<T> nestedMapper) {
 			this.separator = separator;
 			this.nestedMapper = nestedMapper;
 		}

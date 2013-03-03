@@ -23,8 +23,8 @@
 package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.drag.DirectionDragButtonDef;
 import org.solovyev.android.view.drag.DragDirection;
 
@@ -39,9 +39,9 @@ public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
 	Integer getPreviewDrawableResId();
 
 	@Nullable
-	Integer getDirectionKeycode(@NotNull DragDirection dragDirection);
+	Integer getDirectionKeycode(@Nonnull DragDirection dragDirection);
 
-	void setImeOptions(@NotNull Resources resources, int imeOptions);
+	void setImeOptions(@Nonnull Resources resources, int imeOptions);
 
 	void setShifted(boolean shifted);
 
@@ -49,5 +49,5 @@ public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
     CharSequence getPreviewText();
 
     @Nullable
-    CharSequence getPreviewDirectionText(@NotNull DragDirection direction);
+    CharSequence getPreviewDirectionText(@Nonnull DragDirection direction);
 }

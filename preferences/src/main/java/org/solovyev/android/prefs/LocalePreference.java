@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Mapper;
 
 import java.util.Locale;
@@ -37,29 +37,29 @@ import java.util.StringTokenizer;
  */
 public class LocalePreference implements Preference<Locale> {
 
-    @NotNull
+    @Nonnull
     private final StringPreference<Locale> stringPreference;
 
-    private LocalePreference(@NotNull String id, @Nullable Locale defaultValue, @NotNull Mapper<Locale> localeMapper) {
+    private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
         this.stringPreference = new StringPreference<Locale>(id, defaultValue, localeMapper);
     }
 
-    private LocalePreference(@NotNull String id, @Nullable Locale defaultValue) {
+    private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue) {
         this.stringPreference = new StringPreference<Locale>(id, defaultValue, DefaultLocaleMapper.getInstance());
     }
 
-    @NotNull
-    public static LocalePreference of(@NotNull String id, @Nullable Locale defaultValue, @NotNull Mapper<Locale> localeMapper) {
+    @Nonnull
+    public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
         return new LocalePreference(id, defaultValue, localeMapper);
     }
 
-    @NotNull
-    public static LocalePreference of(@NotNull String id, @Nullable Locale defaultValue) {
+    @Nonnull
+    public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue) {
         return new LocalePreference(id, defaultValue);
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public String getKey() {
         return stringPreference.getKey();
     }
@@ -70,37 +70,37 @@ public class LocalePreference implements Preference<Locale> {
     }
 
     @Override
-    public Locale getPreference(@NotNull SharedPreferences preferences) {
+    public Locale getPreference(@Nonnull SharedPreferences preferences) {
         return stringPreference.getPreference(preferences);
     }
 
     @Override
-    public Locale getPreferenceNoError(@NotNull SharedPreferences preferences) {
+    public Locale getPreferenceNoError(@Nonnull SharedPreferences preferences) {
         return stringPreference.getPreferenceNoError(preferences);
     }
 
     @Override
-    public void putDefault(@NotNull SharedPreferences preferences) {
+    public void putDefault(@Nonnull SharedPreferences preferences) {
         stringPreference.putDefault(preferences);
     }
 
     @Override
-    public void putPreference(@NotNull SharedPreferences preferences, @Nullable Locale value) {
+    public void putPreference(@Nonnull SharedPreferences preferences, @Nullable Locale value) {
         stringPreference.putPreference(preferences, value);
     }
 
     @Override
-    public boolean isSet(@NotNull SharedPreferences preferences) {
+    public boolean isSet(@Nonnull SharedPreferences preferences) {
         return stringPreference.isSet(preferences);
     }
 
     @Override
-    public boolean tryPutDefault(@NotNull SharedPreferences preferences) {
+    public boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
         return stringPreference.tryPutDefault(preferences);
     }
 
     @Override
-    public boolean isSameKey(@NotNull String key) {
+    public boolean isSameKey(@Nonnull String key) {
         return stringPreference.isSameKey(key);
     }
 
@@ -114,16 +114,16 @@ public class LocalePreference implements Preference<Locale> {
 
     private static final class DefaultLocaleMapper implements Mapper<Locale> {
 
-        @NotNull
+        @Nonnull
         private static final String delimiter = ";";
 
-        @NotNull
+        @Nonnull
         private static Mapper<Locale> instance = new DefaultLocaleMapper();
 
         private DefaultLocaleMapper() {
         }
 
-        @NotNull
+        @Nonnull
         public static Mapper<Locale> getInstance() {
             return instance;
         }

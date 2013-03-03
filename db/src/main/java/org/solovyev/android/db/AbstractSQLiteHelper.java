@@ -24,7 +24,7 @@ package org.solovyev.android.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -35,23 +35,23 @@ public abstract class AbstractSQLiteHelper {
 
     protected static final int MAX_IN_COUNT = 999;
 
-    @NotNull
+    @Nonnull
     private final Context context;
 
-    @NotNull
+    @Nonnull
     private final SQLiteOpenHelper sqliteOpenHelper;
 
-    protected AbstractSQLiteHelper(@NotNull Context context, @NotNull SQLiteOpenHelper sqliteOpenHelper) {
+    protected AbstractSQLiteHelper(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
         this.context = context;
         this.sqliteOpenHelper = sqliteOpenHelper;
     }
 
-    @NotNull
+    @Nonnull
     protected Context getContext() {
         return context;
     }
 
-    @NotNull
+    @Nonnull
     protected SQLiteOpenHelper getSqliteOpenHelper() {
         return sqliteOpenHelper;
     }

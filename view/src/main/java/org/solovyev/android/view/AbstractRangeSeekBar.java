@@ -33,8 +33,8 @@ import android.graphics.*;
 import android.graphics.Paint.Style;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 import org.solovyev.common.math.LinearNormalizer;
 import org.solovyev.common.math.Normalizer;
@@ -48,25 +48,25 @@ import org.solovyev.common.math.Normalizer;
  */
 public abstract class AbstractRangeSeekBar<T> extends ImageView {
 
-	@NotNull
+	@Nonnull
 	private final Paint paint = new Paint();
 
-	@NotNull
+	@Nonnull
 	private final ThumbContainer tc;
 
-	@NotNull
+	@Nonnull
 	private final Converter<T, Double> toDoubleConverter;
 
-	@NotNull
+	@Nonnull
 	private final Converter<Double, T> toTConverter;
 
-	@NotNull
+	@Nonnull
 	private final T minValue, maxValue;
 
-	@NotNull
+	@Nonnull
 	private final Normalizer fromValueNormalizer;
 
-	@NotNull
+	@Nonnull
 	private final Normalizer fromScreenNormalizer;
 
 	private double normalizedMinValue = 0d;
@@ -90,7 +90,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 * @param context parent context
 	 * @throws IllegalArgumentException Will be thrown if min/max value types are not one of Long, Double, Integer, Float, Short, Byte or BigDecimal.
 	 */
-	public AbstractRangeSeekBar(@NotNull T minValue, @NotNull T maxValue, @Nullable Integer steps, Context context) throws IllegalArgumentException {
+	public AbstractRangeSeekBar(@Nonnull T minValue, @Nonnull T maxValue, @Nullable Integer steps, Context context) throws IllegalArgumentException {
 		super(context);
 
 		this.minValue = minValue;
@@ -123,10 +123,10 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 		};
 	}
 
-	@NotNull
+	@Nonnull
 	protected abstract Converter<Double,T> getToTConverter();
 
-	@NotNull
+	@Nonnull
 	protected abstract Converter<T,Double> getToDoubleConverter();
 
 	public boolean isNotifyWhileDragging() {
@@ -147,7 +147,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 *
 	 * @return The absolute minimum value of the range.
 	 */
-	@NotNull
+	@Nonnull
 	public T getMinValue() {
 		return minValue;
 	}
@@ -157,7 +157,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 *
 	 * @return The absolute maximum value of the range.
 	 */
-	@NotNull
+	@Nonnull
 	public T getMaxValue() {
 		return maxValue;
 	}
@@ -176,7 +176,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 *
 	 * @param value The Number value to set the minimum value to. Will be clamped to given absolute minimum/maximum range.
 	 */
-	public void setSelectedMinValue(@NotNull T value) {
+	public void setSelectedMinValue(@Nonnull T value) {
 		setNormalizedMinValue(normalizeValue(value));
 	}
 
@@ -194,7 +194,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 *
 	 * @param value The Number value to set the maximum value to. Will be clamped to given absolute minimum/maximum range.
 	 */
-	public void setSelectedMaxValue(@NotNull T value) {
+	public void setSelectedMaxValue(@Nonnull T value) {
 		setNormalizedMaxValue(normalizeValue(value));
 	}
 
@@ -415,10 +415,10 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	}
 
 	private class ThumbContainer {
-		@NotNull
+		@Nonnull
 		private final Bitmap thumbImage = BitmapFactory.decodeResource(getResources(), R.drawable.seek_thumb_normal);
 
-		@NotNull
+		@Nonnull
 		private final Bitmap thumbPressedImage = BitmapFactory.decodeResource(getResources(), R.drawable.seek_thumb_pressed);
 
 		private final float thumbWidth = thumbImage.getWidth();

@@ -23,7 +23,7 @@
 package org.solovyev.android.http;
 
 import org.apache.http.NameValuePair;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.List;
 
@@ -34,12 +34,12 @@ import java.util.List;
  */
 public interface HttpTransactionDef {
 
-    @NotNull
+    @Nonnull
     HttpMethod getHttpMethod();
 
-    @NotNull
+    @Nonnull
     String getUri();
 
-    @NotNull
+    @Nonnull
     List<NameValuePair> getRequestParameters();
 }

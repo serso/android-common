@@ -26,8 +26,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -51,7 +51,7 @@ public class GrayableImpl implements ViewGrayable {
     }
 
     @Override
-    public void dispatchDraw(@NotNull View view, @NotNull Canvas canvas) {
+    public void dispatchDraw(@Nonnull View view, @Nonnull Canvas canvas) {
         final Paint localPaint = paint;
         if (localPaint != null) {
             final RectF drawRect = new RectF();

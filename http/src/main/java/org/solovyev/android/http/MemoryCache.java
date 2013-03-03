@@ -24,7 +24,7 @@ package org.solovyev.android.http;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,11 +56,11 @@ public class MemoryCache {
     }
 
 
-    public Bitmap get(@NotNull String key) {
+    public Bitmap get(@Nonnull String key) {
         return cache.get(key);
     }
 
-    public void put(@NotNull String key, @NotNull Bitmap value) {
+    public void put(@Nonnull String key, @Nonnull Bitmap value) {
         remove(key);
 
         cache.put(key, value);
@@ -69,7 +69,7 @@ public class MemoryCache {
         checkSize();
     }
 
-    private void remove(@NotNull String key) {
+    private void remove(@Nonnull String key) {
         final Bitmap value = cache.get(key);
         if (value != null) {
             size -= getSizeInBytes(value);
@@ -96,7 +96,7 @@ public class MemoryCache {
         cache.clear();
     }
 
-    private static long getSizeInBytes(@NotNull Bitmap bitmap) {
+    private static long getSizeInBytes(@Nonnull Bitmap bitmap) {
         return bitmap.getRowBytes() * bitmap.getHeight();
     }
 }

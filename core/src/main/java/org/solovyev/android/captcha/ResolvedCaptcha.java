@@ -22,7 +22,7 @@
 
 package org.solovyev.android.captcha;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,23 +31,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ResolvedCaptcha {
 
-    @NotNull
+    @Nonnull
     private final String captchaSid;
 
-    @NotNull
+    @Nonnull
     private final String captchaKey;
 
-    public ResolvedCaptcha(@NotNull String captchaSid, @NotNull String captchaKey) {
+    public ResolvedCaptcha(@Nonnull String captchaSid, @Nonnull String captchaKey) {
         this.captchaSid = captchaSid;
         this.captchaKey = captchaKey;
     }
 
-    @NotNull
+    @Nonnull
     public String getCaptchaSid() {
         return captchaSid;
     }
 
-    @NotNull
+    @Nonnull
     public String getCaptchaKey() {
         return captchaKey;
     }

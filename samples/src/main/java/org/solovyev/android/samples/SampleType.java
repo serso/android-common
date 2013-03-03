@@ -28,7 +28,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.db.SamplesDbActivity;
@@ -54,10 +54,10 @@ public enum SampleType implements ListItem {
 
     private final int captionResId;
 
-    @NotNull
+    @Nonnull
     private final Class<? extends Activity> sampleActivity;
 
-    private SampleType(int captionResId, @NotNull Class<? extends Activity> sampleActivity) {
+    private SampleType(int captionResId, @Nonnull Class<? extends Activity> sampleActivity) {
         this.captionResId = captionResId;
         this.sampleActivity = sampleActivity;
     }
@@ -66,7 +66,7 @@ public enum SampleType implements ListItem {
     public OnClickAction getOnClickAction() {
         return new OnClickAction() {
             @Override
-            public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
+            public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
                 context.startActivity(new Intent(context.getApplicationContext(), sampleActivity));
             }
         };
@@ -78,9 +78,9 @@ public enum SampleType implements ListItem {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View updateView(@NotNull Context context, @NotNull View view) {
+    public View updateView(@Nonnull Context context, @Nonnull View view) {
         if ( getTag().equals(view.getTag()) ) {
             fillView((TextView) view);
             return view;
@@ -89,9 +89,9 @@ public enum SampleType implements ListItem {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View build(@NotNull Context context) {
+    public View build(@Nonnull Context context) {
         final TextView textView = TextViewBuilder.newInstance(R.layout.acl_sample_list_item, getTag()).build(context);
 
         fillView(textView);
@@ -99,11 +99,11 @@ public enum SampleType implements ListItem {
         return textView;
     }
 
-    private void fillView(@NotNull TextView textView) {
+    private void fillView(@Nonnull TextView textView) {
         textView.setText(captionResId);
     }
 
-    @NotNull
+    @Nonnull
     private String getTag() {
         return "sample_type";
     }

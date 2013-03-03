@@ -23,8 +23,8 @@
 package org.solovyev.android.view;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.math.NumberValuer;
@@ -36,11 +36,11 @@ import org.solovyev.common.math.NumberValuer;
  */
 public class NumberRangeSeekBar<T extends Number & Comparable<T>> extends AbstractRangeSeekBar<T> {
 
-	@NotNull
+	@Nonnull
 	private final NumberType numberType;
 
 
-	public NumberRangeSeekBar(@NotNull Interval<T> boundaries, @Nullable Integer steps, Context context) throws IllegalArgumentException {
+	public NumberRangeSeekBar(@Nonnull Interval<T> boundaries, @Nullable Integer steps, Context context) throws IllegalArgumentException {
 		this(boundaries.getLeftLimit(), boundaries.getRightLimit(), steps, context);
 	}
 
@@ -53,26 +53,26 @@ public class NumberRangeSeekBar<T extends Number & Comparable<T>> extends Abstra
 	 * @param context  parent context
 	 * @throws IllegalArgumentException Will be thrown if min/max value types are not one of Long, Double, Integer, Float, Short, Byte or BigDecimal.
 	 */
-	public NumberRangeSeekBar(@NotNull T minValue, @NotNull T maxValue, @Nullable Integer steps, Context context) throws IllegalArgumentException {
+	public NumberRangeSeekBar(@Nonnull T minValue, @Nonnull T maxValue, @Nullable Integer steps, Context context) throws IllegalArgumentException {
 		super(minValue, maxValue, steps, context);
 
 		numberType = NumberType.fromNumber(minValue);
 
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected Converter<Double, T> getToTConverter() {
 		return new Converter<Double, T>() {
-			@NotNull
+			@Nonnull
 			@Override
-			public T convert(@NotNull Double value) {
+			public T convert(@Nonnull Double value) {
 				return (T) numberType.toNumber(value);
 			}
 		};
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected Converter<T, Double> getToDoubleConverter() {
 		return new NumberValuer<T>();

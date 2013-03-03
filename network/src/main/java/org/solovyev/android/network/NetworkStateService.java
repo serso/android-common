@@ -1,7 +1,7 @@
 package org.solovyev.android.network;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public interface NetworkStateService {
 
@@ -12,17 +12,17 @@ public interface NetworkStateService {
      *
      * @param context context
      */
-    void startListening(@NotNull Context context);
+    void startListening(@Nonnull Context context);
 
     /**
      * This method stops this class from listening for network changes.
      */
     void stopListening();
 
-    boolean addListener(@NotNull NetworkStateListener listener);
+    boolean addListener(@Nonnull NetworkStateListener listener);
 
-    boolean removeListener(@NotNull NetworkStateListener listener);
+    boolean removeListener(@Nonnull NetworkStateListener listener);
 
-    @NotNull
+    @Nonnull
     NetworkData getNetworkData();
 }

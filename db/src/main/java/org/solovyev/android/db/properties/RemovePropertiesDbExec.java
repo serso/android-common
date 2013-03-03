@@ -23,7 +23,7 @@
 package org.solovyev.android.db.properties;
 
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.db.DbExec;
 
 /**
@@ -33,25 +33,25 @@ import org.solovyev.android.db.DbExec;
  */
 public class RemovePropertiesDbExec implements DbExec {
 
-    @NotNull
+    @Nonnull
     private final Object id;
 
-    @NotNull
+    @Nonnull
     private final String tableName;
 
-    @NotNull
+    @Nonnull
     private final String idColumnName;
 
-    public RemovePropertiesDbExec(@NotNull Object id,
-                                  @NotNull String tableName,
-                                  @NotNull String idColumnName) {
+    public RemovePropertiesDbExec(@Nonnull Object id,
+                                  @Nonnull String tableName,
+                                  @Nonnull String idColumnName) {
         this.id = id;
         this.tableName = tableName;
         this.idColumnName = idColumnName;
     }
 
     @Override
-    public void exec(@NotNull SQLiteDatabase db) {
+    public void exec(@Nonnull SQLiteDatabase db) {
         db.delete(tableName, idColumnName + " = ? ", new String[]{String.valueOf(id)});
     }
 }

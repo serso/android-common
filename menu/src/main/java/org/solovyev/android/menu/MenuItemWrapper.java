@@ -23,8 +23,8 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 * User: serso
@@ -42,17 +42,17 @@ class MenuItemWrapper<MI> {
     @Nullable
     private final IdentifiableMenuItem<MI> identifiableMenuItem;
 
-    MenuItemWrapper(@NotNull LabeledMenuItem<MI> labeledMenuItem) {
+    MenuItemWrapper(@Nonnull LabeledMenuItem<MI> labeledMenuItem) {
         this.labeledMenuItem = labeledMenuItem;
         this.identifiableMenuItem = null;
     }
 
-    MenuItemWrapper(@NotNull IdentifiableMenuItem<MI> identifiableMenuItem) {
+    MenuItemWrapper(@Nonnull IdentifiableMenuItem<MI> identifiableMenuItem) {
         this.identifiableMenuItem = identifiableMenuItem;
         this.labeledMenuItem = null;
     }
 
-    @NotNull
+    @Nonnull
     public AMenuItem<MI> getMenuItem() {
         return labeledMenuItem != null ? labeledMenuItem : identifiableMenuItem;
     }
@@ -67,8 +67,8 @@ class MenuItemWrapper<MI> {
         this.menuItemId = menuItemId;
     }
 
-    @NotNull
-    public String getCaption(@NotNull Activity activity) {
+    @Nonnull
+    public String getCaption(@Nonnull Activity activity) {
         assert labeledMenuItem != null;
         return labeledMenuItem.getCaption(activity);
     }

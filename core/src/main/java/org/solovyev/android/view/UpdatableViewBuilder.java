@@ -24,7 +24,7 @@ package org.solovyev.android.view;
 
 import android.content.Context;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,6 +33,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface UpdatableViewBuilder<V extends View> extends ViewBuilder<V> {
 
-    @NotNull
-    V updateView(@NotNull Context context, @NotNull View view);
+    @Nonnull
+    V updateView(@Nonnull Context context, @Nonnull View view);
 }

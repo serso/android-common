@@ -22,8 +22,8 @@
 
 package org.solovyev.android.db;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -44,7 +44,7 @@ public abstract class AbstractObjectDbExec<T> implements DbExec {
         return object;
     }
 
-    @NotNull
+    @Nonnull
     protected T getNotNullObject() {
         assert object != null;
         return object;

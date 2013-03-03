@@ -23,8 +23,8 @@
 package org.solovyev.android.properties;
 
 import android.os.Parcelable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 
 import java.io.Serializable;
@@ -36,7 +36,7 @@ import java.io.Serializable;
  */
 public interface AProperty extends Parcelable, JCloneable<AProperty>, Serializable {
 
-    @NotNull
+    @Nonnull
     String getName();
 
     @Nullable

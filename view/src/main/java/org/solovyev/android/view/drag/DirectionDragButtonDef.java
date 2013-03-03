@@ -22,8 +22,8 @@
 
 package org.solovyev.android.view.drag;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -33,5 +33,5 @@ import org.jetbrains.annotations.Nullable;
 public interface DirectionDragButtonDef extends DragButtonDef {
 
     @Nullable
-    CharSequence getText(@NotNull DragDirection dragDirection);
+    CharSequence getText(@Nonnull DragDirection dragDirection);
 }

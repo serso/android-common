@@ -25,7 +25,7 @@ package org.solovyev.android.menu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.DialogFragmentShower;
 import org.solovyev.common.BuilderWithData;
 
@@ -44,16 +44,16 @@ public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements Buil
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final FragmentActivity fragmentActivity;
 
-    @NotNull
+    @Nonnull
     private final String fragmentTag;
 
-    @NotNull
+    @Nonnull
     private final AlertDialog.Builder menuBuilder;
 
-    @NotNull
+    @Nonnull
     private final ContextMenu<T, D> menu;
 
     /*
@@ -64,23 +64,23 @@ public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements Buil
     **********************************************************************
     */
 
-    @NotNull
-    public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull FragmentActivity fragmentActivity,
-                                                                                                @NotNull String fragmentTag,
-                                                                                                @NotNull Class<T> enumClass) {
+    @Nonnull
+    public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
+                                                                                                @Nonnull String fragmentTag,
+                                                                                                @Nonnull Class<T> enumClass) {
         return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, EnumContextMenu.<T, D>newInstance(enumClass));
     }
 
-    @NotNull
-    public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@NotNull FragmentActivity fragmentActivity,
-                                                                                         @NotNull String fragmentTag,
-                                                                                         @NotNull ContextMenu<T, D> menu) {
+    @Nonnull
+    public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
+                                                                                         @Nonnull String fragmentTag,
+                                                                                         @Nonnull ContextMenu<T, D> menu) {
         return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, menu);
     }
 
-    private ContextMenuBuilder(@NotNull FragmentActivity fragmentActivity,
-                               @NotNull String fragmentTag,
-                               @NotNull ContextMenu<T, D> menu) {
+    private ContextMenuBuilder(@Nonnull FragmentActivity fragmentActivity,
+                               @Nonnull String fragmentTag,
+                               @Nonnull ContextMenu<T, D> menu) {
         this.fragmentActivity = fragmentActivity;
         this.fragmentTag = fragmentTag;
         this.menuBuilder = new AlertDialog.Builder(fragmentActivity);
@@ -95,13 +95,13 @@ public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements Buil
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     public AlertDialog.Builder getMenuBuilder() {
         return menuBuilder;
     }
 
-    @NotNull
-    public DialogFragmentShower build(@NotNull final D data) {
+    @Nonnull
+    public DialogFragmentShower build(@Nonnull final D data) {
         menuBuilder.setItems(menu.getMenuCaptions(fragmentActivity), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 final LabeledMenuItem<D> menuItem = menu.itemAt(item);

@@ -30,7 +30,7 @@ import android.preference.PreferenceManager;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.IBillingObserver;
 import net.robotmedia.billing.ResponseCode;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Abstract subclass of IBillingObserver that provides default implementations
@@ -52,7 +52,7 @@ public abstract class AbstractBillingObserver implements IBillingObserver {
 		return isTransactionsRestored(context);
 	}
 
-	public static boolean isTransactionsRestored(@NotNull Context context) {
+	public static boolean isTransactionsRestored(@Nonnull Context context) {
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		return preferences.getBoolean(KEY_TRANSACTIONS_RESTORED, false);
 	}
@@ -67,7 +67,7 @@ public abstract class AbstractBillingObserver implements IBillingObserver {
 	 *            a purchase pending intent for the specified item.
 	 */
 	@Override
-	public void onPurchaseIntentOK(@NotNull String productId, @NotNull PendingIntent purchaseIntent) {
+	public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
 		BillingController.startPurchaseIntent(context, purchaseIntent, null);
 	}
 
@@ -80,7 +80,7 @@ public abstract class AbstractBillingObserver implements IBillingObserver {
 	}
 	
 	@Override
-	public void onErrorRestoreTransactions(@NotNull ResponseCode responseCode) {
+	public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
 		// ignore errors when restoring transactions
 	}
 }

@@ -24,8 +24,8 @@ package org.solovyev.android.keyboard;
 
 import android.os.Handler;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -58,19 +58,19 @@ public class RepeatHelper {
 
     private boolean repeat = false;
 
-	@NotNull
+	@Nonnull
 	private final Handler uiHandler = new Handler();
 
 	@Nullable
 	private Runnable repeatRunnable;
 
-	public synchronized void keyUp(@NotNull View v) {
+	public synchronized void keyUp(@Nonnull View v) {
 		if (this.repeatView == v ) {
 			clean(null);
 		}
 	}
 
-	public synchronized void keyDown(@NotNull View v, @Nullable final Runnable repeatRunnable) {
+	public synchronized void keyDown(@Nonnull View v, @Nullable final Runnable repeatRunnable) {
 		clean(v);
 
 		if (repeatRunnable !=  null) {

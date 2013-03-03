@@ -25,7 +25,7 @@ package org.solovyev.android.keyboard;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.EditorInfo;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: Solovyev_S
@@ -34,29 +34,29 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboard> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardViewWithSuggestions<DragAKeyboard> createKeyboardView0(@NotNull Context context) {
+    protected AKeyboardViewWithSuggestions<DragAKeyboard> createKeyboardView0(@Nonnull Context context) {
         return new AKeyboardViewWithSuggestionsImpl<DragAKeyboard, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
         return AKeyboardControllerStateImpl.newDefaultState(createKeyboardDef(inputMethodService));
     }
 
-    protected abstract DragAKeyboard createKeyboardDef(@NotNull Context context);
+    protected abstract DragAKeyboard createKeyboardDef(@Nonnull Context context);
 
-    @NotNull
+    @Nonnull
     @Override
-    public AKeyboardControllerState<DragAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+    public AKeyboardControllerState<DragAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
         return getState();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
+    protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
         return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
     }
 }

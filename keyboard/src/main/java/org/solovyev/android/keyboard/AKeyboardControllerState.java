@@ -22,7 +22,7 @@
 
 package org.solovyev.android.keyboard;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -39,15 +39,15 @@ public interface AKeyboardControllerState<K extends AKeyboard> {
 
     boolean isPrediction();
 
-	@NotNull
+	@Nonnull
 	K getKeyboard();
 
-	@NotNull
-	AKeyboardControllerState<K> copyForNewKeyboard(@NotNull K keyboard);
+	@Nonnull
+	AKeyboardControllerState<K> copyForNewKeyboard(@Nonnull K keyboard);
 
-	@NotNull
+	@Nonnull
 	AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock);
 
-    @NotNull
+    @Nonnull
     AKeyboardControllerState<K> copyForNewShift(boolean newState);
 }

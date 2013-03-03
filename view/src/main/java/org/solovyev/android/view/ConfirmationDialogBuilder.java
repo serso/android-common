@@ -25,8 +25,8 @@ package org.solovyev.android.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.DialogFragmentShower;
 import org.solovyev.common.Builder;
 
@@ -45,10 +45,10 @@ public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> 
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final FragmentActivity fragmentActivity;
 
-    @NotNull
+    @Nonnull
     private final String fragmentTag;
 
     private final int messageResId;
@@ -73,14 +73,14 @@ public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> 
     **********************************************************************
     */
 
-    private ConfirmationDialogBuilder(@NotNull FragmentActivity fragmentActivity, @NotNull String fragmentTag, int messageResId) {
+    private ConfirmationDialogBuilder(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
         this.fragmentActivity = fragmentActivity;
         this.fragmentTag = fragmentTag;
         this.messageResId = messageResId;
     }
 
-    @NotNull
-    public static ConfirmationDialogBuilder newInstance(@NotNull FragmentActivity fragmentActivity, @NotNull String fragmentTag, int messageResId) {
+    @Nonnull
+    public static ConfirmationDialogBuilder newInstance(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
         return new ConfirmationDialogBuilder(fragmentActivity, fragmentTag, messageResId);
     }
 
@@ -92,37 +92,37 @@ public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> 
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     public ConfirmationDialogBuilder setTitleResId(int titleResId) {
         this.titleResId = titleResId;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public ConfirmationDialogBuilder setPositiveButtonTextResId(int positiveButtonTextResId) {
         this.positiveButtonTextResId = positiveButtonTextResId;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public ConfirmationDialogBuilder setNegativeButtonTextResId(int negativeButtonTextResId) {
         this.negativeButtonTextResId = negativeButtonTextResId;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public ConfirmationDialogBuilder setPositiveHandler(@Nullable DialogInterface.OnClickListener positiveHandler) {
         this.positiveHandler = positiveHandler;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     public ConfirmationDialogBuilder setNegativeHandler(@Nullable DialogInterface.OnClickListener negativeHandler) {
         this.negativeHandler = negativeHandler;
         return this;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DialogFragmentShower build() {
         AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity);

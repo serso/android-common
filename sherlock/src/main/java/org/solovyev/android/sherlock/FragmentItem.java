@@ -23,7 +23,7 @@
 package org.solovyev.android.sherlock;
 
 import android.support.v4.app.FragmentTransaction;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface FragmentItem {
 
-    public void onSelected(@NotNull FragmentTransaction ft);
+    public void onSelected(@Nonnull FragmentTransaction ft);
 
-    public void onUnselected(@NotNull FragmentTransaction ft);
+    public void onUnselected(@Nonnull FragmentTransaction ft);
 }

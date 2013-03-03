@@ -23,7 +23,7 @@
 package org.solovyev.android.view;
 
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,5 +32,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ActivityViewBuilder {
 
-    void buildView(@NotNull Activity activity);
+    void buildView(@Nonnull Activity activity);
 }

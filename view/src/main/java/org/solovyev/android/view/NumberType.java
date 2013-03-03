@@ -22,7 +22,7 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.math.BigDecimal;
 
@@ -41,14 +41,14 @@ enum NumberType {
 	BYTE(Byte.class),
 	BIG_DECIMAL(BigDecimal.class);
 
-	@NotNull
+	@Nonnull
 	private final Class underlyingClass;
 
-	NumberType(@NotNull Class underlyingClass) {
+	NumberType(@Nonnull Class underlyingClass) {
 		this.underlyingClass = underlyingClass;
 	}
 
-	@NotNull
+	@Nonnull
 	public static <E extends Number> NumberType fromNumber(E value) throws IllegalArgumentException {
 
 		for (NumberType numberType : NumberType.values()) {

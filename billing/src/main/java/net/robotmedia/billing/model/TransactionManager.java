@@ -23,36 +23,36 @@
 package net.robotmedia.billing.model;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.db.AndroidDbUtils;
 
 import java.util.List;
 
 public class TransactionManager {
 
-	public synchronized static void dropDatabase(@NotNull Context context) {
+	public synchronized static void dropDatabase(@Nonnull Context context) {
 		context.deleteDatabase(BillingDB.DATABASE_NAME);
 	}
 
-	public synchronized static void addTransaction(@NotNull Transaction transaction) {
+	public synchronized static void addTransaction(@Nonnull Transaction transaction) {
 		BillingDB.getInstance().insert(transaction);
 	}
 
-	public synchronized static boolean isPurchased(@NotNull String productId) {
+	public synchronized static boolean isPurchased(@Nonnull String productId) {
 		return countPurchases(productId) > 0;
 	}
 
-	public synchronized static int countPurchases(@NotNull String productId) {
+	public synchronized static int countPurchases(@Nonnull String productId) {
 		return AndroidDbUtils.doDbQuery(BillingDB.getInstance().getDatabaseHelper(), new BillingDB.CountPurchases(productId));
 	}
 
-	@NotNull
+	@Nonnull
 	public synchronized static List<Transaction> getTransactions() {
 		return AndroidDbUtils.doDbQuery(BillingDB.getInstance().getDatabaseHelper(), new BillingDB.TransactionsByProductId(null));
 	}
 
-	@NotNull
-	public synchronized static List<Transaction> getTransactions(@NotNull String productId) {
+	@Nonnull
+	public synchronized static List<Transaction> getTransactions(@Nonnull String productId) {
 		return AndroidDbUtils.doDbQuery(BillingDB.getInstance().getDatabaseHelper(), new BillingDB.TransactionsByProductId(productId));
 	}
 

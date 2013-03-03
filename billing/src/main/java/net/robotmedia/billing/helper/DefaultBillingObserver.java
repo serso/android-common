@@ -28,8 +28,8 @@ import android.content.Context;
 import net.robotmedia.billing.IBillingObserver;
 import net.robotmedia.billing.ResponseCode;
 import net.robotmedia.billing.model.Transaction;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -41,7 +41,7 @@ public class DefaultBillingObserver extends AbstractBillingObserver {
     @Nullable
     private final IBillingObserver nestedBillingObserver;
 
-    public DefaultBillingObserver(@NotNull Context context, @Nullable IBillingObserver nestedBillingObserver) {
+    public DefaultBillingObserver(@Nonnull Context context, @Nullable IBillingObserver nestedBillingObserver) {
         super(context);
         this.nestedBillingObserver = nestedBillingObserver;
     }
@@ -54,7 +54,7 @@ public class DefaultBillingObserver extends AbstractBillingObserver {
     }
 
     @Override
-    public void onPurchaseIntentOK(@NotNull String productId, @NotNull PendingIntent purchaseIntent) {
+    public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
         super.onPurchaseIntentOK(productId, purchaseIntent);
         if (nestedBillingObserver != null) {
             nestedBillingObserver.onPurchaseIntentOK(productId, purchaseIntent);
@@ -62,21 +62,21 @@ public class DefaultBillingObserver extends AbstractBillingObserver {
     }
 
     @Override
-    public void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode) {
+    public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
         if (nestedBillingObserver != null) {
             nestedBillingObserver.onPurchaseIntentFailure(productId, responseCode);
         }
     }
 
     @Override
-    public void onPurchaseStateChanged(@NotNull String productId, @NotNull Transaction.PurchaseState state) {
+    public void onPurchaseStateChanged(@Nonnull String productId, @Nonnull Transaction.PurchaseState state) {
         if (nestedBillingObserver != null) {
             nestedBillingObserver.onPurchaseStateChanged(productId, state);
         }
     }
 
     @Override
-    public void onRequestPurchaseResponse(@NotNull String productId, @NotNull ResponseCode response) {
+    public void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response) {
         if (nestedBillingObserver != null) {
             nestedBillingObserver.onRequestPurchaseResponse(productId, response);
         }
@@ -91,7 +91,7 @@ public class DefaultBillingObserver extends AbstractBillingObserver {
     }
 
     @Override
-    public void onErrorRestoreTransactions(@NotNull ResponseCode responseCode) {
+    public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
         super.onErrorRestoreTransactions(responseCode);
         if (nestedBillingObserver != null) {
             nestedBillingObserver.onErrorRestoreTransactions(responseCode);

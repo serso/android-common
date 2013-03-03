@@ -26,8 +26,8 @@ import android.content.Context;
 import android.util.Log;
 import net.robotmedia.billing.security.BillingSecurity;
 import net.robotmedia.billing.utils.AESObfuscator.ValidationException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.security.SecureRandom;
 import java.util.HashSet;
@@ -42,7 +42,7 @@ public class Security {
 	@Nullable
 	private static AESObfuscator obfuscator = null;
 
-	@NotNull
+	@Nonnull
 	private static final Object obfuscatorLock = new Object();
 
 
@@ -87,12 +87,12 @@ public class Security {
 	 * @return obfuscated string. Null can be returned only if source string is null
 	 */
 	@Nullable
-	public static String obfuscate(@NotNull Context context, @Nullable byte[] salt, @Nullable String source) {
+	public static String obfuscate(@Nonnull Context context, @Nullable byte[] salt, @Nullable String source) {
 		return salt == null ? source : getObfuscator(context, salt).obfuscate(source);
 	}
 
-	@NotNull
-	private static AESObfuscator getObfuscator(@NotNull Context context, @NotNull byte[] salt) {
+	@Nonnull
+	private static AESObfuscator getObfuscator(@Nonnull Context context, @Nonnull byte[] salt) {
 		// todo serso: optimize synchronization
 		// obfuscatorLock object used only in order not to lock the whole class by synchronizing method
 		synchronized (obfuscatorLock) {
@@ -117,7 +117,7 @@ public class Security {
 	 * @return unobfuscated string. Null returned in two cases: either obfuscated string is null or unobfuscation failed due to some errors
 	 */
 	@Nullable
-	public static String unobfuscate(@NotNull Context context, @Nullable byte[] salt, @Nullable String obfuscated) {
+	public static String unobfuscate(@Nonnull Context context, @Nullable byte[] salt, @Nullable String obfuscated) {
 		if (salt != null) {
 			final AESObfuscator obfuscator = getObfuscator(context, salt);
 			try {

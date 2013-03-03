@@ -24,8 +24,8 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.Labeled;
 import org.solovyev.android.LabeledFormatter;
 import org.solovyev.android.view.ListRange;
@@ -41,21 +41,21 @@ import java.util.Arrays;
  */
 public abstract class AbstractEnumPickerDialogPreference<T extends Enum & Labeled> extends AbstractPickerDialogPreference<T> {
 
-    @NotNull
+    @Nonnull
     private final Class<T> enumClass;
 
     protected AbstractEnumPickerDialogPreference(Context context,
                                                  AttributeSet attrs,
                                                  @Nullable String defaultStringValue,
                                                  boolean needValueText,
-                                                 @NotNull Class<T> enumClass) {
+                                                 @Nonnull Class<T> enumClass) {
         super(context, attrs, defaultStringValue, needValueText, EnumMapper.of(enumClass));
         this.enumClass = enumClass;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Picker.Range<T> createRange(@NotNull T selected) {
+    protected Picker.Range<T> createRange(@Nonnull T selected) {
         return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected, new LabeledFormatter<T>(getContext()));
     }
 }

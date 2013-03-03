@@ -22,17 +22,17 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class BooleanPreferenceTest extends AbstractPreferenceTest<Boolean> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<Boolean> createPreference(@NotNull String key, @NotNull Boolean defaultValue) {
+    protected Preference<Boolean> createPreference(@Nonnull String key, @Nonnull Boolean defaultValue) {
         return BooleanPreference.of(key,  defaultValue);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Boolean createDefaultValue() {
         return true;

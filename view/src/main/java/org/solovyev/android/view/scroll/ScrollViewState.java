@@ -24,7 +24,7 @@ package org.solovyev.android.view.scroll;
 
 import android.os.Bundle;
 import android.widget.ScrollView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.Serializable;
 
@@ -35,7 +35,7 @@ import java.io.Serializable;
  */
 public class ScrollViewState implements Serializable {
 
-    @NotNull
+    @Nonnull
     private static final String SCROLL_VIEW_STATE = "scroll_view_state";
 
     private int scrollX = 0;
@@ -45,12 +45,12 @@ public class ScrollViewState implements Serializable {
     public ScrollViewState() {
     }
 
-    public ScrollViewState(@NotNull ScrollView scrollView) {
+    public ScrollViewState(@Nonnull ScrollView scrollView) {
         this.scrollX = scrollView.getScrollX();
         this.scrollY = scrollView.getScrollY();
     }
 
-    public void restoreState(@NotNull final ScrollView scrollView) {
+    public void restoreState(@Nonnull final ScrollView scrollView) {
         scrollView.post(new Runnable() {
             @Override
             public void run() {
@@ -60,11 +60,11 @@ public class ScrollViewState implements Serializable {
 
     }
 
-    public static void saveState(@NotNull Bundle out, @NotNull final ScrollView scrollView) {
+    public static void saveState(@Nonnull Bundle out, @Nonnull final ScrollView scrollView) {
         out.putSerializable(SCROLL_VIEW_STATE, new ScrollViewState(scrollView));
     }
 
-    public static void restoreState(@NotNull Bundle in, @NotNull final ScrollView scrollView) {
+    public static void restoreState(@Nonnull Bundle in, @Nonnull final ScrollView scrollView) {
         final Object o = in.getSerializable(SCROLL_VIEW_STATE);
         if (o instanceof ScrollViewState) {
             ((ScrollViewState) o).restoreState(scrollView);

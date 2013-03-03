@@ -24,8 +24,8 @@ package net.robotmedia.billing;
 
 import android.content.Context;
 import android.content.Intent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -35,26 +35,26 @@ import org.jetbrains.annotations.Nullable;
 enum BillingRequestType {
 
 	CHECK_BILLING_SUPPORTED {
-		@NotNull
+		@Nonnull
 		@Override
-		protected BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId) {
+		protected BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId) {
 			return new BillingRequest.CheckBillingSupported(packageName, startId);
 		}
 	},
 
 	CONFIRM_NOTIFICATIONS {
-		@NotNull
+		@Nonnull
 		@Override
-		protected BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId) {
+		protected BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId) {
 			final String[] notifyIds = intent.getStringArrayExtra(EXTRA_NOTIFY_IDS);
 			return new BillingRequest.ConfirmNotifications(packageName, startId, notifyIds);
 		}
 	},
 
 	GET_PURCHASE_INFORMATION {
-		@NotNull
+		@Nonnull
 		@Override
-		protected BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId) {
+		protected BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId) {
 			final long nonce = intent.getLongExtra(EXTRA_NONCE, 0);
 			final String[] notifyIds = intent.getStringArrayExtra(EXTRA_NOTIFY_IDS);
 			return new BillingRequest.GetPurchaseInformation(packageName, startId, notifyIds, nonce);
@@ -62,9 +62,9 @@ enum BillingRequestType {
 	},
 
 	REQUEST_PURCHASE {
-		@NotNull
+		@Nonnull
 		@Override
-		protected BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId) {
+		protected BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId) {
 			final String productId = intent.getStringExtra(EXTRA_ITEM_ID);
 			final String developerPayload = intent.getStringExtra(EXTRA_DEVELOPER_PAYLOAD);
 			return new BillingRequest.Purchase(packageName, startId, productId, developerPayload);
@@ -72,9 +72,9 @@ enum BillingRequestType {
 	},
 
 	RESTORE_TRANSACTIONS {
-		@NotNull
+		@Nonnull
 		@Override
-		protected BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId) {
+		protected BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId) {
 			final long nonce = intent.getLongExtra(EXTRA_NONCE, 0);
 			return new BillingRequest.RestoreTransactions(packageName, startId, nonce);
 		}
@@ -85,20 +85,20 @@ enum BillingRequestType {
 	public static final String EXTRA_NOTIFY_IDS = "NOTIFY_IDS";
 	public static final String EXTRA_DEVELOPER_PAYLOAD = "DEVELOPER_PAYLOAD";
 
-	final void doAction(@NotNull IBillingService service, @NotNull Intent intent, int startId) {
+	final void doAction(@Nonnull IBillingService service, @Nonnull Intent intent, int startId) {
 		service.runRequestOrQueue(getBillingRequest(service.getPackageName(), intent, startId));
 	}
 
-	@NotNull
-	protected abstract BillingRequest getBillingRequest(@NotNull String packageName, @NotNull Intent intent, int startId);
+	@Nonnull
+	protected abstract BillingRequest getBillingRequest(@Nonnull String packageName, @Nonnull Intent intent, int startId);
 
-	@NotNull
-	String toIntentAction(@NotNull Context context) {
+	@Nonnull
+	String toIntentAction(@Nonnull Context context) {
 		return context.getPackageName() + "." + this.name();
 	}
 
 	@Nullable
-	static BillingRequestType fromIntentAction(@NotNull Intent intent) {
+	static BillingRequestType fromIntentAction(@Nonnull Intent intent) {
 		final String actionString = intent.getAction();
 		if (actionString == null) {
 			return null;

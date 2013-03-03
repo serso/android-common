@@ -23,7 +23,7 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.KeyboardView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: Solovyev_S
@@ -32,10 +32,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DefaultKeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
-	@NotNull
+	@Nonnull
 	private final AKeyboardController keyboardController;
 
-	public DefaultKeyboardActionListener(@NotNull AKeyboardController keyboardController) {
+	public DefaultKeyboardActionListener(@Nonnull AKeyboardController keyboardController) {
 		this.keyboardController = keyboardController;
 	}
 

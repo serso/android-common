@@ -32,7 +32,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Parcelable;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -96,7 +96,7 @@ public final class Android {
      * @throws PackageManager.NameNotFoundException
      *          if application is not found
      */
-    public static int getAppVersionCode(@NotNull Context context, @NotNull String appPackageName) throws PackageManager.NameNotFoundException {
+    public static int getAppVersionCode(@Nonnull Context context, @Nonnull String appPackageName) throws PackageManager.NameNotFoundException {
         return context.getPackageManager().getPackageInfo(appPackageName, 0).versionCode;
     }
 
@@ -104,7 +104,7 @@ public final class Android {
      * @param context context
      * @return version number of current application
      */
-    public static int getAppVersionCode(@NotNull Context context) {
+    public static int getAppVersionCode(@Nonnull Context context) {
         try {
             return getAppVersionCode(context, context.getPackageName());
         } catch (PackageManager.NameNotFoundException e) {
@@ -112,24 +112,24 @@ public final class Android {
         }
     }
 
-    public static boolean isPhoneModel(@NotNull DeviceModel phoneModel) {
+    public static boolean isPhoneModel(@Nonnull DeviceModel phoneModel) {
         final String model = Build.MODEL;
         return model != null && phoneModel.getModels().contains(model);
     }
 
-    public static boolean isDebuggable(@NotNull Context context) {
+    public static boolean isDebuggable(@Nonnull Context context) {
         if (debug == null) {
             debug = 0 != (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE);
         }
         return debug;
     }
 
-    @NotNull
+    @Nonnull
     public static Parcelable.Creator<String> getStringParcelableCreator() {
         return StringParcelableCreator.getInstance();
     }
 
-    public static void addIntentFlags(@NotNull Intent intent, boolean detached, @NotNull Context context) {
+    public static void addIntentFlags(@Nonnull Intent intent, boolean detached, @Nonnull Context context) {
         int flags = 0;
 
         if (!(context instanceof Activity)) {
@@ -144,8 +144,8 @@ public final class Android {
 
     }
 
-    public static void toggleComponent(@NotNull Context context,
-                                       @NotNull Class<? extends Context> componentClass,
+    public static void toggleComponent(@Nonnull Context context,
+                                       @Nonnull Class<? extends Context> componentClass,
                                        boolean enable) {
         final PackageManager pm = context.getPackageManager();
 
@@ -159,17 +159,17 @@ public final class Android {
         pm.setComponentEnabledSetting(new ComponentName(context, componentClass), componentState, PackageManager.DONT_KILL_APP);
     }
 
-    public static boolean isComponentEnabled(@NotNull Context context,
-                                             @NotNull Class<? extends Context> componentClass) {
+    public static boolean isComponentEnabled(@Nonnull Context context,
+                                             @Nonnull Class<? extends Context> componentClass) {
         final PackageManager pm = context.getPackageManager();
 
         int componentEnabledSetting = pm.getComponentEnabledSetting(new ComponentName(context, componentClass));
         return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
     }
 
-    public static String saveBitmap(@NotNull Bitmap bitmap,
-                                    @NotNull String path,
-                                    @NotNull String fileName) {
+    public static String saveBitmap(@Nonnull Bitmap bitmap,
+                                    @Nonnull String path,
+                                    @Nonnull String fileName) {
         final File filePath = new File(path);
         filePath.mkdirs();
 

@@ -22,8 +22,8 @@
 
 package org.solovyev.android.list;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 /**
@@ -38,7 +38,7 @@ public class PrefixAdapterFilter<T> extends AdapterFilter<T> {
         return new PrefixFilter<T>(prefix.toString().toLowerCase());
     }
 
-    public PrefixAdapterFilter(@NotNull Helper<T> helper) {
+    public PrefixAdapterFilter(@Nonnull Helper<T> helper) {
         super(helper);
     }
 }

@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -40,9 +40,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ActivityMenu<M, MI> {
 
-    boolean onCreateOptionsMenu(@NotNull Activity activity, @NotNull M menu);
+    boolean onCreateOptionsMenu(@Nonnull Activity activity, @Nonnull M menu);
 
-    boolean onPrepareOptionsMenu(@NotNull Activity activity, @NotNull M menu);
+    boolean onPrepareOptionsMenu(@Nonnull Activity activity, @Nonnull M menu);
 
-    boolean onOptionsItemSelected(@NotNull Activity activity, @NotNull MI item);
+    boolean onOptionsItemSelected(@Nonnull Activity activity, @Nonnull MI item);
 }

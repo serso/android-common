@@ -27,8 +27,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -37,15 +37,15 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FragmentItemImpl implements FragmentItem {
 
-    @NotNull
+    @Nonnull
     private final SherlockFragmentActivity activity;
 
     // Fragment
 
-    @NotNull
+    @Nonnull
     private final String tag;
 
-    @NotNull
+    @Nonnull
     private final Class<? extends Fragment> fragmentClass;
 
     @Nullable
@@ -67,9 +67,9 @@ public class FragmentItemImpl implements FragmentItem {
      * @param parentViewId parent view id
      */
 
-    public FragmentItemImpl(@NotNull SherlockFragmentActivity activity,
-                            @NotNull String tag,
-                            @NotNull Class<? extends Fragment> fragmentClass,
+    public FragmentItemImpl(@Nonnull SherlockFragmentActivity activity,
+                            @Nonnull String tag,
+                            @Nonnull Class<? extends Fragment> fragmentClass,
                             @Nullable Bundle fragmentArgs,
                             @Nullable Integer parentViewId) {
         this.activity = activity;
@@ -84,7 +84,7 @@ public class FragmentItemImpl implements FragmentItem {
 
 
     @Override
-    public void onSelected(@NotNull FragmentTransaction ft) {
+    public void onSelected(@Nonnull FragmentTransaction ft) {
 		if (fragment == null) {
 			fragment = activity.getSupportFragmentManager().findFragmentByTag(this.tag);
 		}
@@ -107,7 +107,7 @@ public class FragmentItemImpl implements FragmentItem {
     }
 
     @Override
-    public void onUnselected(@NotNull FragmentTransaction ft) {
+    public void onUnselected(@Nonnull FragmentTransaction ft) {
         if (fragment != null) {
             ft.detach(fragment);
         }

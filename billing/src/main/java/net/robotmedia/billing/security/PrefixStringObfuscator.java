@@ -1,6 +1,6 @@
 package net.robotmedia.billing.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.security.Cipherer;
 import org.solovyev.common.security.CiphererException;
 
@@ -13,31 +13,31 @@ import javax.crypto.SecretKey;
 */
 class PrefixStringObfuscator implements Cipherer<String, String> {
 
-    @NotNull
+    @Nonnull
     private final String securityPrefix;
 
-    @NotNull
+    @Nonnull
     private Cipherer<String, String> stringCipherer;
 
-    private PrefixStringObfuscator(@NotNull String securityPrefix, @NotNull Cipherer<String, String> stringCipherer) {
+    private PrefixStringObfuscator(@Nonnull String securityPrefix, @Nonnull Cipherer<String, String> stringCipherer) {
         this.securityPrefix = securityPrefix;
         this.stringCipherer = stringCipherer;
     }
 
-    @NotNull
-    static Cipherer<String, String> newInstance(@NotNull String prefix, @NotNull Cipherer<String, String> stringCipherer) {
+    @Nonnull
+    static Cipherer<String, String> newInstance(@Nonnull String prefix, @Nonnull Cipherer<String, String> stringCipherer) {
         return new PrefixStringObfuscator(prefix, stringCipherer);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String encrypt(@NotNull SecretKey secret, @NotNull String decrypted) throws CiphererException {
+    public String encrypt(@Nonnull SecretKey secret, @Nonnull String decrypted) throws CiphererException {
         return stringCipherer.encrypt(secret, securityPrefix + decrypted);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String decrypt(@NotNull SecretKey secret, @NotNull String encrypted) throws CiphererException {
+    public String decrypt(@Nonnull SecretKey secret, @Nonnull String encrypted) throws CiphererException {
         String decrypted = stringCipherer.decrypt(secret, encrypted);
 
         // Check for presence of header. This serves as a final integrity check, for cases

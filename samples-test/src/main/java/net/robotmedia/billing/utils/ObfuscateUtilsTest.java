@@ -4,7 +4,7 @@ import android.test.AndroidTestCase;
 import junit.framework.Assert;
 import net.robotmedia.billing.model.Transaction;
 import net.robotmedia.billing.security.BillingSecurity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.security.SecurityService;
 import org.solovyev.common.text.Strings;
 
@@ -21,7 +21,7 @@ public class ObfuscateUtilsTest extends AndroidTestCase {
 
     private static int TEST_COUNT = 1000;
 
-    @NotNull
+    @Nonnull
     private Random random;
 
     private byte[] salt = new byte[]{81, -114, 32, -127, -32, -104, -40, -15, -47, 57, -13, -41, -33, 67, -114, 7, -11, 53, 126, 82};
@@ -72,7 +72,7 @@ public class ObfuscateUtilsTest extends AndroidTestCase {
 
     }
 
-    @NotNull
+    @Nonnull
     private Transaction generateRandomTransaction() {
         final Transaction transaction = new Transaction();
 

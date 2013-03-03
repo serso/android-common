@@ -26,7 +26,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GrayableRelativeLayout extends RelativeLayout implements Grayable {
 
-    @NotNull
+    @Nonnull
     private ViewGrayable grayable = new GrayableImpl();
 
     public GrayableRelativeLayout(Context context, AttributeSet attrs) {

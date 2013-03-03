@@ -24,7 +24,7 @@ package org.solovyev.android.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,28 +33,28 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MaxIdLoader implements DbQuery<Integer> {
 
-    @NotNull
+    @Nonnull
     private final String tableName;
 
-    @NotNull
+    @Nonnull
     private final String columnName;
 
-    public MaxIdLoader(@NotNull String tableName, @NotNull String columnName) {
+    public MaxIdLoader(@Nonnull String tableName, @Nonnull String columnName) {
         this.tableName = tableName;
         this.columnName = columnName;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Cursor createCursor(@NotNull SQLiteDatabase db) {
+    public Cursor createCursor(@Nonnull SQLiteDatabase db) {
         final StringBuilder query = new StringBuilder();
         query.append("select max(").append(columnName).append(") from ").append(tableName);
         return db.rawQuery(query.toString(), null);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Integer retrieveData(@NotNull Cursor cursor) {
+    public Integer retrieveData(@Nonnull Cursor cursor) {
         cursor.moveToNext();
         return cursor.getInt(0);
     }

@@ -29,8 +29,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.db.AndroidDbUtils;
 import org.solovyev.android.db.DbExec;
 import org.solovyev.android.db.DbQuery;
@@ -67,22 +67,22 @@ public class BillingDB {
 
 	private static volatile BillingDB instance;
 
-	private BillingDB(@NotNull Context context) {
+	private BillingDB(@Nonnull Context context) {
 		databaseHelper = new DatabaseHelper(context);
 		db = databaseHelper.getWritableDatabase();
 	}
 
-	public static void init(@NotNull Application application) {
+	public static void init(@Nonnull Application application) {
 		instance = new BillingDB(application);
 	}
 
-	@NotNull
+	@Nonnull
 	public static BillingDB getInstance() {
 		return instance;
 	}
 
-	@NotNull
-	private static List<Transaction> getTransactionsFromCursor(@NotNull final Cursor cursor) {
+	@Nonnull
+	private static List<Transaction> getTransactionsFromCursor(@Nonnull final Cursor cursor) {
 		final List<Transaction> result = new ArrayList<Transaction>();
 
 		while (cursor.moveToNext()) {
@@ -98,12 +98,12 @@ public class BillingDB {
 		//databaseHelper.close();
 	}
 
-	public void insert(@NotNull Transaction transaction) {
+	public void insert(@Nonnull Transaction transaction) {
 		AndroidDbUtils.doDbExec(this.getDatabaseHelper(), new InsertTransaction(transaction));
 	}
 
-	@NotNull
-	protected static Transaction createTransaction( @NotNull Cursor cursor) {
+	@Nonnull
+	protected static Transaction createTransaction( @Nonnull Cursor cursor) {
 		final Transaction purchase = new Transaction();
 
 		purchase.orderId = cursor.getString(0);
@@ -117,22 +117,22 @@ public class BillingDB {
 
 	static class CountPurchases implements DbQuery<Integer> {
 
-		@NotNull
+		@Nonnull
 		private final String productId;
 
-		public CountPurchases(@NotNull String productId) {
+		public CountPurchases(@Nonnull String productId) {
 			this.productId = productId;
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public Cursor createCursor(@NotNull SQLiteDatabase db) {
+		public Cursor createCursor(@Nonnull SQLiteDatabase db) {
 			return db.query(TABLE_TRANSACTIONS, TABLE_TRANSACTIONS_COLUMNS, COLUMN_PRODUCT_ID + " = ? AND " + COLUMN_STATE + " = ?", new String[]{productId, String.valueOf(PurchaseState.PURCHASED.ordinal())}, null, null, null);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public Integer retrieveData(@NotNull Cursor cursor) {
+		public Integer retrieveData(@Nonnull Cursor cursor) {
 			return cursor.getCount();
 		}
 	}
@@ -146,9 +146,9 @@ public class BillingDB {
 			this.productId = productId;
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public Cursor createCursor(@NotNull SQLiteDatabase db) {
+		public Cursor createCursor(@Nonnull SQLiteDatabase db) {
 			if (productId != null) {
 				return db.query(TABLE_TRANSACTIONS, TABLE_TRANSACTIONS_COLUMNS, COLUMN_PRODUCT_ID + " = ?", new String[]{productId}, null, null, null);
 			} else {
@@ -156,25 +156,25 @@ public class BillingDB {
 			}
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
-		public List<Transaction> retrieveData(@NotNull Cursor cursor) {
+		public List<Transaction> retrieveData(@Nonnull Cursor cursor) {
 			return getTransactionsFromCursor(cursor);
 		}
 	}
 
 	private class DatabaseHelper extends SQLiteOpenHelper {
 
-		public DatabaseHelper(@NotNull Context context) {
+		public DatabaseHelper(@Nonnull Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 
 		@Override
-		public void onCreate(@NotNull SQLiteDatabase db) {
+		public void onCreate(@Nonnull SQLiteDatabase db) {
 			createTransactionsTable(db);
 		}
 
-		private void createTransactionsTable(@NotNull SQLiteDatabase db) {
+		private void createTransactionsTable(@Nonnull SQLiteDatabase db) {
 			db.execSQL("CREATE TABLE " + TABLE_TRANSACTIONS + "(" +
 					COLUMN_ID + " TEXT PRIMARY KEY, " +
 					COLUMN_PRODUCT_ID + " INTEGER, " +
@@ -184,26 +184,26 @@ public class BillingDB {
 		}
 
 		@Override
-		public void onUpgrade(@NotNull SQLiteDatabase db, int oldVersion, int newVersion) {
+		public void onUpgrade(@Nonnull SQLiteDatabase db, int oldVersion, int newVersion) {
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	public DatabaseHelper getDatabaseHelper() {
 		return databaseHelper;
 	}
 
 	static class InsertTransaction implements DbExec {
 
-		@NotNull
+		@Nonnull
 		private final Transaction transaction;
 
-		InsertTransaction(@NotNull Transaction transaction) {
+		InsertTransaction(@Nonnull Transaction transaction) {
 			this.transaction = transaction;
 		}
 
 		@Override
-		public void exec(@NotNull SQLiteDatabase db) {
+		public void exec(@Nonnull SQLiteDatabase db) {
 			final ContentValues values = new ContentValues();
 
 			values.put(COLUMN_ID, transaction.orderId);

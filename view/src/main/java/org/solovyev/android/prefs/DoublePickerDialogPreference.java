@@ -24,8 +24,8 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.DoubleRange;
 import org.solovyev.android.view.NumberRange;
 import org.solovyev.common.interval.Interval;
@@ -41,18 +41,18 @@ import java.text.DecimalFormat;
  */
 public class DoublePickerDialogPreference extends NumberPickerDialogPreference<Double> {
 
-    @NotNull
+    @Nonnull
     private static final Formatter<Double> simpleFormatter = new DoubleFormatter(2);
 
-    @NotNull
+    @Nonnull
     @Override
     protected Double getDefaultStep() {
         return 1d;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected NumberRange<Double> createRange(@NotNull Interval<Double> boundaries, @NotNull Double step, @NotNull Double selected) {
+    protected NumberRange<Double> createRange(@Nonnull Interval<Double> boundaries, @Nonnull Double step, @Nonnull Double selected) {
         return DoubleRange.newInstance(boundaries.getLeftLimit(), boundaries.getRightLimit(), step, selected, simpleFormatter);
     }
 
@@ -62,7 +62,7 @@ public class DoublePickerDialogPreference extends NumberPickerDialogPreference<D
 
     private static class DoubleFormatter implements Formatter<Double> {
 
-        @NotNull
+        @Nonnull
         private final DecimalFormat df;
 
         private DoubleFormatter(int numberOfDecimalDigits) {

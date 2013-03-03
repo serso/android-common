@@ -33,7 +33,7 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
 
@@ -52,12 +52,12 @@ public class ColorButton extends Button {
 	private static final int CLICK_FEEDBACK_INTERVAL = 10;
 	private static final int CLICK_FEEDBACK_DURATION = 350;
 
-	@NotNull
+	@Nonnull
 	private Point2d textPosition;
 	private long animationStart;
 	private Paint feedbackPaint;
 
-	@NotNull
+	@Nonnull
 	private final OnClickListenerVibrator onClickListener;
 
 	private static final float H_TEXT_POSITION_DEFAULT_VALUE = 0.5f;
@@ -124,7 +124,7 @@ public class ColorButton extends Button {
 		}
 	}
 
-	private Point2d getTextPosition(@NotNull Paint paint, @NotNull CharSequence text) {
+	private Point2d getTextPosition(@Nonnull Paint paint, @Nonnull CharSequence text) {
 		final Point2d result = new Point2d();
 
 		result.setX(hTextPosition * getWidth() - 0.5f * paint.measureText(text.toString()));

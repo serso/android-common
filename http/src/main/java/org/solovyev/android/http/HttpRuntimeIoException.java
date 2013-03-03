@@ -22,7 +22,7 @@
 
 package org.solovyev.android.http;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 public class HttpRuntimeIoException extends RuntimeException {
 
-    public HttpRuntimeIoException(@NotNull IOException e) {
+    public HttpRuntimeIoException(@Nonnull IOException e) {
         super(e);
     }
 }

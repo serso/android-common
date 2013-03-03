@@ -31,7 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class CandidateView extends View {
 
     private static final int OUT_OF_BOUNDS = -1;
 
-	@NotNull
+	@Nonnull
     private AKeyboardController keyboardController;
     private List<String> mSuggestions;
     private int mSelectedIndex;
@@ -76,7 +76,7 @@ public class CandidateView extends View {
      * Construct a CandidateView for showing suggested words for completion.
      * @param context
      */
-    public CandidateView(@NotNull Context context) {
+    public CandidateView(@Nonnull Context context) {
         super(context);
         mSelectionHighlight = context.getResources().getDrawable(
                 android.R.drawable.list_selector_background);
@@ -127,7 +127,7 @@ public class CandidateView extends View {
         setVerticalScrollBarEnabled(false);
     }
 
-    public void setKeyboardController(@NotNull AKeyboardController keyboardController) {
+    public void setKeyboardController(@Nonnull AKeyboardController keyboardController) {
 		this.keyboardController = keyboardController;
     }
     

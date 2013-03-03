@@ -37,9 +37,10 @@ import net.robotmedia.billing.ResponseCode;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
 import net.robotmedia.billing.helper.DefaultBillingObserver;
 import net.robotmedia.billing.model.Transaction;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.solovyev.android.Activities;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -48,7 +49,7 @@ import org.solovyev.android.Activities;
  */
 public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivity implements IBillingObserver {
 
-    @NotNull
+    @Nonnull
     private final IBillingObserver defaultBillingObserver = new DefaultBillingObserver(this, this);
 
     @Override
@@ -89,13 +90,13 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
     @Nullable
     protected abstract String getClearBillingDataPreferenceId();
 
-    @NotNull
+    @Nonnull
     protected abstract String getAdFreeProductId();
 
-    @NotNull
+    @Nonnull
     protected abstract String getAdFreePreferenceId();
 
-    public static void removeBillingInformation(@NotNull Context context, @NotNull SharedPreferences preferences) {
+    public static void removeBillingInformation(@Nonnull Context context, @Nonnull SharedPreferences preferences) {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(AbstractBillingObserver.KEY_TRANSACTIONS_RESTORED, false);
         editor.commit();
@@ -163,17 +164,17 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
     }
 
     @Override
-    public void onPurchaseIntentOK(@NotNull String productId, @NotNull PendingIntent purchaseIntent) {
+    public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
         // do nothing
     }
 
     @Override
-    public void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode) {
+    public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
         // do nothing
     }
 
     @Override
-    public void onPurchaseStateChanged(@NotNull String itemId, @NotNull Transaction.PurchaseState state) {
+    public void onPurchaseStateChanged(@Nonnull String itemId, @Nonnull Transaction.PurchaseState state) {
         if (getAdFreeProductId().equals(itemId)) {
             final Preference adFreePreference = findPreference(getAdFreePreferenceId());
             if (adFreePreference != null) {
@@ -196,7 +197,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
     }
 
     @Override
-    public void onRequestPurchaseResponse(@NotNull String itemId, @NotNull ResponseCode response) {
+    public void onRequestPurchaseResponse(@Nonnull String itemId, @Nonnull ResponseCode response) {
         // do nothing
     }
 
@@ -206,7 +207,7 @@ public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivit
     }
 
     @Override
-    public void onErrorRestoreTransactions(@NotNull ResponseCode responseCode) {
+    public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
         // do nothing
     }
 }

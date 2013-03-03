@@ -24,7 +24,7 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.text.NumberIntervalMapper;
 
 /**
@@ -34,19 +34,19 @@ import org.solovyev.common.text.NumberIntervalMapper;
  */
 public class FloatRangeSeekBarPreference extends RangeSeekBarPreference<Float> {
 
-	public FloatRangeSeekBarPreference(@NotNull Context context, AttributeSet attrs) {
+	public FloatRangeSeekBarPreference(@Nonnull Context context, AttributeSet attrs) {
 		super(context, attrs, NumberIntervalMapper.of(Float.class));
 	}
 
-    @NotNull
+    @Nonnull
     @Override
     protected Float getDefaultStep() {
         return 1f;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Float add(@NotNull Float l, @NotNull Float r) {
+    protected Float add(@Nonnull Float l, @Nonnull Float r) {
         return l + r;
     }
 }

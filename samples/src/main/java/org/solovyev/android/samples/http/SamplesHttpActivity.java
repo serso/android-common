@@ -31,8 +31,8 @@ import android.widget.Toast;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.AThreads;
 import org.solovyev.android.http.HttpRuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
@@ -52,13 +52,13 @@ import java.util.List;
  */
 public class SamplesHttpActivity extends ListActivity {
 
-    @NotNull
+    @Nonnull
     private ImageLoader imageLoader;
 
-    @NotNull
+    @Nonnull
     private static final String fetchDataUri = "http://se.solovyev.org/other/acl/data.txt";
 
-    @NotNull
+    @Nonnull
     private static final String uriPrefix = "http://se.solovyev.org/other/acl/icons/";
 
     private static final List<String> imageNames = new ArrayList<String>();
@@ -138,7 +138,7 @@ public class SamplesHttpActivity extends ListActivity {
                 new CommonAsyncTask<String, Void, String>(SamplesHttpActivity.this) {
 
                     @Override
-                    protected String doWork(@NotNull List<String> strings) {
+                    protected String doWork(@Nonnull List<String> strings) {
                         assert strings.size() == 1;
                         try {
                             return HttpTransactions.execute(new FetchHttpData(strings.get(0)));
@@ -161,7 +161,7 @@ public class SamplesHttpActivity extends ListActivity {
                     }
 
                     @Override
-                    protected void onFailurePostExecute(@NotNull final Exception e) {
+                    protected void onFailurePostExecute(@Nonnull final Exception e) {
                         final Activity activity = (Activity) getContext();
                         AThreads.tryRunOnUiThread(activity, new Runnable() {
                             @Override
@@ -178,12 +178,12 @@ public class SamplesHttpActivity extends ListActivity {
 
     private static class FetchHttpData extends AbstractHttpTransaction<String> {
 
-        private FetchHttpData(@NotNull String uri) {
+        private FetchHttpData(@Nonnull String uri) {
             super(uri, HttpMethod.GET);
         }
 
         @Override
-        public String getResponse(@NotNull HttpResponse response) {
+        public String getResponse(@Nonnull HttpResponse response) {
             try {
                 return EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
@@ -191,7 +191,7 @@ public class SamplesHttpActivity extends ListActivity {
             }
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public List<NameValuePair> getRequestParameters() {
             return Collections.emptyList();

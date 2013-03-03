@@ -22,8 +22,8 @@
 
 package org.solovyev.android.properties;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
@@ -35,11 +35,11 @@ import java.util.Collection;
 public interface AProperties {
 
     @Nullable
-    AProperty getProperty(@NotNull String name);
+    AProperty getProperty(@Nonnull String name);
 
     @Nullable
-    String getPropertyValue(@NotNull String name);
+    String getPropertyValue(@Nonnull String name);
 
-    @NotNull
+    @Nonnull
     Collection<AProperty> getPropertiesCollection();
 }

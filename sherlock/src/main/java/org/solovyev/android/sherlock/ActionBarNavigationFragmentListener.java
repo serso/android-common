@@ -27,7 +27,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 
 import java.util.List;
@@ -39,27 +39,27 @@ import java.util.List;
  */
 public class ActionBarNavigationFragmentListener<T extends Fragment> implements ActionBar.OnNavigationListener {
 
-    @NotNull
+    @Nonnull
     private final SherlockFragmentActivity activity;
 
-    @NotNull
+    @Nonnull
     private List<? extends FragmentItem> items;
 
     private int selected = -1;
 
-    @NotNull
+    @Nonnull
     private ListAdapter<String> adapter;
 
-    public ActionBarNavigationFragmentListener(@NotNull SherlockFragmentActivity activity,
-                                               @NotNull List<? extends FragmentItem> items,
-                                               @NotNull List<String> itemLabels) {
+    public ActionBarNavigationFragmentListener(@Nonnull SherlockFragmentActivity activity,
+                                               @Nonnull List<? extends FragmentItem> items,
+                                               @Nonnull List<String> itemLabels) {
         assert  items.size() == itemLabels.size();
         this.activity = activity;
         this.items = items;
         this.adapter = AndroidSherlockUtils.newSherlockDefaultAdapter(activity, itemLabels);
     }
 
-    @NotNull
+    @Nonnull
     public synchronized ListAdapter getAdapter() {
         return adapter;
     }

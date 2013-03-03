@@ -24,16 +24,16 @@ package org.solovyev.android;
 
 import android.content.Context;
 import android.os.Build;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.File;
 
 public class FileCache {
 
-    @NotNull
+    @Nonnull
     private final File cacheDir;
 
-    public FileCache(@NotNull Context context, @NotNull String cacheFileName) {
+    public FileCache(@Nonnull Context context, @Nonnull String cacheFileName) {
         // find the dir to save cached images
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             cacheDir = new File(createCachePath(context), cacheFileName);
@@ -46,8 +46,8 @@ public class FileCache {
         }
     }
 
-    @NotNull
-    private String createCachePath(@NotNull Context context) {
+    @Nonnull
+    private String createCachePath(@Nonnull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             return context.getExternalCacheDir().getPath();
         } else {
@@ -55,8 +55,8 @@ public class FileCache {
         }
     }
 
-    @NotNull
-    public File getFile(@NotNull String filename) {
+    @Nonnull
+    public File getFile(@Nonnull String filename) {
         return new File(cacheDir, filename);
     }
 

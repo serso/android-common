@@ -30,8 +30,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.StringCollections;
@@ -51,79 +51,79 @@ import java.util.Map;
  */
 public class DirectionDragButton extends DragButton {
 
-	@NotNull
+	@Nonnull
 	private final static Float DEFAULT_DIRECTION_TEXT_SCALE_FLOAT = 0.33f;
 
-	@NotNull
+	@Nonnull
 	private final static Integer DEFAULT_DIRECTION_TEXT_ALPHA = 140;
 
 	private final static int  DEFAULT_DIRECTION_TEXT_COLOR = Color.WHITE;
 
-	@NotNull
+	@Nonnull
 	private final static String DEFAULT_DIRECTION_TEXT_SCALE = "0.33;0.33;0.33;0.33";
 
 	protected static class DirectionTextData {
 
-		@NotNull
+		@Nonnull
 		private final GuiDragDirection guiDragDirection;
 
-		@NotNull
+		@Nonnull
 		private String text;
 
-		@NotNull
+		@Nonnull
 		private Point2d position;
 
-		@NotNull
+		@Nonnull
 		private TextPaint paint;
 
-		@NotNull
+		@Nonnull
 		private Float textScale = 0.5f;
 
 		private boolean showText = true;
 
-		private DirectionTextData(@NotNull GuiDragDirection guiDragDirection, @NotNull String text) {
+		private DirectionTextData(@Nonnull GuiDragDirection guiDragDirection, @Nonnull String text) {
 			this.guiDragDirection = guiDragDirection;
 			this.text = text;
 		}
 
-		@NotNull
+		@Nonnull
 		public GuiDragDirection getGuiDragDirection() {
 			return guiDragDirection;
 		}
 
-		@NotNull
+		@Nonnull
 		public String getText() {
 			return text;
 		}
 
-		public void setText(@NotNull String text) {
+		public void setText(@Nonnull String text) {
 			this.text = text;
 		}
 
-		@NotNull
+		@Nonnull
 		public Point2d getPosition() {
 			return position;
 		}
 
-		public void setPosition(@NotNull Point2d position) {
+		public void setPosition(@Nonnull Point2d position) {
 			this.position = position;
 		}
 
-		@NotNull
+		@Nonnull
 		public TextPaint getPaint() {
 			return paint;
 		}
 
-		public void setPaint(@NotNull TextPaint paint) {
+		public void setPaint(@Nonnull TextPaint paint) {
 			this.paint = paint;
 		}
 
-		@NotNull
+		@Nonnull
 		public Float getTextScale() {
 			return textScale;
 		}
 
-		public void setTextScale(@NotNull Float textScale) {
+		public void setTextScale(@Nonnull Float textScale) {
 			this.textScale = textScale;
 		}
 
@@ -143,9 +143,9 @@ public class DirectionDragButton extends DragButton {
 				return R.styleable.DirectionDragButton_textUp;
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
-			public Point2d getTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, int w, int h) {
+			public Point2d getTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, int w, int h) {
 				return getUpDownTextPosition(paint, basePaint, text, baseText, 1, w, h);
 			}
 		},
@@ -155,9 +155,9 @@ public class DirectionDragButton extends DragButton {
 				return R.styleable.DirectionDragButton_textDown;
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
-			public Point2d getTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, int w, int h) {
+			public Point2d getTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, int w, int h) {
 				return getUpDownTextPosition(paint, basePaint, text, baseText, -1, w, h);
 			}
 		},
@@ -167,9 +167,9 @@ public class DirectionDragButton extends DragButton {
 				return R.styleable.DirectionDragButton_textLeft;
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
-			public Point2d getTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, int w, int h) {
+			public Point2d getTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, int w, int h) {
 				return getLeftRightTextPosition(paint, basePaint, text, baseText, w, h, true);
 			}
 		},
@@ -180,19 +180,19 @@ public class DirectionDragButton extends DragButton {
 				return R.styleable.DirectionDragButton_textRight;
 			}
 
-			@NotNull
+			@Nonnull
 			@Override
-			public Point2d getTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, int w, int h) {
+			public Point2d getTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, int w, int h) {
 				return getLeftRightTextPosition(paint, basePaint, text, baseText, w, h, false);
 			}
 		};
 
-		@NotNull
+		@Nonnull
 		private final DragDirection dragDirection;
 
 		private final int attributePosition;
 
-		GuiDragDirection(@NotNull DragDirection dragDirection, int attributePosition) {
+		GuiDragDirection(@Nonnull DragDirection dragDirection, int attributePosition) {
 			this.dragDirection = dragDirection;
 			this.attributePosition = attributePosition;
 		}
@@ -203,11 +203,11 @@ public class DirectionDragButton extends DragButton {
 			return attributePosition;
 		}
 
-		@NotNull
-		public abstract Point2d getTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, int w, int h);
+		@Nonnull
+		public abstract Point2d getTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, int w, int h);
 
-		@NotNull
-		private static Point2d getLeftRightTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, CharSequence text, @NotNull CharSequence baseText, int w, int h, boolean left) {
+		@Nonnull
+		private static Point2d getLeftRightTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, CharSequence text, @Nonnull CharSequence baseText, int w, int h, boolean left) {
 			final Point2d result = new Point2d();
 
 			if (left) {
@@ -227,8 +227,8 @@ public class DirectionDragButton extends DragButton {
 			return result;
 		}
 
-		@NotNull
-		private static Point2d getUpDownTextPosition(@NotNull Paint paint, @NotNull Paint basePaint, @NotNull CharSequence text, CharSequence baseText, float direction, int w, int h) {
+		@Nonnull
+		private static Point2d getUpDownTextPosition(@Nonnull Paint paint, @Nonnull Paint basePaint, @Nonnull CharSequence text, CharSequence baseText, float direction, int w, int h) {
 			final Point2d result = new Point2d();
 
 			float width = paint.measureText(text.toString() + " ");
@@ -248,7 +248,7 @@ public class DirectionDragButton extends DragButton {
 		}
 
 		@Nullable
-		public static GuiDragDirection valueOf(@NotNull DragDirection dragDirection) {
+		public static GuiDragDirection valueOf(@Nonnull DragDirection dragDirection) {
 			for (GuiDragDirection guiDragDirection : values()) {
 				if (guiDragDirection.dragDirection == dragDirection) {
 					return guiDragDirection;
@@ -258,31 +258,31 @@ public class DirectionDragButton extends DragButton {
 		}
 	}
 
-	@NotNull
+	@Nonnull
 	private final Map<GuiDragDirection, DirectionTextData> directionTextDataMap = new EnumMap<GuiDragDirection, DirectionTextData>(GuiDragDirection.class);
 
-	@NotNull
+	@Nonnull
 	private String directionTextScale = DEFAULT_DIRECTION_TEXT_SCALE;
 
-	@NotNull
+	@Nonnull
 	private Integer directionTextAlpha = DEFAULT_DIRECTION_TEXT_ALPHA;
 
 	private int directionTextColor = DEFAULT_DIRECTION_TEXT_COLOR;
 
 	private boolean initialized = false;
 
-	public DirectionDragButton(Context context, @NotNull AttributeSet attrs) {
+	public DirectionDragButton(Context context, @Nonnull AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
-    public DirectionDragButton(Context context, @NotNull DirectionDragButtonDef directionDragButtonDef) {
+    public DirectionDragButton(Context context, @Nonnull DirectionDragButtonDef directionDragButtonDef) {
         super(context, directionDragButtonDef);
         init(context, directionDragButtonDef);
     }
 
-    private void init(@NotNull Context context,
-                      @NotNull DirectionDragButtonDef directionDragButtonDef) {
+    private void init(@Nonnull Context context,
+                      @Nonnull DirectionDragButtonDef directionDragButtonDef) {
         for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
             final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
             this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, Strings.getNotEmpty(directionText, "")));
@@ -291,7 +291,7 @@ public class DirectionDragButton extends DragButton {
         this.initialized = true;
     }
 
-    public void applyDef(@NotNull DirectionDragButtonDef directionDragButtonDef) {
+    public void applyDef(@Nonnull DirectionDragButtonDef directionDragButtonDef) {
         super.applyDef(directionDragButtonDef);
 
         for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
@@ -300,7 +300,7 @@ public class DirectionDragButton extends DragButton {
         }
     }
 
-    private void init(@NotNull Context context, @NotNull AttributeSet attrs) {
+    private void init(@Nonnull Context context, @Nonnull AttributeSet attrs) {
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionDragButton);
 
@@ -387,9 +387,9 @@ public class DirectionDragButton extends DragButton {
 		}
 	}
 
-	protected void initDirectionTextPaint(@NotNull Paint basePaint,
-										  @NotNull DirectionTextData directionTextData,
-										  @NotNull Resources resources) {
+	protected void initDirectionTextPaint(@Nonnull Paint basePaint,
+										  @Nonnull DirectionTextData directionTextData,
+										  @Nonnull Resources resources) {
 		final TextPaint directionTextPaint = new TextPaint(basePaint);
 
 		directionTextPaint.setColor(directionTextColor);
@@ -416,13 +416,13 @@ public class DirectionDragButton extends DragButton {
 	}
 
 	@Nullable
-	public String getText(@NotNull DragDirection direction) {
+	public String getText(@Nonnull DragDirection direction) {
 		final GuiDragDirection guiDragDirection = GuiDragDirection.valueOf(direction);
 		return guiDragDirection == null ? null : getText(guiDragDirection);
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	public void showDirectionText(boolean showDirectionText, @NotNull DragDirection direction) {
+	public void showDirectionText(boolean showDirectionText, @Nonnull DragDirection direction) {
 		final GuiDragDirection guiDragDirection = GuiDragDirection.valueOf(direction);
 		final DirectionTextData directionTextData = this.directionTextDataMap.get(guiDragDirection);
 		if ( directionTextData != null ) {
@@ -431,7 +431,7 @@ public class DirectionDragButton extends DragButton {
 	}
 
 	@Nullable
-	private String getText(@NotNull GuiDragDirection direction) {
+	private String getText(@Nonnull GuiDragDirection direction) {
 		DirectionTextData directionTextData = this.directionTextDataMap.get(direction);
 		if ( directionTextData == null ) {
 			return null;
@@ -445,12 +445,12 @@ public class DirectionDragButton extends DragButton {
 	}
 
 
-	@NotNull
+	@Nonnull
 	public String getDirectionTextScale() {
 		return directionTextScale;
 	}
 
-	@NotNull
+	@Nonnull
 	private Map<GuiDragDirection, Float> getDirectionTextScales() {
 		final List<Float> scales = StringCollections.split(getDirectionTextScale(), ";", NumberParser.of(Float.class));
 

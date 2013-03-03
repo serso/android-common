@@ -23,8 +23,8 @@
 package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface SQLiteOpenHelperConfiguration {
 
-    @NotNull
+    @Nonnull
     String getName();
 
     @Nullable

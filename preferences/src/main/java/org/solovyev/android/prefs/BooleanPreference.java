@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -33,22 +33,22 @@ import org.jetbrains.annotations.Nullable;
  */
 public class BooleanPreference extends AbstractPreference<Boolean>{
 
-	private BooleanPreference(@NotNull String key, @Nullable Boolean defaultValue) {
+	private BooleanPreference(@Nonnull String key, @Nullable Boolean defaultValue) {
 		super(key, defaultValue);
 	}
 
-    @NotNull
-    public static BooleanPreference of(@NotNull String key, @Nullable Boolean defaultValue) {
+    @Nonnull
+    public static BooleanPreference of(@Nonnull String key, @Nullable Boolean defaultValue) {
         return new BooleanPreference(key, defaultValue);
     }
 
     @Override
-	protected Boolean getPersistedValue(@NotNull SharedPreferences preferences) {
+	protected Boolean getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getBoolean(getKey(), false);
 	}
 
 	@Override
-	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull Boolean value) {
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull Boolean value) {
 		editor.putBoolean(getKey(), value);
 	}
 }

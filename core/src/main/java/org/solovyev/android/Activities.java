@@ -25,7 +25,7 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -42,7 +42,7 @@ public final class Activities {
 	 * Method restarts activity
 	 * @param activity to be restarted activity
 	 */
-	public static void restartActivity(@NotNull Activity activity) {
+	public static void restartActivity(@Nonnull Activity activity) {
 		final Intent intent = activity.getIntent();
 
 		Log.d(activity.getClass().getName(), "Finishing current activity!");

@@ -25,8 +25,8 @@ package org.solovyev.android.view;
 import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.view.View;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 * User: serso
@@ -37,11 +37,11 @@ public class OnClickListenerVibrator implements View.OnClickListener {
 
 	private static final float VIBRATION_TIME_SCALE = 1.0f;
 
-	@NotNull
+	@Nonnull
    	private VibratorContainer vibrator;
 
 	public OnClickListenerVibrator(@Nullable Vibrator vibrator,
-								   @NotNull SharedPreferences preferences) {
+								   @Nonnull SharedPreferences preferences) {
 		this.vibrator = new VibratorContainer(vibrator, preferences, VIBRATION_TIME_SCALE);
 	}
 

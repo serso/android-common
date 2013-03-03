@@ -24,7 +24,7 @@ package org.solovyev.android;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
 * User: serso
@@ -33,10 +33,10 @@ import org.jetbrains.annotations.NotNull;
 */
 final class StringParcelableCreator implements Parcelable.Creator<String> {
 
-    @NotNull
+    @Nonnull
     private final static Parcelable.Creator<String> instance = new StringParcelableCreator();
 
-    @NotNull
+    @Nonnull
     static Parcelable.Creator<String> getInstance() {
         return instance;
     }

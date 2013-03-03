@@ -22,8 +22,8 @@
 
 package org.solovyev.android.view.drag;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -61,12 +61,12 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
     private DirectionDragButtonDefImpl() {
     }
 
-    @NotNull
+    @Nonnull
     public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text) {
         return newInstance(text, null, null, null, null);
     }
 
-    @NotNull
+    @Nonnull
     public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text,
                                                      @Nullable CharSequence up,
                                                      @Nullable CharSequence right,
@@ -75,7 +75,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
         return newInstance(text, up, right, down, left, null);
     }
 
-    @NotNull
+    @Nonnull
     public static DirectionDragButtonDefImpl newInstance(@Nullable CharSequence text,
                                                      @Nullable CharSequence up,
                                                      @Nullable CharSequence right,
@@ -95,13 +95,13 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
         return result;
     }
 
-    @NotNull
-    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId) {
+    @Nonnull
+    public static DirectionDragButtonDefImpl newDrawableInstance(@Nonnull Integer drawableResId) {
         return newDrawableInstance(drawableResId, null);
     }
 
-    @NotNull
-    public static DirectionDragButtonDefImpl newDrawableInstance(@NotNull Integer drawableResId, @Nullable Integer backgroundColor) {
+    @Nonnull
+    public static DirectionDragButtonDefImpl newDrawableInstance(@Nonnull Integer drawableResId, @Nullable Integer backgroundColor) {
         final DirectionDragButtonDefImpl result = new DirectionDragButtonDefImpl();
 
         result.drawableResId = drawableResId;
@@ -113,7 +113,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 
     @Nullable
     @Override
-    public CharSequence getText(@NotNull DragDirection dragDirection) {
+    public CharSequence getText(@Nonnull DragDirection dragDirection) {
         return directionsTexts.get(dragDirection);
     }
 
@@ -191,7 +191,7 @@ public class DirectionDragButtonDefImpl implements DirectionDragButtonDef {
 		this.drawableResId = drawableResId;
 	}
 
-	public void setDirectionText(@NotNull DragDirection key, @Nullable CharSequence text) {
+	public void setDirectionText(@Nonnull DragDirection key, @Nullable CharSequence text) {
 		directionsTexts.put(key, text);
 	}
 }

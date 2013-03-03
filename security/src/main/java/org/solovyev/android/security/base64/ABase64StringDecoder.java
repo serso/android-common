@@ -1,25 +1,25 @@
 package org.solovyev.android.security.base64;
 
 import android.util.Base64;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 public class ABase64StringDecoder implements Converter<String, byte[]> {
 
-    @NotNull
+    @Nonnull
     private static Converter<String, byte[]> instance = new ABase64StringDecoder();
 
     private ABase64StringDecoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<String, byte[]> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public byte[] convert(@NotNull String s) {
+    public byte[] convert(@Nonnull String s) {
         return Base64.decode(s, Base64.DEFAULT);
     }
 }

@@ -27,12 +27,15 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.jetbrains.annotations.NotNull;
-import org.solovyev.android.list.*;
+import org.solovyev.android.list.ListAdapter;
+import org.solovyev.android.list.ListItem;
+import org.solovyev.android.list.ListItemOnClickData;
+import org.solovyev.android.list.SimpleMenuOnClick;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.TextViewBuilder;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 /**
@@ -55,7 +58,7 @@ public class MenuListItem implements ListItem {
     public OnClickAction getOnClickAction() {
         return new OnClickAction() {
             @Override
-            public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
+            public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
                 Toast.makeText(context, context.getString(R.string.long_press_to_open_menu), Toast.LENGTH_SHORT).show();
             }
         };
@@ -66,9 +69,9 @@ public class MenuListItem implements ListItem {
         return new SimpleMenuOnClick<MenuListItem>(Arrays.asList(MenuItemMenu.values()), this, String.valueOf(captionResId));
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View updateView(@NotNull Context context, @NotNull View view) {
+    public View updateView(@Nonnull Context context, @Nonnull View view) {
         if (this.getTag().equals(view.getTag())) {
             fillView(context, (TextView) view);
             return view;
@@ -77,9 +80,9 @@ public class MenuListItem implements ListItem {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View build(@NotNull Context context) {
+    public View build(@Nonnull Context context) {
         final TextView view = TextViewBuilder.newInstance(R.layout.acl_menu_list_item, getTag()).build(context);
 
         fillView(context, view);
@@ -87,11 +90,11 @@ public class MenuListItem implements ListItem {
         return view;
     }
 
-    private void fillView(@NotNull Context context, @NotNull TextView view) {
+    private void fillView(@Nonnull Context context, @Nonnull TextView view) {
         view.setText(context.getString(captionResId));
     }
 
-    @NotNull
+    @Nonnull
     private String getTag() {
         return "menu_list_item";
     }
@@ -104,14 +107,14 @@ public class MenuListItem implements ListItem {
 
         show_number(R.string.show_menu_number) {
             @Override
-            public void onClick(@NotNull ListItemOnClickData<MenuListItem> data, @NotNull Context context) {
+            public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
                 Toast.makeText(context, context.getString(R.string.show_menu_number_text, String.valueOf(data.getDataObject().getSortOrder())), Toast.LENGTH_SHORT).show();
             }
         },
 
         show_name(R.string.show_menu_name) {
             @Override
-            public void onClick(@NotNull ListItemOnClickData<MenuListItem> data, @NotNull Context context) {
+            public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
                 Toast.makeText(context, context.getString(R.string.show_menu_name_text, context.getString(data.getDataObject().captionResId)), Toast.LENGTH_SHORT).show();
             }
         };
@@ -122,9 +125,9 @@ public class MenuListItem implements ListItem {
             this.captionResId = captionResId;
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public String getCaption(@NotNull Context context) {
+        public String getCaption(@Nonnull Context context) {
             return context.getString(captionResId);
         }
     }

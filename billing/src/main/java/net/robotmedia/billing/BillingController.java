@@ -37,8 +37,8 @@ import net.robotmedia.billing.utils.AESObfuscator;
 import net.robotmedia.billing.utils.Compatibility;
 import net.robotmedia.billing.utils.ObfuscateUtils;
 import net.robotmedia.billing.utils.Security;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,8 +53,8 @@ public class BillingController {
     @Nullable
     private static SecretKey secretKey;
 
-    @NotNull
-    public static SecretKey getSecretKey(@NotNull Context context) throws CiphererException {
+    @Nonnull
+    public static SecretKey getSecretKey(@Nonnull Context context) throws CiphererException {
         if ( secretKey == null ) {
             final byte[] salt = getSalt();
             final String password = BillingSecurity.generatePassword(context);
@@ -97,7 +97,7 @@ public class BillingController {
 
 	public static final String LOG_TAG = "Billing";
 
-	@NotNull
+	@Nonnull
 	private static BillingStatus status = BillingStatus.UNKNOWN;
 
 	private static IConfiguration configuration = null;
@@ -109,16 +109,16 @@ public class BillingController {
 	// todo serso: we only queue to this list and never remove (probably we should do it inside net.robotmedia.billing.BillingController.onPurchaseStateChanged )
 	// synchronized field
 	// value: product id with automatic confirmation
-	@NotNull
+	@Nonnull
 	private static final Set<String> automaticConfirmations = new HashSet<String>();
 
 	// todo serso: we only queue to this list and never remove (probably we should do it inside net.robotmedia.billing.BillingController.confirmNotifications )
 	// synchronized field
-	@NotNull
+	@Nonnull
 	private static final Map<String, Set<String>> manualConfirmations = new HashMap<String, Set<String>>();
 
 	// synchronized field
-	@NotNull
+	@Nonnull
 	private static final Map<Long, IBillingRequest> pendingRequests = new HashMap<Long, IBillingRequest>();
 
     @Nullable
@@ -131,7 +131,7 @@ public class BillingController {
 	 * @param productId	  id of the item.
 	 * @param notificationId id of the notification.
 	 */
-	private static void addManualConfirmation(@NotNull String productId, @NotNull String notificationId) {
+	private static void addManualConfirmation(@Nonnull String productId, @Nonnull String notificationId) {
 		synchronized (manualConfirmations) {
 			Set<String> notifications = manualConfirmations.get(productId);
 			if (notifications == null) {
@@ -152,8 +152,8 @@ public class BillingController {
 	 *
 	 * @see IBillingObserver#onCheckBillingSupportedResponse(boolean)
 	 */
-	@NotNull
-	public static BillingStatus checkBillingSupported(@NotNull Context context) {
+	@Nonnull
+	public static BillingStatus checkBillingSupported(@Nonnull Context context) {
 		BillingService.checkBillingSupported(context);
 		return status;
 	}
@@ -179,7 +179,7 @@ public class BillingController {
 	 * @return true if pending notifications for this item were found, false
 	 *         otherwise.
 	 */
-	public static boolean confirmNotifications(@NotNull Context context, @NotNull String productId) {
+	public static boolean confirmNotifications(@Nonnull Context context, @Nonnull String productId) {
 		synchronized (manualConfirmations) {
 			final Set<String> notifications = manualConfirmations.get(productId);
 			if (notifications != null) {
@@ -197,7 +197,7 @@ public class BillingController {
 	 * @param context   context
 	 * @param notifyIds array with the ids of all the notifications to confirm.
 	 */
-	private static void confirmNotifications(@NotNull Context context, @NotNull String[] notifyIds) {
+	private static void confirmNotifications(@Nonnull Context context, @Nonnull String[] notifyIds) {
 		BillingService.confirmNotifications(context, notifyIds);
 	}
 
@@ -207,7 +207,7 @@ public class BillingController {
 	 * @param context   context
 	 * @param notifyIds array with the ids of all the notifications to confirm.
 	 */
-	private static void confirmNotifications(@NotNull Context context, @NotNull Collection<String> notifyIds) {
+	private static void confirmNotifications(@Nonnull Context context, @Nonnull Collection<String> notifyIds) {
 		BillingService.confirmNotifications(context, notifyIds);
 	}
 
@@ -218,7 +218,7 @@ public class BillingController {
 	 * @param productId id of the item whose purchases will be counted.
 	 * @return number of purchases for the specified item.
 	 */
-	public static int countPurchases(@NotNull Context context, @NotNull String productId) {
+	public static int countPurchases(@Nonnull Context context, @Nonnull String productId) {
 		final String obfuscatedItemId = Security.obfuscate(context, getSalt(), productId);
 
 		// item id != null => obfuscatedItemId != null
@@ -242,7 +242,7 @@ public class BillingController {
 	 * @param notifyId id of the notification whose purchase information is
 	 *                 requested.
 	 */
-	private static void getPurchaseInformation(@NotNull Context context, @NotNull String notifyId) {
+	private static void getPurchaseInformation(@Nonnull Context context, @Nonnull String notifyId) {
 		final long nonce = Security.generateNonce();
 		BillingService.getPurchaseInformation(context, new String[]{notifyId}, nonce);
 	}
@@ -268,8 +268,8 @@ public class BillingController {
 	 * @param context context
 	 * @return list of transactions.
 	 */
-	@NotNull
-	public static List<Transaction> getTransactions(@NotNull Context context) {
+	@Nonnull
+	public static List<Transaction> getTransactions(@Nonnull Context context) {
 		final List<Transaction> transactions = TransactionManager.getTransactions();
 		ObfuscateUtils.unobfuscate(context, transactions, getSalt());
 		return transactions;
@@ -282,8 +282,8 @@ public class BillingController {
 	 * @param productId id of the item whose transactions will be returned.
 	 * @return list of transactions.
 	 */
-	@NotNull
-	public static List<Transaction> getTransactions(@NotNull Context context, @NotNull String productId) {
+	@Nonnull
+	public static List<Transaction> getTransactions(@Nonnull Context context, @Nonnull String productId) {
 		byte[] salt = getSalt();
 
 		final String obfuscatedItemId = Security.obfuscate(context, getSalt(), productId);
@@ -306,7 +306,7 @@ public class BillingController {
 	 * @param productId item id.
 	 * @return true if the specified item is purchased, false otherwise.
 	 */
-	public static boolean isPurchased(@NotNull Context context, @NotNull String productId) {
+	public static boolean isPurchased(@Nonnull Context context, @Nonnull String productId) {
 		final byte[] salt = getSalt();
 		final String obfuscatedItemId = Security.obfuscate(context, salt, productId);
 
@@ -320,7 +320,7 @@ public class BillingController {
 	 * @param context  context
 	 * @param notifyId notification id.
 	 */
-	protected static void onNotify(@NotNull Context context, @NotNull String notifyId) {
+	protected static void onNotify(@Nonnull Context context, @Nonnull String notifyId) {
 		debug("Notification " + notifyId + " available");
 
 		getPurchaseInformation(context, notifyId);
@@ -336,7 +336,7 @@ public class BillingController {
 	 * @param signedData signed JSON data received from the Market Billing service.
 	 * @param signature  data signature.
 	 */
-	protected static void onPurchaseStateChanged(@NotNull Context context, @Nullable String signedData, @Nullable String signature) {
+	protected static void onPurchaseStateChanged(@Nonnull Context context, @Nullable String signedData, @Nullable String signature) {
 		debug("Purchase state changed");
 
 		if (TextUtils.isEmpty(signedData)) {
@@ -401,7 +401,7 @@ public class BillingController {
 	 * @param requestId the id the request.
 	 * @param request   the billing request.
 	 */
-	protected static void onRequestSent(long requestId, @NotNull IBillingRequest request) {
+	protected static void onRequestSent(long requestId, @Nonnull IBillingRequest request) {
 		debug("Request " + requestId + " of type " + request.getRequestType() + " sent");
 
 		if (request.isSuccess()) {
@@ -443,8 +443,8 @@ public class BillingController {
 	 * @return list of purchases.
 	 * @throws org.json.JSONException if the data couldn't be properly parsed.
 	 */
-	@NotNull
-	private static List<Transaction> parseTransactions(@NotNull JSONObject data) throws JSONException {
+	@Nonnull
+	private static List<Transaction> parseTransactions(@Nonnull JSONObject data) throws JSONException {
 		final List<Transaction> result = new ArrayList<Transaction>();
 
 		final JSONArray orders = data.optJSONArray(JSON_ORDERS);
@@ -466,7 +466,7 @@ public class BillingController {
 	 * @param productId id of the item to be purchased.
 	 * @see #requestPurchase(android.content.Context, String, boolean)
 	 */
-	public static void requestPurchase(@NotNull Context context, @NotNull String productId) {
+	public static void requestPurchase(@Nonnull Context context, @Nonnull String productId) {
 		requestPurchase(context, productId, false);
 	}
 
@@ -481,8 +481,8 @@ public class BillingController {
 	 *                         to {@link #confirmNotifications(android.content.Context, String)}.
 	 * @see IBillingObserver#onPurchaseIntentOK(String, android.app.PendingIntent)
 	 */
-	public static void requestPurchase(@NotNull Context context,
-									   @NotNull String productId,
+	public static void requestPurchase(@Nonnull Context context,
+									   @Nonnull String productId,
 									   boolean autoConfirmation) {
 		if (autoConfirmation) {
 			synchronized (automaticConfirmations) {
@@ -498,7 +498,7 @@ public class BillingController {
 	 *
 	 * @param context context
 	 */
-	public static void restoreTransactions(@NotNull Context context) {
+	public static void restoreTransactions(@Nonnull Context context) {
 		Log.d(BillingController.class.getSimpleName(), "Restoring transactions...");
 
 		final long nonce = Security.generateNonce();
@@ -540,7 +540,7 @@ public class BillingController {
 		BillingController.validator = validator;
 	}
 
-	@NotNull
+	@Nonnull
 	static ISignatureValidator getSignatureValidator() {
 		return BillingController.validator != null ? BillingController.validator : new DefaultSignatureValidator(BillingController.configuration);
 	}
@@ -552,8 +552,8 @@ public class BillingController {
 	 * @param purchaseIntent purchase intent.
 	 * @param intent		 intent
 	 */
-	public static void startPurchaseIntent(@NotNull Context context,
-										   @NotNull PendingIntent purchaseIntent,
+	public static void startPurchaseIntent(@Nonnull Context context,
+										   @Nonnull PendingIntent purchaseIntent,
 										   @Nullable Intent intent) {
 		if (Compatibility.isStartIntentSenderSupported(context)) {
 			// This is on Android 2.0 and beyond. The in-app buy page activity
@@ -571,13 +571,13 @@ public class BillingController {
 		}
 	}
 
-	static void storeTransaction(@NotNull Context context, @NotNull Transaction t) {
+	static void storeTransaction(@Nonnull Context context, @Nonnull Transaction t) {
 		final Transaction clone = t.clone();
 		ObfuscateUtils.obfuscate(context, clone, getSalt());
 		TransactionManager.addTransaction(clone);
 	}
 
-	private static boolean verifyNonce(@NotNull JSONObject data) {
+	private static boolean verifyNonce(@Nonnull JSONObject data) {
 		long nonce = data.optLong(JSON_NONCE);
 		if (Security.isNonceKnown(nonce)) {
 			Security.removeNonce(nonce);
@@ -587,20 +587,20 @@ public class BillingController {
 		}
 	}
 
-	public static void dropBillingData(@NotNull Context context) {
+	public static void dropBillingData(@Nonnull Context context) {
 		Log.d(BillingController.class.getSimpleName(), "Dropping billing database...");
 		TransactionManager.dropDatabase(context);
 	}
 
-	static void onRequestPurchaseResponse(@NotNull String productId, @NotNull ResponseCode response) {
+	static void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response) {
 		BillingObserverRegistry.onRequestPurchaseResponse(productId, response);
 	}
 
-	static void onPurchaseIntent(@NotNull String productId, @NotNull PendingIntent purchaseIntent) {
+	static void onPurchaseIntent(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
 		BillingObserverRegistry.onPurchaseIntent(productId, purchaseIntent);
 	}
 
-	static void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode) {
+	static void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
 		BillingObserverRegistry.onPurchaseIntentFailure(productId, responseCode);
 	}
 
@@ -608,19 +608,19 @@ public class BillingController {
 		BillingObserverRegistry.onTransactionsRestored();
 	}
 
-	static void onErrorRestoreTransactions(@NotNull ResponseCode response) {
+	static void onErrorRestoreTransactions(@Nonnull ResponseCode response) {
 		BillingObserverRegistry.onErrorRestoreTransactions(response);
 	}
 
-	public static void registerObserver(@NotNull IBillingObserver billingObserver) {
+	public static void registerObserver(@Nonnull IBillingObserver billingObserver) {
 		BillingObserverRegistry.registerObserver(billingObserver);
 	}
 
-	public static void unregisterObserver(@NotNull IBillingObserver billingObserver) {
+	public static void unregisterObserver(@Nonnull IBillingObserver billingObserver) {
 		BillingObserverRegistry.unregisterObserver(billingObserver);
 	}
 
-    @NotNull
+    @Nonnull
     static SecurityService<Transaction, Transaction, byte[]> getTransactionObfuscator() {
         if ( transactionObfuscator == null ) {
             transactionObfuscator = BillingSecurity.getObfuscationSecurityService(AESObfuscator.IV, AESObfuscator.SECURITY_PREFIX);

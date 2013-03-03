@@ -32,8 +32,8 @@ import android.util.Log;
 import android.view.*;
 import android.widget.TabHost;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -54,11 +54,11 @@ public final class Views {
      * @param view          parent view to be processed, if view is ViewGroup then all it's children will be processed
      * @param viewProcessor object which processes views
      */
-    public static void processViews(@NotNull View view, @NotNull ViewProcessor<View> viewProcessor) {
+    public static void processViews(@Nonnull View view, @Nonnull ViewProcessor<View> viewProcessor) {
         processViewsOfType0(view, null, viewProcessor);
     }
 
-    static <T> void processViewsOfType0(@NotNull View view, @Nullable Class<T> viewClass, @NotNull ViewProcessor<T> viewProcessor) {
+    static <T> void processViewsOfType0(@Nonnull View view, @Nullable Class<T> viewClass, @Nonnull ViewProcessor<T> viewProcessor) {
         if (view instanceof ViewGroup) {
             final ViewGroup viewGroup = (ViewGroup) view;
 
@@ -83,7 +83,7 @@ public final class Views {
      * @param viewClass     only instances of specified class will be processed
      * @param viewProcessor object which processes views
      */
-    public static <T> void processViewsOfType(@NotNull View view, @NotNull Class<T> viewClass, @NotNull ViewProcessor<T> viewProcessor) {
+    public static <T> void processViewsOfType(@Nonnull View view, @Nonnull Class<T> viewClass, @Nonnull ViewProcessor<T> viewProcessor) {
         processViewsOfType0(view, viewClass, viewProcessor);
     }
 
@@ -96,7 +96,7 @@ public final class Views {
      *
      * @param tabHost tabHost element
      */
-    public static void centerAndWrapTabsFor(@NotNull TabHost tabHost) {
+    public static void centerAndWrapTabsFor(@Nonnull TabHost tabHost) {
         if (allowCenterAndWrappingTabs()) {
             int tabCount = tabHost.getTabWidget().getTabCount();
             for (int i = 0; i < tabCount; i++) {
@@ -169,11 +169,11 @@ public final class Views {
      * @param tabCaptionId  string id of tab to be added
      * @param activityClass activity class to be invoked if the tab is pressed
      */
-    public static void addTab(@NotNull Context context,
-                              @NotNull TabHost tabHost,
-                              @NotNull String tabId,
+    public static void addTab(@Nonnull Context context,
+                              @Nonnull TabHost tabHost,
+                              @Nonnull String tabId,
                               int tabCaptionId,
-                              @NotNull Class<? extends Activity> activityClass) {
+                              @Nonnull Class<? extends Activity> activityClass) {
 
         // create intent to be invoked on tab press
         final Intent intent = new Intent().setClass(context, activityClass);
@@ -184,12 +184,12 @@ public final class Views {
         tabHost.addTab(tabSpec);
     }
 
-    public static int toPixels(@NotNull DisplayMetrics dm, float dps) {
+    public static int toPixels(@Nonnull DisplayMetrics dm, float dps) {
         final float scale = dm.density;
         return (int) (dps * scale + 0.5f);
     }
 
-    public static int getScreenOrientation(@NotNull Activity activity) {
+    public static int getScreenOrientation(@Nonnull Activity activity) {
         final Display display = activity.getWindowManager().getDefaultDisplay();
 
         final int result;
@@ -204,21 +204,21 @@ public final class Views {
     }
 
     // copied from API-15
-    public static boolean isLayoutSizeAtLeast(int size, @NotNull Configuration configuration) {
+    public static boolean isLayoutSizeAtLeast(int size, @Nonnull Configuration configuration) {
         int cur = configuration.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
         if (cur == Configuration.SCREENLAYOUT_SIZE_UNDEFINED) return false;
         return cur >= size;
     }
 
-    public static int getPointerCountFromMotionEvent(@NotNull MotionEvent event) {
+    public static int getPointerCountFromMotionEvent(@Nonnull MotionEvent event) {
         return AT_LEAST_API_5 ? event.getPointerCount() : 1;
     }
 
-    public static float getXFromMotionEvent(@NotNull MotionEvent event, int pointer) {
+    public static float getXFromMotionEvent(@Nonnull MotionEvent event, int pointer) {
         return AT_LEAST_API_5 ? event.getX(pointer) : 0;
     }
 
-    public static float getYFromMotionEvent(@NotNull MotionEvent event, int pointer) {
+    public static float getYFromMotionEvent(@Nonnull MotionEvent event, int pointer) {
         return AT_LEAST_API_5 ? event.getY(pointer) : 0;
     }
 
@@ -229,6 +229,6 @@ public final class Views {
      * @see Views#processViews(android.view.View, ViewProcessor
      */
     public static interface ViewProcessor<V> {
-        void process(@NotNull V view);
+        void process(@Nonnull V view);
     }
 }

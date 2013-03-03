@@ -26,8 +26,8 @@ import android.inputmethodservice.InputMethodService;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,17 +42,17 @@ public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboard, KV extends Vi
 	@Nullable
 	private CandidateView candidateView;
 
-	@NotNull
+	@Nonnull
 	private List<CompletionInfo> completions = Collections.emptyList();
 
 	public AKeyboardViewWithSuggestionsImpl(int keyboardLayoutResId,
-                                            @NotNull AKeyboardController keyboardController,
-                                            @NotNull InputMethodService inputMethodService) {
+                                            @Nonnull AKeyboardController keyboardController,
+                                            @Nonnull InputMethodService inputMethodService) {
 		super(keyboardLayoutResId,keyboardController, inputMethodService);
 	}
 
     @Override
-    public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
+    public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
         super.setSubtypeOnSpaceKey(subtype);
 
 		final View keyboardView = getAndroidKeyboardView();
@@ -63,18 +63,18 @@ public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboard, KV extends Vi
     }
 
     @Override
-	public void setSuggestions(@NotNull List<String> suggestions, boolean completions, boolean typedWordValid) {
+	public void setSuggestions(@Nonnull List<String> suggestions, boolean completions, boolean typedWordValid) {
 		if (candidateView != null) {
 			candidateView.setSuggestions(suggestions, completions, typedWordValid);
 		}
 	}
 
 	@Override
-	public void setCompletions(@NotNull List<CompletionInfo> completions) {
+	public void setCompletions(@Nonnull List<CompletionInfo> completions) {
 		this.completions = completions;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public List<CompletionInfo> getCompletions() {
 		return this.completions;

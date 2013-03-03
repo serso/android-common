@@ -24,7 +24,7 @@ package org.solovyev.android.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,9 +33,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface DbQuery<R> {
 
-    @NotNull
-    Cursor createCursor(@NotNull SQLiteDatabase db);
+    @Nonnull
+    Cursor createCursor(@Nonnull SQLiteDatabase db);
 
-    @NotNull
-    R retrieveData(@NotNull Cursor cursor);
+    @Nonnull
+    R retrieveData(@Nonnull Cursor cursor);
 }

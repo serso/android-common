@@ -22,7 +22,7 @@
 
 package org.solovyev.android.samples.db;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,6 +31,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface DbItem {
 
-    @NotNull
+    @Nonnull
     String getName();
 }

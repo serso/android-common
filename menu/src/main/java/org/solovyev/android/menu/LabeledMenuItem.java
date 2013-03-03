@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,6 +32,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface LabeledMenuItem<T> extends AMenuItem<T> {
 
-	@NotNull
-	String getCaption(@NotNull Context context);
+	@Nonnull
+	String getCaption(@Nonnull Context context);
 }

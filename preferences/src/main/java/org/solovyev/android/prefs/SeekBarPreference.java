@@ -27,7 +27,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.text.NumberMapper;
 
 
@@ -52,9 +52,9 @@ public class SeekBarPreference extends AbstractDialogPreference<Integer> impleme
         return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected View createPreferenceView(@NotNull Context context) {
+    protected View createPreferenceView(@Nonnull Context context) {
         final SeekBar result = new SeekBar(context);
 
         result.setOnSeekBarChangeListener(this);
@@ -63,7 +63,7 @@ public class SeekBarPreference extends AbstractDialogPreference<Integer> impleme
     }
 
     @Override
-    protected void initPreferenceView(@NotNull View v, Integer value) {
+    protected void initPreferenceView(@Nonnull View v, Integer value) {
         ((SeekBar) v).setMax(max);
         if (value != null) {
             ((SeekBar) v).setProgress(value);

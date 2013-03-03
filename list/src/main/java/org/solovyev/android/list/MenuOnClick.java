@@ -25,7 +25,7 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.menu.ContextMenuBuilder;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.menu.ListContextMenu;
@@ -39,25 +39,25 @@ import java.util.List;
  */
 public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
 
-    @NotNull
+    @Nonnull
     private final List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems;
 
-    @NotNull
+    @Nonnull
     private final String menuName;
 
-    protected MenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems,
-                          @NotNull String menuName) {
+    protected MenuOnClick(@Nonnull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems,
+                          @Nonnull String menuName) {
         this.menuItems = menuItems;
         this.menuName = menuName;
     }
 
     @Override
-    public void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView) {
+    public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
         if (!menuItems.isEmpty()) {
             ContextMenuBuilder.newInstance((FragmentActivity)context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
         }
     }
 
-    @NotNull
+    @Nonnull
     protected abstract T getData();
 }

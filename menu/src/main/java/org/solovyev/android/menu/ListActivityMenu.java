@@ -23,8 +23,8 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
 
     private static final int NO_MENU_RES_ID = -1;
 
-    @NotNull
+    @Nonnull
     private final List<MenuItemWrapper<MI>> menuItems = new ArrayList<MenuItemWrapper<MI>>();
 
     private final int menuResId;
@@ -60,17 +60,17 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     @Nullable
     private final JPredicate<AMenuItem<MI>> filter;
 
-    @NotNull
+    @Nonnull
     private final MenuHelper<M, MI> menuHelper;
 
     private ListActivityMenu(@Nullable JPredicate<AMenuItem<MI>> filter,
-                             @NotNull MenuHelper<M, MI> menuHelper) {
+                             @Nonnull MenuHelper<M, MI> menuHelper) {
         this(NO_MENU_RES_ID, filter, menuHelper);
     }
 
     private ListActivityMenu(int menuResId,
                              @Nullable JPredicate<AMenuItem<MI>> filter,
-                             @NotNull MenuHelper<M, MI> menuHelper) {
+                             @Nonnull MenuHelper<M, MI> menuHelper) {
         this.menuResId = menuResId;
         this.filter = filter;
         this.menuHelper = menuHelper;
@@ -95,9 +95,9 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
-    public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
-                                                       @NotNull MenuHelper<M, MI> menuHelper) {
+    @Nonnull
+    public static <M, MI> ActivityMenu<M, MI> fromList(@Nonnull List<? extends LabeledMenuItem<MI>> menuItems,
+                                                       @Nonnull MenuHelper<M, MI> menuHelper) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(null, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -122,10 +122,10 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
-    public static <M, MI> ActivityMenu<M, MI> fromList(@NotNull List<? extends LabeledMenuItem<MI>> menuItems,
-                                                       @NotNull MenuHelper<M, MI> menuHelper,
-                                                       @NotNull JPredicate<AMenuItem<MI>> filter) {
+    @Nonnull
+    public static <M, MI> ActivityMenu<M, MI> fromList(@Nonnull List<? extends LabeledMenuItem<MI>> menuItems,
+                                                       @Nonnull MenuHelper<M, MI> menuHelper,
+                                                       @Nonnull JPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(filter, menuHelper);
 
         for (LabeledMenuItem<MI> menuItem : menuItems) {
@@ -150,11 +150,11 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromEnum(
-            @NotNull Class<E> enumMenuClass,
-            @NotNull MenuHelper<M, MI> menuHelper,
-            @NotNull JPredicate<AMenuItem<MI>> filter) {
+            @Nonnull Class<E> enumMenuClass,
+            @Nonnull MenuHelper<M, MI> menuHelper,
+            @Nonnull JPredicate<AMenuItem<MI>> filter) {
         return fromList(toList(enumMenuClass), menuHelper, filter);
     }
 
@@ -169,10 +169,10 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI, E extends Enum & LabeledMenuItem<MI>> ActivityMenu<M, MI> fromEnum(
-            @NotNull Class<E> enumMenuClass,
-            @NotNull MenuHelper<M, MI> menuHelper) {
+            @Nonnull Class<E> enumMenuClass,
+            @Nonnull MenuHelper<M, MI> menuHelper) {
         return fromList(toList(enumMenuClass), menuHelper);
     }
 
@@ -193,11 +193,11 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
-                                                         @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
-                                                         @NotNull MenuHelper<M, MI> menuHelper,
-                                                         @NotNull JPredicate<AMenuItem<MI>> filter) {
+                                                         @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                         @Nonnull MenuHelper<M, MI> menuHelper,
+                                                         @Nonnull JPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, filter, menuHelper);
 
         for (IdentifiableMenuItem<MI> menuItem : menuItems) {
@@ -220,10 +220,10 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
-                                                         @NotNull List<? extends IdentifiableMenuItem<MI>> menuItems,
-                                                         @NotNull MenuHelper<M, MI> menuHelper) {
+                                                         @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                         @Nonnull MenuHelper<M, MI> menuHelper) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, null, menuHelper);
 
         for (IdentifiableMenuItem<MI> menuItem : menuItems) {
@@ -250,12 +250,12 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
-            @NotNull Class<? extends E> enumMenuClass,
-            @NotNull MenuHelper<M, MI> menuHelper,
-            @NotNull JPredicate<AMenuItem<MI>> filter) {
+            @Nonnull Class<? extends E> enumMenuClass,
+            @Nonnull MenuHelper<M, MI> menuHelper,
+            @Nonnull JPredicate<AMenuItem<MI>> filter) {
         return fromResource(menuResId, toList(enumMenuClass), menuHelper, filter);
     }
 
@@ -272,16 +272,16 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      *
      * @return constructed menu
      */
-    @NotNull
+    @Nonnull
     public static <M, MI, E extends Enum & IdentifiableMenuItem<MI>> ActivityMenu<M, MI> fromResource(
             int menuResId,
-            @NotNull Class<? extends E> enumMenuClass,
-            @NotNull MenuHelper<M, MI> menuHelper) {
+            @Nonnull Class<? extends E> enumMenuClass,
+            @Nonnull MenuHelper<M, MI> menuHelper) {
         return fromResource(menuResId, toList(enumMenuClass), menuHelper);
     }
 
-    @NotNull
-    private static <E extends Enum> List<E> toList(@NotNull Class<E> enumMenuClass) {
+    @Nonnull
+    private static <E extends Enum> List<E> toList(@Nonnull Class<E> enumMenuClass) {
         final List<E> result = new ArrayList<E>();
 
         Collections.addAll(result, enumMenuClass.getEnumConstants());
@@ -299,7 +299,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     */
 
     @Override
-    public boolean onCreateOptionsMenu(@NotNull final Activity activity, @NotNull M menu) {
+    public boolean onCreateOptionsMenu(@Nonnull final Activity activity, @Nonnull M menu) {
         if (filter == null) {
             if (isFromMenuRes()) {
                 this.menuHelper.inflateMenu(activity, menuResId, menu);
@@ -317,9 +317,9 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         return menuResId != NO_MENU_RES_ID;
     }
 
-    private void addMenuItem(@NotNull final Activity activity,
-                             @NotNull final M menu,
-                             @NotNull final MenuItemWrapper<MI> menuItemWrapper) {
+    private void addMenuItem(@Nonnull final Activity activity,
+                             @Nonnull final M menu,
+                             @Nonnull final MenuItemWrapper<MI> menuItemWrapper) {
         final int size = menuHelper.size(menu);
         final int menuItemId = size + 1;
         final MI aMenuItem = menuHelper.add(menu, 0, menuItemId, 0, menuItemWrapper.getCaption(activity));
@@ -330,7 +330,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(@NotNull Activity activity, @NotNull M menu) {
+    public boolean onPrepareOptionsMenu(@Nonnull Activity activity, @Nonnull M menu) {
         if (filter != null) {
             if (isFromMenuRes()) {
 
@@ -370,7 +370,7 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NotNull Activity activity, @NotNull MI item) {
+    public boolean onOptionsItemSelected(@Nonnull Activity activity, @Nonnull MI item) {
         if (isFromMenuRes()) {
             for (MenuItemWrapper<MI> menuItem : menuItems) {
                 if (menuHelper.getItemId(item).equals(menuItem.getMenuItemId())) {

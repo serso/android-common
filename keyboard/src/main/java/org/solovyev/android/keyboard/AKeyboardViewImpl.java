@@ -28,8 +28,8 @@ import android.inputmethodservice.KeyboardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: Solovyev_S
@@ -43,10 +43,10 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
 
     private final int keyboardLayoutResId;
 
-    @NotNull
+    @Nonnull
     private final AKeyboardController keyboardController;
 
-    @NotNull
+    @Nonnull
     private final InputMethodService inputMethodService;
 
     @Nullable
@@ -54,8 +54,8 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
 
 
     public AKeyboardViewImpl(int keyboardLayoutResId,
-                             @NotNull AKeyboardController keyboardController,
-                             @NotNull InputMethodService inputMethodService) {
+                             @Nonnull AKeyboardController keyboardController,
+                             @Nonnull InputMethodService inputMethodService) {
         this.keyboardLayoutResId = keyboardLayoutResId;
         this.keyboardController = keyboardController;
         this.inputMethodService = inputMethodService;
@@ -77,19 +77,19 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
         inputMethodService.setCandidatesViewShown(shown);
     }
 
-    @NotNull
+    @Nonnull
     public AKeyboardController getKeyboardController() {
         return keyboardController;
     }
 
-    @NotNull
+    @Nonnull
     public InputMethodService getInputMethodService() {
         return inputMethodService;
     }
 
 
     @Override
-    public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
         this.keyboardActionListener = keyboardActionListener;
 
         if (this.keyboardView != null) {
@@ -98,7 +98,7 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     }
 
     @Override
-    public void createAndroidKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater) {
+    public void createAndroidKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
         this.keyboardView = (KV) layoutInflater.inflate(keyboardLayoutResId, null);
 
         final KeyboardView.OnKeyboardActionListener keyboardActionListener = this.getKeyboardActionListener();
@@ -108,7 +108,7 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     }
 
     @Override
-    public void setKeyboard(@NotNull K keyboard) {
+    public void setKeyboard(@Nonnull K keyboard) {
         if (this.keyboardView != null) {
             this.keyboardView.setKeyboard(keyboard);
         }
@@ -122,7 +122,7 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
     }
 
     @Override
-    public void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype) {
+    public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
     }
 
     @Override
@@ -132,7 +132,7 @@ public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKey
         }
     }
 
-    @NotNull
+    @Nonnull
     public View getAndroidKeyboardView() {
         assert keyboardView != null;
         return keyboardView;

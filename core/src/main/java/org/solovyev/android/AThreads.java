@@ -25,8 +25,8 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -48,7 +48,7 @@ public final class AThreads {
      * @param activity activity bound to runnable
      * @param runnable runnable to bve executed
      */
-    public static void tryRunOnUiThread(@Nullable final Activity activity, @NotNull final Runnable runnable) {
+    public static void tryRunOnUiThread(@Nullable final Activity activity, @Nonnull final Runnable runnable) {
         if (activity != null && !activity.isFinishing()) {
             if (isUiThread()) {
                 runnable.run();
@@ -77,7 +77,7 @@ public final class AThreads {
     /**
      * @return new instance of {@link Handler} which runs on UI thread
      */
-    @NotNull
+    @Nonnull
     public static Handler newUiHandler() {
         return new Handler(Looper.getMainLooper());
     }

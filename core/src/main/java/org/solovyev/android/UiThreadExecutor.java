@@ -23,7 +23,7 @@
 package org.solovyev.android;
 
 import android.os.Handler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.threads.DelayedExecutor;
 
 import java.util.concurrent.TimeUnit;
@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class UiThreadExecutor implements DelayedExecutor {
 
-    @NotNull
+    @Nonnull
     private final Handler uiHandler;
 
     public UiThreadExecutor() {
@@ -48,12 +48,12 @@ public class UiThreadExecutor implements DelayedExecutor {
     }
 
     @Override
-    public void execute(@NotNull Runnable command, long delay, @NotNull TimeUnit delayUnit) {
+    public void execute(@Nonnull Runnable command, long delay, @Nonnull TimeUnit delayUnit) {
         this.uiHandler.postDelayed(command, delayUnit.toMillis(delay));
     }
 
     @Override
-    public void execute(@NotNull Runnable command) {
+    public void execute(@Nonnull Runnable command) {
         this.uiHandler.post(command);
     }
 }

@@ -26,12 +26,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class BillingReceiver extends BroadcastReceiver {
 
 	@Override
-	public void onReceive(@NotNull Context context, @NotNull Intent intent) {
+	public void onReceive(@Nonnull Context context, @Nonnull Intent intent) {
 		final String action = intent.getAction();
 		BillingController.debug("Received " + action);
 

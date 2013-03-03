@@ -30,8 +30,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.*;
 
@@ -45,7 +45,7 @@ public class ListAdapter<T> extends BaseAdapter {
      * Contains the list of objects that represent the data of this ListAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    @NotNull
+    @Nonnull
     private List<T> shownElements;
 
     // if null => then shown elements = all elements
@@ -86,16 +86,16 @@ public class ListAdapter<T> extends BaseAdapter {
     private boolean notifyOnChange = true;
 
 
-    @NotNull
+    @Nonnull
     private final Context context;
 
     @Nullable
     private Filter filter;
 
-    @NotNull
+    @Nonnull
     private final LayoutInflater inflater;
 
-    @NotNull
+    @Nonnull
     private final ListAdapter<T>.AdapterHelper adapterHelper;
 
     /**
@@ -105,7 +105,7 @@ public class ListAdapter<T> extends BaseAdapter {
      * @param textViewResourceId The resource ID for a layout file containing a TextView to use when
      *                           instantiating views.
      */
-    public ListAdapter(@NotNull Context context, int textViewResourceId) {
+    public ListAdapter(@Nonnull Context context, int textViewResourceId) {
         this(context, textViewResourceId, 0, new ArrayList<T>());
     }
 
@@ -129,7 +129,7 @@ public class ListAdapter<T> extends BaseAdapter {
      *                           instantiating views.
      * @param elements           The objects to represent in the ListView.
      */
-    public ListAdapter(@NotNull Context context, int textViewResourceId, @NotNull T[] elements) {
+    public ListAdapter(@Nonnull Context context, int textViewResourceId, @Nonnull T[] elements) {
         this(context, textViewResourceId, 0, Arrays.asList(elements));
     }
 
@@ -142,7 +142,7 @@ public class ListAdapter<T> extends BaseAdapter {
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      * @param elements           The objects to represent in the ListView.
      */
-    public ListAdapter(@NotNull Context context, int resource, int textViewResourceId, @NotNull T[] elements) {
+    public ListAdapter(@Nonnull Context context, int resource, int textViewResourceId, @Nonnull T[] elements) {
         this(context, resource, textViewResourceId, Arrays.asList(elements));
     }
 
@@ -154,7 +154,7 @@ public class ListAdapter<T> extends BaseAdapter {
      *                           instantiating views.
      * @param elements           The objects to represent in the ListView.
      */
-    public ListAdapter(@NotNull Context context, int textViewResourceId, @NotNull List<T> elements) {
+    public ListAdapter(@Nonnull Context context, int textViewResourceId, @Nonnull List<T> elements) {
         this(context, textViewResourceId, 0, elements);
     }
 
@@ -167,7 +167,7 @@ public class ListAdapter<T> extends BaseAdapter {
      * @param textViewResourceId The id of the TextView within the layout resource to be populated
      * @param elements           The objects to represent in the ListView.
      */
-    public ListAdapter(@NotNull Context context, int resource, int textViewResourceId, @NotNull List<T> elements) {
+    public ListAdapter(@Nonnull Context context, int resource, int textViewResourceId, @Nonnull List<T> elements) {
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.resources = this.dropDownResource = resource;
@@ -324,7 +324,7 @@ public class ListAdapter<T> extends BaseAdapter {
      *
      * @return The Context associated with this adapter.
      */
-    @NotNull
+    @Nonnull
     public Context getContext() {
         return context;
     }
@@ -353,11 +353,11 @@ public class ListAdapter<T> extends BaseAdapter {
         return shownElements.indexOf(item);
     }
 
-    public boolean containsInShown(@NotNull T element) {
+    public boolean containsInShown(@Nonnull T element) {
         return this.shownElements.contains(element);
     }
 
-    public boolean containsInAll(@NotNull T element) {
+    public boolean containsInAll(@Nonnull T element) {
         return getAllElements().contains(element);
     }
 
@@ -375,7 +375,7 @@ public class ListAdapter<T> extends BaseAdapter {
         return createViewFromResource(position, convertView, parent, resources);
     }
 
-    public void doWork(@NotNull Runnable runnable) {
+    public void doWork(@Nonnull Runnable runnable) {
         final boolean notifyOnChange = isNotifyOnChange();
         try {
             setNotifyOnChange(false);
@@ -466,22 +466,22 @@ public class ListAdapter<T> extends BaseAdapter {
         return filter;
     }
 
-    @NotNull
+    @Nonnull
     protected Filter createFilter() {
         return new PrefixAdapterFilter<T>(adapterHelper);
     }
 
-    @NotNull
+    @Nonnull
     protected List<T> getShownElements() {
         return Collections.unmodifiableList(shownElements);
     }
 
-    @NotNull
+    @Nonnull
     protected List<T> getAllElements() {
         return Collections.unmodifiableList(allElements == null ? shownElements : allElements);
     }
 
-    @NotNull
+    @Nonnull
     protected AdapterHelper getAdapterHelper() {
         return adapterHelper;
     }
@@ -492,20 +492,20 @@ public class ListAdapter<T> extends BaseAdapter {
 
     public class AdapterHelper implements AdapterFilter.Helper<T> {
 
-        @NotNull
+        @Nonnull
         @Override
         public Object getLock() {
             return lock;
         }
 
-        @NotNull
+        @Nonnull
         @Override
         public List<T> getShownElements() {
             return shownElements;
         }
 
         @Override
-        public void setShownElements(@NotNull List<T> shownElements) {
+        public void setShownElements(@Nonnull List<T> shownElements) {
             ListAdapter.this.shownElements = shownElements;
         }
 
@@ -516,7 +516,7 @@ public class ListAdapter<T> extends BaseAdapter {
         }
 
         @Override
-        public void setAllElements(@NotNull List<T> allElements) {
+        public void setAllElements(@Nonnull List<T> allElements) {
             ListAdapter.this.allElements = allElements;
         }
 

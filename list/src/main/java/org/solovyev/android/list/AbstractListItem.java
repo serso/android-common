@@ -26,8 +26,8 @@ import android.content.Context;
 import org.solovyev.android.view.TextViewBuilder;
 import android.view.View;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.UpdatableViewBuilder;
 
 /**
@@ -37,10 +37,10 @@ import org.solovyev.android.view.UpdatableViewBuilder;
  */
 public abstract class AbstractListItem implements UpdatableViewBuilder<TextView> {
 
-    @NotNull
+    @Nonnull
     private final UpdatableViewBuilder<TextView> textViewCreator;
 
-    protected AbstractListItem(int textViewLayoutId, @NotNull String tag) {
+    protected AbstractListItem(int textViewLayoutId, @Nonnull String tag) {
         this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, tag);
     }
 
@@ -49,23 +49,23 @@ public abstract class AbstractListItem implements UpdatableViewBuilder<TextView>
     }
 
     @Override
-    @NotNull
-    public TextView updateView(@NotNull Context context, @NotNull View view) {
+    @Nonnull
+    public TextView updateView(@Nonnull Context context, @Nonnull View view) {
         return fillView(context, textViewCreator.updateView(context, view));
     }
 
     @Override
-    @NotNull
-    public TextView build(@NotNull Context context) {
+    @Nonnull
+    public TextView build(@Nonnull Context context) {
         return fillView(context, textViewCreator.build(context));
     }
 
-    @NotNull
-    private TextView fillView(@NotNull Context context, @NotNull TextView textView) {
+    @Nonnull
+    private TextView fillView(@Nonnull Context context, @Nonnull TextView textView) {
         textView.setText(getText(context));
         return textView;
     }
 
     @Nullable
-    protected abstract CharSequence getText(@NotNull Context context);
+    protected abstract CharSequence getText(@Nonnull Context context);
 }

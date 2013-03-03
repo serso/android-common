@@ -22,7 +22,7 @@
 
 package net.robotmedia.billing;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
 * User: serso
@@ -53,7 +53,7 @@ public enum ResponseCode {
 		return ResponseCode.RESULT_OK.response == response;
 	}
 
-	@NotNull
+	@Nonnull
 	public static ResponseCode valueOf(int response) {
 		for (ResponseCode responseCode : values()) {
 			if (responseCode.response == response) {

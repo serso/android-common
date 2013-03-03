@@ -24,7 +24,7 @@ package org.solovyev.android.db.properties;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.DbExec;
 
@@ -35,31 +35,31 @@ import org.solovyev.android.db.DbExec;
  */
 public class InsertPropertyDbExec implements DbExec {
 
-    @NotNull
+    @Nonnull
     private final Object id;
 
-    @NotNull
+    @Nonnull
     private final AProperty property;
 
-    @NotNull
+    @Nonnull
     private final String tableName;
 
-    @NotNull
+    @Nonnull
     private final String idColumnName;
 
-    @NotNull
+    @Nonnull
     private final String propertyNameColumnName;
 
-    @NotNull
+    @Nonnull
     private final String propertyValueColumnName;
 
 
-    public InsertPropertyDbExec(@NotNull Object id,
-                                @NotNull AProperty property,
-                                @NotNull String tableName,
-                                @NotNull String idColumnName,
-                                @NotNull String propertyNameColumnName,
-                                @NotNull String propertyValueColumnName) {
+    public InsertPropertyDbExec(@Nonnull Object id,
+                                @Nonnull AProperty property,
+                                @Nonnull String tableName,
+                                @Nonnull String idColumnName,
+                                @Nonnull String propertyNameColumnName,
+                                @Nonnull String propertyValueColumnName) {
         this.id = id;
         this.property = property;
         this.tableName = tableName;
@@ -69,7 +69,7 @@ public class InsertPropertyDbExec implements DbExec {
     }
 
     @Override
-    public void exec(@NotNull SQLiteDatabase db) {
+    public void exec(@Nonnull SQLiteDatabase db) {
         final ContentValues values = new ContentValues();
 
         values.put(idColumnName, String.valueOf(id));

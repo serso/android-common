@@ -24,19 +24,19 @@ package org.solovyev.android.keyboard;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class PreviewParams implements Parcelable {
 
-	@NotNull
+	@Nonnull
 	public static final Creator<PreviewParams> CREATOR = new Creator<PreviewParams>() {
 
 		@Override
-		public PreviewParams createFromParcel(@NotNull Parcel in) {
+		public PreviewParams createFromParcel(@Nonnull Parcel in) {
 			return fromParcel(in);
 		}
 
@@ -57,10 +57,10 @@ public final class PreviewParams implements Parcelable {
 	@Nullable
 	private Integer drawableResId;
 
-	@NotNull
+	@Nonnull
 	private static final Map<PreviewParams, PreviewParams> cache = new HashMap<PreviewParams, PreviewParams>();
 
-	private PreviewParams(@NotNull Parcel in) {
+	private PreviewParams(@Nonnull Parcel in) {
 		this.x = in.readInt();
 		this.y = in.readInt();
 		this.text = in.readString();
@@ -74,23 +74,23 @@ public final class PreviewParams implements Parcelable {
 		this.drawableResId = drawableResId;
 	}
 
-	@NotNull
-	public static PreviewParams newTextInstance(int x, int y, @NotNull String text) {
+	@Nonnull
+	public static PreviewParams newTextInstance(int x, int y, @Nonnull String text) {
 		return fromCache(new PreviewParams(x, y, text, null));
 	}
 
-	@NotNull
-	public static PreviewParams newDrawableInstance(int x, int y, @NotNull Integer drawableResId) {
+	@Nonnull
+	public static PreviewParams newDrawableInstance(int x, int y, @Nonnull Integer drawableResId) {
 		return fromCache(new PreviewParams(x, y, null, drawableResId));
 	}
 
-	@NotNull
-	private static PreviewParams fromParcel(@NotNull Parcel in) {
+	@Nonnull
+	private static PreviewParams fromParcel(@Nonnull Parcel in) {
 		return fromCache(new PreviewParams(in));
 	}
 
-	@NotNull
-	private static PreviewParams fromCache(@NotNull PreviewParams previewParams) {
+	@Nonnull
+	private static PreviewParams fromCache(@Nonnull PreviewParams previewParams) {
 		synchronized (cache) {
 			final PreviewParams fromCache = cache.get(previewParams);
 			if (fromCache != null) {
@@ -134,7 +134,7 @@ public final class PreviewParams implements Parcelable {
 	}
 
 	@Override
-	public void writeToParcel(@NotNull Parcel out, int flags) {
+	public void writeToParcel(@Nonnull Parcel out, int flags) {
 		out.writeInt(x);
 		out.writeInt(y);
 		out.writeString(text);

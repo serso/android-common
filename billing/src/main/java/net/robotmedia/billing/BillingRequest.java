@@ -28,7 +28,7 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import com.android.vending.billing.IMarketBillingService;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 abstract class BillingRequest implements IBillingRequest {
 
@@ -44,25 +44,25 @@ abstract class BillingRequest implements IBillingRequest {
 
 	public static final long IGNORE_REQUEST_ID = -1;
 
-	@NotNull
+	@Nonnull
 	private String packageName;
 
 	private int startId;
 	private boolean success;
 	private long nonce;
 
-	public BillingRequest(@NotNull String packageName, int startId) {
+	public BillingRequest(@Nonnull String packageName, int startId) {
 		this.packageName = packageName;
 		this.startId = startId;
 	}
 
-	public BillingRequest(@NotNull String packageName, int startId, long nonce) {
+	public BillingRequest(@Nonnull String packageName, int startId, long nonce) {
 		this.packageName = packageName;
 		this.startId = startId;
 		this.nonce = nonce;
 	}
 
-	protected void addParams(@NotNull Bundle request) {
+	protected void addParams(@Nonnull Bundle request) {
 		// Do nothing by default
 	}
 
@@ -81,7 +81,7 @@ abstract class BillingRequest implements IBillingRequest {
 		return success;
 	}
 
-	@NotNull
+	@Nonnull
 	private Bundle makeRequestBundle() {
 		final Bundle request = new Bundle();
 		request.putString(KEY_BILLING_REQUEST, getRequestType().name());
@@ -94,20 +94,20 @@ abstract class BillingRequest implements IBillingRequest {
 	}
 
 	@Override
-	public void onResponseCode(@NotNull ResponseCode response) {
+	public void onResponseCode(@Nonnull ResponseCode response) {
 		// Do nothing by default
 	}
 
-	protected void processOkResponse(@NotNull Bundle response) {
+	protected void processOkResponse(@Nonnull Bundle response) {
 		// Do nothing by default
 	}
 
-	protected void processNotOkResponse(@NotNull Bundle response, @NotNull ResponseCode responseCode) {
+	protected void processNotOkResponse(@Nonnull Bundle response, @Nonnull ResponseCode responseCode) {
 		// Do nothing by default
 	}
 
 	@Override
-	public final long run(@NotNull IMarketBillingService service) throws RemoteException {
+	public final long run(@Nonnull IMarketBillingService service) throws RemoteException {
 		final Bundle request = makeRequestBundle();
 		addParams(request);
 
@@ -125,7 +125,7 @@ abstract class BillingRequest implements IBillingRequest {
 		this.nonce = nonce;
 	}
 
-	private boolean validateResponse(@NotNull Bundle response) {
+	private boolean validateResponse(@Nonnull Bundle response) {
 		final int responseCode = response.getInt(KEY_RESPONSE_CODE);
 		success = ResponseCode.isOk(responseCode);
 		if (!success) {
@@ -150,14 +150,14 @@ abstract class BillingRequest implements IBillingRequest {
 			super(packageName, startId);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public BillingRequestType getRequestType() {
 			return BillingRequestType.CHECK_BILLING_SUPPORTED;
 		}
 
 		@Override
-		protected void processOkResponse(@NotNull Bundle response) {
+		protected void processOkResponse(@Nonnull Bundle response) {
 			final boolean supported = this.isSuccess();
 			BillingController.onCheckBillingSupportedResponse(supported);
 		}
@@ -170,22 +170,22 @@ abstract class BillingRequest implements IBillingRequest {
 	*/
 	static class ConfirmNotifications extends BillingRequest {
 
-		@NotNull
+		@Nonnull
 		private final String[] notifyIds;
 
 		private static final String KEY_NOTIFY_IDS = "NOTIFY_IDS";
 
-		public ConfirmNotifications(@NotNull String packageName, int startId, @NotNull String[] notifyIds) {
+		public ConfirmNotifications(@Nonnull String packageName, int startId, @Nonnull String[] notifyIds) {
 			super(packageName, startId);
 			this.notifyIds = notifyIds;
 		}
 
 		@Override
-		protected void addParams(@NotNull Bundle request) {
+		protected void addParams(@Nonnull Bundle request) {
 			request.putStringArray(KEY_NOTIFY_IDS, notifyIds);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public BillingRequestType getRequestType() {
 			return BillingRequestType.CONFIRM_NOTIFICATIONS;
@@ -210,11 +210,11 @@ abstract class BillingRequest implements IBillingRequest {
 		}
 
 		@Override
-		protected void addParams(@NotNull Bundle request) {
+		protected void addParams(@Nonnull Bundle request) {
 			request.putStringArray(KEY_NOTIFY_IDS, notifyIds);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public BillingRequestType getRequestType() {
 			return BillingRequestType.GET_PURCHASE_INFORMATION;
@@ -245,33 +245,33 @@ abstract class BillingRequest implements IBillingRequest {
 		}
 
 		@Override
-		protected void addParams(@NotNull Bundle request) {
+		protected void addParams(@Nonnull Bundle request) {
 			request.putString(KEY_ITEM_ID, productId);
 			if (developerPayload != null) {
 				request.putString(KEY_DEVELOPER_PAYLOAD, developerPayload);
 			}
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public BillingRequestType getRequestType() {
 			return BillingRequestType.REQUEST_PURCHASE;
 		}
 
 		@Override
-		public void onResponseCode(@NotNull ResponseCode response) {
+		public void onResponseCode(@Nonnull ResponseCode response) {
 			super.onResponseCode(response);
 			BillingController.onRequestPurchaseResponse(productId, response);
 		}
 
 		@Override
-		protected void processOkResponse(@NotNull Bundle response) {
+		protected void processOkResponse(@Nonnull Bundle response) {
 			final PendingIntent purchaseIntent = response.getParcelable(KEY_PURCHASE_INTENT);
 			BillingController.onPurchaseIntent(productId, purchaseIntent);
 		}
 
 		@Override
-		protected void processNotOkResponse(@NotNull Bundle response, @NotNull ResponseCode responseCode) {
+		protected void processNotOkResponse(@Nonnull Bundle response, @Nonnull ResponseCode responseCode) {
 			BillingController.onPurchaseIntentFailure(productId, responseCode);
 		}
 	}
@@ -287,7 +287,7 @@ abstract class BillingRequest implements IBillingRequest {
 			super(packageName, startId, nonce);
 		}
 
-		@NotNull
+		@Nonnull
 		@Override
 		public BillingRequestType getRequestType() {
 			return BillingRequestType.RESTORE_TRANSACTIONS;
@@ -296,7 +296,7 @@ abstract class BillingRequest implements IBillingRequest {
 		@Override public boolean hasNonce() { return true; }
 
 		@Override
-		public void onResponseCode(@NotNull ResponseCode response) {
+		public void onResponseCode(@Nonnull ResponseCode response) {
 			super.onResponseCode(response);
 
 			if (response == ResponseCode.RESULT_OK) {

@@ -22,7 +22,7 @@
 
 package org.solovyev.android.keyboard;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -39,14 +39,14 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
 
     private boolean prediction;
 
-	@NotNull
+	@Nonnull
 	private K keyboard;
 
     private AKeyboardControllerStateImpl() {
     }
 
-    @NotNull
-    public static <K extends AKeyboard> AKeyboardControllerState<K> newDefaultState(@NotNull K keyboard) {
+    @Nonnull
+    public static <K extends AKeyboard> AKeyboardControllerState<K> newDefaultState(@Nonnull K keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
@@ -58,8 +58,8 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
         return result;
     }
 
-    @NotNull
-    public static <K extends AKeyboard> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @NotNull K keyboard) {
+    @Nonnull
+    public static <K extends AKeyboard> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @Nonnull K keyboard) {
         final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
         result.shifted = false;
@@ -92,14 +92,14 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
     }
 
 	@Override
-	@NotNull
+	@Nonnull
 	public K getKeyboard() {
 		return keyboard;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public AKeyboardControllerState<K> copyForNewKeyboard(@NotNull K keyboard) {
+	public AKeyboardControllerState<K> copyForNewKeyboard(@Nonnull K keyboard) {
         final AKeyboardControllerStateImpl<K> result = copy();
         result.keyboard = keyboard;
         return result;
@@ -115,7 +115,7 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock) {
         final AKeyboardControllerStateImpl<K> result = copy();
@@ -123,7 +123,7 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public AKeyboardControllerState<K> copyForNewShift(boolean shifted) {
         final AKeyboardControllerStateImpl<K> result = copy();

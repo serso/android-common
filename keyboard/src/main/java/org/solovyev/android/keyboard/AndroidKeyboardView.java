@@ -23,7 +23,7 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.KeyboardView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,9 +32,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface AndroidKeyboardView<K extends AKeyboard> {
 
-    void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener);
+    void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener);
 
-    void setKeyboard(@NotNull K keyboard);
+    void setKeyboard(@Nonnull K keyboard);
 
     void close();
 

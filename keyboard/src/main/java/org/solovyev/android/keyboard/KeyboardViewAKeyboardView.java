@@ -27,7 +27,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -45,12 +45,12 @@ public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKe
     }
 
     @Override
-    public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
         super.setOnKeyboardActionListener(keyboardActionListener);
     }
 
     @Override
-    public void setKeyboard(@NotNull AndroidAKeyboard keyboard) {
+    public void setKeyboard(@Nonnull AndroidAKeyboard keyboard) {
         super.setKeyboard(keyboard.getKeyboard());
     }
 

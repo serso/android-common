@@ -1,25 +1,25 @@
 package org.solovyev.android.security.base64;
 
 import android.util.Base64;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 public class ABase64StringEncoder implements Converter<byte[], String> {
 
-    @NotNull
+    @Nonnull
     private static Converter<byte[], String> instance = new ABase64StringEncoder();
 
     private ABase64StringEncoder() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<byte[], String> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String convert(@NotNull byte[] bytes) {
+    public String convert(@Nonnull byte[] bytes) {
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 }

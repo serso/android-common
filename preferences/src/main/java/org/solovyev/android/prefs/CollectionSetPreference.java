@@ -23,7 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.text.Mapper;
 
 import java.util.Collection;
@@ -32,16 +32,16 @@ import java.util.Set;
 
 public abstract class CollectionSetPreference<C extends Collection<T>, T> extends AbstractPreference<C> {
 
-	@NotNull
+	@Nonnull
 	private final Mapper<T> mapper;
 
-	protected CollectionSetPreference(@NotNull String id, @NotNull C defaultValue, @NotNull Mapper<T> mapper) {
+	protected CollectionSetPreference(@Nonnull String id, @Nonnull C defaultValue, @Nonnull Mapper<T> mapper) {
 		super(id, defaultValue);
 		this.mapper = mapper;
 	}
 
 	@Override
-	protected C getPersistedValue(@NotNull SharedPreferences preferences) {
+	protected C getPersistedValue(@Nonnull SharedPreferences preferences) {
 		final Set<String> stringValues = preferences.getStringSet(getKey(), null);
 
 		final C result = createCollection(stringValues.size());
@@ -52,11 +52,11 @@ public abstract class CollectionSetPreference<C extends Collection<T>, T> extend
 		return result;
 	}
 
-	@NotNull
+	@Nonnull
 	protected abstract C createCollection(int size);
 
 	@Override
-	protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull C values) {
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull C values) {
 
 		final Set<String> result = new HashSet<String>(values.size());
 		for (T value : values) {

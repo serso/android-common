@@ -24,7 +24,7 @@ package org.solovyev.android.http;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,8 +33,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface HttpTransaction<R> {
 
-    @NotNull
+    @Nonnull
     HttpUriRequest createRequest();
 
-    R getResponse(@NotNull HttpResponse response);
+    R getResponse(@Nonnull HttpResponse response);
 }

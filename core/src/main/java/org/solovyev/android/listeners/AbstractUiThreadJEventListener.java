@@ -23,7 +23,7 @@
 package org.solovyev.android.listeners;
 
 import android.os.Handler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.AThreads;
 import org.solovyev.common.listeners.AbstractJEventListener;
 import org.solovyev.common.listeners.JEvent;
@@ -35,16 +35,16 @@ import org.solovyev.common.listeners.JEvent;
  */
 public abstract class AbstractUiThreadJEventListener<E extends JEvent> extends AbstractJEventListener<E> {
 
-    @NotNull
+    @Nonnull
     private final Handler uiHandler;
 
-    protected AbstractUiThreadJEventListener(@NotNull Class<E> eventType) {
+    protected AbstractUiThreadJEventListener(@Nonnull Class<E> eventType) {
         super(eventType);
         uiHandler = AThreads.newUiHandler();
     }
 
     @Override
-    public void onEvent(@NotNull final E event) {
+    public void onEvent(@Nonnull final E event) {
         uiHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -57,5 +57,5 @@ public abstract class AbstractUiThreadJEventListener<E extends JEvent> extends A
      * Called on UI thread
      * @param event event to be processed
      */
-    protected abstract void handleEvent(@NotNull E event);
+    protected abstract void handleEvent(@Nonnull E event);
 }

@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -38,9 +38,9 @@ public abstract class AbstractLabeledMenuItem<T> implements LabeledMenuItem<T> {
         this.captionResId = captionResId;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String getCaption(@NotNull Context context) {
+    public String getCaption(@Nonnull Context context) {
         return context.getString(captionResId);
     }
 }

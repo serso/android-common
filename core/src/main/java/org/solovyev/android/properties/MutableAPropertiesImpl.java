@@ -22,8 +22,8 @@
 
 package org.solovyev.android.properties;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JObject;
 import org.solovyev.common.clone.Cloneables;
 
@@ -39,19 +39,19 @@ import java.util.Map;
  */
 public class MutableAPropertiesImpl extends JObject implements MutableAProperties {
 
-    @NotNull
+    @Nonnull
     private Map<String, AProperty> properties = new HashMap<String, AProperty>();
 
     public MutableAPropertiesImpl() {
     }
 
-    @NotNull
-    public static MutableAProperties copyOf(@NotNull MutableAProperties propertiesContainer) {
+    @Nonnull
+    public static MutableAProperties copyOf(@Nonnull MutableAProperties propertiesContainer) {
         return propertiesContainer.clone();
     }
 
-    @NotNull
-    public static MutableAProperties newInstance(@NotNull Collection<AProperty> properties) {
+    @Nonnull
+    public static MutableAProperties newInstance(@Nonnull Collection<AProperty> properties) {
         final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties) {
@@ -61,8 +61,8 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
         return result;
     }
 
-    @NotNull
-    public static MutableAProperties newInstance(@NotNull Map<String, AProperty> properties) {
+    @Nonnull
+    public static MutableAProperties newInstance(@Nonnull Map<String, AProperty> properties) {
         final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties.values()) {
@@ -72,7 +72,7 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public MutableAPropertiesImpl clone() {
         final MutableAPropertiesImpl clone = (MutableAPropertiesImpl) super.clone();
@@ -83,8 +83,8 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
     }
 
     @Override
-    @NotNull
-    public AProperty setProperty(@NotNull String name, @NotNull String value) {
+    @Nonnull
+    public AProperty setProperty(@Nonnull String name, @Nonnull String value) {
         final AProperty property = APropertyImpl.newInstance(name, value);
 
         properties.put(name, property);
@@ -93,19 +93,19 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
     }
 
     @Override
-    public void setProperty(@NotNull AProperty property) {
+    public void setProperty(@Nonnull AProperty property) {
         properties.put(property.getName(), property);
     }
 
     @Override
-    public void setPropertiesFrom(@NotNull MutableAProperties that) {
+    public void setPropertiesFrom(@Nonnull MutableAProperties that) {
         for (AProperty property : that.getProperties().values()) {
               setProperty(property);
         }
     }
 
     @Override
-    public void setPropertiesFrom(@NotNull Collection<AProperty> properties) {
+    public void setPropertiesFrom(@Nonnull Collection<AProperty> properties) {
         for (AProperty property : properties) {
             setProperty(property);
         }
@@ -113,18 +113,18 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
 
     @Override
     @Nullable
-    public AProperty removeProperty(@NotNull String name) {
+    public AProperty removeProperty(@Nonnull String name) {
         return properties.remove(name);
     }
 
     @Override
     @Nullable
-    public AProperty getProperty(@NotNull String name) {
+    public AProperty getProperty(@Nonnull String name) {
         return properties.get(name);
     }
 
     @Override
-    public String getPropertyValue(@NotNull String name) {
+    public String getPropertyValue(@Nonnull String name) {
         final AProperty property = properties.get(name);
         return property == null ? null : property.getValue();
     }
@@ -135,13 +135,13 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Map<String, AProperty> getProperties() {
         return Collections.unmodifiableMap(this.properties);
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public Collection<AProperty> getPropertiesCollection() {
        return Collections.unmodifiableCollection(this.properties.values());
     }

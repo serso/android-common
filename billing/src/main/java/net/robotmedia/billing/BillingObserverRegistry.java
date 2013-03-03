@@ -24,7 +24,7 @@ package net.robotmedia.billing;
 
 import android.app.PendingIntent;
 import net.robotmedia.billing.model.Transaction;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,7 +44,7 @@ import java.util.Set;
 class BillingObserverRegistry {
 
 	// synchronized field
-	@NotNull
+	@Nonnull
 	private static final Set<IBillingObserver> observers = new HashSet<IBillingObserver>();
 
 	static void onCheckBillingSupportedResponse(boolean supported) {
@@ -61,7 +61,7 @@ class BillingObserverRegistry {
 	 * @param productId		 id of the item whose purchase was requested.
 	 * @param purchaseIntent intent to purchase the item.
 	 */
-	static void onPurchaseIntent(@NotNull String productId, @NotNull PendingIntent purchaseIntent) {
+	static void onPurchaseIntent(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
 		for (IBillingObserver o : getSynchronizedObservers()) {
 			o.onPurchaseIntentOK(productId, purchaseIntent);
 		}
@@ -81,7 +81,7 @@ class BillingObserverRegistry {
 	 *         otherwise.
 	 * @see #unregisterObserver(IBillingObserver)
 	 */
-	static boolean registerObserver(@NotNull IBillingObserver observer) {
+	static boolean registerObserver(@Nonnull IBillingObserver observer) {
 		synchronized (observers) {
 			return observers.add(observer);
 		}
@@ -94,7 +94,7 @@ class BillingObserverRegistry {
 	 * @return true if the billing observer was unregistered, false otherwise.
 	 * @see #registerObserver(IBillingObserver)
 	 */
-	static boolean unregisterObserver(@NotNull IBillingObserver observer) {
+	static boolean unregisterObserver(@Nonnull IBillingObserver observer) {
 		synchronized (observers) {
 			return observers.remove(observer);
 		}
@@ -106,14 +106,14 @@ class BillingObserverRegistry {
 	 * @param productId id of the item whose purchase state has changed.
 	 * @param state  new purchase state of the item.
 	 */
-	static void notifyPurchaseStateChange(@NotNull String productId, @NotNull Transaction.PurchaseState state) {
+	static void notifyPurchaseStateChange(@Nonnull String productId, @Nonnull Transaction.PurchaseState state) {
 		for (IBillingObserver o : getSynchronizedObservers()) {
 			o.onPurchaseStateChanged(productId, state);
 		}
 	}
 
 	// method gets a synchronized copy of list
-	@NotNull
+	@Nonnull
 	private static List<IBillingObserver> getSynchronizedObservers() {
 		final List<IBillingObserver> result;
 		synchronized (observers) {
@@ -122,19 +122,19 @@ class BillingObserverRegistry {
 		return result;
 	}
 
-	static void onRequestPurchaseResponse(@NotNull String productId, @NotNull ResponseCode response) {
+	static void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response) {
 		for (IBillingObserver o : getSynchronizedObservers()) {
 			o.onRequestPurchaseResponse(productId, response);
 		}
 	}
 
-	public static void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode) {
+	public static void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
 		for (IBillingObserver o : getSynchronizedObservers()) {
 			o.onPurchaseIntentFailure(productId, responseCode);
 		}
 	}
 
-	public static void onErrorRestoreTransactions(@NotNull ResponseCode response) {
+	public static void onErrorRestoreTransactions(@Nonnull ResponseCode response) {
 		for (IBillingObserver o : getSynchronizedObservers()) {
 			o.onErrorRestoreTransactions(response);
 		}

@@ -22,17 +22,17 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class FloatPreferenceTest extends AbstractPreferenceTest<Float> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<Float> createPreference(@NotNull String key, @NotNull Float defaultValue) {
+    protected Preference<Float> createPreference(@Nonnull String key, @Nonnull Float defaultValue) {
         return FloatPreference.of(key, defaultValue);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Float createDefaultValue() {
         return 23423f;

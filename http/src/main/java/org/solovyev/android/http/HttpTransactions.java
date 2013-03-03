@@ -29,8 +29,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
 import java.io.IOException;
@@ -49,12 +49,12 @@ public class HttpTransactions {
         throw new AssertionError();
     }
 
-    public static <R> R execute(@NotNull HttpTransaction<R> httpTransaction) throws IOException {
+    public static <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
         return Collections.getFirstListElement(execute(Arrays.asList(httpTransaction)));
     }
 
-    @NotNull
-    public static <R> List<R> execute(@NotNull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
+    @Nonnull
+    public static <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
         final DefaultHttpClient httpClient = new DefaultHttpClient();
 
         final List<R> result = new ArrayList<R>();
@@ -69,7 +69,7 @@ public class HttpTransactions {
         return result;
     }
 
-    public static void asyncExecute(@NotNull HttpTransactionDef httpTransactionDef,
+    public static void asyncExecute(@Nonnull HttpTransactionDef httpTransactionDef,
                                     @Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
         final AsyncHttpClient httpClient = new AsyncHttpClient();
 

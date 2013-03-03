@@ -27,7 +27,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.db.*;
 import org.solovyev.common.Converter;
 
@@ -40,35 +40,35 @@ import java.util.List;
  */
 public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
 
-    public SqliteDbItemDao(@NotNull Context context, @NotNull SQLiteOpenHelper sqliteOpenHelper) {
+    public SqliteDbItemDao(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
         super(context, sqliteOpenHelper);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<DbItem> loadAll() {
         return AndroidDbUtils.doDbQuery(getSqliteOpenHelper(), new LoadAll(getContext(), getSqliteOpenHelper()));
     }
 
     @Override
-    public void insert(@NotNull DbItem dbItem) {
+    public void insert(@Nonnull DbItem dbItem) {
         AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new Insert(dbItem));
     }
 
     @Override
-    public void removeByName(@NotNull String name) {
+    public void removeByName(@Nonnull String name) {
         AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new RemoveByName(name));
     }
 
 
     private static final class RemoveByName extends AbstractObjectDbExec<String> {
 
-        protected RemoveByName(@NotNull String name) {
+        protected RemoveByName(@Nonnull String name) {
             super(name);
         }
 
         @Override
-        public void exec(@NotNull SQLiteDatabase db) {
+        public void exec(@Nonnull SQLiteDatabase db) {
             final String name = getNotNullObject();
 
             db.delete("items", "name = ?", new String[]{name});
@@ -76,12 +76,12 @@ public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
     }
     private static final class Insert extends AbstractObjectDbExec<DbItem> {
 
-        protected Insert(@NotNull DbItem object) {
+        protected Insert(@Nonnull DbItem object) {
             super(object);
         }
 
         @Override
-        public void exec(@NotNull SQLiteDatabase db) {
+        public void exec(@Nonnull SQLiteDatabase db) {
             final DbItem dbItem = getNotNullObject();
 
             final ContentValues values = new ContentValues();
@@ -92,39 +92,39 @@ public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
 
     private static final class LoadAll extends AbstractDbQuery<List<DbItem>> {
 
-        protected LoadAll(@NotNull Context context, @NotNull SQLiteOpenHelper sqliteOpenHelper) {
+        protected LoadAll(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
             super(context, sqliteOpenHelper);
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public Cursor createCursor(@NotNull SQLiteDatabase db) {
+        public Cursor createCursor(@Nonnull SQLiteDatabase db) {
             return db.query("items", null, null, null, null, null, null);
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public List<DbItem> retrieveData(@NotNull Cursor cursor) {
+        public List<DbItem> retrieveData(@Nonnull Cursor cursor) {
             return new ListMapper<DbItem>(DbItemMapper.getInstance()).convert(cursor);
         }
     }
 
     private static final class DbItemMapper implements Converter<Cursor, DbItem> {
 
-        @NotNull
+        @Nonnull
         private static final DbItemMapper instance = new DbItemMapper();
 
         private DbItemMapper() {
         }
 
-        @NotNull
+        @Nonnull
         public static DbItemMapper getInstance() {
             return instance;
         }
 
-        @NotNull
+        @Nonnull
         @Override
-        public DbItem convert(@NotNull Cursor cursor) {
+        public DbItem convert(@Nonnull Cursor cursor) {
             final String name = cursor.getString(0);
             return new DbItemImpl(name);
         }

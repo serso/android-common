@@ -28,7 +28,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -41,7 +41,7 @@ public final class AndroidViewUtils {
         throw new AssertionError();
     }
 
-    public static boolean drawDrawables(Canvas canvas, @NotNull TextView textView) {
+    public static boolean drawDrawables(Canvas canvas, @Nonnull TextView textView) {
         final int compoundPaddingLeft = textView.getCompoundPaddingLeft();
         final int compoundPaddingTop = textView.getCompoundPaddingTop();
         final int compoundPaddingRight = textView.getCompoundPaddingRight();
@@ -77,7 +77,7 @@ public final class AndroidViewUtils {
         return false;
     }
 
-    public static void applyButtonDef(@NotNull Button button, @NotNull ButtonDef buttonDef) {
+    public static void applyButtonDef(@Nonnull Button button, @Nonnull ButtonDef buttonDef) {
         button.setText(buttonDef.getText());
 
         final Integer drawableResId = buttonDef.getDrawableResId();
@@ -92,7 +92,7 @@ public final class AndroidViewUtils {
         applyViewDef(button, buttonDef);
     }
 
-    public static void applyButtonDef(@NotNull ImageButton imageButton, @NotNull ButtonDef buttonDef) {
+    public static void applyButtonDef(@Nonnull ImageButton imageButton, @Nonnull ButtonDef buttonDef) {
         final Integer drawableResId = buttonDef.getDrawableResId();
         if ( drawableResId != null ) {
             imageButton.setImageDrawable(imageButton.getContext().getResources().getDrawable(drawableResId));
@@ -101,7 +101,7 @@ public final class AndroidViewUtils {
         applyViewDef(imageButton, buttonDef);
     }
 
-    public static void applyViewDef(@NotNull View view, @NotNull ViewDef viewDef) {
+    public static void applyViewDef(@Nonnull View view, @Nonnull ViewDef viewDef) {
         final Integer backgroundResId = viewDef.getBackgroundResId();
         if (backgroundResId != null) {
             view.setBackgroundResource(backgroundResId);

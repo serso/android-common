@@ -23,18 +23,18 @@
 package org.solovyev.android.view.drag;
 
 import android.view.MotionEvent;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.math.Point2d;
 
 public class DragEvent {
 
-	@NotNull
+	@Nonnull
 	private final Point2d startPoint;
 
-	@NotNull
+	@Nonnull
 	private final MotionEvent motionEvent;
 
-	public DragEvent(@NotNull Point2d startPoint, @NotNull MotionEvent motionEvent) {
+	public DragEvent(@Nonnull Point2d startPoint, @Nonnull MotionEvent motionEvent) {
 		this.startPoint = startPoint;
 		this.motionEvent = motionEvent;
 	}
@@ -42,7 +42,7 @@ public class DragEvent {
 	/**
 	 * @return motion event started at start point
 	 */
-	@NotNull
+	@Nonnull
 	public MotionEvent getMotionEvent() {
 		return motionEvent;
 	}
@@ -50,7 +50,7 @@ public class DragEvent {
 	/**
 	 * @return start point of dragging
 	 */
-	@NotNull
+	@Nonnull
 	public Point2d getStartPoint() {
 		return startPoint;
 	}

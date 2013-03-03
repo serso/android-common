@@ -26,8 +26,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.test.AndroidTestCase;
 import junit.framework.Assert;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class AbstractPreferenceTest<T> extends AndroidTestCase {
 
@@ -62,10 +62,10 @@ public abstract class AbstractPreferenceTest<T> extends AndroidTestCase {
         Assert.assertEquals(defaultValue, preference.getPreference(preferences));
     }
 
-    @NotNull
-    protected abstract Preference<T> createPreference(@NotNull String key, @Nullable T defaultValue);
+    @Nonnull
+    protected abstract Preference<T> createPreference(@Nonnull String key, @Nullable T defaultValue);
 
-    @NotNull
+    @Nonnull
     protected abstract T createDefaultValue();
 
     protected abstract T createValue();

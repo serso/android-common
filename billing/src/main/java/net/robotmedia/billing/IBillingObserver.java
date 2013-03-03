@@ -24,7 +24,7 @@ package net.robotmedia.billing;
 
 import net.robotmedia.billing.model.Transaction.PurchaseState;
 import android.app.PendingIntent;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public interface IBillingObserver {
 
@@ -44,7 +44,7 @@ public interface IBillingObserver {
 	 * @see BillingController#requestPurchase(android.content.Context, String,
 	 *	  boolean)
 	 */
-	public void onPurchaseIntentOK(@NotNull String productId, @NotNull PendingIntent purchaseIntent);
+	public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent);
 
 	/**
 	 * Called when purchase intent was not sent due to billing service error
@@ -52,7 +52,7 @@ public interface IBillingObserver {
 	 * @param productId	id of the item whose purchase was requested
 	 * @param responseCode one of the failures response codes from billing service
 	 */
-	void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode);
+	void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode);
 
 	/**
 	 * Called when the specified item is purchased, cancelled or refunded.
@@ -60,7 +60,7 @@ public interface IBillingObserver {
 	 * @param productId id of the item whose purchase state has changed.
 	 * @param state	 purchase state of the specified item.
 	 */
-	public void onPurchaseStateChanged(@NotNull String productId, @NotNull PurchaseState state);
+	public void onPurchaseStateChanged(@Nonnull String productId, @Nonnull PurchaseState state);
 
 	/**
 	 * Called with the response for the purchase request of the specified item.
@@ -70,7 +70,7 @@ public interface IBillingObserver {
 	 * @param productId id of the item whose purchase was requested
 	 * @param response  response of the purchase request
 	 */
-	public void onRequestPurchaseResponse(@NotNull String productId, @NotNull ResponseCode response);
+	public void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response);
 
 	/**
 	 * Called when a restore transactions request has been successfully
@@ -82,5 +82,5 @@ public interface IBillingObserver {
 	 * Called when a restore transactions request ended with a server error.
 	 * @param responseCode response code
 	 */
-	public void onErrorRestoreTransactions(@NotNull ResponseCode responseCode);
+	public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode);
 }

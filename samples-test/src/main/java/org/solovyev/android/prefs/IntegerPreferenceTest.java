@@ -22,17 +22,17 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class IntegerPreferenceTest extends AbstractPreferenceTest<Integer> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<Integer> createPreference(@NotNull String key, @NotNull Integer defaultValue) {
+    protected Preference<Integer> createPreference(@Nonnull String key, @Nonnull Integer defaultValue) {
         return IntegerPreference.of(key, defaultValue);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Integer createDefaultValue() {
         return 122;

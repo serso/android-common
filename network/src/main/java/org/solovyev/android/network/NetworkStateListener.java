@@ -1,6 +1,6 @@
 package org.solovyev.android.network;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -9,5 +9,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface NetworkStateListener {
 
-    void onNetworkEvent(@NotNull NetworkData networkData);
+    void onNetworkEvent(@Nonnull NetworkData networkData);
 }

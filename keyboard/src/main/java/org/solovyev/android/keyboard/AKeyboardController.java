@@ -30,8 +30,8 @@ import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -52,13 +52,13 @@ public interface AKeyboardController {
      * Main initialization of the input method component.  Be sure to call
      * to super class.
      */
-    void onCreate(@NotNull Context context);
+    void onCreate(@Nonnull Context context);
 
     /**
      * This is the point where you can do all of your UI initialization.  It
      * is called after creation and any configuration change.
      */
-    void onInitializeInterface(@NotNull InputMethodService inputMethodService);
+    void onInitializeInterface(@Nonnull InputMethodService inputMethodService);
 
     /**
      * Called by the framework when your view for creating input needs to
@@ -66,8 +66,8 @@ public interface AKeyboardController {
      * is displayed, and every time it needs to be re-created such as due to
      * a configuration change.
      */
-    @NotNull
-    AKeyboardView createKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
+    @Nonnull
+    AKeyboardView createKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater);
 
     /**
      * Called by the framework when your view for showing candidates needs to
@@ -82,7 +82,7 @@ public interface AKeyboardController {
      * bound to the client, and are now receiving all of the detailed information
      * about the target of our edits.
      */
-    void onStartInput(@NotNull EditorInfo attribute, boolean restarting);
+    void onStartInput(@Nonnull EditorInfo attribute, boolean restarting);
 
     /**
      * This is called when the user is done editing a field.  We can use
@@ -125,7 +125,7 @@ public interface AKeyboardController {
      */
     boolean onKeyUp(int keyCode, KeyEvent event);
 
-    void onCurrentInputMethodSubtypeChanged(@NotNull InputMethodSubtype subtype);
+    void onCurrentInputMethodSubtypeChanged(@Nonnull InputMethodSubtype subtype);
 
     void onStartInputView(EditorInfo attribute, boolean restarting);
 

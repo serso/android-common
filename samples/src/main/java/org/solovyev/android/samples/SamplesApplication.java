@@ -25,7 +25,7 @@ package org.solovyev.android.samples;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.App;
 import org.solovyev.android.db.CommonSQLiteOpenHelper;
 import org.solovyev.android.db.SQLiteOpenHelperConfiguration;
@@ -41,10 +41,10 @@ import org.solovyev.android.samples.db.SqliteDbItemDao;
  */
 public class SamplesApplication extends Application implements Locator {
 
-    @NotNull
+    @Nonnull
     private CommonSQLiteOpenHelper sqliteOpenHelper;
 
-    @NotNull
+    @Nonnull
     private DbItemService dbItemService;
 
     public SamplesApplication() {
@@ -60,13 +60,13 @@ public class SamplesApplication extends Application implements Locator {
         dbItemService = new DbItemServiceImpl();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public SQLiteOpenHelper getSqliteOpenHelper() {
         return this.sqliteOpenHelper;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DbItemDao getDbItemDao() {
         // even can have multiple instances as they are synchronized on ONE SQLiteOpenHelper
@@ -74,20 +74,20 @@ public class SamplesApplication extends Application implements Locator {
         return new SqliteDbItemDao(this, getSqliteOpenHelper());
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public DbItemService getDbItemService() {
         return this.dbItemService;
     }
 
-    @NotNull
+    @Nonnull
     private SQLiteOpenHelperConfiguration getSqliteOpenHelperConfiguration() {
         return new DbConfiguration();
     }
 
     private static final class DbConfiguration implements SQLiteOpenHelperConfiguration {
 
-        @NotNull
+        @Nonnull
         @Override
         public String getName() {
             return "samples";

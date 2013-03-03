@@ -23,7 +23,7 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.Labeled;
 
 import java.util.ArrayList;
@@ -36,17 +36,17 @@ import java.util.List;
  */
 public class LabeledEnum<E> {
 
-    @NotNull
+    @Nonnull
     private E enumConstant;
 
-    @NotNull
+    @Nonnull
     private String label;
 
     private LabeledEnum() {
     }
 
-    @NotNull
-    public static <E> LabeledEnum<E> newInstance(@NotNull E enumConstant, @NotNull String label) {
+    @Nonnull
+    public static <E> LabeledEnum<E> newInstance(@Nonnull E enumConstant, @Nonnull String label) {
         final LabeledEnum<E> result = new LabeledEnum<E>();
 
         result.enumConstant = enumConstant;
@@ -55,15 +55,15 @@ public class LabeledEnum<E> {
         return result;
     }
 
-    @NotNull
-    public static <E extends Enum & Labeled> LabeledEnum<E> newInstance(@NotNull E enumConstant,
-                                                                        @NotNull Context context) {
+    @Nonnull
+    public static <E extends Enum & Labeled> LabeledEnum<E> newInstance(@Nonnull E enumConstant,
+                                                                        @Nonnull Context context) {
         return LabeledEnum.newInstance(enumConstant, context.getString(enumConstant.getCaptionResId()));
     }
 
-    @NotNull
-    public static <E extends Enum & Labeled> List<LabeledEnum<E>> toLabeledEnums(@NotNull Class<E> enumClass,
-                                                                                 @NotNull Context context) {
+    @Nonnull
+    public static <E extends Enum & Labeled> List<LabeledEnum<E>> toLabeledEnums(@Nonnull Class<E> enumClass,
+                                                                                 @Nonnull Context context) {
         final E[] enumConstants = enumClass.getEnumConstants();
 
         final List<LabeledEnum<E>> result = new ArrayList<LabeledEnum<E>>(enumConstants.length);
@@ -74,12 +74,12 @@ public class LabeledEnum<E> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     public E getEnumConstant() {
         return enumConstant;
     }
 
-    @NotNull
+    @Nonnull
     public String getLabel() {
         return label;
     }

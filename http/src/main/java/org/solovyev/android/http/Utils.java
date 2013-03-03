@@ -22,7 +22,7 @@
 
 package org.solovyev.android.http;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +31,7 @@ import java.io.OutputStream;
 public class Utils {
 
     // todo serso: move
-    public static void copyStream(@NotNull InputStream is, @NotNull OutputStream os) throws IOException {
+    public static void copyStream(@Nonnull InputStream is, @Nonnull OutputStream os) throws IOException {
         final int bufferSize = 1024;
         byte[] bytes = new byte[bufferSize];
 

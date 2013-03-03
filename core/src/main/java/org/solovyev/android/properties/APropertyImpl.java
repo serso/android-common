@@ -23,8 +23,8 @@
 package org.solovyev.android.properties;
 
 import android.os.Parcel;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JObject;
 
 /**
@@ -44,7 +44,7 @@ public class APropertyImpl extends JObject implements AProperty {
 
     public static Creator<APropertyImpl> CREATOR = new Creator<APropertyImpl>() {
         @Override
-        public APropertyImpl createFromParcel(@NotNull Parcel in) {
+        public APropertyImpl createFromParcel(@Nonnull Parcel in) {
             return fromParcel(in);
         }
 
@@ -62,7 +62,7 @@ public class APropertyImpl extends JObject implements AProperty {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private String name;
 
     @Nullable
@@ -79,20 +79,20 @@ public class APropertyImpl extends JObject implements AProperty {
     private APropertyImpl() {
     }
 
-    private APropertyImpl(@NotNull String name, @Nullable String value) {
+    private APropertyImpl(@Nonnull String name, @Nullable String value) {
         this.name = name;
         this.value = value;
     }
 
-    @NotNull
-    private static APropertyImpl fromParcel(@NotNull Parcel in) {
+    @Nonnull
+    private static APropertyImpl fromParcel(@Nonnull Parcel in) {
         final String name = in.readString();
         final String value = in.readString();
         return (APropertyImpl)newInstance(name, value);
     }
 
-    @NotNull
-    public static AProperty newInstance(@NotNull String name, @Nullable String value) {
+    @Nonnull
+    public static AProperty newInstance(@Nonnull String name, @Nullable String value) {
         return new APropertyImpl(name, value);
     }
 
@@ -104,7 +104,7 @@ public class APropertyImpl extends JObject implements AProperty {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     @Override
     public String getName() {
         return this.name;
@@ -122,12 +122,12 @@ public class APropertyImpl extends JObject implements AProperty {
     }
 
     @Override
-    public void writeToParcel(@NotNull Parcel out, int flags) {
+    public void writeToParcel(@Nonnull Parcel out, int flags) {
         out.writeString(name);
         out.writeString(value);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public APropertyImpl clone() {
         return (APropertyImpl) super.clone();

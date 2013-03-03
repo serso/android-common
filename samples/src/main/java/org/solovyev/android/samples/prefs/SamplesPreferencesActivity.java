@@ -26,7 +26,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.samples.R;
 
 /**
@@ -88,7 +88,7 @@ public class SamplesPreferencesActivity
         }
     }
 
-    private void updateAnswer(@NotNull String key, @NotNull String answer) {
+    private void updateAnswer(@Nonnull String key, @Nonnull String answer) {
         final android.preference.Preference preference = findPreference(key);
         preference.setSummary(getString(R.string.answer) + ": " + answer);
     }

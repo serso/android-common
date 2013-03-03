@@ -1,6 +1,6 @@
 package org.solovyev.android.security;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.security.base64.ABase64StringDecoder;
 import org.solovyev.android.security.base64.ABase64StringEncoder;
 import org.solovyev.common.security.*;
@@ -28,57 +28,57 @@ public final class ASecurity extends Security {
         throw new AssertionError();
     }
 
-    @NotNull
+    @Nonnull
     public static Cipherer<byte[], byte[]> newAndroidAesByteCipherer() {
         return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newRandom(IV_RANDOM_ALGORITHM, IV_LENGTH));
     }
 
-    @NotNull
+    @Nonnull
     public static Cipherer<byte[], byte[]> newAndroidAesByteCipherer(final byte[] initialVector) {
         return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newPredefined(initialVector));
     }
 
-    @NotNull
+    @Nonnull
     public static SecretKeyProvider newAndroidAesSecretKeyProvider() {
         return Security.newPbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, CIPHERER_ALGORITHM_AES, PROVIDER, PBE_KEY_LENGTH, SALT_LENGTH);
     }
 
-    @NotNull
+    @Nonnull
     public static HashProvider<byte[], byte[]> newAndroidSha512ByteHashProvider() {
         return Security.newHashProvider(HASH_ALGORITHM, PROVIDER);
     }
 
-    @NotNull
+    @Nonnull
     public static HashProvider<String, String> newAndroidSha512StringHashProvider() {
         return TypedHashProvider.newInstance(newAndroidSha512ByteHashProvider(), StringDecoder.getInstance(), ABase64StringEncoder.getInstance());
     }
 
-    @NotNull
+    @Nonnull
     public static SaltGenerator newAndroidSaltGenerator() {
         return Security.newSaltGenerator(IV_RANDOM_ALGORITHM, SALT_LENGTH);
     }
 
-    @NotNull
+    @Nonnull
     public static Cipherer<String, String> newAndroidAesStringCipherer() {
         return TypedCipherer.newInstance(newAndroidAesByteCipherer(), StringDecoder.getInstance(), StringEncoder.getInstance(), ABase64StringDecoder.getInstance(), ABase64StringEncoder.getInstance());
     }
 
-    @NotNull
+    @Nonnull
     public static Cipherer<String, String> newAndroidAesStringCipherer(final byte[] initialVector) {
         return TypedCipherer.newInstance(newAndroidAesByteCipherer(initialVector), StringDecoder.getInstance(), StringEncoder.getInstance(), ABase64StringDecoder.getInstance(), ABase64StringEncoder.getInstance());
     }
 
-    @NotNull
+    @Nonnull
     public static SecurityService<byte[], byte[], byte[]> newAndroidAesByteSecurityService() {
         return newSecurityService(newAndroidAesByteCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512ByteHashProvider());
     }
 
-    @NotNull
+    @Nonnull
     public static SecurityService<byte[], byte[], byte[]> newAndroidAesByteSecurityService(final byte[] initialVector) {
         return newSecurityService(newAndroidAesByteCipherer(initialVector), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512ByteHashProvider());
     }
 
-    @NotNull
+    @Nonnull
     public static SecurityService<String, String, String> newAndroidAesStringSecurityService() {
         return newSecurityService(newAndroidAesStringCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512StringHashProvider());
     }

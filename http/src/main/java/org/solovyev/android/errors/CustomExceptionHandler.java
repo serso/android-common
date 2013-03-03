@@ -30,8 +30,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.HTTP;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Strings;
 
 import java.io.*;
@@ -91,7 +91,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 	}
 
 	@Nullable
-	private String getStackTrace(@NotNull Throwable e) {
+	private String getStackTrace(@Nonnull Throwable e) {
 
 		PrintWriter writer = null;
 
@@ -111,7 +111,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 		return result;
 	}
 
-	private void writeToFile(@NotNull String stackTrace, @NotNull String fileName) {
+	private void writeToFile(@Nonnull String stackTrace, @Nonnull String fileName) {
 		try {
 			BufferedWriter bos = null;
 			try {
@@ -129,7 +129,7 @@ public class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
 		}
 	}
 
-	private void sendToServer(@NotNull final String stackTrace, @NotNull Date time) {
+	private void sendToServer(@Nonnull final String stackTrace, @Nonnull Date time) {
 		final DefaultHttpClient httpClient = new DefaultHttpClient();
 		final HttpPost httpPost = new HttpPost(url);
 		httpPost.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);

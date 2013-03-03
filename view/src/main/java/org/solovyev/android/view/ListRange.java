@@ -22,8 +22,8 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Formatter;
 
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ListRange<T> implements Picker.Range<T> {
 
-    @NotNull
+    @Nonnull
     private List<T> elements;
 
     private int startPosition;
@@ -43,7 +43,7 @@ public class ListRange<T> implements Picker.Range<T> {
     @Nullable
     private Formatter<T> formatter;
 
-    public ListRange(@NotNull List<T> elements, @Nullable T selected) {
+    public ListRange(@Nonnull List<T> elements, @Nullable T selected) {
         this.elements = elements;
         this.startPosition = elements.indexOf(selected);
         if ( this.startPosition < 0 ) {
@@ -52,7 +52,7 @@ public class ListRange<T> implements Picker.Range<T> {
         this.formatter = null;
     }
 
-    public ListRange(@NotNull List<T> elements, @Nullable T selected, @Nullable Formatter<T> formatter) {
+    public ListRange(@Nonnull List<T> elements, @Nullable T selected, @Nullable Formatter<T> formatter) {
         this(elements, selected);
         this.formatter = formatter;
     }
@@ -67,14 +67,14 @@ public class ListRange<T> implements Picker.Range<T> {
         return this.elements.size();
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getStringValueAt(int position) {
         final T value = getValueAt(position);
         return formatter == null ? value.toString() : formatter.formatValue(value);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public T getValueAt(int position) {
         return this.elements.get(position);

@@ -26,7 +26,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.AbstractDbQuery;
 import org.solovyev.android.db.ListMapper;
@@ -40,35 +40,35 @@ import java.util.List;
  */
 public class PropertyByIdDbQuery extends AbstractDbQuery<List<AProperty>> {
 
-    @NotNull
+    @Nonnull
     private String tableName;
 
-    @NotNull
+    @Nonnull
     private String idColumnName;
 
-    @NotNull
+    @Nonnull
     private Object id;
 
-    public PropertyByIdDbQuery(@NotNull Context context,
-                               @NotNull SQLiteOpenHelper sqliteOpenHelper,
-                               @NotNull String tableName,
-                               @NotNull String idColumnName,
-                               @NotNull Object id) {
+    public PropertyByIdDbQuery(@Nonnull Context context,
+                               @Nonnull SQLiteOpenHelper sqliteOpenHelper,
+                               @Nonnull String tableName,
+                               @Nonnull String idColumnName,
+                               @Nonnull Object id) {
         super(context, sqliteOpenHelper);
         this.tableName = tableName;
         this.idColumnName = idColumnName;
         this.id = id;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Cursor createCursor(@NotNull SQLiteDatabase db) {
+    public Cursor createCursor(@Nonnull SQLiteDatabase db) {
         return db.query(tableName, null, idColumnName + " = ? ", new String[]{String.valueOf(id)}, null, null, null);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public List<AProperty> retrieveData(@NotNull Cursor cursor) {
+    public List<AProperty> retrieveData(@Nonnull Cursor cursor) {
         return new ListMapper<AProperty>(APropertyMapper.getInstance()).convert(cursor);
     }
 }

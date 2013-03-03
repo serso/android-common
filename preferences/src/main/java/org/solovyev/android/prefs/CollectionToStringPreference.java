@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.ListMapper;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.StringMapper;
@@ -41,7 +41,7 @@ public class CollectionToStringPreference<C extends Collection<T>, T> extends Ab
     *
     **********************************************************************
     */
-    @NotNull
+    @Nonnull
     private final Mapper<C> mapper;
 
     /*
@@ -52,23 +52,23 @@ public class CollectionToStringPreference<C extends Collection<T>, T> extends Ab
     **********************************************************************
     */
 
-    private CollectionToStringPreference(@NotNull String key, @Nullable C defaultValue, @NotNull Mapper<C> mapper) {
+    private CollectionToStringPreference(@Nonnull String key, @Nullable C defaultValue, @Nonnull Mapper<C> mapper) {
         super(key, defaultValue);
         this.mapper = mapper;
     }
 
-    @NotNull
-    public static <T> CollectionToStringPreference<List<T>, T> forList(@NotNull String key, @Nullable List<T> defaultValue, @NotNull Mapper<List<T>> mapper) {
+    @Nonnull
+    public static <T> CollectionToStringPreference<List<T>, T> forList(@Nonnull String key, @Nullable List<T> defaultValue, @Nonnull Mapper<List<T>> mapper) {
         return new CollectionToStringPreference<List<T>, T>(key, defaultValue, mapper);
     }
 
-    @NotNull
-    public static <T> CollectionToStringPreference<List<T>, T> forTypedList(@NotNull String key, @Nullable List<T> defaultValue, @NotNull Mapper<T> mapper) {
+    @Nonnull
+    public static <T> CollectionToStringPreference<List<T>, T> forTypedList(@Nonnull String key, @Nullable List<T> defaultValue, @Nonnull Mapper<T> mapper) {
         return new CollectionToStringPreference<List<T>, T>(key, defaultValue, ListMapper.newInstance(mapper));
     }
 
-    @NotNull
-    public static CollectionToStringPreference<List<String>, String> forStringList(@NotNull String key, @Nullable List<String> defaultValue) {
+    @Nonnull
+    public static CollectionToStringPreference<List<String>, String> forStringList(@Nonnull String key, @Nullable List<String> defaultValue) {
         return new CollectionToStringPreference<List<String>, String>(key, defaultValue, ListMapper.newInstance(StringMapper.getInstance()));
     }
 
@@ -81,12 +81,12 @@ public class CollectionToStringPreference<C extends Collection<T>, T> extends Ab
     */
 
     @Override
-    protected C getPersistedValue(@NotNull SharedPreferences preferences) {
+    protected C getPersistedValue(@Nonnull SharedPreferences preferences) {
         return mapper.parseValue(preferences.getString(getKey(), null));
     }
 
     @Override
-    protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull C values) {
+    protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull C values) {
         editor.putString(getKey(), mapper.formatValue(values));
     }
 }

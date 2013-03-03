@@ -24,8 +24,8 @@ package org.solovyev.android.view;
 
 import android.content.SharedPreferences;
 import android.os.Vibrator;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.prefs.BooleanPreference;
 import org.solovyev.android.prefs.NumberToStringPreference;
 import org.solovyev.android.prefs.Preference;
@@ -49,7 +49,7 @@ public class VibratorContainer implements SharedPreferences.OnSharedPreferenceCh
 
 	private long time = 0;
 
-	public VibratorContainer(@Nullable Vibrator vibrator, @NotNull SharedPreferences preferences, float vibrationTimeScale) {
+	public VibratorContainer(@Nullable Vibrator vibrator, @Nonnull SharedPreferences preferences, float vibrationTimeScale) {
 		this.vibrator = vibrator;
 		this.vibrationTimeScale = vibrationTimeScale;
 

@@ -30,8 +30,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
@@ -44,23 +44,23 @@ public class DragButton extends Button {
     @Nullable
     private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
-    @NotNull
+    @Nonnull
     private DragButton.OnTouchListenerImpl onTouchListener;
 
     private boolean showText = true;
 
-    @NotNull
+    @Nonnull
     private final Handler uiHandler = new Handler();
 
     @Nullable
     private CharSequence textBackup;
 
-    public DragButton(@NotNull Context context, @NotNull AttributeSet attrs) {
+    public DragButton(@Nonnull Context context, @Nonnull AttributeSet attrs) {
         super(context, attrs);
         setOnTouchListener(new OnTouchListenerImpl());
     }
 
-    public DragButton(@NotNull Context context, @NotNull DragButtonDef dragButtonDef) {
+    public DragButton(@Nonnull Context context, @Nonnull DragButtonDef dragButtonDef) {
         super(context);
 
         setOnTouchListener(new OnTouchListenerImpl());
@@ -77,7 +77,7 @@ public class DragButton extends Button {
         return onDragListener;
     }
 
-    public void applyDef(@NotNull DragButtonDef buttonDef) {
+    public void applyDef(@Nonnull DragButtonDef buttonDef) {
         AndroidViewUtils.applyButtonDef(this, buttonDef);
     }
 
@@ -102,7 +102,7 @@ public class DragButton extends Button {
         private OnTouchListener nestedOnTouchListener;
 
         @Override
-        public boolean onTouch(@NotNull View v, @NotNull MotionEvent event) {
+        public boolean onTouch(@Nonnull View v, @Nonnull MotionEvent event) {
             // processing on touch event
 
             boolean consumed = false;

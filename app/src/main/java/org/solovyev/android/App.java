@@ -23,8 +23,8 @@
 package org.solovyev.android;
 
 import android.app.Application;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.listeners.JEvent;
 import org.solovyev.common.listeners.JEventListener;
 import org.solovyev.common.listeners.JEventListeners;
@@ -53,16 +53,16 @@ public final class App {
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private static volatile Application application;
 
-    @NotNull
+    @Nonnull
     private static volatile ServiceLocator locator;
 
-    @NotNull
+    @Nonnull
     private static volatile DelayedExecutor uiThreadExecutor;
 
-    @NotNull
+    @Nonnull
     private static volatile JEventListeners<JEventListener<? extends JEvent>, JEvent> eventBus;
 
     private static volatile boolean initialized;
@@ -79,17 +79,17 @@ public final class App {
     **********************************************************************
     */
 
-    public static <A extends Application & ServiceLocator> void init(@NotNull A application) {
+    public static <A extends Application & ServiceLocator> void init(@Nonnull A application) {
         init(application, new UiThreadExecutor(), Listeners.newEventBus(), application);
     }
 
-    public static void init(@NotNull Application application, @Nullable ServiceLocator serviceLocator) {
+    public static void init(@Nonnull Application application, @Nullable ServiceLocator serviceLocator) {
         init(application, new UiThreadExecutor(), Listeners.newEventBus(), serviceLocator);
     }
 
-    public static void init(@NotNull Application application,
-                            @NotNull UiThreadExecutor uiThreadExecutor,
-                            @NotNull JEventListeners<JEventListener<? extends JEvent>, JEvent> eventBus,
+    public static void init(@Nonnull Application application,
+                            @Nonnull UiThreadExecutor uiThreadExecutor,
+                            @Nonnull JEventListeners<JEventListener<? extends JEvent>, JEvent> eventBus,
                             @Nullable ServiceLocator serviceLocator) {
         if (!initialized) {
             App.application = application;
@@ -125,7 +125,7 @@ public final class App {
      * @param <A> real type of application
      * @return application instance which was provided in {@link App#init(android.app.Application)} method
      */
-    @NotNull
+    @Nonnull
     public static <A extends Application> A getApplication() {
         checkInit();
         return (A) application;
@@ -135,7 +135,7 @@ public final class App {
      * @param <L> real type of service locator
      * @return instance of service locator user in application
      */
-    @NotNull
+    @Nonnull
     public static <L extends ServiceLocator> L getLocator() {
         checkInit();
         return (L) locator;
@@ -145,7 +145,7 @@ public final class App {
      * Method returns executor which runs on Main Application's thread. It's safe to do all UI work on this executor
      * @return UI thread executor
      */
-    @NotNull
+    @Nonnull
     public static DelayedExecutor getUiThreadExecutor() {
         checkInit();
         return uiThreadExecutor;
@@ -154,7 +154,7 @@ public final class App {
     /**
      * @return application's event bus
      */
-    @NotNull
+    @Nonnull
     public static JEventListeners<JEventListener<? extends JEvent>, JEvent> getEventBus() {
         checkInit();
         return eventBus;

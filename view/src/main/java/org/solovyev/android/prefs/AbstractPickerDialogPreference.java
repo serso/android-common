@@ -27,8 +27,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.text.Mapper;
 
@@ -44,7 +44,7 @@ public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPr
                                              AttributeSet attrs,
                                              @Nullable String defaultStringValue,
                                              boolean needValueText,
-                                             @NotNull Mapper<T> mapper) {
+                                             @Nonnull Mapper<T> mapper) {
         super(context, attrs, defaultStringValue, needValueText, mapper);
     }
 
@@ -57,9 +57,9 @@ public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPr
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected View createPreferenceView(@NotNull Context context) {
+    protected View createPreferenceView(@Nonnull Context context) {
         final Picker<T> result = new Picker<T>(context);
 
         result.setOnChangeListener(this);
@@ -68,17 +68,17 @@ public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPr
     }
 
     @Override
-    protected void initPreferenceView(@NotNull View v, @Nullable T value) {
+    protected void initPreferenceView(@Nonnull View v, @Nullable T value) {
         if (value != null) {
             ((Picker<T>) v).setRange(createRange(value));
         }
     }
 
-    @NotNull
-    protected abstract Picker.Range<T> createRange(@NotNull T selected);
+    @Nonnull
+    protected abstract Picker.Range<T> createRange(@Nonnull T selected);
 
     @Override
-    public void onChanged(@NotNull Picker picker, @NotNull T o) {
+    public void onChanged(@Nonnull Picker picker, @Nonnull T o) {
         persistValue(o);
     }
 }

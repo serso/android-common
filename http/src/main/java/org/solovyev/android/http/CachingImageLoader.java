@@ -28,8 +28,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.AThreads;
 import org.solovyev.android.FileCache;
 
@@ -48,30 +48,30 @@ public class CachingImageLoader implements ImageLoader {
 
     private static final String TAG = CachingImageLoader.class.getSimpleName();
 
-    @NotNull
+    @Nonnull
     private final MemoryCache memoryCache = new MemoryCache();
 
-    @NotNull
+    @Nonnull
     private final FileCache fileCache;
 
-    @NotNull
+    @Nonnull
     private final Map<OnImageLoadedListener, String> imageViews = Collections.synchronizedMap(new WeakHashMap<OnImageLoadedListener, String>());
 
-    @NotNull
+    @Nonnull
     private final ExecutorService executorService;
 
-    public CachingImageLoader(@NotNull Context context, @NotNull String cacheFileName) {
+    public CachingImageLoader(@Nonnull Context context, @Nonnull String cacheFileName) {
         fileCache = new FileCache(context, cacheFileName);
         executorService = Executors.newFixedThreadPool(5);
     }
 
     @Override
-    public void loadImage(@NotNull String url, @NotNull ImageView imageView, @Nullable Integer defaultImageId) {
+    public void loadImage(@Nonnull String url, @Nonnull ImageView imageView, @Nullable Integer defaultImageId) {
         loadImage(url, new ImageViewImageLoadedListener(imageView, defaultImageId));
     }
 
     @Override
-    public void loadImage(@NotNull String url, @NotNull OnImageLoadedListener imageLoadedListener) {
+    public void loadImage(@Nonnull String url, @Nonnull OnImageLoadedListener imageLoadedListener) {
         imageViews.put(imageLoadedListener, url);
 
         final Bitmap bitmapFromMemory = memoryCache.get(url);
@@ -87,7 +87,7 @@ public class CachingImageLoader implements ImageLoader {
     }
 
     @Override
-    public void loadImage(@NotNull String url) {
+    public void loadImage(@Nonnull String url) {
         final Bitmap bitmapFromMemory = memoryCache.get(url);
         if (bitmapFromMemory != null) {
             // bitmap found in memory
@@ -97,12 +97,12 @@ public class CachingImageLoader implements ImageLoader {
         }
     }
 
-    private void queuePhoto(@NotNull String url, @NotNull OnImageLoadedListener imageLoadedListener) {
+    private void queuePhoto(@Nonnull String url, @Nonnull OnImageLoadedListener imageLoadedListener) {
         executorService.submit(new PhotosLoader(new PhotoToLoad(url, imageLoadedListener)));
     }
 
     @Nullable
-    private Bitmap getBitmap(@NotNull String url) {
+    private Bitmap getBitmap(@Nonnull String url) {
         final File cachedBitmapFile = fileCache.getFile(createFilename(url));
 
         // from SD cache
@@ -144,7 +144,7 @@ public class CachingImageLoader implements ImageLoader {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     private String createFilename(String url) {
         try {
             return URLEncoder.encode(url, "UTF-8");
@@ -155,7 +155,7 @@ public class CachingImageLoader implements ImageLoader {
 
     // decodes image and scales it to reduce memory consumption
     @Nullable
-    private static Bitmap decodeFile(@NotNull File file) {
+    private static Bitmap decodeFile(@Nonnull File file) {
         try {
             //decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
@@ -186,13 +186,13 @@ public class CachingImageLoader implements ImageLoader {
     //Task for the queue
     private static class PhotoToLoad {
 
-        @NotNull
+        @Nonnull
         public final String url;
 
-        @NotNull
+        @Nonnull
         public final OnImageLoadedListener imageLoadedListener;
 
-        public PhotoToLoad(@NotNull String url, @NotNull OnImageLoadedListener imageLoadedListener) {
+        public PhotoToLoad(@Nonnull String url, @Nonnull OnImageLoadedListener imageLoadedListener) {
             this.url = url;
             this.imageLoadedListener = imageLoadedListener;
         }
@@ -200,10 +200,10 @@ public class CachingImageLoader implements ImageLoader {
 
     private class PhotosLoader implements Runnable {
 
-        @NotNull
+        @Nonnull
         private final PhotoToLoad photoToLoad;
 
-        private PhotosLoader(@NotNull PhotoToLoad photoToLoad) {
+        private PhotosLoader(@Nonnull PhotoToLoad photoToLoad) {
             this.photoToLoad = photoToLoad;
         }
 
@@ -223,7 +223,7 @@ public class CachingImageLoader implements ImageLoader {
         }
     }
 
-    private boolean isNeedToLoad(@NotNull PhotoToLoad photoToLoad) {
+    private boolean isNeedToLoad(@Nonnull PhotoToLoad photoToLoad) {
         final String url = imageViews.get(photoToLoad.imageLoadedListener);
         if (url == null || !url.equals(photoToLoad.url)) {
             return true;
@@ -248,13 +248,13 @@ public class CachingImageLoader implements ImageLoader {
 
     private static final class ImageViewImageLoadedListener implements OnImageLoadedListener {
 
-        @NotNull
+        @Nonnull
         private final ImageView imageView;
 
         @Nullable
         private final Integer defaultImageId;
 
-        private ImageViewImageLoadedListener(@NotNull ImageView imageView, @Nullable Integer defaultImageId) {
+        private ImageViewImageLoadedListener(@Nonnull ImageView imageView, @Nullable Integer defaultImageId) {
             this.imageView = imageView;
             this.defaultImageId = defaultImageId;
         }
@@ -310,13 +310,13 @@ public class CachingImageLoader implements ImageLoader {
 
     private static final class EmptyImageLoadedListener implements OnImageLoadedListener {
 
-        @NotNull
+        @Nonnull
         private static final OnImageLoadedListener instance = new EmptyImageLoadedListener();
 
         private EmptyImageLoadedListener() {
         }
 
-        @NotNull
+        @Nonnull
         public static OnImageLoadedListener getInstance() {
             return instance;
         }

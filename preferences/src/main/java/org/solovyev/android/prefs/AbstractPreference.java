@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -46,7 +46,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     **********************************************************************
     */
 
-	@NotNull
+	@Nonnull
 	private final String key;
 
 	private final T defaultValue;
@@ -59,7 +59,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     **********************************************************************
     */
 
-	protected AbstractPreference(@NotNull String key, @Nullable T defaultValue) {
+	protected AbstractPreference(@Nonnull String key, @Nullable T defaultValue) {
 		this.key = key;
 		this.defaultValue = defaultValue;
 	}
@@ -72,7 +72,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     **********************************************************************
     */
 
-	@NotNull
+	@Nonnull
 	public String getKey() {
 		return key;
 	}
@@ -82,7 +82,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 	}
 
 	@Override
-	public final T getPreference(@NotNull SharedPreferences preferences) {
+	public final T getPreference(@Nonnull SharedPreferences preferences) {
 		if ( isSet(preferences) ) {
 			return getPersistedValue(preferences);
 		} else {
@@ -91,7 +91,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 	}
 
     @Override
-    public T getPreferenceNoError(@NotNull SharedPreferences preferences) {
+    public T getPreferenceNoError(@Nonnull SharedPreferences preferences) {
         if (isSet(preferences)) {
             try {
                 return getPersistedValue(preferences);
@@ -104,12 +104,12 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     }
 
     @Override
-	public void putDefault(@NotNull SharedPreferences preferences) {
+	public void putDefault(@Nonnull SharedPreferences preferences) {
 		putPreference(preferences, this.defaultValue);
 	}
 
 	@Override
-	public void putPreference(@NotNull SharedPreferences preferences, @Nullable T value) {
+	public void putPreference(@Nonnull SharedPreferences preferences, @Nullable T value) {
 		if (value != null) {
 			final SharedPreferences.Editor editor = preferences.edit();
 			putPersistedValue(editor, value);
@@ -118,12 +118,12 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 	}
 
 	@Override
-	public boolean isSet(@NotNull SharedPreferences preferences) {
+	public boolean isSet(@Nonnull SharedPreferences preferences) {
 		return preferences.contains(this.key);
 	}
 
     @Override
-    public final boolean tryPutDefault(@NotNull SharedPreferences preferences) {
+    public final boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
         final boolean result;
 
         if (isSet(preferences)) {
@@ -137,7 +137,7 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     }
 
     @Override
-    public final boolean isSameKey(@NotNull String key) {
+    public final boolean isSameKey(@Nonnull String key) {
         return this.key.equals(key);
     }
 
@@ -154,13 +154,13 @@ public abstract class AbstractPreference<T> implements Preference<T> {
      * @return preference value from preferences with key defined by {@link #getKey()} method
      */
     @Nullable
-    protected abstract T getPersistedValue(@NotNull SharedPreferences preferences);
+    protected abstract T getPersistedValue(@Nonnull SharedPreferences preferences);
 
     /**
      * Method saved preference to preferences container editor
      * @param editor editor in which value must be saved
      * @param value value to be saved
      */
-    protected abstract void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull T value);
+    protected abstract void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull T value);
 
 }

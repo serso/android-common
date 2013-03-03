@@ -3,8 +3,8 @@ package org.solovyev.android.network;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class NetworkDataImpl implements NetworkData {
 
-    @NotNull
+    @Nonnull
     private NetworkState state = NetworkState.UNKNOWN;
 
     @Nullable
@@ -30,13 +30,13 @@ public class NetworkDataImpl implements NetworkData {
     private NetworkDataImpl() {
     }
 
-    @NotNull
+    @Nonnull
     public static NetworkData newUnknownNetworkData() {
         return new NetworkDataImpl();
     }
 
-    @NotNull
-    public static NetworkData fromIntent(@NotNull Intent intent) {
+    @Nonnull
+    public static NetworkData fromIntent(@Nonnull Intent intent) {
         assert ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction());
 
         final NetworkDataImpl result = new NetworkDataImpl();
@@ -58,7 +58,7 @@ public class NetworkDataImpl implements NetworkData {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public NetworkState getState() {
         return this.state;

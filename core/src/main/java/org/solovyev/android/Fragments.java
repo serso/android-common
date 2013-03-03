@@ -6,8 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -20,9 +20,9 @@ public final class Fragments {
         throw new AssertionError();
     }
 
-    public static void showDialog(@NotNull DialogFragment dialogFragment,
-                                  @NotNull String fragmentTag,
-                                  @NotNull FragmentManager fm) {
+    public static void showDialog(@Nonnull DialogFragment dialogFragment,
+                                  @Nonnull String fragmentTag,
+                                  @Nonnull FragmentManager fm) {
         final FragmentTransaction ft = fm.beginTransaction();
 
         Fragment prev = fm.findFragmentByTag(fragmentTag);
@@ -35,9 +35,9 @@ public final class Fragments {
         dialogFragment.show(ft, fragmentTag);
     }
 
-    public static void showDialog(@NotNull android.support.v4.app.DialogFragment dialogFragment,
-                                  @NotNull String fragmentTag,
-                                  @NotNull android.support.v4.app.FragmentManager fm) {
+    public static void showDialog(@Nonnull android.support.v4.app.DialogFragment dialogFragment,
+                                  @Nonnull String fragmentTag,
+                                  @Nonnull android.support.v4.app.FragmentManager fm) {
         final android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
         android.support.v4.app.Fragment prev = fm.findFragmentByTag(fragmentTag);
@@ -50,17 +50,17 @@ public final class Fragments {
         dialogFragment.show(ft, fragmentTag);
     }
 
-    public static void createFragment(@NotNull FragmentActivity activity,
-                                      @NotNull Class<? extends android.support.v4.app.Fragment> fragmentClass,
+    public static void createFragment(@Nonnull FragmentActivity activity,
+                                      @Nonnull Class<? extends android.support.v4.app.Fragment> fragmentClass,
                                       int parentViewId,
-                                      @NotNull String tag) {
+                                      @Nonnull String tag) {
         createFragment(activity, fragmentClass, parentViewId, tag, null);
     }
 
-    public static void createFragment(@NotNull FragmentActivity activity,
-                                      @NotNull Class<? extends android.support.v4.app.Fragment> fragmentClass,
+    public static void createFragment(@Nonnull FragmentActivity activity,
+                                      @Nonnull Class<? extends android.support.v4.app.Fragment> fragmentClass,
                                       int parentViewId,
-                                      @NotNull String tag,
+                                      @Nonnull String tag,
                                       @Nullable Bundle args) {
         final android.support.v4.app.FragmentManager fm = activity.getSupportFragmentManager();
 

@@ -26,7 +26,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.view.AbstractRangeSeekBar;
 import org.solovyev.android.view.NumberRangeSeekBar;
 import org.solovyev.common.interval.Interval;
@@ -40,13 +40,13 @@ import org.solovyev.common.text.NumberIntervalMapper;
  */
 public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> extends AbstractDialogPreference<Interval<T>> implements AbstractRangeSeekBar.OnRangeSeekBarChangeListener<T> {
 
-	@NotNull
+	@Nonnull
 	private final Interval<T> boundaries;
 
-    @NotNull
+    @Nonnull
 	private final T step;
 
-	public RangeSeekBarPreference(@NotNull Context context, AttributeSet attrs, @NotNull NumberIntervalMapper<T> mapper) {
+	public RangeSeekBarPreference(@Nonnull Context context, AttributeSet attrs, @Nonnull NumberIntervalMapper<T> mapper) {
 		super(context, attrs, null, true, mapper);
 
 		//noinspection ConstantConditions
@@ -61,11 +61,11 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 
 	}
 
-    @NotNull
+    @Nonnull
     protected abstract T getDefaultStep();
 
-    @NotNull
-	protected View createPreferenceView(@NotNull Context context) {
+    @Nonnull
+	protected View createPreferenceView(@Nonnull Context context) {
         int count = 0;
         for ( T t = boundaries.getLeftLimit(); t.compareTo(boundaries.getRightLimit()) <= 0; t = add(t, step) ) {
             count += 1;
@@ -78,8 +78,8 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 		return result;
 	}
 
-    @NotNull
-    protected abstract T add(@NotNull T l, @NotNull T r);
+    @Nonnull
+    protected abstract T add(@Nonnull T l, @Nonnull T r);
 
     @Override
 	protected LinearLayout.LayoutParams getParams() {
@@ -87,7 +87,7 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 	}
 
 	@Override
-	protected void initPreferenceView(@NotNull View v, Interval<T> value) {
+	protected void initPreferenceView(@Nonnull View v, Interval<T> value) {
 		if (value != null) {
 			((NumberRangeSeekBar<T>) v).setSelectedMinValue(value.getLeftLimit());
 			((NumberRangeSeekBar<T>) v).setSelectedMaxValue(value.getRightLimit());
@@ -106,7 +106,7 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 		setValueText(interval);
 	}
 
-	private void setValueText(@NotNull Interval<T> interval) {
+	private void setValueText(@Nonnull Interval<T> interval) {
 		final String t = String.valueOf(interval);
         final String valueText = getValueText();
 		updateValueText(valueText == null ? t : t.concat(valueText));

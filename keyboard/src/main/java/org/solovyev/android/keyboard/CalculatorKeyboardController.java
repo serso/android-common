@@ -24,7 +24,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
 public class CalculatorKeyboardController extends DragKeyboardController {
 
     @Override
-    protected DragAKeyboard createKeyboardDef(@NotNull Context context) {
+    protected DragAKeyboard createKeyboardDef(@Nonnull Context context) {
         final int operatorButtonColor = R.drawable.metro_dark_button;
         final DragAKeyboard.KeyboardDef result = new DragAKeyboard.KeyboardDef();
 

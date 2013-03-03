@@ -25,7 +25,7 @@ package org.solovyev.android;
 import android.app.TabActivity;
 import android.preference.PreferenceManager;
 import android.widget.TabHost;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.prefs.StringPreference;
 
 /**
@@ -44,11 +44,11 @@ public class LastTabSaver implements TabHost.OnTabChangeListener {
 	private static final String LAST_OPENED_TAB_P_KEY = "last_opened_tab_";
 
 	// preference object
-	@NotNull
+	@Nonnull
 	private final StringPreference<String> preference;
 
 	// activity that holds tab host
-	@NotNull
+	@Nonnull
 	private final TabActivity tabActivity;
 
 	/**
@@ -58,7 +58,7 @@ public class LastTabSaver implements TabHost.OnTabChangeListener {
 	 * @param tabActivity tab activity
 	 * @param defaultTabId default tab (if no preference value is not defined)
 	 */
-	public LastTabSaver(@NotNull TabActivity tabActivity, @NotNull String defaultTabId) {
+	public LastTabSaver(@Nonnull TabActivity tabActivity, @Nonnull String defaultTabId) {
 		this.tabActivity = tabActivity;
 		this.preference = StringPreference.of(getPreferenceKey(), defaultTabId);
 
@@ -80,12 +80,12 @@ public class LastTabSaver implements TabHost.OnTabChangeListener {
 		preference.putPreference(PreferenceManager.getDefaultSharedPreferences(tabActivity), tabId);
 	}
 
-	@NotNull
+	@Nonnull
 	public String getLastOpenedTabId() {
 		return preference.getPreference(PreferenceManager.getDefaultSharedPreferences(tabActivity));
 	}
 
-	@NotNull
+	@Nonnull
 	private String getPreferenceKey() {
 		return LAST_OPENED_TAB_P_KEY + tabActivity.getClass().getName();
 	}

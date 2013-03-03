@@ -27,8 +27,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -39,7 +39,7 @@ public class ListAnimator {
 
     public static enum AnimationType {
         left_to_right {
-            @NotNull
+            @Nonnull
             @Override
             public Animation create() {
                 return new TranslateAnimation(
@@ -50,7 +50,7 @@ public class ListAnimator {
             }
         },
         right_to_left{
-            @NotNull
+            @Nonnull
             @Override
             public Animation create() {
                 return new TranslateAnimation(
@@ -61,7 +61,7 @@ public class ListAnimator {
             }
         },
         top_to_bottom {
-            @NotNull
+            @Nonnull
             @Override
             public Animation create() {
                 return new TranslateAnimation(
@@ -72,20 +72,20 @@ public class ListAnimator {
             }
         };
 
-        @NotNull
+        @Nonnull
         public abstract Animation create();
     }
 
-    @NotNull
+    @Nonnull
     private final ListView listView;
 
-    @NotNull
+    @Nonnull
     private final AnimationType animationType;
 
     @Nullable
     private final Runnable postAction;
 
-    public ListAnimator(@NotNull ListView listView, @NotNull AnimationType animationType, @Nullable Runnable postAction) {
+    public ListAnimator(@Nonnull ListView listView, @Nonnull AnimationType animationType, @Nullable Runnable postAction) {
         this.listView = listView;
         this.animationType = animationType;
         this.postAction = postAction;

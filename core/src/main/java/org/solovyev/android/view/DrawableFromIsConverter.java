@@ -23,8 +23,8 @@
 package org.solovyev.android.view;
 
 import android.graphics.drawable.Drawable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 
 import java.io.InputStream;
@@ -36,32 +36,32 @@ import java.io.InputStream;
  */
 public class DrawableFromIsConverter implements Converter<InputStream, Drawable> {
 
-    @NotNull
+    @Nonnull
     private static final DrawableFromIsConverter instance = new DrawableFromIsConverter("instance");
 
-    @NotNull
+    @Nonnull
     private final String name;
 
     @Nullable
     private final Drawable defaultDrawable;
 
-    public DrawableFromIsConverter(@NotNull String name) {
+    public DrawableFromIsConverter(@Nonnull String name) {
         this(name, null);
     }
 
-    public DrawableFromIsConverter(@NotNull String name, @Nullable Drawable defaultDrawable) {
+    public DrawableFromIsConverter(@Nonnull String name, @Nullable Drawable defaultDrawable) {
         this.name = name;
         this.defaultDrawable = defaultDrawable;
     }
 
-    @NotNull
+    @Nonnull
     public static DrawableFromIsConverter getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Drawable convert(@NotNull InputStream inputStream) {
+    public Drawable convert(@Nonnull InputStream inputStream) {
         Drawable result = Drawable.createFromStream(inputStream, name);
 
         if ( result == null ) {

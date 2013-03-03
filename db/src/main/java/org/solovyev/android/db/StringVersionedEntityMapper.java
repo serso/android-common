@@ -1,7 +1,7 @@
 package org.solovyev.android.db;
 
 import android.database.Cursor;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 import org.solovyev.common.VersionedEntity;
 import org.solovyev.common.VersionedEntityImpl;
@@ -13,20 +13,20 @@ import org.solovyev.common.VersionedEntityImpl;
  */
 public class StringVersionedEntityMapper implements Converter<Cursor, VersionedEntity<String>> {
 
-    @NotNull
+    @Nonnull
     private static final Converter<Cursor, VersionedEntity<String>> instance = new StringVersionedEntityMapper();
 
     private StringVersionedEntityMapper() {
     }
 
-    @NotNull
+    @Nonnull
     public static Converter<Cursor, VersionedEntity<String>> getInstance() {
         return instance;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public VersionedEntity<String> convert(@NotNull Cursor cursor) {
+    public VersionedEntity<String> convert(@Nonnull Cursor cursor) {
 
         final String id = cursor.getString(0);
         final int version = cursor.getInt(1);

@@ -22,19 +22,19 @@
 
 package org.solovyev.android.keyboard;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public abstract class AbstractAKeyboard implements AKeyboard {
 
-	@NotNull
+	@Nonnull
 	private final String keyboardId;
 
-	protected AbstractAKeyboard(@NotNull String keyboardId) {
+	protected AbstractAKeyboard(@Nonnull String keyboardId) {
 		this.keyboardId = keyboardId;
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getKeyboardId() {
 		return keyboardId;
 	}

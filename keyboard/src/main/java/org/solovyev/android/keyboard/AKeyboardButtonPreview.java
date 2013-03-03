@@ -33,8 +33,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.Views;
 
 /**
@@ -52,15 +52,15 @@ public class AKeyboardButtonPreview {
     private static final long DELAY_AFTER_PREVIEW = 200;
     private static final long DELAY_BEFORE_PREVIEW = 0;
 
-    @NotNull
+    @Nonnull
     private PopupWindow popup;
 
-    @NotNull
+    @Nonnull
     private final View popupParent;
 
     private View previewView;
 
-    @NotNull
+    @Nonnull
     private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,11 +77,11 @@ public class AKeyboardButtonPreview {
         }
     };
 
-    public AKeyboardButtonPreview(@NotNull View popupParent) {
+    public AKeyboardButtonPreview(@Nonnull View popupParent) {
         this.popupParent = popupParent;
     }
 
-    public void createPreviewView(@NotNull LayoutInflater layoutInflater) {
+    public void createPreviewView(@Nonnull LayoutInflater layoutInflater) {
         Log.d(TAG, "Creating preview view and popup window...");
 
         previewView = layoutInflater.inflate(R.layout.drag_keyboard_preview, null);
@@ -89,7 +89,7 @@ public class AKeyboardButtonPreview {
         popup = new PopupWindow(previewView);
     }
 
-    public void showPreview(@NotNull View view, @Nullable CharSequence text, @Nullable Integer drawableResId) {
+    public void showPreview(@Nonnull View view, @Nullable CharSequence text, @Nullable Integer drawableResId) {
         final int[] location = new int[2];
         view.getLocationInWindow(location);
         int x = location[0] + view.getWidth() / 2;
@@ -116,7 +116,7 @@ public class AKeyboardButtonPreview {
 		}
 	}
 
-    private void showText0(@NotNull PreviewParams previewParams) {
+    private void showText0(@Nonnull PreviewParams previewParams) {
 		synchronized (handler) {
 			handler.removeMessages(MSG_REMOVE_PREVIEW, previewParams);
 		}

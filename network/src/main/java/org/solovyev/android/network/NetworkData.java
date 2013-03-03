@@ -1,8 +1,8 @@
 package org.solovyev.android.network;
 
 import android.net.NetworkInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface NetworkData {
 
-    @NotNull
+    @Nonnull
     NetworkState getState();
 
     /**

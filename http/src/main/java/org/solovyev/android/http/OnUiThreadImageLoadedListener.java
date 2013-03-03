@@ -24,8 +24,8 @@ package org.solovyev.android.http;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.lang.ref.WeakReference;
 
@@ -36,10 +36,10 @@ import java.lang.ref.WeakReference;
  */
 public abstract class OnUiThreadImageLoadedListener implements OnImageLoadedListener {
 
-    @NotNull
+    @Nonnull
     private final WeakReference<Activity> activityRef;
 
-    public OnUiThreadImageLoadedListener(@NotNull Activity activity) {
+    public OnUiThreadImageLoadedListener(@Nonnull Activity activity) {
         this.activityRef = new WeakReference<Activity>(activity);
     }
 

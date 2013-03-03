@@ -26,7 +26,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,15 +42,15 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DbOperation";
 
-    @NotNull
+    @Nonnull
     protected final Context context;
 
-    @NotNull
+    @Nonnull
     private String databaseName;
 
     private int version;
 
-    public CommonSQLiteOpenHelper(@NotNull Context context, @NotNull SQLiteOpenHelperConfiguration configuration) {
+    public CommonSQLiteOpenHelper(@Nonnull Context context, @Nonnull SQLiteOpenHelperConfiguration configuration) {
         super(context.getApplicationContext(), configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
         this.context = context.getApplicationContext();
         this.databaseName = configuration.getName();
@@ -58,12 +58,12 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(@NotNull SQLiteDatabase db) {
+    public void onCreate(@Nonnull SQLiteDatabase db) {
         onUpgrade(db, 0, this.version);
     }
 
     @Override
-    public void onUpgrade(@NotNull SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(@Nonnull SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "Upgrading database, old version: " + oldVersion + ", new version: " + newVersion);
 
         final DecimalFormat decimalFormat = new DecimalFormat("000");
@@ -96,7 +96,7 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    @NotNull
+    @Nonnull
     public String convertStreamToString(java.io.InputStream is) {
         try {
             return new Scanner(is, "UTF-8").useDelimiter("\\A").next();

@@ -22,21 +22,21 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ListToStringPreferenceTest extends AbstractPreferenceTest<List<String>> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<List<String>> createPreference(@NotNull String key, @Nullable List<String> defaultValue) {
+    protected Preference<List<String>> createPreference(@Nonnull String key, @Nullable List<String> defaultValue) {
         return CollectionToStringPreference.forStringList(key, defaultValue);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected List<String> createDefaultValue() {
         return Arrays.asList("1", "2", "3", "4");

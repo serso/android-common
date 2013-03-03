@@ -25,8 +25,8 @@ package org.solovyev.android.view;
 import android.content.Context;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -38,14 +38,14 @@ public class ListViewBuilder implements ViewBuilder<ListView> {
     @Nullable
     private Integer layoutId;
 
-    @NotNull
+    @Nonnull
     private ListAdapter listAdapter;
 
     private ListViewBuilder() {
     }
 
-    @NotNull
-    public static ViewBuilder<ListView> newInstance(@NotNull ListAdapter listAdapter) {
+    @Nonnull
+    public static ViewBuilder<ListView> newInstance(@Nonnull ListAdapter listAdapter) {
         final ListViewBuilder result = new ListViewBuilder();
 
         result.layoutId = null;
@@ -54,8 +54,8 @@ public class ListViewBuilder implements ViewBuilder<ListView> {
         return result;
     }
 
-    @NotNull
-    public static ViewBuilder<ListView> newInstance(int layoutId, @NotNull ListAdapter listAdapter) {
+    @Nonnull
+    public static ViewBuilder<ListView> newInstance(int layoutId, @Nonnull ListAdapter listAdapter) {
         final ListViewBuilder result = new ListViewBuilder();
 
         result.layoutId = layoutId;
@@ -64,9 +64,9 @@ public class ListViewBuilder implements ViewBuilder<ListView> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public ListView build(@NotNull Context context) {
+    public ListView build(@Nonnull Context context) {
         final ListView result;
         if (layoutId != null) {
             result = ViewFromLayoutBuilder.<ListView>newInstance(layoutId).build(context);

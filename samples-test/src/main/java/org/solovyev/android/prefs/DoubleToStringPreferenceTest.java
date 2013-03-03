@@ -22,7 +22,7 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class DoubleToStringPreferenceTest extends NumberToStringPreferenceTest<Double> {
 
@@ -33,13 +33,13 @@ public class DoubleToStringPreferenceTest extends NumberToStringPreferenceTest<D
         runPreferenceTest(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Class<Double> getNumberClass() {
         return Double.class;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Double createDefaultValue() {
         return 324d;

@@ -25,8 +25,8 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.view.View;
 import android.widget.ListView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.UpdatableViewBuilder;
 
 /**
@@ -50,6 +50,6 @@ public interface ListItem extends UpdatableViewBuilder<View> {
 
     public static interface OnClickAction {
 
-        void onClick(@NotNull Context context, @NotNull ListAdapter<? extends ListItem> adapter, @NotNull ListView listView);
+        void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView);
     }
 }

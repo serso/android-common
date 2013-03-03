@@ -23,8 +23,8 @@
 package org.solovyev.android.http;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.common.Converter;
 
@@ -43,18 +43,18 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
     @Nullable
     private OnPostExecute<List<Object>> onPostExecute;
 
-    public DownloadFileAsyncTask(@NotNull Context context) {
+    public DownloadFileAsyncTask(@Nonnull Context context) {
         super(context);
     }
 
-    public DownloadFileAsyncTask(@NotNull Context context, @NotNull OnPostExecute<List<Object>> onPostExecute) {
+    public DownloadFileAsyncTask(@Nonnull Context context, @Nonnull OnPostExecute<List<Object>> onPostExecute) {
         super(context);
         this.onPostExecute = onPostExecute;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected List<Object> doWork(@NotNull List<Input> params) {
+    protected List<Object> doWork(@Nonnull List<Input> params) {
         final List<Object> result = new ArrayList<Object>();
         for (Input param : params) {
             final DownloadFileHttpTransaction<?> downloadFileHttpTransaction = new DownloadFileHttpTransaction<Object>(param.getUri(), param.getMethod(), param.getFileConverter());
@@ -77,7 +77,7 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
     }
 
     @Override
-    protected void onFailurePostExecute(@NotNull Exception e) {
+    protected void onFailurePostExecute(@Nonnull Exception e) {
         if ( e instanceof HttpRuntimeIoException) {
             // no internet connection => ok
         } else {
@@ -86,38 +86,38 @@ public class DownloadFileAsyncTask extends CommonAsyncTask<DownloadFileAsyncTask
     }
 
     public static interface OnPostExecute<R> {
-        void onPostExecute(@NotNull R result);
+        void onPostExecute(@Nonnull R result);
     }
 
     public static class Input {
 
-        @NotNull
+        @Nonnull
         private String uri;
 
-        @NotNull
+        @Nonnull
         private HttpMethod method;
 
-        @NotNull
+        @Nonnull
         private Converter<InputStream, ?> fileConverter;
 
-        public Input(@NotNull String uri, @NotNull HttpMethod method, @NotNull Converter<InputStream, ?> fileConverter) {
+        public Input(@Nonnull String uri, @Nonnull HttpMethod method, @Nonnull Converter<InputStream, ?> fileConverter) {
             this.uri = uri;
             this.method = method;
             this.fileConverter = fileConverter;
         }
 
 
-        @NotNull
+        @Nonnull
         public String getUri() {
             return uri;
         }
 
-        @NotNull
+        @Nonnull
         public HttpMethod getMethod() {
             return method;
         }
 
-        @NotNull
+        @Nonnull
         public Converter<InputStream, Object> getFileConverter() {
             return (Converter<InputStream, Object>) fileConverter;
         }

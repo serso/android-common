@@ -23,7 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -38,17 +38,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface MenuHelper<M, MI> {
 
-    int size(@NotNull M menu);
+    int size(@Nonnull M menu);
 
-    @NotNull
-    MI add(@NotNull M menu, int groupId, int itemId, int orderId, @NotNull String caption);
+    @Nonnull
+    MI add(@Nonnull M menu, int groupId, int itemId, int orderId, @Nonnull String caption);
 
-    public void setOnMenuItemClickListener(@NotNull MI menuItem, @NotNull AMenuItem<MI> onMenuItemClick, @NotNull Activity activity);
+    public void setOnMenuItemClickListener(@Nonnull MI menuItem, @Nonnull AMenuItem<MI> onMenuItemClick, @Nonnull Activity activity);
 
-    void removeItem(@NotNull M menu, @NotNull Integer menuItemId);
+    void removeItem(@Nonnull M menu, @Nonnull Integer menuItemId);
 
-    void inflateMenu(@NotNull Activity activity, int layoutId, @NotNull M menu);
+    void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull M menu);
 
-    @NotNull
-    Integer getItemId(@NotNull MI item);
+    @Nonnull
+    Integer getItemId(@Nonnull MI item);
 }

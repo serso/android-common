@@ -22,7 +22,7 @@
 
 package org.solovyev.android.keyboard;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,14 +31,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public class AKeyboardConfigurationImpl implements AKeyboardConfiguration {
 
-    @NotNull
+    @Nonnull
     private final String wordSeparators;
 
-    public AKeyboardConfigurationImpl(@NotNull String wordSeparators) {
+    public AKeyboardConfigurationImpl(@Nonnull String wordSeparators) {
         this.wordSeparators = wordSeparators;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getWordSeparators() {
         return wordSeparators;

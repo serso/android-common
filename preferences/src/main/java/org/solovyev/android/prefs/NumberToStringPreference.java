@@ -23,8 +23,8 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberMapper;
 
@@ -35,27 +35,27 @@ import org.solovyev.common.text.NumberMapper;
  */
 public class NumberToStringPreference<N extends Number> extends AbstractPreference<N> {
 
-    @NotNull
+    @Nonnull
     private final Mapper<N> mapper;
 
-    private NumberToStringPreference(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
+    private NumberToStringPreference(@Nonnull String key, @Nullable N defaultValue, @Nonnull Class<N> clazz) {
         super(key, defaultValue);
 
         this.mapper = NumberMapper.of(clazz);
     }
 
-    @NotNull
-    public static <N extends Number> NumberToStringPreference<N> of(@NotNull String key, @Nullable N defaultValue, @NotNull Class<N> clazz) {
+    @Nonnull
+    public static <N extends Number> NumberToStringPreference<N> of(@Nonnull String key, @Nullable N defaultValue, @Nonnull Class<N> clazz) {
         return new NumberToStringPreference<N>(key, defaultValue, clazz);
     }
 
     @Override
-    protected N getPersistedValue(@NotNull SharedPreferences preferences) {
+    protected N getPersistedValue(@Nonnull SharedPreferences preferences) {
         return mapper.parseValue(preferences.getString(getKey(), "0"));
     }
 
     @Override
-    protected void putPersistedValue(@NotNull SharedPreferences.Editor editor, @NotNull N value) {
+    protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull N value) {
         editor.putString(getKey(), mapper.formatValue(value));
     }
 

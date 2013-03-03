@@ -28,8 +28,8 @@ import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Example of writing an input method for a soft keyboard.  This code is
@@ -57,10 +57,10 @@ public abstract class AbstractAKeyboardInputMethodService extends InputMethodSer
     **********************************************************************
     */
 
-    @NotNull
+    @Nonnull
     private final AKeyboardController keyboardController;
 
-    protected AbstractAKeyboardInputMethodService(@NotNull AKeyboardController keyboardController) {
+    protected AbstractAKeyboardInputMethodService(@Nonnull AKeyboardController keyboardController) {
         this.keyboardController = keyboardController;
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractAKeyboardInputMethodService extends InputMethodSer
     }
 
     @Override
-    public void onStartInput(@NotNull EditorInfo attribute,
+    public void onStartInput(@Nonnull EditorInfo attribute,
                              boolean restarting) {
         super.onStartInput(attribute, restarting);
 

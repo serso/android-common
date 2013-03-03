@@ -22,17 +22,17 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class NumberToStringPreferenceTest<N extends Number> extends AbstractPreferenceTest<N> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<N> createPreference(@NotNull String key, @Nullable N defaultValue) {
+    protected Preference<N> createPreference(@Nonnull String key, @Nullable N defaultValue) {
         return NumberToStringPreference.of(key, defaultValue, getNumberClass());
     }
 
-    @NotNull
+    @Nonnull
     protected abstract Class<N> getNumberClass();
 }

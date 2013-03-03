@@ -24,7 +24,7 @@ package org.solovyev.android.http;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
 import java.io.IOException;
@@ -39,22 +39,22 @@ import java.util.List;
  */
 public class DownloadFileHttpTransaction<R> extends AbstractHttpTransaction<R> {
 
-    @NotNull
+    @Nonnull
     private final Converter<InputStream, R> fileConverter;
 
-    public DownloadFileHttpTransaction(@NotNull String uri, @NotNull HttpMethod httpMethod, @NotNull Converter<InputStream, R> fileConverter) {
+    public DownloadFileHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod, @Nonnull Converter<InputStream, R> fileConverter) {
         super(uri, httpMethod);
         this.fileConverter = fileConverter;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public List<NameValuePair> getRequestParameters() {
         return Collections.emptyList();
     }
 
     @Override
-    public R getResponse(@NotNull HttpResponse response) {
+    public R getResponse(@Nonnull HttpResponse response) {
         try {
             return fileConverter.convert(response.getEntity().getContent());
         } catch (IOException e) {

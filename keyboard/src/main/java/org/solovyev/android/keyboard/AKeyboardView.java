@@ -27,7 +27,7 @@ import android.inputmethodservice.KeyboardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodSubtype;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -36,21 +36,21 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface AKeyboardView<K extends AKeyboard> {
 
-    void setKeyboard(@NotNull K keyboard);
+    void setKeyboard(@Nonnull K keyboard);
 
-    void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener);
+    void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener);
 
     void close();
 
     void dismiss();
 
-    void setSubtypeOnSpaceKey(@NotNull InputMethodSubtype subtype);
+    void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype);
 
 	boolean isExtractViewShown();
 
-    void createAndroidKeyboardView(@NotNull Context context, @NotNull LayoutInflater layoutInflater);
+    void createAndroidKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater);
 
-    @NotNull
+    @Nonnull
     View getAndroidKeyboardView();
 
     void reloadAndroidKeyboardView();

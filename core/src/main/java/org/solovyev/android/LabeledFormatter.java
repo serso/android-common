@@ -23,8 +23,8 @@
 package org.solovyev.android;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Formatter;
 
 /**
@@ -34,10 +34,10 @@ import org.solovyev.common.text.Formatter;
  */
 public final class LabeledFormatter<T extends Labeled> implements Formatter<T> {
 
-    @NotNull
+    @Nonnull
     private Context context;
 
-    public LabeledFormatter(@NotNull Context context) {
+    public LabeledFormatter(@Nonnull Context context) {
         this.context = context;
     }
 

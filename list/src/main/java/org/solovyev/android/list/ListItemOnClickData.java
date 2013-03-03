@@ -23,7 +23,7 @@
 package org.solovyev.android.list;
 
 import android.widget.ListView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,12 +32,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ListItemOnClickData<T> {
 
-    @NotNull
+    @Nonnull
     T getDataObject();
 
-    @NotNull
+    @Nonnull
     ListAdapter<? extends ListItem> getAdapter();
 
-    @NotNull
+    @Nonnull
     ListView getListView();
 }

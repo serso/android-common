@@ -24,7 +24,7 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.view.NumberRange;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.interval.Interval;
@@ -37,15 +37,15 @@ import org.solovyev.common.text.NumberIntervalMapper;
  */
 public abstract class NumberPickerDialogPreference<N extends Number & Comparable<N>> extends AbstractPickerDialogPreference<N> {
 
-    @NotNull
+    @Nonnull
     private final Interval<N> boundaries;
 
-    @NotNull
+    @Nonnull
     private final N step;
 
     protected NumberPickerDialogPreference(Context context,
                                            AttributeSet attrs,
-                                           @NotNull NumberIntervalMapper<N> mapper) {
+                                           @Nonnull NumberIntervalMapper<N> mapper) {
         super(context, attrs, null, false, mapper.getMapper());
 
         //noinspection ConstantConditions
@@ -59,16 +59,16 @@ public abstract class NumberPickerDialogPreference<N extends Number & Comparable
         }
     }
 
-    @NotNull
+    @Nonnull
     protected abstract N getDefaultStep();
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Picker.Range<N> createRange(@NotNull N selected) {
+    protected Picker.Range<N> createRange(@Nonnull N selected) {
         return createRange(boundaries, step, selected);
     }
 
-    @NotNull
-    protected abstract NumberRange<N> createRange(@NotNull Interval<N> boundaries, @NotNull N step, @NotNull N selected);
+    @Nonnull
+    protected abstract NumberRange<N> createRange(@Nonnull Interval<N> boundaries, @Nonnull N step, @Nonnull N selected);
 
 }

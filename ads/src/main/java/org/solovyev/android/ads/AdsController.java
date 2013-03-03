@@ -31,8 +31,8 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,25 +49,25 @@ public final class AdsController {
 	private AdsController() {
 	}
 
-	@NotNull
+	@Nonnull
 	public static AdsController getInstance() {
 		return instance;
 	}
 
-	@NotNull
+	@Nonnull
 	private String admobUserId;
 
-	@NotNull
+	@Nonnull
 	private String adFreeProductId;
 
 	private boolean initialized = false;
 
-	@NotNull
-	public AdView createAndInflateAdView(@NotNull Activity activity,
-												@NotNull String admobAccountId,
+	@Nonnull
+	public AdView createAndInflateAdView(@Nonnull Activity activity,
+												@Nonnull String admobAccountId,
 												@Nullable ViewGroup parentView,
 												int layoutId,
-												@NotNull List<String> keywords) {
+												@Nonnull List<String> keywords) {
 		final ViewGroup layout = parentView != null ? parentView : (ViewGroup) activity.findViewById(layoutId);
 
 		// Create the adView
@@ -91,7 +91,7 @@ public final class AdsController {
 		return adView;
 	}
 
-	public void init(@NotNull String admobUserId, @NotNull String adFreeProductId, @NotNull BillingController.IConfiguration configuration) {
+	public void init(@Nonnull String admobUserId, @Nonnull String adFreeProductId, @Nonnull BillingController.IConfiguration configuration) {
 		this.admobUserId = admobUserId;
 		this.adFreeProductId = adFreeProductId;
 
@@ -101,14 +101,14 @@ public final class AdsController {
 		this.initialized = true;
 	}
 
-	private boolean isAdFreePurchased(@NotNull Context context) {
+	private boolean isAdFreePurchased(@Nonnull Context context) {
         // todo serso: this piece of code is shared between two branches in Android Calculator project (Calculator++) don't forget to change code below for correct work
         // Blackberry playbook doesn't support billing => this it the only one point where we can stop application to communicate with billing service
 		//return true;
         return BillingController.isPurchased(context.getApplicationContext(), adFreeProductId);
 	}
 
-	public boolean isAdFree(@NotNull Context context) {
+	public boolean isAdFree(@Nonnull Context context) {
 		// check if user already bought this product
 		boolean purchased = isAdFreePurchased(context);
 		if ( !purchased ) {
@@ -125,7 +125,7 @@ public final class AdsController {
 	}
 
 	@Nullable
-	public AdView inflateAd(@NotNull Activity activity, @Nullable ViewGroup parentView, int parentViewId) {
+	public AdView inflateAd(@Nonnull Activity activity, @Nullable ViewGroup parentView, int parentViewId) {
 		AdView result = null;
 		if (!isAdFree(activity)) {
 			Log.d(activity.getClass().getName(), "Application is not ad free - inflating ad!");
@@ -139,7 +139,7 @@ public final class AdsController {
 	}
 
 	@Nullable
-	public AdView inflateAd(@NotNull Activity activity) {
+	public AdView inflateAd(@Nonnull Activity activity) {
 		return inflateAd(activity, null, R.id.ad_parent_view);
 	}
 

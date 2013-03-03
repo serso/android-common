@@ -23,7 +23,7 @@
 package org.solovyev.android.msg;
 
 import android.app.Application;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.msg.AbstractMessage;
 import org.solovyev.common.msg.MessageType;
 
@@ -37,35 +37,35 @@ import java.util.Locale;
  */
 public class AndroidMessage extends AbstractMessage {
 
-    @NotNull
+    @Nonnull
     private final Integer messageCodeId;
 
-    @NotNull
+    @Nonnull
     private final Application application;
 
     private final boolean javaFormat;
 
-    public AndroidMessage(@NotNull Integer messageCodeId,
-                          @NotNull MessageType messageType,
-                          @NotNull Application application,
-                          @org.jetbrains.annotations.Nullable Object... arguments) {
+    public AndroidMessage(@Nonnull Integer messageCodeId,
+                          @Nonnull MessageType messageType,
+                          @Nonnull Application application,
+                          @javax.annotation.Nullable Object... arguments) {
         super(String.valueOf(messageCodeId), messageType, arguments);
         this.messageCodeId = messageCodeId;
         this.application = application;
         this.javaFormat = false;
     }
 
-    public AndroidMessage(@NotNull Integer messageCodeId,
-                          @NotNull MessageType messageType,
-                          @NotNull Application application,
-                          @NotNull List<?> arguments) {
+    public AndroidMessage(@Nonnull Integer messageCodeId,
+                          @Nonnull MessageType messageType,
+                          @Nonnull Application application,
+                          @Nonnull List<?> arguments) {
         this(messageCodeId, messageType, application, arguments, false);
     }
 
-    public AndroidMessage(@NotNull Integer messageCodeId,
-                          @NotNull MessageType messageType,
-                          @NotNull Application application,
-                          @NotNull List<?> arguments,
+    public AndroidMessage(@Nonnull Integer messageCodeId,
+                          @Nonnull MessageType messageType,
+                          @Nonnull Application application,
+                          @Nonnull List<?> arguments,
                           boolean javaFormat) {
         super(String.valueOf(messageCodeId), messageType, arguments);
         this.messageCodeId = messageCodeId;
@@ -73,9 +73,9 @@ public class AndroidMessage extends AbstractMessage {
         this.javaFormat = javaFormat;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public String getLocalizedMessage(@NotNull Locale locale) {
+    public String getLocalizedMessage(@Nonnull Locale locale) {
         if (javaFormat) {
             return super.getLocalizedMessage(locale);
         } else {
@@ -86,7 +86,7 @@ public class AndroidMessage extends AbstractMessage {
     }
 
     @Override
-    protected String getMessagePattern(@NotNull Locale locale) {
+    protected String getMessagePattern(@Nonnull Locale locale) {
         return application.getResources().getString(messageCodeId);
     }
 }

@@ -27,8 +27,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.sherlock.FragmentItem;
 import org.solovyev.android.sherlock.FragmentItemImpl;
 
@@ -51,9 +51,9 @@ public class ActionBarFragmentTabListener implements ActionBar.TabListener {
      * @param parentViewId  parent view id
      */
 
-    public ActionBarFragmentTabListener(@NotNull SherlockFragmentActivity activity,
-                                        @NotNull String tag,
-                                        @NotNull Class<? extends Fragment> fragmentClass,
+    public ActionBarFragmentTabListener(@Nonnull SherlockFragmentActivity activity,
+                                        @Nonnull String tag,
+                                        @Nonnull Class<? extends Fragment> fragmentClass,
                                         @Nullable Bundle fragmentArgs,
                                         @Nullable Integer parentViewId) {
         this.fragmentItem = new FragmentItemImpl(activity, tag, fragmentClass, fragmentArgs, parentViewId);

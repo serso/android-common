@@ -26,7 +26,7 @@ import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,18 +37,18 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 
 	private long lastShiftTime;
 
-	@NotNull
+	@Nonnull
 	private AndroidAKeyboard qwertyKeyboard;
 
-	@NotNull
+	@Nonnull
 	private AndroidAKeyboard symbolsKeyboard;
 
-	@NotNull
+	@Nonnull
 	private AndroidAKeyboard symbolsShiftedKeyboard;
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardControllerState<AndroidAKeyboard> onInitializeInterface0(@NotNull InputMethodService inputMethodService) {
+    protected AKeyboardControllerState<AndroidAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
         qwertyKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.qwerty));
         symbolsKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols));
         symbolsShiftedKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols_shift));
@@ -56,9 +56,9 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
         return AKeyboardControllerStateImpl.newDefaultState(qwertyKeyboard);
     }
 
-    @NotNull
+    @Nonnull
 	@Override
-	public AKeyboardControllerState<AndroidAKeyboard> onStartInput0(@NotNull EditorInfo attribute, boolean restarting) {
+	public AKeyboardControllerState<AndroidAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
 		final AKeyboardControllerState<AndroidAKeyboard> result;
 
 		// We are now going to initialize our state based on the type of
@@ -153,15 +153,15 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected AKeyboardConfiguration onCreate0(@NotNull Context context) {
+    protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
         return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
     }
 
-    @NotNull
+    @Nonnull
 	@Override
-	public AKeyboardViewWithSuggestions<AndroidAKeyboard> createKeyboardView0(@NotNull Context context) {
+	public AKeyboardViewWithSuggestions<AndroidAKeyboard> createKeyboardView0(@Nonnull Context context) {
 		return new AKeyboardViewWithSuggestionsImpl<AndroidAKeyboard, KeyboardViewAKeyboardView>(R.layout.latin_keyboard, this, getInputMethodService());
 	}
 

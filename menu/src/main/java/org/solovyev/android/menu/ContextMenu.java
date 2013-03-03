@@ -23,8 +23,8 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -44,6 +44,6 @@ public interface ContextMenu<MI extends LabeledMenuItem<D>, D> {
     @Nullable
     MI itemAt(int i);
 
-	@NotNull
-	CharSequence[] getMenuCaptions(@NotNull final Context context);
+	@Nonnull
+	CharSequence[] getMenuCaptions(@Nonnull final Context context);
 }

@@ -27,8 +27,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
 import java.lang.ref.WeakReference;
@@ -41,10 +41,10 @@ import java.util.List;
  */
 public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Param, Progress, CommonAsyncTask.Result<R>> {
 
-    @NotNull
+    @Nonnull
     private static final String TAG = "CommonAsyncTask";
 
-    @NotNull
+    @Nonnull
     private final WeakReference<Context> contextRef;
 
     private boolean mask;
@@ -52,11 +52,11 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
     @Nullable
     private AlertDialog dialog;
 
-    protected CommonAsyncTask(@NotNull Context context) {
+    protected CommonAsyncTask(@Nonnull Context context) {
         this(context, false);
     }
 
-    protected CommonAsyncTask(@NotNull Context context, boolean mask) {
+    protected CommonAsyncTask(@Nonnull Context context, boolean mask) {
         this.mask = mask;
         this.contextRef = new WeakReference<Context>(context);
     }
@@ -82,10 +82,10 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
         }
     }
 
-    protected abstract R doWork(@NotNull List<Param> params);
+    protected abstract R doWork(@Nonnull List<Param> params);
 
     @Override
-    protected final void onPostExecute(@NotNull Result<R> r) {
+    protected final void onPostExecute(@Nonnull Result<R> r) {
         super.onPostExecute(r);
 
         if (dialog != null) {
@@ -107,7 +107,7 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
 
     protected abstract void onSuccessPostExecute(@Nullable R result);
 
-    protected abstract void onFailurePostExecute(@NotNull Exception e);
+    protected abstract void onFailurePostExecute(@Nonnull Exception e);
 
     private static class CommonResult<SR> implements Result<SR> {
 
@@ -124,7 +124,7 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
             this.successResult = result;
         }
 
-        public CommonResult(@NotNull Exception e) {
+        public CommonResult(@Nonnull Exception e) {
             this.failureResult = e;
         }
 
@@ -157,11 +157,11 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
         SR getSuccessResult();
     }
 
-    protected void throwException(@NotNull Exception e) {
+    protected void throwException(@Nonnull Exception e) {
         throw new CommonAsyncTaskRuntimeException(e);
     }
 
-    protected void defaultOnFailurePostExecute(@NotNull Exception e) {
+    protected void defaultOnFailurePostExecute(@Nonnull Exception e) {
         if (e instanceof RuntimeException) {
             throw (RuntimeException) e;
         } else {
@@ -171,14 +171,14 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
 
     private static class CommonAsyncTaskRuntimeException extends RuntimeException {
 
-        @NotNull
+        @Nonnull
         private Exception exception;
 
-        public CommonAsyncTaskRuntimeException(@NotNull Exception exception) {
+        public CommonAsyncTaskRuntimeException(@Nonnull Exception exception) {
             this.exception = exception;
         }
 
-        @NotNull
+        @Nonnull
         public Exception getException() {
             return exception;
         }

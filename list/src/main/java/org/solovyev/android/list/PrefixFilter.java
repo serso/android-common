@@ -22,8 +22,8 @@
 
 package org.solovyev.android.list;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 
@@ -34,10 +34,10 @@ import org.solovyev.common.JPredicate;
  */
 public class PrefixFilter<T> implements JPredicate<T> {
 
-    @NotNull
+    @Nonnull
     private String prefix;
 
-    public PrefixFilter(@NotNull String prefix) {
+    public PrefixFilter(@Nonnull String prefix) {
         this.prefix = prefix;
     }
 

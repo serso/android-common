@@ -25,8 +25,8 @@ package org.solovyev.android.keyboard;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: Solovyev_S
@@ -39,7 +39,7 @@ public interface AKeyboardInput {
 
     void onText(@Nullable CharSequence text);
 
-    @NotNull
+    @Nonnull
     EditorInfo getCurrentInputEditorInfo();
 
     @Nullable
@@ -47,11 +47,11 @@ public interface AKeyboardInput {
 
     boolean handleBackspace();
 
-    void sendKeyEvent(@NotNull KeyEvent keyEvent);
+    void sendKeyEvent(@Nonnull KeyEvent keyEvent);
 
     int translateKeyDown(int unicodeChar);
 
-    void commitCompletion(@NotNull CompletionInfo completionInfo);
+    void commitCompletion(@Nonnull CompletionInfo completionInfo);
 
     void append(char primaryCode);
 

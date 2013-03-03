@@ -25,8 +25,8 @@ package org.solovyev.android.view;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -43,7 +43,7 @@ public class TextViewBuilder implements UpdatableViewBuilder<TextView> {
     private TextViewBuilder() {
     }
 
-    @NotNull
+    @Nonnull
     public static UpdatableViewBuilder<TextView> newInstance(int textViewLayoutId, @Nullable String tag) {
         final TextViewBuilder result = new TextViewBuilder();
 
@@ -53,9 +53,9 @@ public class TextViewBuilder implements UpdatableViewBuilder<TextView> {
         return result;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public TextView build(@NotNull Context context) {
+    public TextView build(@Nonnull Context context) {
         final TextView result = ViewFromLayoutBuilder.<TextView>newInstance(textViewLayoutId).build(context);
 
         result.setTag(createViewTag());
@@ -63,14 +63,14 @@ public class TextViewBuilder implements UpdatableViewBuilder<TextView> {
         return updateView(context, result);
     }
 
-    @NotNull
+    @Nonnull
     private String createViewTag() {
         return tag == null ? this.getClass().getName() : tag;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public TextView updateView(@NotNull Context context, @NotNull View view) {
+    public TextView updateView(@Nonnull Context context, @Nonnull View view) {
         if (createViewTag().equals(view.getTag())) {
             return (TextView) view;
         } else {

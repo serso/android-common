@@ -22,7 +22,7 @@
 
 package org.solovyev.android.list;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.menu.LabeledMenuItem;
 
 import java.util.List;
@@ -35,17 +35,17 @@ import java.util.List;
 // class for types object to be passed on click
 public class SimpleMenuOnClick<T> extends MenuOnClick<T> {
 
-    @NotNull
+    @Nonnull
     private final T data;
 
-    public SimpleMenuOnClick(@NotNull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> labeledMenuItems,
-                             @NotNull T data,
-                             @NotNull String menuName) {
+    public SimpleMenuOnClick(@Nonnull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> labeledMenuItems,
+                             @Nonnull T data,
+                             @Nonnull String menuName) {
         super(labeledMenuItems, menuName);
         this.data = data;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected T getData() {
         return this.data;

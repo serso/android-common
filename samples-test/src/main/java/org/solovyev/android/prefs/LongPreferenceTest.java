@@ -22,17 +22,17 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class LongPreferenceTest extends AbstractPreferenceTest<Long> {
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Preference<Long> createPreference(@NotNull String key, @NotNull Long defaultValue) {
+    protected Preference<Long> createPreference(@Nonnull String key, @Nonnull Long defaultValue) {
         return LongPreference.of(key, defaultValue);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Long createDefaultValue() {
         return 1231231232132131L;

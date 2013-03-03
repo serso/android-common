@@ -23,7 +23,7 @@
 package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -32,5 +32,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface DbExec {
 
-    void exec(@NotNull SQLiteDatabase db);
+    void exec(@Nonnull SQLiteDatabase db);
 }

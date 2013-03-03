@@ -26,8 +26,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.interval.Interval;
@@ -42,26 +42,26 @@ import java.util.Map;
 
 public class SimpleOnDragListener implements OnDragListener, DragPreferencesChangeListener {
 
-	@NotNull
+	@Nonnull
 	public static final Point2d axis = new Point2d(0, 1);
 
-	@NotNull
+	@Nonnull
 	private DragProcessor dragProcessor;
 
-	@NotNull
+	@Nonnull
 	private Preferences preferences;
 
-	public SimpleOnDragListener(@NotNull Preferences preferences) {
+	public SimpleOnDragListener(@Nonnull Preferences preferences) {
 		this.preferences = preferences;
 	}
 
-	public SimpleOnDragListener(@NotNull DragProcessor dragProcessor, @NotNull Preferences preferences) {
+	public SimpleOnDragListener(@Nonnull DragProcessor dragProcessor, @Nonnull Preferences preferences) {
 		this.dragProcessor = dragProcessor;
 		this.preferences = preferences;
 	}
 
 	@Override
-	public boolean onDrag(@NotNull DragButton dragButton, @NotNull DragEvent event) {
+	public boolean onDrag(@Nonnull DragButton dragButton, @Nonnull DragEvent event) {
 		boolean result = false;
 
 		logDragEvent(dragButton, event);
@@ -128,7 +128,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 		return true;
 	}
 
-	private void logDragEvent(@NotNull DragButton dragButton, @NotNull DragEvent event) {
+	private void logDragEvent(@Nonnull DragButton dragButton, @Nonnull DragEvent event) {
 		final Point2d startPoint = event.getStartPoint();
 		final MotionEvent motionEvent = event.getMotionEvent();
 		final Point2d endPoint = new Point2d(motionEvent.getX(), motionEvent.getY());
@@ -142,42 +142,42 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 		Log.d(String.valueOf(dragButton.getId()), "Total time: " + (motionEvent.getEventTime() - motionEvent.getDownTime()) + " ms");
 	}
 
-	@NotNull
+	@Nonnull
 	public DragProcessor getDragProcessor() {
 		return dragProcessor;
 	}
 
-	public void setDragProcessor(@NotNull DragProcessor dragProcessor) {
+	public void setDragProcessor(@Nonnull DragProcessor dragProcessor) {
 		this.dragProcessor = dragProcessor;
 	}
 
 	@Override
-	public void onDragPreferencesChange(@NotNull Preferences preferences) {
+	public void onDragPreferencesChange(@Nonnull Preferences preferences) {
 		this.preferences = preferences;
 	}
 
 	public interface DragProcessor {
 
-		boolean processDragEvent(@NotNull DragDirection dragDirection, @NotNull DragButton dragButton, @NotNull Point2d startPoint2d, @NotNull MotionEvent motionEvent);
+		boolean processDragEvent(@Nonnull DragDirection dragDirection, @Nonnull DragButton dragButton, @Nonnull Point2d startPoint2d, @Nonnull MotionEvent motionEvent);
 	}
 
 	// todo serso: currently we do not use direction
-	public static String getPreferenceId(@NotNull PreferenceType preferenceType, @NotNull DragDirection direction) {
+	public static String getPreferenceId(@Nonnull PreferenceType preferenceType, @Nonnull DragDirection direction) {
 		return "org.solovyev.android.calculator.DragButtonCalibrationActivity" + "_" + preferenceType.name() /*+ "_" + direction.name()*/;
 	}
 
-	@NotNull
-	public static Preferences getDefaultPreferences(@NotNull Context context) {
+	@Nonnull
+	public static Preferences getDefaultPreferences(@Nonnull Context context) {
 		return getPreferences0(null, context);
 	}
 
-	@NotNull
-	public static Preferences getPreferences(@NotNull final SharedPreferences preferences, @NotNull Context context) {
+	@Nonnull
+	public static Preferences getPreferences(@Nonnull final SharedPreferences preferences, @Nonnull Context context) {
 		return getPreferences0(preferences, context);
 	}
 
-	@NotNull
-	private static Preferences getPreferences0(@Nullable final SharedPreferences preferences, @NotNull Context context) {
+	@Nonnull
+	private static Preferences getPreferences0(@Nullable final SharedPreferences preferences, @Nonnull Context context) {
 
 		final Mapper<Interval<Float>> mapper = NumberIntervalMapper.of(Float.class);
 
@@ -227,10 +227,10 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 		return result;
 	}
 
-	@NotNull
-	public static Interval<Float> transformInterval(@NotNull PreferenceType preferenceType,
-                                                    @NotNull DragDirection dragDirection,
-                                                    @NotNull Interval<Float> interval) {
+	@Nonnull
+	public static Interval<Float> transformInterval(@Nonnull PreferenceType preferenceType,
+                                                    @Nonnull DragDirection dragDirection,
+                                                    @Nonnull Interval<Float> interval) {
 
         if (preferenceType == PreferenceType.angle) {
 			final Float leftLimit = interval.getLeftLimit();
@@ -270,65 +270,65 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 
 	public static class DragPreference {
 
-		@NotNull
+		@Nonnull
 		private DragDirection direction;
 
-		@NotNull
+		@Nonnull
 		private Interval<Float> interval;
 
 
-		public DragPreference(@NotNull DragDirection direction, @NotNull Interval<Float> interval) {
+		public DragPreference(@Nonnull DragDirection direction, @Nonnull Interval<Float> interval) {
 			this.direction = direction;
 			this.interval = interval;
 		}
 
-		@NotNull
+		@Nonnull
 		public DragDirection getDirection() {
 			return direction;
 		}
 
-		public void setDirection(@NotNull DragDirection direction) {
+		public void setDirection(@Nonnull DragDirection direction) {
 			this.direction = direction;
 		}
 
-		@NotNull
+		@Nonnull
 		public Interval<Float> getInterval() {
 			return interval;
 		}
 
-		public void setInterval(@NotNull Interval<Float> interval) {
+		public void setInterval(@Nonnull Interval<Float> interval) {
 			this.interval = interval;
 		}
 	}
 
 	public static class Preference {
 
-		@NotNull
+		@Nonnull
 		private PreferenceType preferenceType;
 
-		@NotNull
+		@Nonnull
 		private Map<DragDirection, DragPreference> directionPreferences = new HashMap<DragDirection, DragPreference>();
 
 
-		public Preference(@NotNull PreferenceType preferenceType) {
+		public Preference(@Nonnull PreferenceType preferenceType) {
 			this.preferenceType = preferenceType;
 		}
 
-		@NotNull
+		@Nonnull
 		public PreferenceType getPreferenceType() {
 			return preferenceType;
 		}
 
-		public void setPreferenceType(@NotNull PreferenceType preferenceType) {
+		public void setPreferenceType(@Nonnull PreferenceType preferenceType) {
 			this.preferenceType = preferenceType;
 		}
 
-		@NotNull
+		@Nonnull
 		public Map<DragDirection, DragPreference> getDirectionPreferences() {
 			return directionPreferences;
 		}
 
-		public void setDirectionPreferences(@NotNull Map<DragDirection, DragPreference> directionPreferences) {
+		public void setDirectionPreferences(@Nonnull Map<DragDirection, DragPreference> directionPreferences) {
 			this.directionPreferences = directionPreferences;
 		}
 	}

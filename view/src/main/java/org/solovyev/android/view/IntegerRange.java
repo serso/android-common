@@ -22,8 +22,8 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.text.Formatter;
 
 /**
@@ -33,16 +33,16 @@ import org.solovyev.common.text.Formatter;
  */
 public class IntegerRange extends NumberRange<Integer> {
 
-    public IntegerRange(@NotNull Integer min,
-                        @NotNull Integer max,
-                        @NotNull Integer step,
+    public IntegerRange(@Nonnull Integer min,
+                        @Nonnull Integer max,
+                        @Nonnull Integer step,
                         int startPosition,
                         @Nullable Formatter<Integer> formatter) {
         super(min, max, step, startPosition, formatter);
     }
 
-    @NotNull
-    public static NumberRange<Integer> newInstance(@NotNull Integer min, @NotNull Integer max, @NotNull Integer step, @NotNull Integer selected) {
+    @Nonnull
+    public static NumberRange<Integer> newInstance(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step, @Nonnull Integer selected) {
         if (selected < min || selected > max) {
             throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
         }
@@ -56,16 +56,16 @@ public class IntegerRange extends NumberRange<Integer> {
     }
 
     @Override
-    protected int getCount(@NotNull Integer min, @NotNull Integer max, @NotNull Integer step) {
+    protected int getCount(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
         // (4 - 0)/1 + 1= 5
         // (4 - 0)/2 + 1 = 3
         // (4 - 1)/2 + 1 = 2
         return (max - min) / step + 1;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    protected Integer getValueAt(int position, @NotNull Integer min, @NotNull Integer max, @NotNull Integer step) {
+    protected Integer getValueAt(int position, @Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
         return min + position * step;
     }
 }

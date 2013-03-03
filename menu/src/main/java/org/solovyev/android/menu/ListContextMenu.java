@@ -23,8 +23,8 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
 import java.util.ArrayList;
@@ -39,13 +39,13 @@ public class ListContextMenu<T extends LabeledMenuItem<D>, D> implements Context
 
 	private final List<? extends T> menuItems;
 
-	@NotNull
+	@Nonnull
 	public static <T extends LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(T... menuItems) {
 		return new ListContextMenu<T, D>(menuItems);
 	}
 
-	@NotNull
-	public static <T extends LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@NotNull List<? extends T> menuItems) {
+	@Nonnull
+	public static <T extends LabeledMenuItem<D>, D> ContextMenu<T, D> newInstance(@Nonnull List<? extends T> menuItems) {
 		return new ListContextMenu<T, D>(menuItems);
 	}
 
@@ -53,7 +53,7 @@ public class ListContextMenu<T extends LabeledMenuItem<D>, D> implements Context
 		this(Collections.asList(menuItems));
 	}
 
-	private ListContextMenu(@NotNull List<? extends T> menuItems) {
+	private ListContextMenu(@Nonnull List<? extends T> menuItems) {
 		this.menuItems = new ArrayList<T>(menuItems);
 	}
 
@@ -68,8 +68,8 @@ public class ListContextMenu<T extends LabeledMenuItem<D>, D> implements Context
 	}
 
 	@Override
-	@NotNull
-	public CharSequence[] getMenuCaptions(@NotNull final Context context) {
+	@Nonnull
+	public CharSequence[] getMenuCaptions(@Nonnull final Context context) {
 		final CharSequence[] result = new CharSequence[this.menuItems.size()];
 		for (int i = 0; i < this.menuItems.size(); i++) {
 			result[i] = this.menuItems.get(i).getCaption(context);

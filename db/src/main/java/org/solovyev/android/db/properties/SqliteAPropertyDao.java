@@ -24,7 +24,7 @@ package org.solovyev.android.db.properties;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.AbstractSQLiteHelper;
 import org.solovyev.android.db.AndroidDbUtils;
@@ -41,24 +41,24 @@ import java.util.List;
  */
 public class SqliteAPropertyDao extends AbstractSQLiteHelper implements APropertyDao {
 
-    @NotNull
+    @Nonnull
     private final String tableName;
 
-    @NotNull
+    @Nonnull
     private final String idColumnName;
 
-    @NotNull
+    @Nonnull
     private final String propertyNameColumnName;
 
-    @NotNull
+    @Nonnull
     private final String propertyValueColumnName;
 
-    public SqliteAPropertyDao(@NotNull Context context,
-                              @NotNull SQLiteOpenHelper sqliteOpenHelper,
-                              @NotNull String tableName,
-                              @NotNull String idColumnName,
-                              @NotNull String propertyNameColumnName,
-                              @NotNull String propertyValueColumnName) {
+    public SqliteAPropertyDao(@Nonnull Context context,
+                              @Nonnull SQLiteOpenHelper sqliteOpenHelper,
+                              @Nonnull String tableName,
+                              @Nonnull String idColumnName,
+                              @Nonnull String propertyNameColumnName,
+                              @Nonnull String propertyValueColumnName) {
         super(context, sqliteOpenHelper);
         this.tableName = tableName;
         this.idColumnName = idColumnName;
@@ -66,24 +66,24 @@ public class SqliteAPropertyDao extends AbstractSQLiteHelper implements APropert
         this.propertyValueColumnName = propertyValueColumnName;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public List<AProperty> loadPropertiesById(@NotNull Object id) {
+    public List<AProperty> loadPropertiesById(@Nonnull Object id) {
         return AndroidDbUtils.doDbQuery(getSqliteOpenHelper(), new PropertyByIdDbQuery(getContext(), getSqliteOpenHelper(), tableName, idColumnName, id));
     }
 
     @Override
-    public void removePropertiesById(@NotNull Object id) {
+    public void removePropertiesById(@Nonnull Object id) {
         AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new RemovePropertiesDbExec(id, tableName, idColumnName));
     }
 
     @Override
-    public void insertProperty(@NotNull Object id, @NotNull AProperty property) {
+    public void insertProperty(@Nonnull Object id, @Nonnull AProperty property) {
         AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new InsertPropertyDbExec(id, property, tableName, idColumnName, propertyNameColumnName, propertyValueColumnName));
     }
 
     @Override
-    public void insertProperties(@NotNull Object id, @NotNull Collection<AProperty> properties) {
+    public void insertProperties(@Nonnull Object id, @Nonnull Collection<AProperty> properties) {
         final List<DbExec> execs = new ArrayList<DbExec>(properties.size());
 
         for (AProperty property : properties) {

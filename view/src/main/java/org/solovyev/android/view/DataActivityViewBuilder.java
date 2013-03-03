@@ -22,7 +22,7 @@
 
 package org.solovyev.android.view;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -31,5 +31,5 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface DataActivityViewBuilder<D> extends ActivityViewBuilder {
 
-    void setData(@NotNull D data);
+    void setData(@Nonnull D data);
 }

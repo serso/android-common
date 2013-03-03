@@ -24,7 +24,7 @@ package org.solovyev.android.captcha;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,23 +33,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Captcha implements Parcelable {
 
-    @NotNull
+    @Nonnull
     private final String captchaSid;
 
-    @NotNull
+    @Nonnull
     private final String captchaImage;
 
-    public Captcha(@NotNull String captchaSid, @NotNull String captchaImage) {
+    public Captcha(@Nonnull String captchaSid, @Nonnull String captchaImage) {
         this.captchaSid = captchaSid;
         this.captchaImage = captchaImage;
     }
 
-    @NotNull
+    @Nonnull
     public String getCaptchaSid() {
         return captchaSid;
     }
 
-    @NotNull
+    @Nonnull
     public String getCaptchaImage() {
         return captchaImage;
     }
@@ -65,8 +65,8 @@ public class Captcha implements Parcelable {
         out.writeString(captchaImage);
     }
 
-    @NotNull
-    public ResolvedCaptcha resolve(@NotNull String captchaKey) {
+    @Nonnull
+    public ResolvedCaptcha resolve(@Nonnull String captchaKey) {
         return new ResolvedCaptcha(captchaSid, captchaKey);
     }
 }

@@ -22,16 +22,16 @@
 
 package org.solovyev.android.prefs;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class FloatToStringPreferenceTest extends NumberToStringPreferenceTest<Float> {
-    @NotNull
+    @Nonnull
     @Override
     protected Class<Float> getNumberClass() {
         return Float.class;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected Float createDefaultValue() {
         return 123123f;

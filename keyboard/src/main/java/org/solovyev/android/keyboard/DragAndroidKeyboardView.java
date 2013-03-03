@@ -32,8 +32,8 @@ import android.view.*;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.Views;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.android.view.VibratorContainer;
@@ -54,16 +54,16 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     @Nullable
     private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
-    @NotNull
+    @Nonnull
     private AKeyboardButtonPreview preview;
 
-    @NotNull
+    @Nonnull
     private final RepeatHelper repeatHelper = new RepeatHelper();
 
-    @NotNull
+    @Nonnull
     private final Map<View, DragAKeyboardButtonDef> defs = new HashMap<View, DragAKeyboardButtonDef>();
 
-    @NotNull
+    @Nonnull
     private final VibratorContainer vibrator;
 
     @Nullable
@@ -88,12 +88,12 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public void setOnKeyboardActionListener(@NotNull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
         this.keyboardActionListener = keyboardActionListener;
     }
 
     @Override
-    public void setKeyboard(@NotNull DragAKeyboard keyboard) {
+    public void setKeyboard(@Nonnull DragAKeyboard keyboard) {
         setKeyboard(keyboard, null);
     }
 
@@ -122,7 +122,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         }
     }
 
-    private void reloadView(@NotNull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
+    private void reloadView(@Nonnull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
         dismiss();
 
         final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
@@ -193,7 +193,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public boolean processDragEvent(@NotNull DragDirection dragDirection, @NotNull DragButton dragButton, @NotNull Point2d startPoint2d, @NotNull MotionEvent motionEvent) {
+    public boolean processDragEvent(@Nonnull DragDirection dragDirection, @Nonnull DragButton dragButton, @Nonnull Point2d startPoint2d, @Nonnull MotionEvent motionEvent) {
         if (dragButton instanceof DirectionDragButton) {
             final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
@@ -207,7 +207,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     private Integer getKeycode(@Nullable DragDirection dragDirection,
-                               @NotNull View view) {
+                               @Nonnull View view) {
         Integer keycode = null;
         final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
         if ( buttonDef != null ) {
@@ -221,7 +221,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return keycode;
     }
 
-    private boolean handleTextOrCode(@NotNull View view,
+    private boolean handleTextOrCode(@Nonnull View view,
                                      @Nullable CharSequence text,
                                      @Nullable Integer keycode,
                                      boolean withPreview,
@@ -235,9 +235,9 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         }
     }
 
-    private boolean handleKeycode(@NotNull View view,
+    private boolean handleKeycode(@Nonnull View view,
                                   @Nullable CharSequence text,
-                                  @NotNull Integer keycode,
+                                  @Nonnull Integer keycode,
                                   boolean withPreview,
                                   @Nullable DragDirection dragDirection) {
         if (withPreview) {
@@ -251,7 +251,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return true;
     }
 
-    private boolean handleText(@NotNull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
+    private boolean handleText(@Nonnull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
         if (!Strings.isEmpty(text)) {
 
             if (withPreview) {
@@ -267,7 +267,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         return false;
     }
 
-    private void showPreview(@NotNull View view,
+    private void showPreview(@Nonnull View view,
                              @Nullable CharSequence text,
                              @Nullable DragDirection direction) {
 
@@ -303,7 +303,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
     }
 
     @Override
-    public boolean onTouch(@NotNull final View v, @NotNull MotionEvent event) {
+    public boolean onTouch(@Nonnull final View v, @Nonnull MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
                 if ( isRepeatAllowed(v) ) {
@@ -350,7 +350,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 
 		private final View view;
 
-		public RepeatKeydownRunnable(@NotNull View view) {
+		public RepeatKeydownRunnable(@Nonnull View view) {
 			this.view = view;
 		}
 
@@ -360,7 +360,7 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
         }
     }
 
-    private void doKeydown(@NotNull View view) {
+    private void doKeydown(@Nonnull View view) {
         final Integer keycode = getKeycode(null, view);
 
         if (view instanceof TextView) {

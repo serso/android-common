@@ -27,7 +27,7 @@ import net.robotmedia.billing.BillingController.BillingStatus;
 import net.robotmedia.billing.ResponseCode;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
 import android.app.Activity;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public abstract class AbstractBillingActivity extends Activity implements BillingController.IConfiguration {
 
@@ -60,21 +60,21 @@ public abstract class AbstractBillingActivity extends Activity implements Billin
 			}
 
 			@Override
-			public void onPurchaseIntentFailure(@NotNull String productId, @NotNull ResponseCode responseCode) {
+			public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
 			}
 
 			@Override
-			public void onPurchaseStateChanged(@NotNull String productId, @NotNull PurchaseState state) {
+			public void onPurchaseStateChanged(@Nonnull String productId, @Nonnull PurchaseState state) {
 				AbstractBillingActivity.this.onPurchaseStateChanged(productId, state);
 			}
 
 			@Override
-			public void onRequestPurchaseResponse(@NotNull String productId, @NotNull ResponseCode response) {
+			public void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response) {
 				AbstractBillingActivity.this.onRequestPurchaseResponse(productId, response);
 			}
 
 			@Override
-			public void onErrorRestoreTransactions(@NotNull ResponseCode responseCode) {
+			public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
 				// ignore errors when restoring transactions
 			}
 		};

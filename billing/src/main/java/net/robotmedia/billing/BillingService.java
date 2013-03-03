@@ -32,8 +32,8 @@ import android.os.RemoteException;
 import android.util.Log;
 import com.android.vending.billing.IMarketBillingService;
 import net.robotmedia.billing.utils.Compatibility;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -42,13 +42,13 @@ import java.util.List;
 
 public class BillingService extends Service implements ServiceConnection, IBillingService {
 
-    @NotNull
+    @Nonnull
     private static final String TAG = BillingService.class.getSimpleName();
 
 	private static final String ACTION_MARKET_BILLING_SERVICE = "com.android.vending.billing.MarketBillingService.BIND";
 
 	// all operations must be synchronized
-	@NotNull
+	@Nonnull
 	private static final List<IBillingRequest> pendingRequests = new LinkedList<IBillingRequest>();
 
 	private static final int MAX_RETRIES = 3;
@@ -56,47 +56,47 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 	@Nullable
 	private static IMarketBillingService service;
 
-	static void checkBillingSupported(@NotNull Context context) {
+	static void checkBillingSupported(@Nonnull Context context) {
 		context.startService(createIntent(context, BillingRequestType.CHECK_BILLING_SUPPORTED));
 	}
 
-	static void confirmNotifications(@NotNull Context context, @NotNull String[] notifyIds) {
+	static void confirmNotifications(@Nonnull Context context, @Nonnull String[] notifyIds) {
 		final Intent intent = createIntent(context, BillingRequestType.CONFIRM_NOTIFICATIONS);
 		intent.putExtra(BillingRequestType.EXTRA_NOTIFY_IDS, notifyIds);
 		context.startService(intent);
 	}
 
-	static void confirmNotifications(@NotNull Context context, @NotNull Collection<String> notifyIds) {
+	static void confirmNotifications(@Nonnull Context context, @Nonnull Collection<String> notifyIds) {
 		confirmNotifications(context, notifyIds.toArray(new String[notifyIds.size()]));
 	}
 
-	static void getPurchaseInformation(@NotNull Context context, @NotNull Collection<String> notifyIds, long nonce) {
+	static void getPurchaseInformation(@Nonnull Context context, @Nonnull Collection<String> notifyIds, long nonce) {
 		getPurchaseInformation(context, notifyIds.toArray(new String[notifyIds.size()]), nonce);
 	}
 
-	static void getPurchaseInformation(@NotNull Context context, @NotNull String[] notifyIds, long nonce) {
+	static void getPurchaseInformation(@Nonnull Context context, @Nonnull String[] notifyIds, long nonce) {
 		final Intent intent = createIntent(context, BillingRequestType.GET_PURCHASE_INFORMATION);
 		intent.putExtra(BillingRequestType.EXTRA_NOTIFY_IDS, notifyIds);
 		intent.putExtra(BillingRequestType.EXTRA_NONCE, nonce);
 		context.startService(intent);
 	}
 
-	static void requestPurchase(@NotNull Context context, @NotNull String productId, @Nullable String developerPayload) {
+	static void requestPurchase(@Nonnull Context context, @Nonnull String productId, @Nullable String developerPayload) {
 		final Intent intent = createIntent(context, BillingRequestType.REQUEST_PURCHASE);
 		intent.putExtra(BillingRequestType.EXTRA_ITEM_ID, productId);
 		intent.putExtra(BillingRequestType.EXTRA_DEVELOPER_PAYLOAD, developerPayload);
 		context.startService(intent);
 	}
 
-	static void restoreTransactions(@NotNull Context context, long nonce) {
+	static void restoreTransactions(@Nonnull Context context, long nonce) {
 		final Intent intent = createIntent(context, BillingRequestType.RESTORE_TRANSACTIONS);
 		intent.setClass(context, BillingService.class);
 		intent.putExtra(BillingRequestType.EXTRA_NONCE, nonce);
 		context.startService(intent);
 	}
 
-	@NotNull
-	private static Intent createIntent(@NotNull Context context, @NotNull BillingRequestType action) {
+	@Nonnull
+	private static Intent createIntent(@Nonnull Context context, @Nonnull BillingRequestType action) {
 		final Intent result = new Intent(action.toIntentAction(context));
 
 		result.setClass(context, BillingService.class);
@@ -145,7 +145,7 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 		return Compatibility.START_NOT_STICKY;
 	}
 
-	private void handleCommand(@NotNull Intent intent, int startId) {
+	private void handleCommand(@Nonnull Intent intent, int startId) {
 		final BillingRequestType action = BillingRequestType.fromIntentAction(intent);
 		if (action != null) {
 			action.doAction(this, intent, startId);
@@ -183,7 +183,7 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 		return true;
 	}
 
-	private boolean runRequest(@NotNull IMarketBillingService service, @NotNull IBillingRequest request, int counter) {
+	private boolean runRequest(@Nonnull IMarketBillingService service, @Nonnull IBillingRequest request, int counter) {
 		try {
             BillingController.debug("Running request: " + request.getRequestType());
 
@@ -205,7 +205,7 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 	}
 
 	@Override
-	public void runRequestOrQueue(@NotNull IBillingRequest request) {
+	public void runRequestOrQueue(@Nonnull IBillingRequest request) {
 		synchronized (pendingRequests) {
 			pendingRequests.add(request);
 		}

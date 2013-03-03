@@ -26,7 +26,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.http.ImageLoader;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.R;
@@ -39,13 +39,13 @@ import org.solovyev.android.view.ViewFromLayoutBuilder;
  */
 public class HttpListItem implements ListItem {
 
-    @NotNull
+    @Nonnull
     private String uri;
 
-    @NotNull
+    @Nonnull
     private ImageLoader imageLoader;
 
-    public HttpListItem(@NotNull String uri, @NotNull ImageLoader imageLoader) {
+    public HttpListItem(@Nonnull String uri, @Nonnull ImageLoader imageLoader) {
         this.uri = uri;
         this.imageLoader = imageLoader;
     }
@@ -60,9 +60,9 @@ public class HttpListItem implements ListItem {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View updateView(@NotNull Context context, @NotNull View view) {
+    public View updateView(@Nonnull Context context, @Nonnull View view) {
         if (getTag().equals(view.getTag())) {
             fillView(context, view);
             return view;
@@ -71,7 +71,7 @@ public class HttpListItem implements ListItem {
         }
     }
 
-    private void fillView(@NotNull Context context, @NotNull View root) {
+    private void fillView(@Nonnull Context context, @Nonnull View root) {
         final ImageView icon = (ImageView) root.findViewById(R.id.http_item_icon);
 
         imageLoader.loadImage(uri, icon, R.drawable.icon);
@@ -80,16 +80,16 @@ public class HttpListItem implements ListItem {
         text.setText(uri);
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public View build(@NotNull Context context) {
+    public View build(@Nonnull Context context) {
         final View root = ViewFromLayoutBuilder.newInstance(R.layout.acl_http_list_item).build(context);
         root.setTag(getTag());
         fillView(context, root);
         return root;
     }
 
-    @NotNull
+    @Nonnull
     private String getTag() {
         return "http_list_item";
     }

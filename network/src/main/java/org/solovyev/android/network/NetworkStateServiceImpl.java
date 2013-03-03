@@ -29,8 +29,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.util.Log;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.listeners.JListeners;
 import org.solovyev.common.listeners.Listeners;
 
@@ -41,18 +41,18 @@ public class NetworkStateServiceImpl implements NetworkStateService {
     @Nullable
     private Context context;
 
-    @NotNull
+    @Nonnull
     private final JListeners<NetworkStateListener> listeners = Listeners.newHardRefListeners();
 
-    @NotNull
+    @Nonnull
     private NetworkData networkData;
 
-    @NotNull
+    @Nonnull
     private BroadcastReceiver receiver;
 
     private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(@NotNull Context context, @NotNull Intent intent) {
+        public void onReceive(@Nonnull Context context, @Nonnull Intent intent) {
             final String action = intent.getAction();
 
             if (!action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
@@ -83,7 +83,7 @@ public class NetworkStateServiceImpl implements NetworkStateService {
     }
 
     @Override
-    public synchronized void startListening(@NotNull Context context) {
+    public synchronized void startListening(@Nonnull Context context) {
         this.context = context.getApplicationContext();
 
         final IntentFilter filter = new IntentFilter();
@@ -92,12 +92,12 @@ public class NetworkStateServiceImpl implements NetworkStateService {
     }
 
     @Override
-    public boolean addListener(@NotNull NetworkStateListener listener) {
+    public boolean addListener(@Nonnull NetworkStateListener listener) {
         return listeners.addListener(listener);
     }
 
     @Override
-    public boolean removeListener(@NotNull NetworkStateListener listener) {
+    public boolean removeListener(@Nonnull NetworkStateListener listener) {
         return listeners.removeListener(listener);
     }
 
@@ -111,7 +111,7 @@ public class NetworkStateServiceImpl implements NetworkStateService {
     }
 
     @Override
-    @NotNull
+    @Nonnull
     public NetworkData getNetworkData() {
         return networkData;
     }

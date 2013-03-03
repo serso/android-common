@@ -24,7 +24,7 @@ package net.robotmedia.billing;
 
 import android.os.RemoteException;
 import com.android.vending.billing.IMarketBillingService;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -33,9 +33,9 @@ import org.jetbrains.annotations.NotNull;
  */
 interface IBillingRequest {
 
-	long run(@NotNull IMarketBillingService service) throws RemoteException;
+	long run(@Nonnull IMarketBillingService service) throws RemoteException;
 
-	@NotNull
+	@Nonnull
 	BillingRequestType getRequestType();
 
 	boolean hasNonce();
@@ -44,7 +44,7 @@ interface IBillingRequest {
 
 	long getNonce();
 
-	void onResponseCode(@NotNull ResponseCode response);
+	void onResponseCode(@Nonnull ResponseCode response);
 
 	int getStartId();
 }

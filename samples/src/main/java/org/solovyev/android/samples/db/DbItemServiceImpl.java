@@ -23,7 +23,7 @@
 package org.solovyev.android.samples.db;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.android.App;
 import org.solovyev.android.samples.Locator;
 
@@ -40,12 +40,12 @@ import java.util.List;
 public class DbItemServiceImpl implements DbItemService {
 
     // cached items
-    @NotNull
+    @Nonnull
     private final List<DbItem> items = new ArrayList<DbItem>();
 
-    @NotNull
+    @Nonnull
     @Override
-    public List<DbItem> getAllDbItems(@NotNull Context context) {
+    public List<DbItem> getAllDbItems(@Nonnull Context context) {
         synchronized (items) {
             if (items.isEmpty()) {
                 // assuming: empty => not loaded
@@ -56,9 +56,9 @@ public class DbItemServiceImpl implements DbItemService {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public List<DbItem> getAllStartsWith(@NotNull String prefix, @NotNull Context context) {
+    public List<DbItem> getAllStartsWith(@Nonnull String prefix, @Nonnull Context context) {
         final List<DbItem> result;
         synchronized (items) {
             result = new ArrayList<DbItem>(getAllDbItems(context));
@@ -78,7 +78,7 @@ public class DbItemServiceImpl implements DbItemService {
     }
 
     @Override
-    public void addItem(@NotNull DbItem dbItem, @NotNull Context context) {
+    public void addItem(@Nonnull DbItem dbItem, @Nonnull Context context) {
         synchronized (items) {
             getDbItemDao().insert(dbItem);
             // if successfully insert => add to the cache
@@ -86,9 +86,9 @@ public class DbItemServiceImpl implements DbItemService {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public List<DbItem> removeItemByName(@NotNull String name, @NotNull Context context) {
+    public List<DbItem> removeItemByName(@Nonnull String name, @Nonnull Context context) {
         synchronized (items) {
             final List<DbItem> removedItems = new ArrayList<DbItem>();
 
@@ -108,7 +108,7 @@ public class DbItemServiceImpl implements DbItemService {
         }
     }
 
-    @NotNull
+    @Nonnull
     private DbItemDao getDbItemDao() {
         return ((Locator) App.getLocator()).getDbItemDao();
     }

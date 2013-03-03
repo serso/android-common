@@ -31,8 +31,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.android.App;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.list.ListItem;
@@ -59,19 +59,19 @@ public class SamplesDbActivity extends ListActivity {
     *
     **********************************************************************
     */
-    @NotNull
+    @Nonnull
     private Button addItemButton;
 
-    @NotNull
+    @Nonnull
     private EditText addButtonName;
 
-    @NotNull
+    @Nonnull
     private Button removeItemButton;
 
-    @NotNull
+    @Nonnull
     private EditText removeItemName;
 
-    @NotNull
+    @Nonnull
     private EditText itemFilter;
 
     /*
@@ -146,7 +146,7 @@ public class SamplesDbActivity extends ListActivity {
         new CommonAsyncTask<Void, Void, List<DbItemListItem>>(this) {
 
             @Override
-            protected List<DbItemListItem> doWork(@NotNull List<Void> voids) {
+            protected List<DbItemListItem> doWork(@Nonnull List<Void> voids) {
 
                 final Context context = getContext();
 
@@ -179,23 +179,23 @@ public class SamplesDbActivity extends ListActivity {
             }
 
             @Override
-            protected void onFailurePostExecute(@NotNull Exception e) {
+            protected void onFailurePostExecute(@Nonnull Exception e) {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }.execute((Void) null);
     }
 
     @SuppressWarnings("unchecked")
-    @NotNull
+    @Nonnull
     private ListItemArrayAdapter<DbItemListItem> getListItemAdapter() {
         return (ListItemArrayAdapter<DbItemListItem>) getListView().getAdapter();
     }
 
-    private void removeItem(@NotNull String itemName) {
+    private void removeItem(@Nonnull String itemName) {
         new CommonAsyncTask<String, Void, List<DbItem>>(this) {
 
             @Override
-            protected List<DbItem> doWork(@NotNull List<String> params) {
+            protected List<DbItem> doWork(@Nonnull List<String> params) {
                 assert params.size() == 1;
                 final String itemName = params.get(0);
 
@@ -220,17 +220,17 @@ public class SamplesDbActivity extends ListActivity {
             }
 
             @Override
-            protected void onFailurePostExecute(@NotNull Exception e) {
+            protected void onFailurePostExecute(@Nonnull Exception e) {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }.execute(itemName);
     }
 
-    private void addItem(@NotNull String itemName) {
+    private void addItem(@Nonnull String itemName) {
         new CommonAsyncTask<String, Void, DbItem>(this) {
 
             @Override
-            protected DbItem doWork(@NotNull List<String> params) {
+            protected DbItem doWork(@Nonnull List<String> params) {
                 assert params.size() == 1;
                 final String itemName = params.get(0);
                 final DbItemImpl result = new DbItemImpl(itemName);
@@ -253,13 +253,13 @@ public class SamplesDbActivity extends ListActivity {
             }
 
             @Override
-            protected void onFailurePostExecute(@NotNull Exception e) {
+            protected void onFailurePostExecute(@Nonnull Exception e) {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }.execute(itemName);
     }
 
-    @NotNull
+    @Nonnull
     private DbItemService getDbItemService() {
         return ((Locator) App.getLocator()).getDbItemService();
     }

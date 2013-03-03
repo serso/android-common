@@ -25,7 +25,7 @@ package org.solovyev.android.db;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.solovyev.common.text.Strings;
 
 import java.util.Arrays;
@@ -41,15 +41,15 @@ import java.util.Map;
 public final class AndroidDbUtils {
 
     // cache for databases. Used in order not to close database in nested transactions
-    @NotNull
+    @Nonnull
     private static final Map<SQLiteOpenHelper, SQLiteDatabase> dbCache = new HashMap<SQLiteOpenHelper, SQLiteDatabase>(3);
 
     private AndroidDbUtils() {
         throw new AssertionError();
     }
 
-    @NotNull
-    public static <R> R doDbQuery(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbQuery<R> query) {
+    @Nonnull
+    public static <R> R doDbQuery(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull DbQuery<R> query) {
         final R result;
 
         // assuming there is only one dbHelper per database in application
@@ -88,11 +88,11 @@ public final class AndroidDbUtils {
         return result;
     }
 
-    public static void doDbExec(@NotNull SQLiteOpenHelper dbHelper, @NotNull DbExec exec) {
+    public static void doDbExec(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull DbExec exec) {
         doDbExecs(dbHelper, Arrays.asList(exec));
     }
 
-    public static void doDbExecs(@NotNull SQLiteOpenHelper dbHelper, @NotNull List<DbExec> execs) {
+    public static void doDbExecs(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull List<DbExec> execs) {
 
         // assuming there is only one dbHelper per database in application
         synchronized (dbHelper) {
@@ -118,7 +118,7 @@ public final class AndroidDbUtils {
         }
     }
 
-    private static void doDbTransaction(@NotNull SQLiteDatabase db, @NotNull List<DbExec> execs) {
+    private static void doDbTransaction(@Nonnull SQLiteDatabase db, @Nonnull List<DbExec> execs) {
 
         try {
             // start transaction
@@ -137,8 +137,8 @@ public final class AndroidDbUtils {
         }
     }
 
-    @NotNull
-    public static String[] inClauseValues(@NotNull List<?> objects, @NotNull String... beforeInValues) {
+    @Nonnull
+    public static String[] inClauseValues(@Nonnull List<?> objects, @Nonnull String... beforeInValues) {
         final String[] result = new String[objects.size() + beforeInValues.length];
 
         for (int i = 0; i < result.length; i++) {
@@ -152,8 +152,8 @@ public final class AndroidDbUtils {
         return result;
     }
 
-    @NotNull
-    public static String inClause(@NotNull List<?> objects) {
+    @Nonnull
+    public static String inClause(@Nonnull List<?> objects) {
         final StringBuilder result = new StringBuilder(3 * objects.size());
 
         result.append("(");

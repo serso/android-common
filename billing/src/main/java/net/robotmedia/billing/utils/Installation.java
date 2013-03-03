@@ -23,7 +23,7 @@
 package net.robotmedia.billing.utils;
 
 import android.content.Context;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,10 +37,10 @@ public class Installation {
 
 	private static String sID = null;
 
-	@NotNull
+	@Nonnull
 	private static final Object lock = new Object();
 
-	public synchronized static String id(@NotNull Context context) {
+	public synchronized static String id(@Nonnull Context context) {
 		if (sID == null) {
 
 			// let's synchronize IO operations
@@ -61,8 +61,8 @@ public class Installation {
 		return sID;
 	}
 
-	@NotNull
-	private static String readInstallationFile(@NotNull File installation) throws IOException {
+	@Nonnull
+	private static String readInstallationFile(@Nonnull File installation) throws IOException {
 		byte[] bytes = null;
 
 		RandomAccessFile in = null;
@@ -79,8 +79,8 @@ public class Installation {
 		return new String(bytes);
 	}
 
-	@NotNull
-	private static String writeInstallationFile(@NotNull File installation) throws IOException {
+	@Nonnull
+	private static String writeInstallationFile(@Nonnull File installation) throws IOException {
 		final String id = UUID.randomUUID().toString();
 
 		FileOutputStream out = null;

@@ -23,8 +23,8 @@
 package org.solovyev.android.list;
 
 import android.widget.Filter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
 import java.util.ArrayList;
@@ -37,14 +37,14 @@ import java.util.List;
  */
 public abstract class AdapterFilter<T> extends Filter {
 
-    @NotNull
+    @Nonnull
     private final Helper<T> helper;
 
-    public AdapterFilter(@NotNull Helper<T> helper) {
+    public AdapterFilter(@Nonnull Helper<T> helper) {
         this.helper = helper;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected FilterResults performFiltering(@Nullable CharSequence prefix) {
         final FilterResults results = new FilterResults();
@@ -101,18 +101,18 @@ public abstract class AdapterFilter<T> extends Filter {
 
     public static interface Helper<T> {
 
-        @NotNull
+        @Nonnull
         Object getLock();
 
-        @NotNull
+        @Nonnull
         List<T> getShownElements();
 
-        void setShownElements(@NotNull List<T> shownElements);
+        void setShownElements(@Nonnull List<T> shownElements);
 
         @Nullable
         List<T> getAllElements();
 
-        void setAllElements(@NotNull List<T> allElements);
+        void setAllElements(@Nonnull List<T> allElements);
 
         void notifyDataSetChanged();
     }
