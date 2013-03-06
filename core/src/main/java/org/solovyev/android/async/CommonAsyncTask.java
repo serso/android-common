@@ -27,6 +27,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import org.solovyev.android.core.R;
 import org.solovyev.common.collections.Collections;
 
 import javax.annotation.Nonnull;
@@ -39,7 +40,7 @@ import java.util.List;
  * Date: 5/29/12
  * Time: 11:39 PM
  */
-public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Param, Progress, CommonAsyncTask.Result<R>> {
+public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask<PARAM, PROGRESS, CommonAsyncTask.Result<RESULT>> {
 
     @Nonnull
     private static final String TAG = "CommonAsyncTask";
@@ -47,17 +48,24 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
     @Nonnull
     private final WeakReference<Context> contextRef;
 
-    private boolean mask;
+    @Nullable
+    private final MaskParams maskParams;
 
     @Nullable
     private AlertDialog dialog;
 
-    protected CommonAsyncTask(@Nullable Context context) {
-        this(context, false);
+    protected CommonAsyncTask() {
+        this.maskParams = null;
+        this.contextRef = new WeakReference<Context>(null);
     }
 
-    protected CommonAsyncTask(@Nullable Context context, boolean mask) {
-        this.mask = mask;
+    protected CommonAsyncTask(@Nonnull Context context) {
+        this.maskParams = null;
+        this.contextRef = new WeakReference<Context>(context);
+    }
+
+    protected CommonAsyncTask(@Nonnull Context context, @Nonnull MaskParams maskParams) {
+        this.maskParams = maskParams;
         this.contextRef = new WeakReference<Context>(context);
     }
 
@@ -65,27 +73,26 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
     protected void onPreExecute() {
         super.onPreExecute();
         final Context context = getContext();
-        if (context != null && mask) {
-            final String loading = context.getString(org.solovyev.android.core.R.string.acl_loading);
-            dialog = ProgressDialog.show(context, loading, loading, true, false);
+        if (context != null && maskParams != null) {
+            dialog = maskParams.show(context);
         }
     }
 
     @Override
-    protected final Result<R> doInBackground(Param... params) {
+    protected final Result<RESULT> doInBackground(PARAM... params) {
         try {
-            return new CommonResult<R>(doWork(Collections.asList(params)));
+            return new CommonResult<RESULT>(doWork(Collections.asList(params)));
         } catch (CommonAsyncTaskRuntimeException e) {
-            return new CommonResult<R>(e.getException());
+            return new CommonResult<RESULT>(e.getException());
         } catch (Exception e) {
-            return new CommonResult<R>(e);
+            return new CommonResult<RESULT>(e);
         }
     }
 
-    protected abstract R doWork(@Nonnull List<Param> params);
+    protected abstract RESULT doWork(@Nonnull List<PARAM> params);
 
     @Override
-    protected final void onPostExecute(@Nonnull Result<R> r) {
+    protected final void onPostExecute(@Nonnull Result<RESULT> r) {
         super.onPostExecute(r);
 
         if (dialog != null) {
@@ -105,7 +112,7 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
         return contextRef.get();
     }
 
-    protected abstract void onSuccessPostExecute(@Nullable R result);
+    protected abstract void onSuccessPostExecute(@Nullable RESULT result);
 
     protected abstract void onFailurePostExecute(@Nonnull Exception e);
 
@@ -116,9 +123,6 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
 
         @Nullable
         private Exception failureResult;
-
-        public CommonResult() {
-        }
 
         public CommonResult(@Nullable SR result) {
             this.successResult = result;
@@ -181,6 +185,47 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
         @Nonnull
         public Exception getException() {
             return exception;
+        }
+    }
+
+    public static final class MaskParams {
+
+        private final int titleResId;
+
+        private final int messageResId;
+
+        private boolean indeterminate = true;
+
+        private boolean cancelable = false;
+
+        private MaskParams(int titleResId, int messageResId) {
+            this.titleResId = titleResId;
+            this.messageResId = messageResId;
+        }
+
+        @Nonnull
+        public static MaskParams newInstance(int titleResId, int messageResId) {
+            return new MaskParams(titleResId, messageResId);
+        }
+
+        @Nonnull
+        public static MaskParams newDefault() {
+            return new MaskParams(R.string.acl_loading, R.string.acl_loading);
+        }
+
+        public void setIndeterminate(boolean indeterminate) {
+            this.indeterminate = indeterminate;
+        }
+
+        public void setCancelable(boolean cancelable) {
+            this.cancelable = cancelable;
+        }
+
+        @Nonnull
+        public AlertDialog show(@Nonnull Context context) {
+            final String title = context.getString(titleResId);
+            final String message = context.getString(messageResId);
+            return ProgressDialog.show(context, title, message, indeterminate, cancelable);
         }
     }
 }
