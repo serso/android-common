@@ -27,10 +27,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -52,11 +52,11 @@ public abstract class CommonAsyncTask<Param, Progress, R> extends AsyncTask<Para
     @Nullable
     private AlertDialog dialog;
 
-    protected CommonAsyncTask(@Nonnull Context context) {
+    protected CommonAsyncTask(@Nullable Context context) {
         this(context, false);
     }
 
-    protected CommonAsyncTask(@Nonnull Context context, boolean mask) {
+    protected CommonAsyncTask(@Nullable Context context, boolean mask) {
         this.mask = mask;
         this.contextRef = new WeakReference<Context>(context);
     }
