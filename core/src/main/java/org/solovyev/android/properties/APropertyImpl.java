@@ -23,16 +23,17 @@
 package org.solovyev.android.properties;
 
 import android.os.Parcel;
+import org.solovyev.common.JObject;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.JObject;
 
 /**
  * User: serso
  * Date: 5/30/12
  * Time: 7:17 PM
  */
-public class APropertyImpl extends JObject implements AProperty {
+final class APropertyImpl extends JObject implements AProperty {
 
     /*
     **********************************************************************
@@ -136,12 +137,12 @@ public class APropertyImpl extends JObject implements AProperty {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof APropertyImpl)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        APropertyImpl aProperty = (APropertyImpl) o;
+        final APropertyImpl that = (APropertyImpl) o;
 
-        if (!name.equals(aProperty.name)) return false;
-        if (value != null ? !value.equals(aProperty.value) : aProperty.value != null) return false;
+        if (!name.equals(that.name)) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
         return true;
     }

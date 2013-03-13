@@ -23,8 +23,9 @@
 package org.solovyev.android.db.properties;
 
 import android.database.sqlite.SQLiteDatabase;
-import javax.annotation.Nonnull;
 import org.solovyev.android.db.DbExec;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -51,7 +52,7 @@ public class RemovePropertiesDbExec implements DbExec {
     }
 
     @Override
-    public void exec(@Nonnull SQLiteDatabase db) {
-        db.delete(tableName, idColumnName + " = ? ", new String[]{String.valueOf(id)});
+    public long exec(@Nonnull SQLiteDatabase db) {
+        return db.delete(tableName, idColumnName + " = ? ", new String[]{String.valueOf(id)});
     }
 }

@@ -23,18 +23,18 @@
 package net.robotmedia.billing.model;
 
 import android.app.Application;
-import net.robotmedia.billing.model.Transaction.PurchaseState;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import net.robotmedia.billing.model.Transaction.PurchaseState;
 import org.solovyev.android.db.AndroidDbUtils;
 import org.solovyev.android.db.DbExec;
 import org.solovyev.android.db.DbQuery;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -203,7 +203,7 @@ public class BillingDB {
 		}
 
 		@Override
-		public void exec(@Nonnull SQLiteDatabase db) {
+		public long exec(@Nonnull SQLiteDatabase db) {
 			final ContentValues values = new ContentValues();
 
 			values.put(COLUMN_ID, transaction.orderId);
@@ -212,7 +212,7 @@ public class BillingDB {
 			values.put(COLUMN_PURCHASE_TIME, transaction.purchaseTime);
 			values.put(COLUMN_DEVELOPER_PAYLOAD, transaction.developerPayload);
 
-			db.replace(TABLE_TRANSACTIONS, null /* nullColumnHack */, values);
+			return db.replace(TABLE_TRANSACTIONS, null /* nullColumnHack */, values);
 		}
 	}
 }

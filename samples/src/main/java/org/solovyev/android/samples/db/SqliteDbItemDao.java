@@ -27,10 +27,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
 import org.solovyev.android.db.*;
 import org.solovyev.common.Converter;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -68,10 +68,10 @@ public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
         }
 
         @Override
-        public void exec(@Nonnull SQLiteDatabase db) {
+        public long exec(@Nonnull SQLiteDatabase db) {
             final String name = getNotNullObject();
 
-            db.delete("items", "name = ?", new String[]{name});
+            return db.delete("items", "name = ?", new String[]{name});
         }
     }
     private static final class Insert extends AbstractObjectDbExec<DbItem> {
@@ -81,12 +81,12 @@ public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
         }
 
         @Override
-        public void exec(@Nonnull SQLiteDatabase db) {
+        public long exec(@Nonnull SQLiteDatabase db) {
             final DbItem dbItem = getNotNullObject();
 
             final ContentValues values = new ContentValues();
             values.put("name", dbItem.getName());
-            db.insert("items", null, values);
+            return db.insert("items", null, values);
         }
     }
 

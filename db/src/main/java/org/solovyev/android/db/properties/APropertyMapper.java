@@ -23,10 +23,11 @@
 package org.solovyev.android.db.properties;
 
 import android.database.Cursor;
-import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
-import org.solovyev.android.properties.APropertyImpl;
+import org.solovyev.android.properties.Properties;
 import org.solovyev.common.Converter;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -52,6 +53,6 @@ public class APropertyMapper implements Converter<Cursor, AProperty> {
         final String id = cursor.getString(0);
         final String name = cursor.getString(1);
         final String value = cursor.getString(2);
-        return APropertyImpl.newInstance(name, value);
+        return Properties.newProperty(name, value);
     }
 }

@@ -25,13 +25,10 @@ package org.solovyev.android.db;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.Strings;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * User: serso
@@ -88,11 +85,20 @@ public final class AndroidDbUtils {
         return result;
     }
 
-    public static void doDbExec(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull DbExec exec) {
-        doDbExecs(dbHelper, Arrays.asList(exec));
+    @Nonnull
+    public static Long doDbExec(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull DbExec exec) {
+        final List<Long> result = doDbExecs(dbHelper, Arrays.asList(exec));
+
+        if (!result.isEmpty()) {
+            // must contain one value
+            return result.get(0);
+        } else {
+            return DbExec.SQL_ERROR;
+        }
     }
 
-    public static void doDbExecs(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull List<DbExec> execs) {
+    public static List<Long> doDbExecs(@Nonnull SQLiteOpenHelper dbHelper, @Nonnull List<DbExec> execs) {
+        final List<Long> result;
 
         // assuming there is only one dbHelper per database in application
         synchronized (dbHelper) {
@@ -106,7 +112,7 @@ public final class AndroidDbUtils {
                     wasOpened = true;
                 }
 
-                doDbTransaction(db, execs);
+                result = doDbTransactions(db, execs);
 
             } finally {
                 // if database was opened - close it
@@ -116,17 +122,20 @@ public final class AndroidDbUtils {
                 }
             }
         }
+
+        return result;
     }
 
-    private static void doDbTransaction(@Nonnull SQLiteDatabase db, @Nonnull List<DbExec> execs) {
-
+    @Nonnull
+    private static List<Long> doDbTransactions(@Nonnull SQLiteDatabase db, @Nonnull List<DbExec> execs) {
+        final List<Long> result = new ArrayList<Long>(execs.size());
         try {
             // start transaction
             db.beginTransaction();
 
             // do action
             for (DbExec exec : execs) {
-                exec.exec(db);
+                result.add(exec.exec(db));
             }
 
             // mark transaction successful
@@ -135,6 +144,8 @@ public final class AndroidDbUtils {
             // end transaction
             db.endTransaction();
         }
+
+        return result;
     }
 
     @Nonnull

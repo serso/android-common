@@ -23,10 +23,10 @@
 package org.solovyev.android.properties;
 
 import android.os.Parcelable;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
 
 /**
@@ -41,4 +41,8 @@ public interface AProperty extends Parcelable, JCloneable<AProperty>, Serializab
 
     @Nullable
     String getValue();
+
+    boolean equals(Object o);
+
+    int hashCode();
 }

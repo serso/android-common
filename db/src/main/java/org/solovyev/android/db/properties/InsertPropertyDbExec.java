@@ -24,9 +24,10 @@ package org.solovyev.android.db.properties;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import javax.annotation.Nonnull;
-import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.DbExec;
+import org.solovyev.android.properties.AProperty;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -69,13 +70,13 @@ public class InsertPropertyDbExec implements DbExec {
     }
 
     @Override
-    public void exec(@Nonnull SQLiteDatabase db) {
+    public long exec(@Nonnull SQLiteDatabase db) {
         final ContentValues values = new ContentValues();
 
         values.put(idColumnName, String.valueOf(id));
         values.put(propertyNameColumnName, property.getName());
         values.put(propertyValueColumnName, property.getValue());
 
-        db.insert(tableName, null, values);
+        return db.insert(tableName, null, values);
     }
 }

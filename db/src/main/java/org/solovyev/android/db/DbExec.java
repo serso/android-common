@@ -32,5 +32,14 @@ import javax.annotation.Nonnull;
  */
 public interface DbExec {
 
-    void exec(@Nonnull SQLiteDatabase db);
+    long SQL_ERROR = -1;
+
+    /**
+     * Method executes database operation.
+     * If insert operation is done and error is occurred {@link DbExec#SQL_ERROR} is returned.
+     *
+     * @param db sqlite database instance
+     * @return number of affected rows (for update or delete) or newly generated ID (for insert)
+     */
+    long exec(@Nonnull SQLiteDatabase db);
 }

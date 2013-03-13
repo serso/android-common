@@ -22,11 +22,11 @@
 
 package org.solovyev.android.properties;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.JObject;
 import org.solovyev.common.clone.Cloneables;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ import java.util.Map;
  * Date: 8/21/12
  * Time: 2:18 PM
  */
-public class MutableAPropertiesImpl extends JObject implements MutableAProperties {
+class MutableAPropertiesImpl extends JObject implements MutableAProperties {
 
     @Nonnull
     private Map<String, AProperty> properties = new HashMap<String, AProperty>();
@@ -46,12 +46,12 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
     }
 
     @Nonnull
-    public static MutableAProperties copyOf(@Nonnull MutableAProperties propertiesContainer) {
+    static MutableAProperties copyOf(@Nonnull MutableAProperties propertiesContainer) {
         return propertiesContainer.clone();
     }
 
     @Nonnull
-    public static MutableAProperties newInstance(@Nonnull Collection<AProperty> properties) {
+    static MutableAProperties newInstance(@Nonnull Collection<AProperty> properties) {
         final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties) {
@@ -62,7 +62,7 @@ public class MutableAPropertiesImpl extends JObject implements MutableAPropertie
     }
 
     @Nonnull
-    public static MutableAProperties newInstance(@Nonnull Map<String, AProperty> properties) {
+    static MutableAProperties newInstance(@Nonnull Map<String, AProperty> properties) {
         final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
         for (AProperty property : properties.values()) {
