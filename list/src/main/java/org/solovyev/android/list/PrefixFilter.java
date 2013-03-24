@@ -22,9 +22,10 @@
 
 package org.solovyev.android.list;
 
+import org.solovyev.common.JPredicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.JPredicate;
 
 
 /**
@@ -43,24 +44,27 @@ public class PrefixFilter<T> implements JPredicate<T> {
 
     @Override
     public boolean apply(@Nullable T input) {
+        boolean shown = false;
+
         if (input != null) {
             final String valueText = input.toString().toLowerCase();
 
             // First match against the whole, non-splitted value
             if (valueText.startsWith(prefix)) {
-                return true;
+                shown = true;
             } else {
                 final String[] words = valueText.split(" ");
 
                 for (String word : words) {
                     if (word.startsWith(prefix)) {
-                        return true;
+                        shown = true;
+                        break;
                     }
                 }
             }
         }
 
-        return false;
+        return shown;
     }
 
     @Override

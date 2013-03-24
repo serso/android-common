@@ -23,10 +23,10 @@
 package org.solovyev.android.list;
 
 import android.widget.Filter;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +72,7 @@ public abstract class AdapterFilter<T> extends Filter {
 
                 filteredElements = new ArrayList<T>(allElements.size());
                 for (T element : allElements) {
-                    if ( !filter.apply(element) ) {
+                    if ( filter.apply(element) ) {
                         filteredElements.add(element);
                     }
                 }

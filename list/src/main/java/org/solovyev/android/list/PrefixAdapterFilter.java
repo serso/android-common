@@ -22,9 +22,10 @@
 
 package org.solovyev.android.list;
 
+import org.solovyev.common.JPredicate;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.JPredicate;
 
 /**
  * User: serso
@@ -35,7 +36,7 @@ public class PrefixAdapterFilter<T> extends AdapterFilter<T> {
 
     @Override
     protected JPredicate<T> getFilter(@Nullable CharSequence prefix) {
-        return new PrefixFilter<T>(prefix.toString().toLowerCase());
+        return new PrefixFilter<T>(prefix == null ? "" : prefix.toString().toLowerCase());
     }
 
     public PrefixAdapterFilter(@Nonnull Helper<T> helper) {
