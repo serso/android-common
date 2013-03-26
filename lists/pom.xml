@@ -23,16 +23,15 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.solovyev.android</groupId>
         <artifactId>android-common</artifactId>
-        <version>1.0.7-SNAPSHOT</version>
+        <groupId>org.solovyev.android</groupId>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.solovyev.android</groupId>
-    <artifactId>android-common-view</artifactId>
-    <name>Android Common Library View</name>
-    <version>1.0.7-SNAPSHOT</version>
+    <artifactId>android-common-lists</artifactId>
+    <name>Android Common Library List</name>
+    <version>1.1.0-SNAPSHOT</version>
 
     <packaging>apklib</packaging>
 
@@ -52,7 +51,13 @@
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-preferences</artifactId>
+            <artifactId>android-common-views</artifactId>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-menus</artifactId>
             <type>apklib</type>
         </dependency>
 

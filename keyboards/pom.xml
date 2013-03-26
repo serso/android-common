@@ -22,37 +22,40 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>android-common</artifactId>
-        <groupId>org.solovyev.android</groupId>
-        <version>1.0.7-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>android-common-menu</artifactId>
-    <name>Android Common Library Menu</name>
-    <version>1.0.7-SNAPSHOT</version>
+    <parent>
+        <groupId>org.solovyev.android</groupId>
+        <artifactId>android-common</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
 
-    <packaging>apklib</packaging>
+    <groupId>org.solovyev.android</groupId>
+    <artifactId>android-common-keyboards</artifactId>
+	<name>Android Common Library Keyboard</name>
+	<version>1.1.0-SNAPSHOT</version>
 
-    <dependencies>
+	<packaging>apklib</packaging>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
         <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <scope>provided</scope>
+            <groupId>org.solovyev</groupId>
+            <artifactId>common-core</artifactId>
+            <type>jar</type>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>support-v4</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-core</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-views</artifactId>
+			<type>apklib</type>
+		</dependency>
 
 
 
@@ -61,17 +64,19 @@
             <artifactId>annotations</artifactId>
         </dependency>
 
-    </dependencies>
+	</dependencies>
 
-    <build>
+	<build>
 
-        <extensions>
-            <extension>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-            </extension>
-        </extensions>
+		<extensions>
+			<extension>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+			</extension>
+		</extensions>
 
-    </build>
+	</build>
+
+
 
 </project>

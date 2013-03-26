@@ -28,11 +28,12 @@ import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.view.KeyEvent;
 import android.view.inputmethod.*;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.history.HistoryHelper;
 import org.solovyev.common.history.SimpleHistoryHelper;
 import org.solovyev.common.text.Strings;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: Solovyev_S
