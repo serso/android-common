@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
  * Date: 7/26/12
  * Time: 5:33 PM
  */
-public class NetworkDataImpl implements NetworkData {
+final class NetworkDataImpl implements NetworkData {
 
     @Nonnull
     private NetworkState state = NetworkState.UNKNOWN;
@@ -31,12 +31,12 @@ public class NetworkDataImpl implements NetworkData {
     }
 
     @Nonnull
-    public static NetworkData newUnknownNetworkData() {
+    static NetworkData newUnknownNetworkData() {
         return new NetworkDataImpl();
     }
 
     @Nonnull
-    public static NetworkData fromIntent(@Nonnull Intent intent) {
+    static NetworkData fromIntent(@Nonnull Intent intent) {
         assert ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction());
 
         final NetworkDataImpl result = new NetworkDataImpl();

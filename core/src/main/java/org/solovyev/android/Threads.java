@@ -33,10 +33,9 @@ import javax.annotation.Nullable;
  * Date: 2/2/13
  * Time: 5:55 PM
  */
-public final class AThreads {
+public final class Threads {
 
-
-    private AThreads() {
+    private Threads() {
         throw new AssertionError();
     }
 

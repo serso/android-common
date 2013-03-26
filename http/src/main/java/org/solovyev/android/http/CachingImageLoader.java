@@ -30,7 +30,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.AThreads;
+import org.solovyev.android.Threads;
 import org.solovyev.android.FileCache;
 
 import java.io.*;
@@ -262,7 +262,7 @@ public class CachingImageLoader implements ImageLoader {
         @Override
         public void onImageLoaded(@Nullable final Bitmap image) {
             final Activity activity = (Activity) imageView.getContext();
-            AThreads.tryRunOnUiThread(activity, new Runnable() {
+            Threads.tryRunOnUiThread(activity, new Runnable() {
                 @Override
                 public void run() {
                     if (image != null) {
@@ -279,7 +279,7 @@ public class CachingImageLoader implements ImageLoader {
         @Override
         public void setDefaultImage() {
             final Activity activity = (Activity) imageView.getContext();
-            AThreads.tryRunOnUiThread(activity, new Runnable() {
+            Threads.tryRunOnUiThread(activity, new Runnable() {
                 @Override
                 public void run() {
                     if (defaultImageId != null) {

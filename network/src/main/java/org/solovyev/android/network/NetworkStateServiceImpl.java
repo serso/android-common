@@ -29,12 +29,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.util.Log;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.listeners.JListeners;
 import org.solovyev.common.listeners.Listeners;
 
-public class NetworkStateServiceImpl implements NetworkStateService {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public final class NetworkStateServiceImpl implements NetworkStateService {
 
     private static final boolean DEBUG = false;
 
@@ -74,9 +75,6 @@ public class NetworkStateServiceImpl implements NetworkStateService {
         }
     }
 
-    /**
-     * Create a new NetworkConnectivityListener.
-     */
     public NetworkStateServiceImpl() {
         networkData = NetworkDataImpl.newUnknownNetworkData();
         receiver = new ConnectivityBroadcastReceiver();

@@ -33,7 +33,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.util.EntityUtils;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.AThreads;
+import org.solovyev.android.Threads;
 import org.solovyev.android.http.HttpRuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.http.*;
@@ -152,7 +152,7 @@ public class SamplesHttpActivity extends ListActivity {
                     @Override
                     protected void onSuccessPostExecute(@Nullable final String result) {
                         final Activity activity = (Activity) getContext();
-                        AThreads.tryRunOnUiThread(activity, new Runnable() {
+                        Threads.tryRunOnUiThread(activity, new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(activity, getString(R.string.http_response) + " " + result, Toast.LENGTH_SHORT).show();
@@ -163,7 +163,7 @@ public class SamplesHttpActivity extends ListActivity {
                     @Override
                     protected void onFailurePostExecute(@Nonnull final Exception e) {
                         final Activity activity = (Activity) getContext();
-                        AThreads.tryRunOnUiThread(activity, new Runnable() {
+                        Threads.tryRunOnUiThread(activity, new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();

@@ -127,11 +127,17 @@
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-app</artifactId>
             <type>apklib</type>
-        </dependency>
+        </dependency>r
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-network</artifactId>
+            <type>apklib</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.solovyev.android</groupId>
+            <artifactId>android-common-fragments</artifactId>
             <type>apklib</type>
         </dependency>
 

@@ -44,7 +44,7 @@ public class UiThreadExecutor implements DelayedExecutor {
     private final Handler uiHandler;
 
     public UiThreadExecutor() {
-        this.uiHandler = AThreads.newUiHandler();
+        this.uiHandler = Threads.newUiHandler();
     }
 
     @Override
