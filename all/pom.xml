@@ -127,7 +127,7 @@
             <groupId>org.solovyev.android</groupId>
             <artifactId>android-common-app</artifactId>
             <type>apklib</type>
-        </dependency>r
+        </dependency>
 
         <dependency>
             <groupId>org.solovyev.android</groupId>
