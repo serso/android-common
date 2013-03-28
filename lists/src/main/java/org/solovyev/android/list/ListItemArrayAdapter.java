@@ -53,48 +53,77 @@ public class ListItemArrayAdapter<LI extends ListItem> extends ListAdapter<LI> {
 
     @Nonnull
     public static <LI extends ListItem> ListItemArrayAdapter<LI> createAndAttach(@Nonnull final ListActivity listActivity,
-                                                                                 @Nonnull List<LI> listItems) {
+                                                                                 @Nonnull List<? extends LI> listItems) {
         final ListItemArrayAdapter<LI> result = new ListItemArrayAdapter<LI>(listActivity, listItems);
 
-        listActivity.setListAdapter(result);
-
-        fillListView(listActivity.getListView(), listActivity, result);
+        attach(listActivity, result);
 
         return result;
+    }
+
+    public static <LI extends ListItem> void attach(@Nonnull ListActivity listActivity, @Nonnull ListItemArrayAdapter<? extends LI> adapter) {
+        listActivity.setListAdapter(adapter);
+
+        fillListView(listActivity.getListView(), adapter, listActivity);
     }
 
     @Nonnull
     public static <LI extends ListItem> ListItemArrayAdapter<LI> createAndAttach(@Nonnull final ListFragment listFragment,
-                                                                                 @Nonnull List<LI> listItems) {
+                                                                                 @Nonnull List<? extends LI> listItems) {
         final ListItemArrayAdapter<LI> result = new ListItemArrayAdapter<LI>(listFragment.getActivity(), listItems);
 
-        listFragment.setListAdapter(result);
-
-        fillListView(listFragment.getListView(), listFragment.getActivity(), result);
+        attach(listFragment, result);
 
         return result;
+    }
+
+    private static <LI extends ListItem> void attach(@Nonnull ListFragment listFragment, @Nonnull ListItemArrayAdapter<? extends LI> adapter) {
+        listFragment.setListAdapter(adapter);
+
+        fillListView(listFragment.getListView(), adapter, listFragment.getActivity());
+    }
+
+    @Nonnull
+    public static <LI extends ListItem> ListItemArrayAdapter<LI> createAndAttach(@Nonnull final ListView listView,
+                                                                                 @Nonnull List<? extends LI> listItems,
+                                                                                 @Nonnull Context context) {
+        final ListItemArrayAdapter<LI> result = new ListItemArrayAdapter<LI>(context, listItems);
+
+        attach(listView, result, context);
+
+        return result;
+    }
+
+    private static <LI extends ListItem> void attach(@Nonnull ListView listView, @Nonnull ListItemArrayAdapter<? extends LI> adapter, @Nonnull Context context) {
+        listView.setAdapter(adapter);
+
+        fillListView(listView, adapter, context);
     }
 
     @Nonnull
     public static <LI extends ListItem> ListItemArrayAdapter<LI> createAndAttach(@Nonnull final android.app.ListFragment listFragment,
-                                                                                 @Nonnull List<LI> listItems) {
+                                                                                 @Nonnull List<? extends LI> listItems) {
         final ListItemArrayAdapter<LI> result = new ListItemArrayAdapter<LI>(listFragment.getActivity(), listItems);
 
-        listFragment.setListAdapter(result);
-
-        fillListView(listFragment.getListView(), listFragment.getActivity(), result);
+        attach(listFragment, result);
 
         return result;
     }
 
-    private static <LI extends ListItem> void fillListView(final ListView lv, final Context context, final ListItemArrayAdapter<LI> result) {
+    private static <LI extends ListItem> void attach(@Nonnull android.app.ListFragment listFragment, @Nonnull ListItemArrayAdapter<? extends LI> adapter) {
+        listFragment.setListAdapter(adapter);
+
+        fillListView(listFragment.getListView(), adapter, listFragment.getActivity());
+    }
+
+    private static <LI extends ListItem> void fillListView(@Nonnull final ListView lv, @Nonnull final ListItemArrayAdapter<? extends LI> adapter, @Nonnull final Context context) {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
                 ListItem.OnClickAction onClickAction = listItem.getOnClickAction();
                 if ( onClickAction != null ) {
-                    onClickAction.onClick(context, result, lv);
+                    onClickAction.onClick(context, adapter, lv);
                 }
             }
         });
@@ -105,7 +134,7 @@ public class ListItemArrayAdapter<LI extends ListItem> extends ListAdapter<LI> {
                 final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
                 ListItem.OnClickAction onLongClickAction = listItem.getOnLongClickAction();
                 if ( onLongClickAction != null ) {
-                    onLongClickAction.onClick(context, result, lv);
+                    onLongClickAction.onClick(context, adapter, lv);
                     return true;
                 } else {
                     return false;
