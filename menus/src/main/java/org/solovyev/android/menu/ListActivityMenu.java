@@ -23,10 +23,10 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.JPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -195,9 +195,9 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      */
     @Nonnull
     public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
-                                                         @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
-                                                         @Nonnull MenuHelper<M, MI> menuHelper,
-                                                         @Nonnull JPredicate<AMenuItem<MI>> filter) {
+                                                           @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                           @Nonnull MenuHelper<M, MI> menuHelper,
+                                                           @Nonnull JPredicate<AMenuItem<MI>> filter) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, filter, menuHelper);
 
         for (IdentifiableMenuItem<MI> menuItem : menuItems) {
@@ -221,9 +221,9 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
      * @return constructed menu
      */
     @Nonnull
-    public static <M, MI> ActivityMenu<M, MI> fromResource(int menuResId,
-                                                         @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
-                                                         @Nonnull MenuHelper<M, MI> menuHelper) {
+    public static <M, MI> ListActivityMenu<M, MI> fromResource(int menuResId,
+                                                               @Nonnull List<? extends IdentifiableMenuItem<MI>> menuItems,
+                                                               @Nonnull MenuHelper<M, MI> menuHelper) {
         final ListActivityMenu<M, MI> result = new ListActivityMenu<M, MI>(menuResId, null, menuHelper);
 
         for (IdentifiableMenuItem<MI> menuItem : menuItems) {
@@ -381,6 +381,17 @@ public class ListActivityMenu<M, MI> implements ActivityMenu<M, MI> {
         }
 
         return false;
+    }
+
+    @Nullable
+    public AMenuItem<MI> findMenuItemById(int menuItemId) {
+        for (MenuItemWrapper<MI> menuItem : menuItems) {
+            if (  Integer.valueOf(menuItemId).equals(menuItem.getMenuItemId()) ) {
+                return menuItem.getMenuItem();
+            }
+        }
+
+        return null;
     }
 
 }
