@@ -181,8 +181,11 @@ public class MultiPaneFragmentManager {
                         }
                     }
                 } else {
-                    // fragment cannot be reused
-                    tryToPreserveFragment(ft, fragmentByTag);
+                    // fragment cannot be reused => remove if first
+                    if (fragmentByTag.isAdded()) {
+                        ft.remove(fragmentByTag);
+                    }
+
                     if (fragmentById != null) {
                         tryToPreserveFragment(ft, fragmentById);
                     }
