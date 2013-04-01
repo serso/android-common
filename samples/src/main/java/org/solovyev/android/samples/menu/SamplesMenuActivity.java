@@ -31,7 +31,7 @@ import android.widget.Toast;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.solovyev.android.Fragments;
-import org.solovyev.android.list.ListItemArrayAdapter;
+import org.solovyev.android.list.ListItemAdapter;
 import org.solovyev.android.menu.*;
 import org.solovyev.android.samples.R;
 import org.solovyev.common.JPredicate;
@@ -87,12 +87,12 @@ public class SamplesMenuActivity extends FragmentActivity {
             listItems.add(new MenuListItem(R.string.menu_01, 1));
             listItems.add(new MenuListItem(R.string.menu_02, 2));
             listItems.add(new MenuListItem(R.string.menu_03, 3));
-            ListItemArrayAdapter.createAndAttach(this, listItems);
+            ListItemAdapter.createAndAttach(this, listItems);
         }
 
         @Override
-        public ListItemArrayAdapter<MenuListItem> getListAdapter() {
-            return (ListItemArrayAdapter<MenuListItem>) super.getListAdapter();
+        public ListItemAdapter<MenuListItem> getListAdapter() {
+            return (ListItemAdapter<MenuListItem>) super.getListAdapter();
         }
 
         /*

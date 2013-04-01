@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 import org.solovyev.android.App;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.list.ListItem;
-import org.solovyev.android.list.ListItemArrayAdapter;
+import org.solovyev.android.list.ListItemAdapter;
 import org.solovyev.android.samples.Locator;
 import org.solovyev.android.samples.R;
 import org.solovyev.common.text.Strings;
@@ -131,13 +131,13 @@ public class SamplesDbActivity extends ListActivity {
             public void afterTextChanged(Editable s) {
                 final String filter = s.toString();
 
-                final ListItemArrayAdapter adapter = getListItemAdapter();
+                final ListItemAdapter adapter = getListItemAdapter();
                 adapter.clear();
                 loadDbItems(filter);
             }
         });
 
-        ListItemArrayAdapter.createAndAttach(this, new ArrayList<ListItem>());
+        ListItemAdapter.createAndAttach(this, new ArrayList<ListItem>());
 
         loadDbItems(null);
     }
@@ -187,8 +187,8 @@ public class SamplesDbActivity extends ListActivity {
 
     @SuppressWarnings("unchecked")
     @Nonnull
-    private ListItemArrayAdapter<DbItemListItem> getListItemAdapter() {
-        return (ListItemArrayAdapter<DbItemListItem>) getListView().getAdapter();
+    private ListItemAdapter<DbItemListItem> getListItemAdapter() {
+        return (ListItemAdapter<DbItemListItem>) getListView().getAdapter();
     }
 
     private void removeItem(@Nonnull String itemName) {
@@ -213,7 +213,7 @@ public class SamplesDbActivity extends ListActivity {
 
                 SamplesDbActivity.this.removeItemName.setText("");
                 Toast.makeText(getContext(), getString(R.string.items_removed, result.size()), Toast.LENGTH_SHORT).show();
-                final ListItemArrayAdapter<DbItemListItem> adapter = getListItemAdapter();
+                final ListItemAdapter<DbItemListItem> adapter = getListItemAdapter();
                 for (DbItem dbItem : result) {
                     adapter.remove(new DbItemListItem(dbItem));
                 }

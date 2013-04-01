@@ -37,7 +37,7 @@ import org.solovyev.android.Threads;
 import org.solovyev.android.http.HttpRuntimeIoException;
 import org.solovyev.android.async.CommonAsyncTask;
 import org.solovyev.android.http.*;
-import org.solovyev.android.list.ListItemArrayAdapter;
+import org.solovyev.android.list.ListItemAdapter;
 import org.solovyev.android.samples.R;
 
 import java.io.IOException;
@@ -128,7 +128,7 @@ public class SamplesHttpActivity extends ListActivity {
         for (String imageName : imageNames) {
             listItems.add(new HttpListItem(uriPrefix + imageName, this.imageLoader));
         }
-        ListItemArrayAdapter.createAndAttach(this, listItems);
+        ListItemAdapter.createAndAttach(this, listItems);
 
 
         final Button fetchDataButton = (Button) findViewById(R.id.fetch_data_button);
