@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.util.Log;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -75,7 +76,7 @@ public final class Android {
     **********************************************************************
     */
 
-    /*@Nullable*/
+    @Nullable
     private static Boolean debug = null;
 
     /*

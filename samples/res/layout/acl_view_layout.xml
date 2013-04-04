@@ -22,44 +22,66 @@
   ~ Site:  http://se.solovyev.org
   -->
 
-<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-    xmlns:picker="http://schemas.android.com/apk/res-auto"
-    xmlns:drag="http://schemas.android.com/apk/res-auto"
-    a:layout_width="match_parent"
-    a:layout_height="match_parent"
-    a:orientation="vertical">
+<org.solovyev.android.view.sidebar.SideBarLayout
+        xmlns:a="http://schemas.android.com/apk/res/android"
+        xmlns:picker="http://schemas.android.com/apk/res-auto"
+        xmlns:drag="http://schemas.android.com/apk/res-auto"
+        xmlns:sb="http://schemas.android.com/apk/res-auto"
+        sb:mainViewId="@id/acl_view_main"
+        sb:slidingViewId="@id/acl_view_sidebar"
+        a:layout_width="match_parent"
+        a:layout_height="match_parent">
 
     <LinearLayout
-        a:layout_width="match_parent"
-        a:layout_height="wrap_content"
-        a:orientation="horizontal">
+            a:id="@id/acl_view_main"
+            a:layout_width="match_parent"
+            a:layout_height="match_parent"
+            a:orientation="vertical">
 
-        <org.solovyev.android.view.Picker
-            a:id="@+id/vertical_picker"
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content" />
+        <LinearLayout
+                a:layout_width="match_parent"
+                a:layout_height="wrap_content"
+                a:orientation="horizontal">
 
-        <org.solovyev.android.view.Picker
-            a:id="@+id/horizontal_picker"
-            a:layout_width="wrap_content"
-            a:layout_height="wrap_content"
-            picker:orientation="horizontal" />
+            <org.solovyev.android.view.Picker
+                    a:id="@+id/vertical_picker"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"/>
+
+            <org.solovyev.android.view.Picker
+                    a:id="@+id/horizontal_picker"
+                    a:layout_width="wrap_content"
+                    a:layout_height="wrap_content"
+                    picker:orientation="horizontal"/>
+
+        </LinearLayout>
+
+        <org.solovyev.android.view.drag.DirectionDragButton
+                a:id="@+id/drag_button"
+                a:layout_width="150dp"
+                a:layout_height="100dp"
+                a:layout_weight="0"
+                a:layout_gravity="center"
+                style="@style/metro_button_dark_style"
+                a:text="Try!"
+                drag:directionTextScale="0.7"
+                drag:directionTextColor="@color/metro_button_dark_text_color"
+                drag:textUp="Up"
+                drag:textDown="Down"
+                drag:textLeft="Left"
+                drag:textRight="Right"/>
 
     </LinearLayout>
 
-    <org.solovyev.android.view.drag.DirectionDragButton
-        a:id="@+id/drag_button"
-        a:layout_width="150dp"
-        a:layout_height="100dp"
-        a:layout_weight="0"
-        a:layout_gravity="center"
-        style="@style/metro_button_dark_style"
-        a:text="Try!"
-        drag:directionTextScale="0.7"
-        drag:directionTextColor="@color/metro_button_dark_text_color"
-        drag:textUp="Up"
-        drag:textDown="Down"
-        drag:textLeft="Left"
-        drag:textRight="Right" />
+    <LinearLayout a:id="@id/acl_view_sidebar"
+                  a:layout_width="200dp"
+                  a:layout_height="match_parent"
+                  a:orientation="vertical">
 
-</LinearLayout>
+        <Button a:layout_height="wrap_content" a:layout_width="match_parent" a:text="Test #1"/>
+        <Button a:layout_height="wrap_content" a:layout_width="match_parent" a:text="Test #2"/>
+        <Button a:layout_height="wrap_content" a:layout_width="match_parent" a:text="Test #3"/>
+        <Button a:layout_height="wrap_content" a:layout_width="match_parent" a:text="Test #4"/>
+
+    </LinearLayout>
+</org.solovyev.android.view.sidebar.SideBarLayout>
