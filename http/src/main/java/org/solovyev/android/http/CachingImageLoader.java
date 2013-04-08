@@ -28,12 +28,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
+import org.solovyev.android.FileCache;
+import org.solovyev.android.Threads;
+import org.solovyev.common.Objects;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.Threads;
-import org.solovyev.android.FileCache;
-
 import java.io.*;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -249,44 +251,50 @@ public class CachingImageLoader implements ImageLoader {
     private static final class ImageViewImageLoadedListener implements OnImageLoadedListener {
 
         @Nonnull
-        private final ImageView imageView;
+        private final WeakReference<ImageView> imageViewRef;
 
         @Nullable
         private final Integer defaultImageId;
 
         private ImageViewImageLoadedListener(@Nonnull ImageView imageView, @Nullable Integer defaultImageId) {
-            this.imageView = imageView;
+            this.imageViewRef = new WeakReference<ImageView>(imageView);
             this.defaultImageId = defaultImageId;
         }
 
         @Override
         public void onImageLoaded(@Nullable final Bitmap image) {
-            final Activity activity = (Activity) imageView.getContext();
-            Threads.tryRunOnUiThread(activity, new Runnable() {
-                @Override
-                public void run() {
-                    if (image != null) {
-                        imageView.setImageBitmap(image);
-                    } else {
-                        if (defaultImageId != null) {
-                            imageView.setImageResource(defaultImageId);
+            final ImageView imageView = imageViewRef.get();
+            if (imageView != null) {
+                final Activity activity = (Activity) imageView.getContext();
+                Threads.tryRunOnUiThread(activity, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (image != null) {
+                            imageView.setImageBitmap(image);
+                        } else {
+                            if (defaultImageId != null) {
+                                imageView.setImageResource(defaultImageId);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
 
         @Override
         public void setDefaultImage() {
-            final Activity activity = (Activity) imageView.getContext();
-            Threads.tryRunOnUiThread(activity, new Runnable() {
-                @Override
-                public void run() {
-                    if (defaultImageId != null) {
-                        imageView.setImageResource(defaultImageId);
+            final ImageView imageView = imageViewRef.get();
+            if (imageView != null) {
+                final Activity activity = (Activity) imageView.getContext();
+                Threads.tryRunOnUiThread(activity, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (defaultImageId != null) {
+                            imageView.setImageResource(defaultImageId);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
         @Override
@@ -296,14 +304,17 @@ public class CachingImageLoader implements ImageLoader {
 
             ImageViewImageLoadedListener that = (ImageViewImageLoadedListener) o;
 
-            if (!imageView.equals(that.imageView)) return false;
+            final ImageView thisImageView = this.imageViewRef.get();
+            final ImageView thatImageView = that.imageViewRef.get();
+            if (!Objects.areEqual(thisImageView, thatImageView)) return false;
 
             return true;
         }
 
         @Override
         public int hashCode() {
-            return imageView.hashCode();
+            final ImageView imageView = imageViewRef.get();
+            return imageView == null ? 0 : imageView.hashCode();
         }
     }
 
