@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
@@ -20,10 +22,14 @@
   ~ Site:  http://se.solovyev.org
   -->
 
-<resources>
+<LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
+              a:layout_width="match_parent"
+              a:layout_height="match_parent"
+              a:orientation="vertical">
 
-    <string name="acl_http">Http</string>
-    <string name="acl_fetch_data_text">Fetch data from internet</string>
-    <string name="acl_http_response">Response:</string>
+    <Button a:id="@+id/start_task_button"
+            a:text="@string/acl_start_task"
+            a:layout_height="wrap_content"
+            a:layout_width="match_parent"/>
 
-</resources>
+</LinearLayout>

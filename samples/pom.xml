@@ -50,8 +50,6 @@
             <type>apklib</type>
         </dependency>
 
-
-
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>

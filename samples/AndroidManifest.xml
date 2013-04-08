@@ -43,6 +43,7 @@
         <activity android:name=".http.SamplesHttpActivity"/>
         <activity android:name=".db.SamplesDbActivity"/>
         <activity android:name=".view.SamplesViewActivity"/>
+        <activity android:name=".tasks.SamplesTaskActivity"/>
         <activity android:name=".keyboard.SamplesKeyboardActivity"/>
 
         <service android:label="Latin Input" android:name="org.solovyev.android.keyboard.LatinInputMethodService" android:permission="android.permission.BIND_INPUT_METHOD">

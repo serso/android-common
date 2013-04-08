@@ -25,7 +25,6 @@ package org.solovyev.android.samples;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
 import org.solovyev.android.App;
 import org.solovyev.android.db.CommonSQLiteOpenHelper;
 import org.solovyev.android.db.SQLiteOpenHelperConfiguration;
@@ -33,6 +32,10 @@ import org.solovyev.android.samples.db.DbItemDao;
 import org.solovyev.android.samples.db.DbItemService;
 import org.solovyev.android.samples.db.DbItemServiceImpl;
 import org.solovyev.android.samples.db.SqliteDbItemDao;
+import org.solovyev.android.tasks.Tasks;
+import org.solovyev.tasks.TaskService;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -47,6 +50,9 @@ public class SamplesApplication extends Application implements Locator {
     @Nonnull
     private DbItemService dbItemService;
 
+    @Nonnull
+    private TaskService taskService;
+
     public SamplesApplication() {
     }
 
@@ -58,6 +64,7 @@ public class SamplesApplication extends Application implements Locator {
 
         sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
         dbItemService = new DbItemServiceImpl();
+        taskService = Tasks.newTaskService();
     }
 
     @Nonnull
@@ -78,6 +85,12 @@ public class SamplesApplication extends Application implements Locator {
     @Override
     public DbItemService getDbItemService() {
         return this.dbItemService;
+    }
+
+    @Nonnull
+    @Override
+    public TaskService getTaskService() {
+        return taskService;
     }
 
     @Nonnull

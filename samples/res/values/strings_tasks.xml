@@ -22,8 +22,9 @@
 
 <resources>
 
-    <string name="acl_http">Http</string>
-    <string name="acl_fetch_data_text">Fetch data from internet</string>
-    <string name="acl_http_response">Response:</string>
+    <string name="acl_start_task">Start 10s sleep task</string>
+    <string name="acl_start_task_again">More sleep!</string>
+    <string name="acl_sleeping_title">Sleeping…</string>
+    <string name="acl_sleeping_message">While we are sleeping you can rotate your screen and check that screen is still grayed out.</string>
 
 </resources>

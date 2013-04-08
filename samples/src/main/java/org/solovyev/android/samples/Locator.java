@@ -23,10 +23,12 @@
 package org.solovyev.android.samples;
 
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
 import org.solovyev.android.ServiceLocator;
 import org.solovyev.android.samples.db.DbItemDao;
 import org.solovyev.android.samples.db.DbItemService;
+import org.solovyev.tasks.TaskService;
+
+import javax.annotation.Nonnull;
 
 /**
 * User: serso
@@ -43,4 +45,7 @@ public interface Locator extends ServiceLocator {
 
     @Nonnull
     DbItemService getDbItemService();
+
+    @Nonnull
+    TaskService getTaskService();
 }

@@ -28,7 +28,7 @@
               a:orientation="vertical">
 
     <Button a:id="@+id/fetch_data_button"
-            a:text="@string/fetch_data_text"
+            a:text="@string/acl_fetch_data_text"
             a:layout_height="wrap_content"
             a:layout_width="match_parent"/>
 

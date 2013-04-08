@@ -155,7 +155,7 @@ public class SamplesHttpActivity extends ListActivity {
                         Threads.tryRunOnUiThread(activity, new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(activity, getString(R.string.http_response) + " " + result, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, getString(R.string.acl_http_response) + " " + result, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

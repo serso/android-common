@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.db.SamplesDbActivity;
@@ -36,8 +35,11 @@ import org.solovyev.android.samples.http.SamplesHttpActivity;
 import org.solovyev.android.samples.keyboard.SamplesKeyboardActivity;
 import org.solovyev.android.samples.menu.SamplesMenuActivity;
 import org.solovyev.android.samples.prefs.SamplesPreferencesActivity;
+import org.solovyev.android.samples.tasks.SamplesTaskActivity;
 import org.solovyev.android.samples.view.SamplesViewActivity;
 import org.solovyev.android.view.TextViewBuilder;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -46,10 +48,11 @@ import org.solovyev.android.view.TextViewBuilder;
  */
 public enum SampleType implements ListItem {
     preferences(R.string.preferences, SamplesPreferencesActivity.class),
-    http(R.string.http, SamplesHttpActivity.class),
+    http(R.string.acl_http, SamplesHttpActivity.class),
     db(R.string.db, SamplesDbActivity.class),
     view(R.string.view, SamplesViewActivity.class),
     keyboard(R.string.keyboard, SamplesKeyboardActivity.class),
+    tasks(R.string.tasks, SamplesTaskActivity.class),
     menu(R.string.menu, SamplesMenuActivity.class);
 
     private final int captionResId;

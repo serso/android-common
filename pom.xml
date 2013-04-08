@@ -38,6 +38,7 @@
         <module>security</module>
         <module>networks</module>
         <module>fragments</module>
+        <module>tasks</module>
         <module>all</module>
     </modules>
     <name>Android Common Library</name>
@@ -196,6 +197,13 @@
 
             <dependency>
                 <groupId>org.solovyev.android</groupId>
+                <artifactId>android-common-tasks</artifactId>
+                <version>1.1.0-SNAPSHOT</version>
+                <type>apklib</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev.android</groupId>
                 <artifactId>android-common-all</artifactId>
                 <version>1.1.0-SNAPSHOT</version>
                 <type>apklib</type>
@@ -206,6 +214,12 @@
             <dependency>
                 <groupId>org.solovyev</groupId>
                 <artifactId>common-core</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.solovyev</groupId>
+                <artifactId>common-tasks</artifactId>
                 <version>${common.version}</version>
             </dependency>
 
