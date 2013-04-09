@@ -66,7 +66,7 @@ public class SamplesTaskActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        taskListeners.removeAllTaskListeners(SLEEP_TASK_NAME);
+        taskListeners.removeAllTaskListeners();
         // we must dismiss all dialogs to prevent memory leak
         taskOverlayDialogs.dismissAll();
         super.onDestroy();
