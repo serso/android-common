@@ -9,10 +9,7 @@ import android.widget.Toast;
 import org.solovyev.android.App;
 import org.solovyev.android.samples.Locator;
 import org.solovyev.android.samples.R;
-import org.solovyev.android.tasks.NamedContextTask;
-import org.solovyev.android.tasks.TaskOverlayDialog;
-import org.solovyev.android.tasks.TaskOverlayDialogs;
-import org.solovyev.android.tasks.Tasks;
+import org.solovyev.android.tasks.*;
 import org.solovyev.tasks.TaskService;
 
 import javax.annotation.Nonnull;
@@ -26,12 +23,12 @@ public class SamplesTaskActivity extends Activity {
 
     public static final String SLEEP_TASK_NAME = "sleep-task";
 
+    // if you don't want to overlay the screen remove this field
     @Nonnull
     private final TaskOverlayDialogs taskOverlayDialogs = new TaskOverlayDialogs();
 
-    // minor flaw - even if we use WeakReference there is no guarantee that activity is garbage collected before call of org.solovyev.android.samples.tasks.SamplesTaskActivity.SleepTask.onSuccess method =>
-    // we need to check if activity has been destroyed manually
-    private volatile boolean destroyed = false;
+    @Nonnull
+    private final TaskListeners taskListeners = new TaskListeners(((Locator) App.getLocator()).getTaskService());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +46,15 @@ public class SamplesTaskActivity extends Activity {
         });
 
         // don't forget to reattach result listener and dialogs
-        final TaskService taskService = ((Locator) App.getLocator()).getTaskService();
         // note: here i use SleepTask as a callback but you can easily use simple callback (decouple callable and result callback)
-        taskService.addTaskListener(SLEEP_TASK_NAME, Tasks.toUiThreadFutureCallback(this, new SleepTask()));
+        taskListeners.addTaskListener(SLEEP_TASK_NAME, Tasks.toUiThreadFutureCallback(this, new SleepTask()));
         tryShowDialog();
 
     }
 
     private void startTask() {
         // start the task
-        final TaskService taskService = ((Locator) App.getLocator()).getTaskService();
-        taskService.run(Tasks.toUiThreadTask(this, new SleepTask()));
+        taskListeners.run(Tasks.toUiThreadTask(this, new SleepTask()));
         // attach dialog
         tryShowDialog();
     }
@@ -71,9 +66,9 @@ public class SamplesTaskActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        taskListeners.removeAllTaskListeners(SLEEP_TASK_NAME);
         // we must dismiss all dialogs to prevent memory leak
         taskOverlayDialogs.dismissAll();
-        destroyed = true;
         super.onDestroy();
     }
 
@@ -94,18 +89,14 @@ public class SamplesTaskActivity extends Activity {
 
         @Override
         public void onSuccess(@Nonnull SamplesTaskActivity activity, Integer result) {
-            if (!activity.destroyed) {
-                Log.d(SLEEP_TASK_NAME, "OnSuccess, activity: " + activity);
-                final Button startTaskButton = (Button) activity.findViewById(R.id.start_task_button);
-                startTaskButton.setText(R.string.acl_start_task_again);
-            }
+            Log.d(SLEEP_TASK_NAME, "OnSuccess, activity: " + activity);
+            final Button startTaskButton = (Button) activity.findViewById(R.id.start_task_button);
+            startTaskButton.setText(R.string.acl_start_task_again);
         }
 
         @Override
         public void onFailure(@Nonnull SamplesTaskActivity activity, Throwable t) {
-            if (!activity.destroyed) {
-                Toast.makeText(activity, "Error: " + t, Toast.LENGTH_LONG).show();
-            }
+            Toast.makeText(activity, "Error: " + t, Toast.LENGTH_LONG).show();
         }
     }
 }
