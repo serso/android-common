@@ -22,12 +22,9 @@
 
 package org.solovyev.android.async;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import org.solovyev.android.core.R;
 import org.solovyev.common.collections.Collections;
 
 import javax.annotation.Nonnull;
@@ -48,34 +45,17 @@ public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask
     @Nonnull
     private final WeakReference<Context> contextRef;
 
-    @Nullable
-    private final MaskParams maskParams;
-
-    @Nullable
-    private AlertDialog dialog;
-
     protected CommonAsyncTask() {
-        this.maskParams = null;
         this.contextRef = new WeakReference<Context>(null);
     }
 
     protected CommonAsyncTask(@Nonnull Context context) {
-        this.maskParams = null;
-        this.contextRef = new WeakReference<Context>(context);
-    }
-
-    protected CommonAsyncTask(@Nonnull Context context, @Nonnull MaskParams maskParams) {
-        this.maskParams = maskParams;
         this.contextRef = new WeakReference<Context>(context);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        final Context context = getContext();
-        if (context != null && maskParams != null) {
-            dialog = maskParams.show(context);
-        }
     }
 
     @Override
@@ -94,10 +74,6 @@ public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask
     @Override
     protected final void onPostExecute(@Nonnull Result<RESULT> r) {
         super.onPostExecute(r);
-
-        if (dialog != null) {
-            dialog.dismiss();
-        }
 
         if (r.isFailure()) {
             onFailurePostExecute(r.getFailureResult());
@@ -185,47 +161,6 @@ public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask
         @Nonnull
         public Exception getException() {
             return exception;
-        }
-    }
-
-    public static final class MaskParams {
-
-        private final int titleResId;
-
-        private final int messageResId;
-
-        private boolean indeterminate = true;
-
-        private boolean cancelable = false;
-
-        private MaskParams(int titleResId, int messageResId) {
-            this.titleResId = titleResId;
-            this.messageResId = messageResId;
-        }
-
-        @Nonnull
-        public static MaskParams newInstance(int titleResId, int messageResId) {
-            return new MaskParams(titleResId, messageResId);
-        }
-
-        @Nonnull
-        public static MaskParams newDefault() {
-            return new MaskParams(R.string.acl_loading, R.string.acl_loading);
-        }
-
-        public void setIndeterminate(boolean indeterminate) {
-            this.indeterminate = indeterminate;
-        }
-
-        public void setCancelable(boolean cancelable) {
-            this.cancelable = cancelable;
-        }
-
-        @Nonnull
-        public AlertDialog show(@Nonnull Context context) {
-            final String title = context.getString(titleResId);
-            final String message = context.getString(messageResId);
-            return ProgressDialog.show(context, title, message, indeterminate, cancelable);
         }
     }
 }

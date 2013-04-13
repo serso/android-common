@@ -115,6 +115,7 @@ public final class TaskListeners {
         for (String taskName : listeners.keySet()) {
             removeAllTaskListeners(taskName);
         }
+        listeners.clear();
     }
 
     public void removeAllTaskListeners(@Nonnull String taskName) {
