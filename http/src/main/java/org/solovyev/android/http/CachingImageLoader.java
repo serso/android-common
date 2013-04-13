@@ -179,7 +179,10 @@ public class CachingImageLoader implements ImageLoader {
         try {
             //decode image size
             final BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
+
+            // causes bitmap to be null for VK images
+            //o.inJustDecodeBounds = true;
+
             final Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, o);
 
             //Find the correct scale value. It should be the power of 2.
