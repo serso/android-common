@@ -22,6 +22,7 @@
 
 package org.solovyev.android.tasks;
 
+import android.app.Activity;
 import com.google.common.util.concurrent.FutureCallback;
 import org.solovyev.tasks.*;
 
@@ -44,15 +45,13 @@ public final class TaskListeners {
     private final Map<String, List<FutureCallback<?>>> listeners = new HashMap<String, List<FutureCallback<?>>>();
 
     @Nonnull
+    private final TaskOverlayDialogs overlayDialogs = new TaskOverlayDialogs();
+
+    @Nonnull
     private final TaskService taskService;
 
     public TaskListeners(@Nonnull TaskService taskService) {
         this.taskService = taskService;
-    }
-
-    @Nullable
-    public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task) {
-        return tryAddListener(task.getName(), taskService.run(task));
     }
 
     @Nullable
@@ -69,12 +68,36 @@ public final class TaskListeners {
     }
 
     @Nullable
+    public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task) {
+        return tryAddListener(task.getName(), taskService.run(task));
+    }
+
+    @Nullable
+    public <T> FutureCallback<T> run(@Nonnull NamedTask<T> task, @Nonnull Activity activity, int titleResId, int messageResId) {
+        final FutureCallback<T> result = tryAddListener(task.getName(), taskService.run(task));
+        overlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, activity, task.getName(), titleResId, messageResId));
+        return result;
+    }
+
+    @Nullable
     public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task) {
         return tryAddListener(taskName, taskService.run(taskName, task));
     }
 
+    @Nullable
+    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Task<T> task, @Nonnull Activity activity, int titleResId, int messageResId) {
+        final FutureCallback<T> result = tryAddListener(taskName, taskService.run(taskName, task));
+        overlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, activity, taskName, titleResId, messageResId));
+        return result;
+    }
+
     public <T> void run(@Nonnull String taskName, @Nonnull Callable<T> task) {
         taskService.run(taskName, task);
+    }
+
+    public <T> void run(@Nonnull String taskName, @Nonnull Callable<T> task, @Nonnull Activity activity, int titleResId, int messageResId) {
+        taskService.run(taskName, task);
+        overlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, activity, taskName, titleResId, messageResId));
     }
 
     @Nullable
@@ -83,27 +106,10 @@ public final class TaskListeners {
     }
 
     @Nullable
-    public <T> FutureCallback<T> tryRun(@Nonnull NamedTask<T> task) throws TaskIsAlreadyRunningException {
-        return tryAddListener(task.getName(), taskService.tryRun(task));
-    }
-
-    @Nullable
-    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Task<T> task) throws TaskIsAlreadyRunningException {
-        return tryAddListener(taskName, taskService.tryRun(taskName, task));
-    }
-
-    public <T> void tryRun(@Nonnull String taskName, @Nonnull Callable<T> task) throws TaskIsAlreadyRunningException {
-        taskService.tryRun(taskName, task);
-    }
-
-    @Nullable
-    public <T> FutureCallback<T> tryRun(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener) throws TaskIsAlreadyRunningException {
-        return tryAddListener(taskName, taskService.tryRun(taskName, task, taskListener));
-    }
-
-    @Nonnull
-    public <T> FutureCallback<T> tryAddTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener) throws NoSuchTaskException, TaskFinishedException {
-        return tryAddListener(taskName, taskService.tryAddTaskListener(taskName, taskListener));
+    public <T> FutureCallback<T> run(@Nonnull String taskName, @Nonnull Callable<T> task, @Nullable FutureCallback<T> taskListener, @Nonnull Activity activity, int titleResId, int messageResId) {
+        final FutureCallback<T> result = tryAddListener(taskName, taskService.run(taskName, task, taskListener));
+        overlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, activity, taskName, titleResId, messageResId));
+        return result;
     }
 
     @Nullable
@@ -111,19 +117,29 @@ public final class TaskListeners {
         return tryAddListener(taskName, taskService.addTaskListener(taskName, taskListener));
     }
 
+    @Nullable
+    public <T> FutureCallback<T> addTaskListener(@Nonnull String taskName, @Nonnull FutureCallback<T> taskListener, @Nonnull Activity activity, int titleResId, int messageResId) {
+        final FutureCallback<T> result = tryAddListener(taskName, taskService.addTaskListener(taskName, taskListener));
+        overlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, activity, taskName, titleResId, messageResId));
+        return result;
+    }
+
     public void removeAllTaskListeners() {
         for (String taskName : listeners.keySet()) {
             removeAllTaskListeners(taskName);
         }
         listeners.clear();
+
+        overlayDialogs.dismissAll();
     }
 
-    public void removeAllTaskListeners(@Nonnull String taskName) {
+    private void removeAllTaskListeners(@Nonnull String taskName) {
         final List<FutureCallback<?>> listenersByTask = listeners.get(taskName);
         if (listenersByTask != null) {
             for (FutureCallback<?> listener : listenersByTask) {
                 taskService.removeTaskListener(taskName, listener);
             }
+            listenersByTask.clear();
         }
     }
 }

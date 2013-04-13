@@ -9,8 +9,9 @@ import android.widget.Toast;
 import org.solovyev.android.App;
 import org.solovyev.android.samples.Locator;
 import org.solovyev.android.samples.R;
-import org.solovyev.android.tasks.*;
-import org.solovyev.tasks.TaskService;
+import org.solovyev.android.tasks.NamedContextTask;
+import org.solovyev.android.tasks.TaskListeners;
+import org.solovyev.android.tasks.Tasks;
 
 import javax.annotation.Nonnull;
 
@@ -22,10 +23,6 @@ import javax.annotation.Nonnull;
 public class SamplesTaskActivity extends Activity {
 
     public static final String SLEEP_TASK_NAME = "sleep-task";
-
-    // if you don't want to overlay the screen remove this field
-    @Nonnull
-    private final TaskOverlayDialogs taskOverlayDialogs = new TaskOverlayDialogs();
 
     @Nonnull
     private final TaskListeners taskListeners = new TaskListeners(((Locator) App.getLocator()).getTaskService());
@@ -47,28 +44,18 @@ public class SamplesTaskActivity extends Activity {
 
         // don't forget to reattach result listener and dialogs
         // note: here i use SleepTask as a callback but you can easily use simple callback (decouple callable and result callback)
-        taskListeners.addTaskListener(SLEEP_TASK_NAME, Tasks.toUiThreadFutureCallback(this, new SleepTask()));
-        tryShowDialog();
+        taskListeners.addTaskListener(SLEEP_TASK_NAME, Tasks.toUiThreadFutureCallback(this, new SleepTask()), this, R.string.acl_sleeping_title, R.string.acl_sleeping_message);
 
     }
 
     private void startTask() {
         // start the task
-        taskListeners.run(Tasks.toUiThreadTask(this, new SleepTask()));
-        // attach dialog
-        tryShowDialog();
-    }
-
-    private void tryShowDialog() {
-        final TaskService taskService = ((Locator) App.getLocator()).getTaskService();
-        taskOverlayDialogs.addTaskOverlayDialog(TaskOverlayDialog.attachToTask(taskService, this, SLEEP_TASK_NAME, R.string.acl_sleeping_title, R.string.acl_sleeping_message));
+        taskListeners.run(Tasks.toUiThreadTask(this, new SleepTask()), this, R.string.acl_sleeping_title, R.string.acl_sleeping_message);
     }
 
     @Override
     protected void onDestroy() {
         taskListeners.removeAllTaskListeners();
-        // we must dismiss all dialogs to prevent memory leak
-        taskOverlayDialogs.dismissAll();
         super.onDestroy();
     }
 

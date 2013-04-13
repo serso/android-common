@@ -24,7 +24,6 @@ package org.solovyev.android.samples;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ListView;
 import org.solovyev.android.list.ListItemAdapter;
 
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ public class SamplesActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.acl_samples_list);
-
-        final ListView lv = getListView();
 
         final List<SampleType> listItems = new ArrayList<SampleType>();
         Collections.addAll(listItems, SampleType.values());
