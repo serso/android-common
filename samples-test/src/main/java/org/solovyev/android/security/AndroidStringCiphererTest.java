@@ -24,7 +24,9 @@ public class AndroidStringCiphererTest extends AndroidTestCase {
 
             final String expected = Strings.generateRandomString(r.nextInt(1000));
 
-            final SecretKey sk = secretKeyProvider.getSecretKey(Strings.generateRandomString(10), saltGenerator.generateSalt());
+            final String secret = Strings.generateRandomString(10);
+            byte[] salt = saltGenerator.generateSalt();
+            final SecretKey sk = secretKeyProvider.getSecretKey(secret, salt);
 
             final String encrypted = cipherer.encrypt(sk, expected);
             final String decrypted = cipherer.decrypt(sk, encrypted);

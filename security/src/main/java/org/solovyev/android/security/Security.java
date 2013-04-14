@@ -83,4 +83,9 @@ public final class Security extends org.solovyev.common.security.Security {
     public static SecurityService<String, String, String> newAndroidAesStringSecurityService() {
         return newSecurityService(newAndroidAesStringCipherer(), newAndroidAesSecretKeyProvider(), newAndroidSaltGenerator(), newAndroidSha512StringHashProvider());
     }
+
+    @Nonnull
+    public static SecurityService<String, String, String> newAndroidStringSecurityService(@Nonnull SecurityService<byte[], byte[], byte[]> securityService) {
+        return SecurityServiceConverter.wrap(securityService, ABase64StringDecoder.getInstance(), ABase64StringEncoder.getInstance());
+    }
 }
