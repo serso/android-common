@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,7 +41,7 @@ import java.util.*;
  * Date: 6/6/12
  * Time: 12:53 AM
  */
-public class ListAdapter<T> extends BaseAdapter {
+public class ListAdapter<T> extends BaseAdapter implements Filterable {
     /**
      * Contains the list of objects that represent the data of this ListAdapter.
      * The content of this list is referred to as "the array" in the documentation.
