@@ -32,7 +32,10 @@ import java.util.Collection;
  * Date: 8/22/12
  * Time: 1:45 AM
  */
-public interface AProperties {
+public interface AProperties extends Cloneable {
+
+    @Nonnull
+    AProperties clone();
 
     @Nullable
     AProperty getProperty(@Nonnull String name);

@@ -8,7 +8,10 @@ import net.robotmedia.billing.utils.BillingBase64StringEncoder;
 import net.robotmedia.billing.utils.Installation;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.security.ASecurity;
+
+import org.solovyev.android.security.*;
+import org.solovyev.android.security.Security;
+import org.solovyev.android.security.Security;
 import org.solovyev.common.security.*;
 import org.solovyev.common.text.StringDecoder;
 import org.solovyev.common.text.StringEncoder;
@@ -26,7 +29,7 @@ public final class BillingSecurity {
 
     @Nonnull
     private static Cipherer<Transaction, Transaction> newTransactionObfuscator(@Nonnull byte[] initialVector, @Nullable String securityPrefix) {
-        final Cipherer<byte[], byte[]> byteCipherer = ASecurity.newAndroidAesByteCipherer(initialVector);
+        final Cipherer<byte[], byte[]> byteCipherer = Security.newAndroidAesByteCipherer(initialVector);
         Cipherer<String, String> stringCipherer = TypedCipherer.newInstance(byteCipherer, StringDecoder.getInstance(), StringEncoder.getInstance(), BillingBase64StringDecoder.getInstance(), BillingBase64StringEncoder.getInstance());
 
         if (securityPrefix != null) {
@@ -38,12 +41,12 @@ public final class BillingSecurity {
 
     @Nonnull
     public static SecurityService<Transaction, Transaction, byte[]> getObfuscationSecurityService(byte[] initialVector, @Nullable String securityPrefix) {
-        return ASecurity.newSecurityService(newTransactionObfuscator(initialVector, securityPrefix), ASecurity.newAndroidAesSecretKeyProvider(), ASecurity.newAndroidSaltGenerator(), getHashProvider());
+        return Security.newSecurityService(newTransactionObfuscator(initialVector, securityPrefix), Security.newAndroidAesSecretKeyProvider(), Security.newAndroidSaltGenerator(), getHashProvider());
     }
 
     @Nonnull
     private static HashProvider<Transaction, byte[]> getHashProvider() {
-        final HashProvider<byte[], byte[]> hashProvider = ASecurity.newAndroidSha512ByteHashProvider();
+        final HashProvider<byte[], byte[]> hashProvider = org.solovyev.android.security.Security.newAndroidSha512ByteHashProvider();
         return TypedHashProvider.newByteHashCodeInstance(hashProvider);
     }
 

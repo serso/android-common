@@ -12,7 +12,7 @@ import java.util.Random;
 public class AndroidStringCiphererTest extends AndroidTestCase {
 
     public void testEncryptDecrypt() throws Exception {
-        final SecurityService<String, String, String> securityService = ASecurity.newAndroidAesStringSecurityService();
+        final SecurityService<String, String, String> securityService = Security.newAndroidAesStringSecurityService();
 
         final Cipherer<String, String> cipherer = securityService.getCipherer();
         final SecretKeyProvider secretKeyProvider = securityService.getSecretKeyProvider();

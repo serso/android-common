@@ -17,12 +17,12 @@ public final class Properties {
     }
 
     @Nonnull
-    public static AProperties newProperties(@Nonnull Collection<AProperty> properties) {
+    public static MutableAProperties newProperties(@Nonnull Collection<AProperty> properties) {
         return MutableAPropertiesImpl.newInstance(properties);
     }
 
     @Nonnull
-    public static AProperties newProperties(@Nonnull Map<String, AProperty> properties) {
+    public static MutableAProperties newProperties(@Nonnull Map<String, AProperty> properties) {
         return MutableAPropertiesImpl.newInstance(properties);
     }
 

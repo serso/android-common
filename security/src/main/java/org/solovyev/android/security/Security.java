@@ -1,13 +1,14 @@
 package org.solovyev.android.security;
 
-import javax.annotation.Nonnull;
 import org.solovyev.android.security.base64.ABase64StringDecoder;
 import org.solovyev.android.security.base64.ABase64StringEncoder;
 import org.solovyev.common.security.*;
 import org.solovyev.common.text.StringDecoder;
 import org.solovyev.common.text.StringEncoder;
 
-public final class ASecurity extends Security {
+import javax.annotation.Nonnull;
+
+public final class Security extends org.solovyev.common.security.Security {
 
     private static final String PROVIDER = "BC";
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
@@ -24,28 +25,28 @@ public final class ASecurity extends Security {
     private static final int IV_LENGTH = 16;
     private static final String IV_RANDOM_ALGORITHM = "SHA1PRNG";
 
-    private ASecurity() {
+    private Security() {
         throw new AssertionError();
     }
 
     @Nonnull
     public static Cipherer<byte[], byte[]> newAndroidAesByteCipherer() {
-        return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newRandom(IV_RANDOM_ALGORITHM, IV_LENGTH));
+        return org.solovyev.common.security.Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newRandom(IV_RANDOM_ALGORITHM, IV_LENGTH));
     }
 
     @Nonnull
     public static Cipherer<byte[], byte[]> newAndroidAesByteCipherer(final byte[] initialVector) {
-        return Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newPredefined(initialVector));
+        return org.solovyev.common.security.Security.newCipherer(CIPHER_ALGORITHM, PROVIDER, InitialVectorDef.newPredefined(initialVector));
     }
 
     @Nonnull
     public static SecretKeyProvider newAndroidAesSecretKeyProvider() {
-        return Security.newPbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, CIPHERER_ALGORITHM_AES, PROVIDER, PBE_KEY_LENGTH, SALT_LENGTH);
+        return org.solovyev.common.security.Security.newPbeSecretKeyProvider(PBE_ITERATION_COUNT, PBE_ALGORITHM, CIPHERER_ALGORITHM_AES, PROVIDER, PBE_KEY_LENGTH, SALT_LENGTH);
     }
 
     @Nonnull
     public static HashProvider<byte[], byte[]> newAndroidSha512ByteHashProvider() {
-        return Security.newHashProvider(HASH_ALGORITHM, PROVIDER);
+        return org.solovyev.common.security.Security.newHashProvider(HASH_ALGORITHM, PROVIDER);
     }
 
     @Nonnull
@@ -55,7 +56,7 @@ public final class ASecurity extends Security {
 
     @Nonnull
     public static SaltGenerator newAndroidSaltGenerator() {
-        return Security.newSaltGenerator(IV_RANDOM_ALGORITHM, SALT_LENGTH);
+        return org.solovyev.common.security.Security.newSaltGenerator(IV_RANDOM_ALGORITHM, SALT_LENGTH);
     }
 
     @Nonnull
