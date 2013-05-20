@@ -25,6 +25,7 @@ package org.solovyev.android.keyboard;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,58 +36,59 @@ import javax.annotation.Nullable;
  */
 public interface AKeyboardInput {
 
-    void commitTyped();
+	void commitTyped();
 
-    void onText(@Nullable CharSequence text);
+	void onText(@Nullable CharSequence text);
 
-    @Nonnull
-    EditorInfo getCurrentInputEditorInfo();
+	@Nonnull
+	EditorInfo getCurrentInputEditorInfo();
 
-    @Nullable
-    CharSequence getTypedText();
+	@Nullable
+	CharSequence getTypedText();
 
-    boolean handleBackspace();
+	boolean handleBackspace();
 
-    void sendKeyEvent(@Nonnull KeyEvent keyEvent);
+	void sendKeyEvent(@Nonnull KeyEvent keyEvent);
 
-    int translateKeyDown(int unicodeChar);
+	int translateKeyDown(int unicodeChar);
 
-    void commitCompletion(@Nonnull CompletionInfo completionInfo);
+	void commitCompletion(@Nonnull CompletionInfo completionInfo);
 
-    void append(char primaryCode);
+	void append(char primaryCode);
 
-    void commitText(@Nullable String text, int i);
+	void commitText(@Nullable String text, int i);
 
-    void handleCursorRight();
+	void handleCursorRight();
 
-    void handleCursorLeft();
+	void handleCursorLeft();
 
-    void handleClear();
+	void handleClear();
 
-    void handlePaste();
+	void handlePaste();
 
-    void handleCopy();
+	void handleCopy();
 
-    void clearMetaKeyStates(int flags);
+	void clearMetaKeyStates(int flags);
 
-    void keyDownUp(int keyEventCode);
+	void keyDownUp(int keyEventCode);
 
-    void finishComposingText();
+	void finishComposingText();
 
-    boolean isInputConnected();
+	boolean isInputConnected();
 
-    int getCursorCapsMode(int inputType);
+	int getCursorCapsMode(int inputType);
 
-    void clearTypedText();
+	void clearTypedText();
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           HISTORY
     *
     **********************************************************************
     */
 
-    void undo();
-    void redo();
+	void undo();
+
+	void redo();
 }

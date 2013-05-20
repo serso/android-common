@@ -27,10 +27,11 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.text.Mapper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -40,45 +41,45 @@ import org.solovyev.common.text.Mapper;
 public abstract class AbstractPickerDialogPreference<T> extends AbstractDialogPreference<T> implements Picker.OnChangedListener<T> {
 
 
-    protected AbstractPickerDialogPreference(Context context,
-                                             AttributeSet attrs,
-                                             @Nullable String defaultStringValue,
-                                             boolean needValueText,
-                                             @Nonnull Mapper<T> mapper) {
-        super(context, attrs, defaultStringValue, needValueText, mapper);
-    }
+	protected AbstractPickerDialogPreference(Context context,
+											 AttributeSet attrs,
+											 @Nullable String defaultStringValue,
+											 boolean needValueText,
+											 @Nonnull Mapper<T> mapper) {
+		super(context, attrs, defaultStringValue, needValueText, mapper);
+	}
 
-    @Override
-    protected LinearLayout.LayoutParams getParams() {
-        final LinearLayout.LayoutParams result = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+	@Override
+	protected LinearLayout.LayoutParams getParams() {
+		final LinearLayout.LayoutParams result = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        result.gravity = Gravity.CENTER;
+		result.gravity = Gravity.CENTER;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    protected View createPreferenceView(@Nonnull Context context) {
-        final Picker<T> result = new Picker<T>(context);
+	@Nonnull
+	@Override
+	protected View createPreferenceView(@Nonnull Context context) {
+		final Picker<T> result = new Picker<T>(context);
 
-        result.setOnChangeListener(this);
+		result.setOnChangeListener(this);
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    protected void initPreferenceView(@Nonnull View v, @Nullable T value) {
-        if (value != null) {
-            ((Picker<T>) v).setRange(createRange(value));
-        }
-    }
+	@Override
+	protected void initPreferenceView(@Nonnull View v, @Nullable T value) {
+		if (value != null) {
+			((Picker<T>) v).setRange(createRange(value));
+		}
+	}
 
-    @Nonnull
-    protected abstract Picker.Range<T> createRange(@Nonnull T selected);
+	@Nonnull
+	protected abstract Picker.Range<T> createRange(@Nonnull T selected);
 
-    @Override
-    public void onChanged(@Nonnull Picker picker, @Nonnull T o) {
-        persistValue(o);
-    }
+	@Override
+	public void onChanged(@Nonnull Picker picker, @Nonnull T o) {
+		persistValue(o);
+	}
 }

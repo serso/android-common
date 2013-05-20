@@ -26,70 +26,71 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
-* User: serso
-* Date: 2/23/13
-* Time: 2:35 PM
-*/
+ * User: serso
+ * Date: 2/23/13
+ * Time: 2:35 PM
+ */
 public class DialogFragmentShower {
 
-    @Nonnull
-    private final FragmentActivity fragmentActivity;
+	@Nonnull
+	private final FragmentActivity fragmentActivity;
 
-    @Nonnull
-    private final String fragmentTag;
+	@Nonnull
+	private final String fragmentTag;
 
-    @Nonnull
-    private final AlertDialog.Builder menuBuilder;
+	@Nonnull
+	private final AlertDialog.Builder menuBuilder;
 
-    public DialogFragmentShower(@Nonnull FragmentActivity fragmentActivity,
-                                @Nonnull String fragmentTag,
-                                @Nonnull AlertDialog.Builder menuBuilder) {
-        this.fragmentActivity = fragmentActivity;
-        this.fragmentTag = fragmentTag;
-        this.menuBuilder = menuBuilder;
-    }
+	public DialogFragmentShower(@Nonnull FragmentActivity fragmentActivity,
+								@Nonnull String fragmentTag,
+								@Nonnull AlertDialog.Builder menuBuilder) {
+		this.fragmentActivity = fragmentActivity;
+		this.fragmentTag = fragmentTag;
+		this.menuBuilder = menuBuilder;
+	}
 
-    public void show() {
-        Fragments.showDialog(new AlertDialogFragment(menuBuilder), fragmentTag, fragmentActivity.getSupportFragmentManager());
-    }
+	public void show() {
+		Fragments.showDialog(new AlertDialogFragment(menuBuilder), fragmentTag, fragmentActivity.getSupportFragmentManager());
+	}
 
-    /**
-     * Dirty solution for recreated dialog fragments - dismiss it after showing...
-     */
-    public static final class AlertDialogFragment extends android.support.v4.app.DialogFragment {
+	/**
+	 * Dirty solution for recreated dialog fragments - dismiss it after showing...
+	 */
+	public static final class AlertDialogFragment extends android.support.v4.app.DialogFragment {
 
-        @Nullable
-        private final AlertDialog.Builder menuBuilder;
+		@Nullable
+		private final AlertDialog.Builder menuBuilder;
 
-        private AlertDialogFragment(@Nonnull AlertDialog.Builder menuBuilder) {
-            this.menuBuilder = menuBuilder;
-        }
+		private AlertDialogFragment(@Nonnull AlertDialog.Builder menuBuilder) {
+			this.menuBuilder = menuBuilder;
+		}
 
-        // for auto instantiation
-        public AlertDialogFragment() {
-            this.menuBuilder = null;
-        }
+		// for auto instantiation
+		public AlertDialogFragment() {
+			this.menuBuilder = null;
+		}
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
 
-            if ( menuBuilder == null ) {
-                dismiss();
-            }
-        }
+			if (menuBuilder == null) {
+				dismiss();
+			}
+		}
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            if (menuBuilder != null) {
-                return menuBuilder.create();
-            } else {
-                return super.onCreateDialog(savedInstanceState);
-            }
-        }
-    }
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			if (menuBuilder != null) {
+				return menuBuilder.create();
+			} else {
+				return super.onCreateDialog(savedInstanceState);
+			}
+		}
+	}
 }

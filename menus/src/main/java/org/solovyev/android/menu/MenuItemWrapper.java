@@ -23,53 +23,54 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
-* User: serso
-* Date: 8/13/12
-* Time: 4:24 PM
-*/
+ * User: serso
+ * Date: 8/13/12
+ * Time: 4:24 PM
+ */
 class MenuItemWrapper<MI> {
 
-    @Nullable
-    private final LabeledMenuItem<MI> labeledMenuItem;
+	@Nullable
+	private final LabeledMenuItem<MI> labeledMenuItem;
 
-    @Nullable
-    private Integer menuItemId;
+	@Nullable
+	private Integer menuItemId;
 
-    @Nullable
-    private final IdentifiableMenuItem<MI> identifiableMenuItem;
+	@Nullable
+	private final IdentifiableMenuItem<MI> identifiableMenuItem;
 
-    MenuItemWrapper(@Nonnull LabeledMenuItem<MI> labeledMenuItem) {
-        this.labeledMenuItem = labeledMenuItem;
-        this.identifiableMenuItem = null;
-    }
+	MenuItemWrapper(@Nonnull LabeledMenuItem<MI> labeledMenuItem) {
+		this.labeledMenuItem = labeledMenuItem;
+		this.identifiableMenuItem = null;
+	}
 
-    MenuItemWrapper(@Nonnull IdentifiableMenuItem<MI> identifiableMenuItem) {
-        this.identifiableMenuItem = identifiableMenuItem;
-        this.labeledMenuItem = null;
-    }
+	MenuItemWrapper(@Nonnull IdentifiableMenuItem<MI> identifiableMenuItem) {
+		this.identifiableMenuItem = identifiableMenuItem;
+		this.labeledMenuItem = null;
+	}
 
-    @Nonnull
-    public AMenuItem<MI> getMenuItem() {
-        return labeledMenuItem != null ? labeledMenuItem : identifiableMenuItem;
-    }
+	@Nonnull
+	public AMenuItem<MI> getMenuItem() {
+		return labeledMenuItem != null ? labeledMenuItem : identifiableMenuItem;
+	}
 
-    @Nullable
-    public Integer getMenuItemId() {
-        return identifiableMenuItem == null ? menuItemId : identifiableMenuItem.getItemId();
-    }
+	@Nullable
+	public Integer getMenuItemId() {
+		return identifiableMenuItem == null ? menuItemId : identifiableMenuItem.getItemId();
+	}
 
-    public void setMenuItemId(@Nullable Integer menuItemId) {
-        assert labeledMenuItem != null;
-        this.menuItemId = menuItemId;
-    }
+	public void setMenuItemId(@Nullable Integer menuItemId) {
+		assert labeledMenuItem != null;
+		this.menuItemId = menuItemId;
+	}
 
-    @Nonnull
-    public String getCaption(@Nonnull Activity activity) {
-        assert labeledMenuItem != null;
-        return labeledMenuItem.getCaption(activity);
-    }
+	@Nonnull
+	public String getCaption(@Nonnull Activity activity) {
+		assert labeledMenuItem != null;
+		return labeledMenuItem.getCaption(activity);
+	}
 }

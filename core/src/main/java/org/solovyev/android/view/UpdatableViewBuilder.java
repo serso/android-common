@@ -24,6 +24,7 @@ package org.solovyev.android.view;
 
 import android.content.Context;
 import android.view.View;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,6 +34,6 @@ import javax.annotation.Nonnull;
  */
 public interface UpdatableViewBuilder<V extends View> extends ViewBuilder<V> {
 
-    @Nonnull
-    V updateView(@Nonnull Context context, @Nonnull View view);
+	@Nonnull
+	V updateView(@Nonnull Context context, @Nonnull View view);
 }

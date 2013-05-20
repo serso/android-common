@@ -34,25 +34,25 @@ import javax.annotation.Nonnull;
  */
 public class RemovePropertiesDbExec implements DbExec {
 
-    @Nonnull
-    private final Object id;
+	@Nonnull
+	private final Object id;
 
-    @Nonnull
-    private final String tableName;
+	@Nonnull
+	private final String tableName;
 
-    @Nonnull
-    private final String idColumnName;
+	@Nonnull
+	private final String idColumnName;
 
-    public RemovePropertiesDbExec(@Nonnull Object id,
-                                  @Nonnull String tableName,
-                                  @Nonnull String idColumnName) {
-        this.id = id;
-        this.tableName = tableName;
-        this.idColumnName = idColumnName;
-    }
+	public RemovePropertiesDbExec(@Nonnull Object id,
+								  @Nonnull String tableName,
+								  @Nonnull String idColumnName) {
+		this.id = id;
+		this.tableName = tableName;
+		this.idColumnName = idColumnName;
+	}
 
-    @Override
-    public long exec(@Nonnull SQLiteDatabase db) {
-        return db.delete(tableName, idColumnName + " = ? ", new String[]{String.valueOf(id)});
-    }
+	@Override
+	public long exec(@Nonnull SQLiteDatabase db) {
+		return db.delete(tableName, idColumnName + " = ? ", new String[]{String.valueOf(id)});
+	}
 }

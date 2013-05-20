@@ -26,20 +26,20 @@ import javax.annotation.Nonnull;
 
 public class IntegerPreferenceTest extends AbstractPreferenceTest<Integer> {
 
-    @Nonnull
-    @Override
-    protected Preference<Integer> createPreference(@Nonnull String key, @Nonnull Integer defaultValue) {
-        return IntegerPreference.of(key, defaultValue);
-    }
+	@Nonnull
+	@Override
+	protected Preference<Integer> createPreference(@Nonnull String key, @Nonnull Integer defaultValue) {
+		return IntegerPreference.of(key, defaultValue);
+	}
 
-    @Nonnull
-    @Override
-    protected Integer createDefaultValue() {
-        return 122;
-    }
+	@Nonnull
+	@Override
+	protected Integer createDefaultValue() {
+		return 122;
+	}
 
-    @Override
-    protected Integer createValue() {
-        return -11;
-    }
+	@Override
+	protected Integer createValue() {
+		return -11;
+	}
 }

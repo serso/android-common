@@ -30,152 +30,153 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class DragButton extends Button {
 
-    @Nullable
-    private Point2d startPoint = null;
+	@Nullable
+	private Point2d startPoint = null;
 
-    @Nullable
-    private org.solovyev.android.view.drag.OnDragListener onDragListener;
+	@Nullable
+	private org.solovyev.android.view.drag.OnDragListener onDragListener;
 
-    @Nonnull
-    private DragButton.OnTouchListenerImpl onTouchListener;
+	@Nonnull
+	private DragButton.OnTouchListenerImpl onTouchListener;
 
-    private boolean showText = true;
+	private boolean showText = true;
 
-    @Nonnull
-    private final Handler uiHandler = new Handler();
+	@Nonnull
+	private final Handler uiHandler = new Handler();
 
-    @Nullable
-    private CharSequence textBackup;
+	@Nullable
+	private CharSequence textBackup;
 
-    public DragButton(@Nonnull Context context, @Nonnull AttributeSet attrs) {
-        super(context, attrs);
-        setOnTouchListener(new OnTouchListenerImpl());
-    }
+	public DragButton(@Nonnull Context context, @Nonnull AttributeSet attrs) {
+		super(context, attrs);
+		setOnTouchListener(new OnTouchListenerImpl());
+	}
 
-    public DragButton(@Nonnull Context context, @Nonnull DragButtonDef dragButtonDef) {
-        super(context);
+	public DragButton(@Nonnull Context context, @Nonnull DragButtonDef dragButtonDef) {
+		super(context);
 
-        setOnTouchListener(new OnTouchListenerImpl());
+		setOnTouchListener(new OnTouchListenerImpl());
 
-        setText(dragButtonDef.getText());
-    }
+		setText(dragButtonDef.getText());
+	}
 
-    public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
-        this.onDragListener = onDragListener;
-    }
+	public void setOnDragListener(@Nullable org.solovyev.android.view.drag.OnDragListener onDragListener) {
+		this.onDragListener = onDragListener;
+	}
 
-    @Nullable
-    public org.solovyev.android.view.drag.OnDragListener getOnDragListener() {
-        return onDragListener;
-    }
+	@Nullable
+	public org.solovyev.android.view.drag.OnDragListener getOnDragListener() {
+		return onDragListener;
+	}
 
-    public void applyDef(@Nonnull DragButtonDef buttonDef) {
-        AndroidViewUtils.applyButtonDef(this, buttonDef);
-    }
+	public void applyDef(@Nonnull DragButtonDef buttonDef) {
+		AndroidViewUtils.applyButtonDef(this, buttonDef);
+	}
 
-    @Override
-    public void setOnTouchListener(OnTouchListener l) {
-        if (l instanceof OnTouchListenerImpl) {
-            this.onTouchListener = (OnTouchListenerImpl) l;
-            super.setOnTouchListener(l);
-        } else {
-            this.onTouchListener.nestedOnTouchListener = l;
-        }
-    }
+	@Override
+	public void setOnTouchListener(OnTouchListener l) {
+		if (l instanceof OnTouchListenerImpl) {
+			this.onTouchListener = (OnTouchListenerImpl) l;
+			super.setOnTouchListener(l);
+		} else {
+			this.onTouchListener.nestedOnTouchListener = l;
+		}
+	}
 
-    /**
-     * OnTouchListener implementation that fires onDrag()
-     *
-     * @author serso
-     */
-    private final class OnTouchListenerImpl implements OnTouchListener {
+	/**
+	 * OnTouchListener implementation that fires onDrag()
+	 *
+	 * @author serso
+	 */
+	private final class OnTouchListenerImpl implements OnTouchListener {
 
-        @Nullable
-        private OnTouchListener nestedOnTouchListener;
+		@Nullable
+		private OnTouchListener nestedOnTouchListener;
 
-        @Override
-        public boolean onTouch(@Nonnull View v, @Nonnull MotionEvent event) {
-            // processing on touch event
+		@Override
+		public boolean onTouch(@Nonnull View v, @Nonnull MotionEvent event) {
+			// processing on touch event
 
-            boolean consumed = false;
+			boolean consumed = false;
 
-            // in order to avoid possible NPEs
-            final Point2d localStartPoint = startPoint;
-            final org.solovyev.android.view.drag.OnDragListener localOnDragListener = onDragListener;
+			// in order to avoid possible NPEs
+			final Point2d localStartPoint = startPoint;
+			final org.solovyev.android.view.drag.OnDragListener localOnDragListener = onDragListener;
 
-            if (localOnDragListener != null) {
-                // only if onDrag() listener specified
+			if (localOnDragListener != null) {
+				// only if onDrag() listener specified
 
-                Log.d(String.valueOf(getId()), "onTouch() for: " + getId() + " . Motion event: " + event);
+				Log.d(String.valueOf(getId()), "onTouch() for: " + getId() + " . Motion event: " + event);
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // start tracking: set start point
-                        startPoint = new Point2d(event.getX(), event.getY());
-                        break;
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						// start tracking: set start point
+						startPoint = new Point2d(event.getX(), event.getY());
+						break;
 
-                    case MotionEvent.ACTION_UP:
-                        // stop tracking
+					case MotionEvent.ACTION_UP:
+						// stop tracking
 
-                        if (localStartPoint != null) {
-                            consumed = localOnDragListener.onDrag(DragButton.this, new DragEvent(localStartPoint, event));
+						if (localStartPoint != null) {
+							consumed = localOnDragListener.onDrag(DragButton.this, new DragEvent(localStartPoint, event));
 
-                            if (consumed) {
-                                if (localOnDragListener.isSuppressOnClickEvent()) {
-                                    // prevent on click action
-                                    v.setPressed(false);
-                                }
-                            }
-                        }
+							if (consumed) {
+								if (localOnDragListener.isSuppressOnClickEvent()) {
+									// prevent on click action
+									v.setPressed(false);
+								}
+							}
+						}
 
-                        startPoint = null;
-                        break;
-                }
-            }
+						startPoint = null;
+						break;
+				}
+			}
 
-            if (nestedOnTouchListener != null && !consumed) {
-                return nestedOnTouchListener.onTouch(v, event);
-            } else {
-                return consumed;
-            }
-        }
-    }
+			if (nestedOnTouchListener != null && !consumed) {
+				return nestedOnTouchListener.onTouch(v, event);
+			} else {
+				return consumed;
+			}
+		}
+	}
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        CharSequence text = getText();
-        if (!Strings.isEmpty(text)) {
-            super.onDraw(canvas);
-        } else {
-            if (!AndroidViewUtils.drawDrawables(canvas, this)) {
-                super.onDraw(canvas);
-            }
-        }
-    }
+	@Override
+	protected void onDraw(Canvas canvas) {
+		CharSequence text = getText();
+		if (!Strings.isEmpty(text)) {
+			super.onDraw(canvas);
+		} else {
+			if (!AndroidViewUtils.drawDrawables(canvas, this)) {
+				super.onDraw(canvas);
+			}
+		}
+	}
 
 
-    public boolean isShowText() {
-        return showText;
-    }
+	public boolean isShowText() {
+		return showText;
+	}
 
-    public void setShowText(boolean showText) {
-        if (this.showText != showText) {
-            if ( showText ) {
-                setText(textBackup);
-                textBackup = null;
-            } else {
-                textBackup = this.getText();
-                setText(null);
-            }
-            this.showText = showText;
-        }
-    }
+	public void setShowText(boolean showText) {
+		if (this.showText != showText) {
+			if (showText) {
+				setText(textBackup);
+				textBackup = null;
+			} else {
+				textBackup = this.getText();
+				setText(null);
+			}
+			this.showText = showText;
+		}
+	}
 }

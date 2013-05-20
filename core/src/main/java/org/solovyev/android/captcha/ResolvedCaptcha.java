@@ -31,24 +31,24 @@ import javax.annotation.Nonnull;
  */
 public class ResolvedCaptcha {
 
-    @Nonnull
-    private final String captchaSid;
+	@Nonnull
+	private final String captchaSid;
 
-    @Nonnull
-    private final String captchaKey;
+	@Nonnull
+	private final String captchaKey;
 
-    public ResolvedCaptcha(@Nonnull String captchaSid, @Nonnull String captchaKey) {
-        this.captchaSid = captchaSid;
-        this.captchaKey = captchaKey;
-    }
+	public ResolvedCaptcha(@Nonnull String captchaSid, @Nonnull String captchaKey) {
+		this.captchaSid = captchaSid;
+		this.captchaKey = captchaKey;
+	}
 
-    @Nonnull
-    public String getCaptchaSid() {
-        return captchaSid;
-    }
+	@Nonnull
+	public String getCaptchaSid() {
+		return captchaSid;
+	}
 
-    @Nonnull
-    public String getCaptchaKey() {
-        return captchaKey;
-    }
+	@Nonnull
+	public String getCaptchaKey() {
+		return captchaKey;
+	}
 }

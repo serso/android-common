@@ -23,7 +23,6 @@
 package org.solovyev.android.view;
 
 import javax.annotation.Nonnull;
-
 import java.math.BigDecimal;
 
 /**
@@ -64,19 +63,19 @@ enum NumberType {
 
 		switch (this) {
 			case LONG:
-				return (T)new Long((long) value);
+				return (T) new Long((long) value);
 			case DOUBLE:
-				return (T)new Double(value);
+				return (T) new Double(value);
 			case INTEGER:
-				return (T)new Integer((int) value);
+				return (T) new Integer((int) value);
 			case FLOAT:
-				return (T)new Float((float) value);
+				return (T) new Float((float) value);
 			case SHORT:
-				return (T)new Short((short) value);
+				return (T) new Short((short) value);
 			case BYTE:
-				return (T)new Byte((byte) value);
+				return (T) new Byte((byte) value);
 			case BIG_DECIMAL:
-				return (T)new BigDecimal(value);
+				return (T) new BigDecimal(value);
 		}
 
 		throw new InstantiationError("can't convert " + this + " to a Number object");

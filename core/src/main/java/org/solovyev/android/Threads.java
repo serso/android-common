@@ -25,6 +25,7 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,49 +36,48 @@ import javax.annotation.Nullable;
  */
 public final class Threads {
 
-    private Threads() {
-        throw new AssertionError();
-    }
+	private Threads() {
+		throw new AssertionError();
+	}
 
-    /**
-     * Method tries to run <var>runnable</var> on UI thread. Run can be failed if:
-     * 1. Specified <var>activity</var> is null
-     * 2. Specified <var>activity</var> is finishing
-     *
-     * @param activity activity bound to runnable
-     * @param runnable runnable to bve executed
-     */
-    public static void tryRunOnUiThread(@Nullable final Activity activity, @Nonnull final Runnable runnable) {
-        if (activity != null && !activity.isFinishing()) {
-            if (isUiThread()) {
-                runnable.run();
-            } else {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // some time may pass and activity might be closing
-                        if (!activity.isFinishing()) {
-                            runnable.run();
-                        }
-                    }
-                });
-            }
-        }
-    }
+	/**
+	 * Method tries to run <var>runnable</var> on UI thread. Run can be failed if:
+	 * 1. Specified <var>activity</var> is null
+	 * 2. Specified <var>activity</var> is finishing
+	 *
+	 * @param activity activity bound to runnable
+	 * @param runnable runnable to bve executed
+	 */
+	public static void tryRunOnUiThread(@Nullable final Activity activity, @Nonnull final Runnable runnable) {
+		if (activity != null && !activity.isFinishing()) {
+			if (isUiThread()) {
+				runnable.run();
+			} else {
+				activity.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						// some time may pass and activity might be closing
+						if (!activity.isFinishing()) {
+							runnable.run();
+						}
+					}
+				});
+			}
+		}
+	}
 
-    /**
-     *
-     * @return true if current thread is UI thread (= main application thread)
-     */
-    public static boolean isUiThread() {
-        return Looper.myLooper() == Looper.getMainLooper();
-    }
+	/**
+	 * @return true if current thread is UI thread (= main application thread)
+	 */
+	public static boolean isUiThread() {
+		return Looper.myLooper() == Looper.getMainLooper();
+	}
 
-    /**
-     * @return new instance of {@link Handler} which runs on UI thread
-     */
-    @Nonnull
-    public static Handler newUiHandler() {
-        return new Handler(Looper.getMainLooper());
-    }
+	/**
+	 * @return new instance of {@link Handler} which runs on UI thread
+	 */
+	@Nonnull
+	public static Handler newUiHandler() {
+		return new Handler(Looper.getMainLooper());
+	}
 }

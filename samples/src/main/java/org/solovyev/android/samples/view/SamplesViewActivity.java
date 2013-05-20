@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-import javax.annotation.Nonnull;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.IntegerRange;
 import org.solovyev.android.view.Picker;
@@ -36,6 +35,8 @@ import org.solovyev.android.view.drag.DragButton;
 import org.solovyev.android.view.drag.DragDirection;
 import org.solovyev.android.view.drag.SimpleOnDragListener;
 import org.solovyev.common.math.Point2d;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: Solovyev_S
@@ -66,12 +67,12 @@ public class SamplesViewActivity extends Activity implements Picker.OnChangedLis
 				return true;
 			}
 		}, SimpleOnDragListener.getDefaultPreferences(this)));
-        dragButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(SamplesViewActivity.this, "Button clicked: " + dragButton.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+		dragButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(SamplesViewActivity.this, "Button clicked: " + dragButton.getText(), Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,143 +21,143 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.solovyev.android</groupId>
-        <artifactId>android-common</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.solovyev.android</groupId>
+		<artifactId>android-common</artifactId>
+		<version>1.1.0-SNAPSHOT</version>
+	</parent>
 
-    <groupId>org.solovyev.android</groupId>
-    <artifactId>android-common-all</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
-    <name>Android Common Library All</name>
+	<groupId>org.solovyev.android</groupId>
+	<artifactId>android-common-all</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+	<name>Android Common Library All</name>
 
-    <packaging>apklib</packaging>
+	<packaging>apklib</packaging>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-ads</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-ads</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-billing</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-billing</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-core</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-core</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-db</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-db</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-http</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-http</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-lists</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-lists</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-menus</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-menus</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-other</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-other</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-preferences</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-preferences</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-sherlock</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-sherlock</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-security</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-security</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-views</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-views</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-keyboards</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-keyboards</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-app</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-app</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-networks</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-networks</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-fragments</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-fragments</artifactId>
+			<type>apklib</type>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev.android</groupId>
-            <artifactId>android-common-tasks</artifactId>
-            <type>apklib</type>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev.android</groupId>
+			<artifactId>android-common-tasks</artifactId>
+			<type>apklib</type>
+		</dependency>
 
 
-    </dependencies>
+	</dependencies>
 
-    <build>
+	<build>
 
-        <extensions>
-            <extension>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-            </extension>
-        </extensions>
+		<extensions>
+			<extension>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+			</extension>
+		</extensions>
 
-    </build>
+	</build>
 
 </project>

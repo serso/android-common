@@ -22,9 +22,10 @@
 
 package org.solovyev.android.view;
 
+import org.solovyev.common.text.Formatter;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -33,73 +34,73 @@ import org.solovyev.common.text.Formatter;
  */
 public abstract class NumberRange<N extends Number & Comparable<N>> implements Picker.Range<N> {
 
-    @Nullable
-    private Formatter<N> formatter;
+	@Nullable
+	private Formatter<N> formatter;
 
-    @Nonnull
-    private final N min;
+	@Nonnull
+	private final N min;
 
-    @Nonnull
-    private final N max;
+	@Nonnull
+	private final N max;
 
-    @Nonnull
-    private final N step;
+	@Nonnull
+	private final N step;
 
-    private final int startPosition;
+	private final int startPosition;
 
-    private int count = -1;
+	private int count = -1;
 
-    public NumberRange(@Nonnull N min,
-                       @Nonnull N max,
-                       @Nonnull N step,
-                       int startPosition,
-                       @Nullable Formatter<N> formatter) {
-        assert min.compareTo(max) <= 0;
+	public NumberRange(@Nonnull N min,
+					   @Nonnull N max,
+					   @Nonnull N step,
+					   int startPosition,
+					   @Nullable Formatter<N> formatter) {
+		assert min.compareTo(max) <= 0;
 
-        this.min = min;
-        this.max = max;
-        this.step = step;
-        this.startPosition = startPosition;
-        this.formatter = formatter;
-    }
+		this.min = min;
+		this.max = max;
+		this.step = step;
+		this.startPosition = startPosition;
+		this.formatter = formatter;
+	}
 
-    @Override
-    public int getStartPosition() {
-        if ( this.startPosition < getCount() ) {
-            return this.startPosition;
-        } else {
-            return getCount() - 1;
-        }
-    }
+	@Override
+	public int getStartPosition() {
+		if (this.startPosition < getCount()) {
+			return this.startPosition;
+		} else {
+			return getCount() - 1;
+		}
+	}
 
-    @Override
-    public int getCount() {
-        if (count == -1) {
-            count = getCount(min, max, step);
-        }
-        return count;
-    }
+	@Override
+	public int getCount() {
+		if (count == -1) {
+			count = getCount(min, max, step);
+		}
+		return count;
+	}
 
-    protected abstract int getCount(@Nonnull N min, @Nonnull N max, @Nonnull N step);
+	protected abstract int getCount(@Nonnull N min, @Nonnull N max, @Nonnull N step);
 
-    @Nonnull
-    @Override
-    public String getStringValueAt(int position) {
-        int count = getCount();
-        if (position < 0 || position >= count) {
-            throw new IllegalArgumentException("Position " + position + " must be >= 0 and < " + count + "!");
-        }
+	@Nonnull
+	@Override
+	public String getStringValueAt(int position) {
+		int count = getCount();
+		if (position < 0 || position >= count) {
+			throw new IllegalArgumentException("Position " + position + " must be >= 0 and < " + count + "!");
+		}
 
-        final N number = getValueAt(position, min, max, step);
-        return formatter == null ? number.toString() : formatter.formatValue(number);
-    }
+		final N number = getValueAt(position, min, max, step);
+		return formatter == null ? number.toString() : formatter.formatValue(number);
+	}
 
-    @Nonnull
-    @Override
-    public N getValueAt(int position) {
-        return getValueAt(position, min, max, step);
-    }
+	@Nonnull
+	@Override
+	public N getValueAt(int position) {
+		return getValueAt(position, min, max, step);
+	}
 
-    @Nonnull
-    protected abstract N getValueAt(int position, @Nonnull N min, @Nonnull N max, @Nonnull N step);
+	@Nonnull
+	protected abstract N getValueAt(int position, @Nonnull N min, @Nonnull N max, @Nonnull N step);
 }

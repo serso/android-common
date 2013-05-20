@@ -47,67 +47,67 @@ import javax.annotation.Nonnull;
  * Time: 2:06 AM
  */
 public enum SampleType implements ListItem {
-    preferences(R.string.preferences, SamplesPreferencesActivity.class),
-    http(R.string.acl_http, SamplesHttpActivity.class),
-    db(R.string.db, SamplesDbActivity.class),
-    view(R.string.view, SamplesViewActivity.class),
-    keyboard(R.string.keyboard, SamplesKeyboardActivity.class),
-    tasks(R.string.tasks, SamplesTaskActivity.class),
-    menu(R.string.menu, SamplesMenuActivity.class);
+	preferences(R.string.preferences, SamplesPreferencesActivity.class),
+	http(R.string.acl_http, SamplesHttpActivity.class),
+	db(R.string.db, SamplesDbActivity.class),
+	view(R.string.view, SamplesViewActivity.class),
+	keyboard(R.string.keyboard, SamplesKeyboardActivity.class),
+	tasks(R.string.tasks, SamplesTaskActivity.class),
+	menu(R.string.menu, SamplesMenuActivity.class);
 
-    private final int captionResId;
+	private final int captionResId;
 
-    @Nonnull
-    private final Class<? extends Activity> sampleActivity;
+	@Nonnull
+	private final Class<? extends Activity> sampleActivity;
 
-    private SampleType(int captionResId, @Nonnull Class<? extends Activity> sampleActivity) {
-        this.captionResId = captionResId;
-        this.sampleActivity = sampleActivity;
-    }
+	private SampleType(int captionResId, @Nonnull Class<? extends Activity> sampleActivity) {
+		this.captionResId = captionResId;
+		this.sampleActivity = sampleActivity;
+	}
 
-    @Override
-    public OnClickAction getOnClickAction() {
-        return new OnClickAction() {
-            @Override
-            public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
-                context.startActivity(new Intent(context.getApplicationContext(), sampleActivity));
-            }
-        };
-    }
+	@Override
+	public OnClickAction getOnClickAction() {
+		return new OnClickAction() {
+			@Override
+			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+				context.startActivity(new Intent(context.getApplicationContext(), sampleActivity));
+			}
+		};
+	}
 
-    @Override
-    public OnClickAction getOnLongClickAction() {
-        // do nothing
-        return null;
-    }
+	@Override
+	public OnClickAction getOnLongClickAction() {
+		// do nothing
+		return null;
+	}
 
-    @Nonnull
-    @Override
-    public View updateView(@Nonnull Context context, @Nonnull View view) {
-        if ( getTag().equals(view.getTag()) ) {
-            fillView((TextView) view);
-            return view;
-        } else {
-            return build(context);
-        }
-    }
+	@Nonnull
+	@Override
+	public View updateView(@Nonnull Context context, @Nonnull View view) {
+		if (getTag().equals(view.getTag())) {
+			fillView((TextView) view);
+			return view;
+		} else {
+			return build(context);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public View build(@Nonnull Context context) {
-        final TextView textView = TextViewBuilder.newInstance(R.layout.acl_sample_list_item, getTag()).build(context);
+	@Nonnull
+	@Override
+	public View build(@Nonnull Context context) {
+		final TextView textView = TextViewBuilder.newInstance(R.layout.acl_sample_list_item, getTag()).build(context);
 
-        fillView(textView);
+		fillView(textView);
 
-        return textView;
-    }
+		return textView;
+	}
 
-    private void fillView(@Nonnull TextView textView) {
-        textView.setText(captionResId);
-    }
+	private void fillView(@Nonnull TextView textView) {
+		textView.setText(captionResId);
+	}
 
-    @Nonnull
-    private String getTag() {
-        return "sample_type";
-    }
+	@Nonnull
+	private String getTag() {
+		return "sample_type";
+	}
 }

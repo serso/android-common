@@ -23,11 +23,12 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -36,33 +37,33 @@ import org.solovyev.common.text.NumberIntervalMapper;
  */
 public final class NumberIntervalPreference<N extends Number & Comparable<N>> extends AbstractPreference<Interval<N>> {
 
-    @Nonnull
-    private final Mapper<Interval<N>> mapper;
+	@Nonnull
+	private final Mapper<Interval<N>> mapper;
 
-    private NumberIntervalPreference(@Nonnull String key, @Nullable Interval<N> defaultValue, @Nonnull Class<N> clazz) {
-        super(key, defaultValue);
-        this.mapper = NumberIntervalMapper.of(clazz);
+	private NumberIntervalPreference(@Nonnull String key, @Nullable Interval<N> defaultValue, @Nonnull Class<N> clazz) {
+		super(key, defaultValue);
+		this.mapper = NumberIntervalMapper.of(clazz);
 
-    }
+	}
 
-    @Nonnull
-    public static <N extends Number & Comparable<N>> NumberIntervalPreference<N> of(@Nonnull String key, @Nullable Interval<N> defaultValue, @Nonnull Class<N> clazz) {
-        return new NumberIntervalPreference<N>(key, defaultValue, clazz);
-    }
+	@Nonnull
+	public static <N extends Number & Comparable<N>> NumberIntervalPreference<N> of(@Nonnull String key, @Nullable Interval<N> defaultValue, @Nonnull Class<N> clazz) {
+		return new NumberIntervalPreference<N>(key, defaultValue, clazz);
+	}
 
-    @Override
-    protected Interval<N> getPersistedValue(@Nonnull SharedPreferences preferences) {
-        final String result = preferences.getString(getKey(), null);
-        if ( result == null ) {
-            return null;
-        } else {
-            return mapper.parseValue(result);
-        }
-    }
+	@Override
+	protected Interval<N> getPersistedValue(@Nonnull SharedPreferences preferences) {
+		final String result = preferences.getString(getKey(), null);
+		if (result == null) {
+			return null;
+		} else {
+			return mapper.parseValue(result);
+		}
+	}
 
-    @Override
-    protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull Interval<N> value) {
-        editor.putString(getKey(), mapper.formatValue(value));
-    }
+	@Override
+	protected void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull Interval<N> value) {
+		editor.putString(getKey(), mapper.formatValue(value));
+	}
 
 }

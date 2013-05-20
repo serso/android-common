@@ -42,240 +42,241 @@ import javax.annotation.Nullable;
  */
 public class DefaultKeyboardInput implements AKeyboardInput {
 
-    public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
+	public static final int MAX_INT = Integer.MAX_VALUE / 2 - 1;
 
-    @Nonnull
-    private final HistoryHelper<KeyboardInputHistoryState> history = SimpleHistoryHelper.newInstance(10);
-    {
-        history.addState(new KeyboardInputHistoryState("", 0));
-    }
+	@Nonnull
+	private final HistoryHelper<KeyboardInputHistoryState> history = SimpleHistoryHelper.newInstance(10);
 
-    @Nonnull
-    private final InputMethodService inputMethodService;
+	{
+		history.addState(new KeyboardInputHistoryState("", 0));
+	}
 
-    @Nonnull
-    private final StringBuilder typedText = new StringBuilder(100);
+	@Nonnull
+	private final InputMethodService inputMethodService;
 
-    public DefaultKeyboardInput(@Nonnull InputMethodService inputMethodService) {
-        this.inputMethodService = inputMethodService;
-    }
+	@Nonnull
+	private final StringBuilder typedText = new StringBuilder(100);
 
-    @Override
-    public void commitTyped() {
-        if (typedText.length() > 0) {
-            commitText(typedText, typedText.length());
-            clearTypedText();
-        }
-    }
+	public DefaultKeyboardInput(@Nonnull InputMethodService inputMethodService) {
+		this.inputMethodService = inputMethodService;
+	}
 
-    @Override
-    public void onText(@Nullable CharSequence text) {
-        final InputConnection ic = getCurrentInputConnection();
-        ic.beginBatchEdit();
-        commitTyped();
-        commitText(ic, text, 0);
-        ic.endBatchEdit();
-    }
+	@Override
+	public void commitTyped() {
+		if (typedText.length() > 0) {
+			commitText(typedText, typedText.length());
+			clearTypedText();
+		}
+	}
 
-    public void commitText(@Nullable CharSequence text, int position) {
-        final InputConnection ic = getCurrentInputConnection();
-        commitText(ic, text, position);
-    }
+	@Override
+	public void onText(@Nullable CharSequence text) {
+		final InputConnection ic = getCurrentInputConnection();
+		ic.beginBatchEdit();
+		commitTyped();
+		commitText(ic, text, 0);
+		ic.endBatchEdit();
+	}
 
-    @Override
-    public void commitText(@Nullable String text, int position) {
-        final InputConnection ic = getCurrentInputConnection();
-        commitText(ic, text, position);
-    }
+	public void commitText(@Nullable CharSequence text, int position) {
+		final InputConnection ic = getCurrentInputConnection();
+		commitText(ic, text, position);
+	}
 
-    private void commitText(@Nonnull InputConnection ic, @Nullable CharSequence text, int position) {
-        ic.commitText(text, position);
-        if (!Strings.isEmpty(text)) {
-            history.addState(new KeyboardInputHistoryState(AndroidKeyboardUtils.getTextFromInputConnection(ic), 0));
-        }
-    }
+	@Override
+	public void commitText(@Nullable String text, int position) {
+		final InputConnection ic = getCurrentInputConnection();
+		commitText(ic, text, position);
+	}
 
-    @Nonnull
-    @Override
-    public EditorInfo getCurrentInputEditorInfo() {
-        return inputMethodService.getCurrentInputEditorInfo();
-    }
+	private void commitText(@Nonnull InputConnection ic, @Nullable CharSequence text, int position) {
+		ic.commitText(text, position);
+		if (!Strings.isEmpty(text)) {
+			history.addState(new KeyboardInputHistoryState(AndroidKeyboardUtils.getTextFromInputConnection(ic), 0));
+		}
+	}
 
-    @Nonnull
-    private InputConnection getCurrentInputConnection() {
-        InputConnection result = this.inputMethodService.getCurrentInputConnection();
-        if (result == null ) {
-            result = NoInputConnection.getInstance();
-        }
-        return result;
-    }
+	@Nonnull
+	@Override
+	public EditorInfo getCurrentInputEditorInfo() {
+		return inputMethodService.getCurrentInputEditorInfo();
+	}
 
-    @Override
-    public CharSequence getTypedText() {
-        return typedText;
-    }
+	@Nonnull
+	private InputConnection getCurrentInputConnection() {
+		InputConnection result = this.inputMethodService.getCurrentInputConnection();
+		if (result == null) {
+			result = NoInputConnection.getInstance();
+		}
+		return result;
+	}
 
-    @Override
-    public void clearTypedText() {
-        this.typedText.setLength(0);
-    }
+	@Override
+	public CharSequence getTypedText() {
+		return typedText;
+	}
 
-    @Override
-    public void undo() {
-        if (this.history.isUndoAvailable()) {
-            final KeyboardInputHistoryState state = this.history.undo(null);
-            restoreFromHistory(state);
-        }
-    }
+	@Override
+	public void clearTypedText() {
+		this.typedText.setLength(0);
+	}
 
-    private void restoreFromHistory(@Nullable KeyboardInputHistoryState state) {
-        if (state != null) {
-            final InputConnection ic = getCurrentInputConnection();
-            ic.deleteSurroundingText(MAX_INT, MAX_INT);
-            ic.commitText(state.getCharSequence(), 1);
-        }
-    }
+	@Override
+	public void undo() {
+		if (this.history.isUndoAvailable()) {
+			final KeyboardInputHistoryState state = this.history.undo(null);
+			restoreFromHistory(state);
+		}
+	}
 
-    @Override
-    public void redo() {
-        if (this.history.isRedoAvailable()) {
-            final KeyboardInputHistoryState state = this.history.redo(null);
-            restoreFromHistory(state);
-        }
-    }
+	private void restoreFromHistory(@Nullable KeyboardInputHistoryState state) {
+		if (state != null) {
+			final InputConnection ic = getCurrentInputConnection();
+			ic.deleteSurroundingText(MAX_INT, MAX_INT);
+			ic.commitText(state.getCharSequence(), 1);
+		}
+	}
 
-    @Override
-    public boolean handleBackspace() {
-        boolean changed = false;
+	@Override
+	public void redo() {
+		if (this.history.isRedoAvailable()) {
+			final KeyboardInputHistoryState state = this.history.redo(null);
+			restoreFromHistory(state);
+		}
+	}
 
-        int length = typedText.length();
+	@Override
+	public boolean handleBackspace() {
+		boolean changed = false;
 
-        final InputConnection ic = getCurrentInputConnection();
-        if (length > 1) {
-            typedText.delete(length - 1, length);
-            ic.setComposingText(typedText, 1);
-            changed = true;
-        } else if (length > 0) {
-            clearTypedText();
-            commitText(ic, "", 0);
-            changed = true;
-        }
+		int length = typedText.length();
 
-        return changed;
-    }
+		final InputConnection ic = getCurrentInputConnection();
+		if (length > 1) {
+			typedText.delete(length - 1, length);
+			ic.setComposingText(typedText, 1);
+			changed = true;
+		} else if (length > 0) {
+			clearTypedText();
+			commitText(ic, "", 0);
+			changed = true;
+		}
 
-    @Override
-    public void sendKeyEvent(@Nonnull KeyEvent keyEvent) {
-        getCurrentInputConnection().sendKeyEvent(keyEvent);
-    }
+		return changed;
+	}
 
-    @Override
-    public int translateKeyDown(int unicodeChar) {
-        if (!Strings.isEmpty(typedText)) {
-            char accent = typedText.charAt(typedText.length() - 1);
-            int composed = KeyEvent.getDeadChar(accent, unicodeChar);
+	@Override
+	public void sendKeyEvent(@Nonnull KeyEvent keyEvent) {
+		getCurrentInputConnection().sendKeyEvent(keyEvent);
+	}
 
-            if (composed != 0) {
-                unicodeChar = composed;
-                typedText.setLength(typedText.length() - 1);
-            }
-        }
+	@Override
+	public int translateKeyDown(int unicodeChar) {
+		if (!Strings.isEmpty(typedText)) {
+			char accent = typedText.charAt(typedText.length() - 1);
+			int composed = KeyEvent.getDeadChar(accent, unicodeChar);
 
-        return unicodeChar;
-    }
+			if (composed != 0) {
+				unicodeChar = composed;
+				typedText.setLength(typedText.length() - 1);
+			}
+		}
 
-    @Override
-    public void commitCompletion(@Nonnull CompletionInfo completionInfo) {
-        getCurrentInputConnection().commitCompletion(completionInfo);
-    }
+		return unicodeChar;
+	}
 
-    @Override
-    public void append(char primaryCode) {
-        typedText.append(primaryCode);
-        getCurrentInputConnection().setComposingText(typedText, 1);
-    }
+	@Override
+	public void commitCompletion(@Nonnull CompletionInfo completionInfo) {
+		getCurrentInputConnection().commitCompletion(completionInfo);
+	}
 
-    @Override
-    public void handleCursorRight() {
-        final InputConnection ic = getCurrentInputConnection();
-        int selectionStart = getSelectionStart(ic);
-        int selectionEnd = getSelectionEnd(ic, selectionStart);
-        if (selectionStart > 0) {
-            selectionStart = selectionStart - 1;
-            ic.setSelection(selectionStart, selectionEnd);
-        }
-    }
+	@Override
+	public void append(char primaryCode) {
+		typedText.append(primaryCode);
+		getCurrentInputConnection().setComposingText(typedText, 1);
+	}
 
-    private int getSelectionEnd(@Nonnull InputConnection ic, int selectionStart) {
-        final CharSequence selectedText = ic.getSelectedText(0);
-        return selectionStart + (selectedText == null ? 0 : selectedText.length());
-    }
+	@Override
+	public void handleCursorRight() {
+		final InputConnection ic = getCurrentInputConnection();
+		int selectionStart = getSelectionStart(ic);
+		int selectionEnd = getSelectionEnd(ic, selectionStart);
+		if (selectionStart > 0) {
+			selectionStart = selectionStart - 1;
+			ic.setSelection(selectionStart, selectionEnd);
+		}
+	}
 
-    private int getSelectionStart(@Nonnull InputConnection ic) {
-        return ic.getTextBeforeCursor(MAX_INT, 0).length();
-    }
+	private int getSelectionEnd(@Nonnull InputConnection ic, int selectionStart) {
+		final CharSequence selectedText = ic.getSelectedText(0);
+		return selectionStart + (selectedText == null ? 0 : selectedText.length());
+	}
 
-    @Override
-    public void handleCursorLeft() {
-        final InputConnection ic = getCurrentInputConnection();
-        int selectionStart = getSelectionStart(ic);
-        int selectionEnd = getSelectionEnd(ic, selectionStart);
-        if (selectionStart < 0) {
-            selectionStart = selectionStart - 1;
-            ic.setSelection(selectionStart, selectionEnd);
-        }
-    }
+	private int getSelectionStart(@Nonnull InputConnection ic) {
+		return ic.getTextBeforeCursor(MAX_INT, 0).length();
+	}
 
-    @Override
-    public void handleClear() {
-        typedText.setLength(0);
-        final InputConnection ic = getCurrentInputConnection();
-        ic.setSelection(0, 0);
-        ic.deleteSurroundingText(MAX_INT, MAX_INT);
+	@Override
+	public void handleCursorLeft() {
+		final InputConnection ic = getCurrentInputConnection();
+		int selectionStart = getSelectionStart(ic);
+		int selectionEnd = getSelectionEnd(ic, selectionStart);
+		if (selectionStart < 0) {
+			selectionStart = selectionStart - 1;
+			ic.setSelection(selectionStart, selectionEnd);
+		}
+	}
 
-    }
+	@Override
+	public void handleClear() {
+		typedText.setLength(0);
+		final InputConnection ic = getCurrentInputConnection();
+		ic.setSelection(0, 0);
+		ic.deleteSurroundingText(MAX_INT, MAX_INT);
 
-    @Override
-    public void handlePaste() {
-        final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
-        final CharSequence text = clipboardManager.getText();
-        if (!Strings.isEmpty(text)) {
-            commitText(text, 1);
-        }
-    }
+	}
 
-    @Override
-    public void handleCopy() {
-        final InputConnection ic = getCurrentInputConnection();
-        AndroidKeyboardUtils.copyTextFromInputConnection(ic, inputMethodService);
-    }
+	@Override
+	public void handlePaste() {
+		final ClipboardManager clipboardManager = (ClipboardManager) inputMethodService.getSystemService(Context.CLIPBOARD_SERVICE);
+		final CharSequence text = clipboardManager.getText();
+		if (!Strings.isEmpty(text)) {
+			commitText(text, 1);
+		}
+	}
 
-    @Override
-    public void clearMetaKeyStates(int flags) {
-        getCurrentInputConnection().clearMetaKeyStates(flags);
-    }
+	@Override
+	public void handleCopy() {
+		final InputConnection ic = getCurrentInputConnection();
+		AndroidKeyboardUtils.copyTextFromInputConnection(ic, inputMethodService);
+	}
 
-    @Override
-    public void keyDownUp(int keyEventCode) {
-        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
-        sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
-    }
+	@Override
+	public void clearMetaKeyStates(int flags) {
+		getCurrentInputConnection().clearMetaKeyStates(flags);
+	}
 
-    @Override
-    public void finishComposingText() {
-        getCurrentInputConnection().finishComposingText();
-    }
+	@Override
+	public void keyDownUp(int keyEventCode) {
+		sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+		sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+	}
 
-    @Override
-    public boolean isInputConnected() {
-        return this.inputMethodService.getCurrentInputConnection() != null;
-    }
+	@Override
+	public void finishComposingText() {
+		getCurrentInputConnection().finishComposingText();
+	}
 
-    @Override
-    public int getCursorCapsMode(int inputType) {
-        return getCurrentInputConnection().getCursorCapsMode(inputType);
-    }
-    
+	@Override
+	public boolean isInputConnected() {
+		return this.inputMethodService.getCurrentInputConnection() != null;
+	}
+
+	@Override
+	public int getCursorCapsMode(int inputType) {
+		return getCurrentInputConnection().getCursorCapsMode(inputType);
+	}
+
     /*
     **********************************************************************
     *
@@ -283,123 +284,123 @@ public class DefaultKeyboardInput implements AKeyboardInput {
     *
     **********************************************************************
     */
-    
-    private static final class NoInputConnection implements InputConnection {
 
-        @Nonnull
-        private static final InputConnection instance = new NoInputConnection();
+	private static final class NoInputConnection implements InputConnection {
 
-        @Nonnull
-        public static InputConnection getInstance() {
-            return instance;
-        }
+		@Nonnull
+		private static final InputConnection instance = new NoInputConnection();
 
-        private NoInputConnection() {
-        }
+		@Nonnull
+		public static InputConnection getInstance() {
+			return instance;
+		}
 
-        @Override
-        public CharSequence getTextBeforeCursor(int n, int flags) {
-            return "";
-        }
+		private NoInputConnection() {
+		}
 
-        @Override
-        public CharSequence getTextAfterCursor(int n, int flags) {
-            return "";
-        }
+		@Override
+		public CharSequence getTextBeforeCursor(int n, int flags) {
+			return "";
+		}
 
-        @Override
-        public CharSequence getSelectedText(int flags) {
-            return "";
-        }
+		@Override
+		public CharSequence getTextAfterCursor(int n, int flags) {
+			return "";
+		}
 
-        @Override
-        public int getCursorCapsMode(int reqModes) {
-            return 0;
-        }
+		@Override
+		public CharSequence getSelectedText(int flags) {
+			return "";
+		}
 
-        @Override
-        public ExtractedText getExtractedText(ExtractedTextRequest request, int flags) {
-            return new ExtractedText();
-        }
+		@Override
+		public int getCursorCapsMode(int reqModes) {
+			return 0;
+		}
 
-        @Override
-        public boolean deleteSurroundingText(int beforeLength, int afterLength) {
-            return false;
-        }
+		@Override
+		public ExtractedText getExtractedText(ExtractedTextRequest request, int flags) {
+			return new ExtractedText();
+		}
 
-        @Override
-        public boolean setComposingText(CharSequence text, int newCursorPosition) {
-            return false;
-        }
+		@Override
+		public boolean deleteSurroundingText(int beforeLength, int afterLength) {
+			return false;
+		}
 
-        @Override
-        public boolean setComposingRegion(int start, int end) {
-            return false;
-        }
+		@Override
+		public boolean setComposingText(CharSequence text, int newCursorPosition) {
+			return false;
+		}
 
-        @Override
-        public boolean finishComposingText() {
-            return false;
-        }
+		@Override
+		public boolean setComposingRegion(int start, int end) {
+			return false;
+		}
 
-        @Override
-        public boolean commitText(CharSequence text, int newCursorPosition) {
-            return false;
-        }
+		@Override
+		public boolean finishComposingText() {
+			return false;
+		}
 
-        @Override
-        public boolean commitCompletion(CompletionInfo text) {
-            return false;
-        }
+		@Override
+		public boolean commitText(CharSequence text, int newCursorPosition) {
+			return false;
+		}
 
-        @Override
-        public boolean commitCorrection(CorrectionInfo correctionInfo) {
-            return false;
-        }
+		@Override
+		public boolean commitCompletion(CompletionInfo text) {
+			return false;
+		}
 
-        @Override
-        public boolean setSelection(int start, int end) {
-            return false;
-        }
+		@Override
+		public boolean commitCorrection(CorrectionInfo correctionInfo) {
+			return false;
+		}
 
-        @Override
-        public boolean performEditorAction(int editorAction) {
-            return false;
-        }
+		@Override
+		public boolean setSelection(int start, int end) {
+			return false;
+		}
 
-        @Override
-        public boolean performContextMenuAction(int id) {
-            return false;
-        }
+		@Override
+		public boolean performEditorAction(int editorAction) {
+			return false;
+		}
 
-        @Override
-        public boolean beginBatchEdit() {
-            return false;
-        }
+		@Override
+		public boolean performContextMenuAction(int id) {
+			return false;
+		}
 
-        @Override
-        public boolean endBatchEdit() {
-            return false;
-        }
+		@Override
+		public boolean beginBatchEdit() {
+			return false;
+		}
 
-        @Override
-        public boolean sendKeyEvent(KeyEvent event) {
-            return false;
-        }
+		@Override
+		public boolean endBatchEdit() {
+			return false;
+		}
 
-        @Override
-        public boolean clearMetaKeyStates(int states) {
-            return false;
-        }
+		@Override
+		public boolean sendKeyEvent(KeyEvent event) {
+			return false;
+		}
 
-        @Override
-        public boolean reportFullscreenMode(boolean enabled) {
-            return false;
-        }
+		@Override
+		public boolean clearMetaKeyStates(int states) {
+			return false;
+		}
 
-        @Override
-        public boolean performPrivateCommand(String action, Bundle data) {
-            return false;
-        }
-    }
+		@Override
+		public boolean reportFullscreenMode(boolean enabled) {
+			return false;
+		}
+
+		@Override
+		public boolean performPrivateCommand(String action, Bundle data) {
+			return false;
+		}
+	}
 }

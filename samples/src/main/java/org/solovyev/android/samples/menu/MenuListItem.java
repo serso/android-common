@@ -45,90 +45,90 @@ import java.util.Arrays;
  */
 public class MenuListItem implements ListItem {
 
-    private final int captionResId;
+	private final int captionResId;
 
-    private final int sortOrder;
+	private final int sortOrder;
 
-    public MenuListItem(int captionResId, int sortOrder) {
-        this.captionResId = captionResId;
-        this.sortOrder = sortOrder;
-    }
+	public MenuListItem(int captionResId, int sortOrder) {
+		this.captionResId = captionResId;
+		this.sortOrder = sortOrder;
+	}
 
-    @Override
-    public OnClickAction getOnClickAction() {
-        return new OnClickAction() {
-            @Override
-            public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
-                Toast.makeText(context, context.getString(R.string.long_press_to_open_menu), Toast.LENGTH_SHORT).show();
-            }
-        };
-    }
+	@Override
+	public OnClickAction getOnClickAction() {
+		return new OnClickAction() {
+			@Override
+			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+				Toast.makeText(context, context.getString(R.string.long_press_to_open_menu), Toast.LENGTH_SHORT).show();
+			}
+		};
+	}
 
-    @Override
-    public OnClickAction getOnLongClickAction() {
-        return new SimpleMenuOnClick<MenuListItem>(Arrays.asList(MenuItemMenu.values()), this, String.valueOf(captionResId));
-    }
+	@Override
+	public OnClickAction getOnLongClickAction() {
+		return new SimpleMenuOnClick<MenuListItem>(Arrays.asList(MenuItemMenu.values()), this, String.valueOf(captionResId));
+	}
 
-    @Nonnull
-    @Override
-    public View updateView(@Nonnull Context context, @Nonnull View view) {
-        if (this.getTag().equals(view.getTag())) {
-            fillView(context, (TextView) view);
-            return view;
-        } else {
-            return build(context);
-        }
-    }
+	@Nonnull
+	@Override
+	public View updateView(@Nonnull Context context, @Nonnull View view) {
+		if (this.getTag().equals(view.getTag())) {
+			fillView(context, (TextView) view);
+			return view;
+		} else {
+			return build(context);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public View build(@Nonnull Context context) {
-        final TextView view = TextViewBuilder.newInstance(R.layout.acl_menu_list_item, getTag()).build(context);
+	@Nonnull
+	@Override
+	public View build(@Nonnull Context context) {
+		final TextView view = TextViewBuilder.newInstance(R.layout.acl_menu_list_item, getTag()).build(context);
 
-        fillView(context, view);
+		fillView(context, view);
 
-        return view;
-    }
+		return view;
+	}
 
-    private void fillView(@Nonnull Context context, @Nonnull TextView view) {
-        view.setText(context.getString(captionResId));
-    }
+	private void fillView(@Nonnull Context context, @Nonnull TextView view) {
+		view.setText(context.getString(captionResId));
+	}
 
-    @Nonnull
-    private String getTag() {
-        return "menu_list_item";
-    }
+	@Nonnull
+	private String getTag() {
+		return "menu_list_item";
+	}
 
-    public int getSortOrder() {
-        return sortOrder;
-    }
+	public int getSortOrder() {
+		return sortOrder;
+	}
 
-    private static enum MenuItemMenu implements LabeledMenuItem<ListItemOnClickData<MenuListItem>> {
+	private static enum MenuItemMenu implements LabeledMenuItem<ListItemOnClickData<MenuListItem>> {
 
-        show_number(R.string.show_menu_number) {
-            @Override
-            public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
-                Toast.makeText(context, context.getString(R.string.show_menu_number_text, String.valueOf(data.getDataObject().getSortOrder())), Toast.LENGTH_SHORT).show();
-            }
-        },
+		show_number(R.string.show_menu_number) {
+			@Override
+			public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
+				Toast.makeText(context, context.getString(R.string.show_menu_number_text, String.valueOf(data.getDataObject().getSortOrder())), Toast.LENGTH_SHORT).show();
+			}
+		},
 
-        show_name(R.string.show_menu_name) {
-            @Override
-            public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
-                Toast.makeText(context, context.getString(R.string.show_menu_name_text, context.getString(data.getDataObject().captionResId)), Toast.LENGTH_SHORT).show();
-            }
-        };
+		show_name(R.string.show_menu_name) {
+			@Override
+			public void onClick(@Nonnull ListItemOnClickData<MenuListItem> data, @Nonnull Context context) {
+				Toast.makeText(context, context.getString(R.string.show_menu_name_text, context.getString(data.getDataObject().captionResId)), Toast.LENGTH_SHORT).show();
+			}
+		};
 
-        private final int captionResId;
+		private final int captionResId;
 
-        private MenuItemMenu(int captionResId) {
-            this.captionResId = captionResId;
-        }
+		private MenuItemMenu(int captionResId) {
+			this.captionResId = captionResId;
+		}
 
-        @Nonnull
-        @Override
-        public String getCaption(@Nonnull Context context) {
-            return context.getString(captionResId);
-        }
-    }
+		@Nonnull
+		@Override
+		public String getCaption(@Nonnull Context context) {
+			return context.getString(captionResId);
+		}
+	}
 }

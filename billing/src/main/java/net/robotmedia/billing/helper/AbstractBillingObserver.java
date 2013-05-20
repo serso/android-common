@@ -30,13 +30,13 @@ import android.preference.PreferenceManager;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.IBillingObserver;
 import net.robotmedia.billing.ResponseCode;
+
 import javax.annotation.Nonnull;
 
 /**
  * Abstract subclass of IBillingObserver that provides default implementations
  * for {@link IBillingObserver#onPurchaseIntentOK(String, android.app.PendingIntent)} and
  * {@link IBillingObserver#onTransactionsRestored()}.
- * 
  */
 public abstract class AbstractBillingObserver implements IBillingObserver {
 
@@ -60,11 +60,9 @@ public abstract class AbstractBillingObserver implements IBillingObserver {
 	/**
 	 * Called after requesting the purchase of the specified item. The default
 	 * implementation simply starts the pending intent.
-	 * 
-	 * @param productId
-	 *            id of the item whose purchase was requested.
-	 * @param purchaseIntent
-	 *            a purchase pending intent for the specified item.
+	 *
+	 * @param productId      id of the item whose purchase was requested.
+	 * @param purchaseIntent a purchase pending intent for the specified item.
 	 */
 	@Override
 	public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
@@ -78,7 +76,7 @@ public abstract class AbstractBillingObserver implements IBillingObserver {
 		editor.putBoolean(KEY_TRANSACTIONS_RESTORED, true);
 		editor.commit();
 	}
-	
+
 	@Override
 	public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
 		// ignore errors when restoring transactions

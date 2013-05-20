@@ -31,5 +31,5 @@ import javax.annotation.Nonnull;
  */
 public interface DataActivityViewBuilder<D> extends ActivityViewBuilder {
 
-    void setData(@Nonnull D data);
+	void setData(@Nonnull D data);
 }

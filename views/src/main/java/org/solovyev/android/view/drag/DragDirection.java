@@ -24,7 +24,7 @@ package org.solovyev.android.view.drag;
 
 public enum DragDirection {
 
-	up, 
+	up,
 	down,
 	left,
 	right;

@@ -49,166 +49,166 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractAdFreePreferenceActivity extends PreferenceActivity implements IBillingObserver {
 
-    @Nonnull
-    private final IBillingObserver defaultBillingObserver = new DefaultBillingObserver(this, this);
+	@Nonnull
+	private final IBillingObserver defaultBillingObserver = new DefaultBillingObserver(this, this);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(getPreferencesResourceId());
+		addPreferencesFromResource(getPreferencesResourceId());
 
-        final Preference adFreePreference = findPreference(getAdFreePreferenceId());
-        adFreePreference.setEnabled(false);
+		final Preference adFreePreference = findPreference(getAdFreePreferenceId());
+		adFreePreference.setEnabled(false);
 
-        // observer must be set before net.robotmedia.billing.BillingController.checkBillingSupported()
-        BillingController.registerObserver(defaultBillingObserver);
+		// observer must be set before net.robotmedia.billing.BillingController.checkBillingSupported()
+		BillingController.registerObserver(defaultBillingObserver);
 
-        BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this);
+		BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this);
 
-        final String clearBillingDataPreferenceId = getClearBillingDataPreferenceId();
-        if (clearBillingDataPreferenceId != null) {
-            final Preference clearBillingInfoPreference = findPreference(clearBillingDataPreferenceId);
-            if (clearBillingInfoPreference != null) {
-                clearBillingInfoPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
+		final String clearBillingDataPreferenceId = getClearBillingDataPreferenceId();
+		if (clearBillingDataPreferenceId != null) {
+			final Preference clearBillingInfoPreference = findPreference(clearBillingDataPreferenceId);
+			if (clearBillingInfoPreference != null) {
+				clearBillingInfoPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+					@Override
+					public boolean onPreferenceClick(Preference preference) {
 
-                        Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_clearing, Toast.LENGTH_SHORT).show();
+						Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_clearing, Toast.LENGTH_SHORT).show();
 
-                        removeBillingInformation(AbstractAdFreePreferenceActivity.this, PreferenceManager.getDefaultSharedPreferences(AbstractAdFreePreferenceActivity.this));
+						removeBillingInformation(AbstractAdFreePreferenceActivity.this, PreferenceManager.getDefaultSharedPreferences(AbstractAdFreePreferenceActivity.this));
 
-                        return true;
-                    }
-                });
-            }
-        }
-    }
+						return true;
+					}
+				});
+			}
+		}
+	}
 
-    protected abstract int getPreferencesResourceId();
+	protected abstract int getPreferencesResourceId();
 
-    @Nullable
-    protected abstract String getClearBillingDataPreferenceId();
+	@Nullable
+	protected abstract String getClearBillingDataPreferenceId();
 
-    @Nonnull
-    protected abstract String getAdFreeProductId();
+	@Nonnull
+	protected abstract String getAdFreeProductId();
 
-    @Nonnull
-    protected abstract String getAdFreePreferenceId();
+	@Nonnull
+	protected abstract String getAdFreePreferenceId();
 
-    public static void removeBillingInformation(@Nonnull Context context, @Nonnull SharedPreferences preferences) {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(AbstractBillingObserver.KEY_TRANSACTIONS_RESTORED, false);
-        editor.commit();
+	public static void removeBillingInformation(@Nonnull Context context, @Nonnull SharedPreferences preferences) {
+		final SharedPreferences.Editor editor = preferences.edit();
+		editor.putBoolean(AbstractBillingObserver.KEY_TRANSACTIONS_RESTORED, false);
+		editor.commit();
 
-        BillingController.dropBillingData(context);
-    }
+		BillingController.dropBillingData(context);
+	}
 
-    private void setAdFreeAction() {
-        final Preference adFreePreference = findPreference(getAdFreePreferenceId());
+	private void setAdFreeAction() {
+		final Preference adFreePreference = findPreference(getAdFreePreferenceId());
 
-        if (!AdsController.getInstance().isAdFree(this)) {
-            Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Ad free is not purchased - enable preference!");
+		if (!AdsController.getInstance().isAdFree(this)) {
+			Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Ad free is not purchased - enable preference!");
 
-            adFreePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
+			adFreePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+				public boolean onPreferenceClick(Preference preference) {
 
-                    // check billing availability
-                    if (BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this) != BillingController.BillingStatus.SUPPORTED) {
-                        Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is not supported - warn user!");
-                        // warn about not supported billing
-                        Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_error, Toast.LENGTH_LONG).show();
-                    } else {
-                        Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is supported - continue!");
-                        if (!AdsController.getInstance().isAdFree(AbstractAdFreePreferenceActivity.this)) {
-                            Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Item not purchased - try to purchase!");
+					// check billing availability
+					if (BillingController.checkBillingSupported(AbstractAdFreePreferenceActivity.this) != BillingController.BillingStatus.SUPPORTED) {
+						Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is not supported - warn user!");
+						// warn about not supported billing
+						Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_error, Toast.LENGTH_LONG).show();
+					} else {
+						Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is supported - continue!");
+						if (!AdsController.getInstance().isAdFree(AbstractAdFreePreferenceActivity.this)) {
+							Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Item not purchased - try to purchase!");
 
-                            // not purchased => purchasing
-                            Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_purchasing, Toast.LENGTH_SHORT).show();
+							// not purchased => purchasing
+							Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_purchasing, Toast.LENGTH_SHORT).show();
 
-                            // show purchase window for user
-                            BillingController.requestPurchase(AbstractAdFreePreferenceActivity.this, getAdFreeProductId(), true);
-                        } else {
-                            // disable preference
-                            adFreePreference.setEnabled(false);
-                            // and show message to user
-                            Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_already_purchased, Toast.LENGTH_SHORT).show();
-                        }
-                    }
+							// show purchase window for user
+							BillingController.requestPurchase(AbstractAdFreePreferenceActivity.this, getAdFreeProductId(), true);
+						} else {
+							// disable preference
+							adFreePreference.setEnabled(false);
+							// and show message to user
+							Toast.makeText(AbstractAdFreePreferenceActivity.this, R.string.c_billing_already_purchased, Toast.LENGTH_SHORT).show();
+						}
+					}
 
-                    return true;
-                }
-            });
-            adFreePreference.setEnabled(true);
-        } else {
-            Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Ad free is not purchased - disable preference!");
-            adFreePreference.setEnabled(false);
-        }
-    }
+					return true;
+				}
+			});
+			adFreePreference.setEnabled(true);
+		} else {
+			Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Ad free is not purchased - disable preference!");
+			adFreePreference.setEnabled(false);
+		}
+	}
 
-    @Override
-    protected void onDestroy() {
-        BillingController.unregisterObserver(defaultBillingObserver);
-        super.onDestroy();
-    }
+	@Override
+	protected void onDestroy() {
+		BillingController.unregisterObserver(defaultBillingObserver);
+		super.onDestroy();
+	}
 
-    @Override
-    public void onCheckBillingSupportedResponse(boolean supported) {
-        if (supported) {
-            setAdFreeAction();
-        } else {
-            final Preference adFreePreference = findPreference(getAdFreePreferenceId());
-            adFreePreference.setEnabled(false);
-            Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is not supported!");
-        }
-    }
+	@Override
+	public void onCheckBillingSupportedResponse(boolean supported) {
+		if (supported) {
+			setAdFreeAction();
+		} else {
+			final Preference adFreePreference = findPreference(getAdFreePreferenceId());
+			adFreePreference.setEnabled(false);
+			Log.d(AbstractAdFreePreferenceActivity.class.getName(), "Billing is not supported!");
+		}
+	}
 
-    @Override
-    public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
-        // do nothing
-    }
+	@Override
+	public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
+		// do nothing
+	}
 
-    @Override
-    public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
-        // do nothing
-    }
+	@Override
+	public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
+		// do nothing
+	}
 
-    @Override
-    public void onPurchaseStateChanged(@Nonnull String itemId, @Nonnull Transaction.PurchaseState state) {
-        if (getAdFreeProductId().equals(itemId)) {
-            final Preference adFreePreference = findPreference(getAdFreePreferenceId());
-            if (adFreePreference != null) {
-                switch (state) {
-                    case PURCHASED:
-                        adFreePreference.setEnabled(false);
-                        // restart activity to disable ads
-                        Activities.restartActivity(this);
-                        break;
-                    case CANCELLED:
-                        adFreePreference.setEnabled(true);
-                        break;
-                    case REFUNDED:
-                        adFreePreference.setEnabled(true);
-                        break;
-                }
-            } else {
-            }
-        }
-    }
+	@Override
+	public void onPurchaseStateChanged(@Nonnull String itemId, @Nonnull Transaction.PurchaseState state) {
+		if (getAdFreeProductId().equals(itemId)) {
+			final Preference adFreePreference = findPreference(getAdFreePreferenceId());
+			if (adFreePreference != null) {
+				switch (state) {
+					case PURCHASED:
+						adFreePreference.setEnabled(false);
+						// restart activity to disable ads
+						Activities.restartActivity(this);
+						break;
+					case CANCELLED:
+						adFreePreference.setEnabled(true);
+						break;
+					case REFUNDED:
+						adFreePreference.setEnabled(true);
+						break;
+				}
+			} else {
+			}
+		}
+	}
 
-    @Override
-    public void onRequestPurchaseResponse(@Nonnull String itemId, @Nonnull ResponseCode response) {
-        // do nothing
-    }
+	@Override
+	public void onRequestPurchaseResponse(@Nonnull String itemId, @Nonnull ResponseCode response) {
+		// do nothing
+	}
 
-    @Override
-    public void onTransactionsRestored() {
-        // do nothing
-    }
+	@Override
+	public void onTransactionsRestored() {
+		// do nothing
+	}
 
-    @Override
-    public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
-        // do nothing
-    }
+	@Override
+	public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
+		// do nothing
+	}
 }
 

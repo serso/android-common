@@ -25,10 +25,11 @@ package org.solovyev.android.samples.db;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListItem;
 import org.solovyev.android.samples.R;
 import org.solovyev.android.view.TextViewBuilder;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,67 +38,67 @@ import org.solovyev.android.view.TextViewBuilder;
  */
 public class DbItemListItem implements ListItem {
 
-    @Nonnull
-    private final DbItem dbItem;
+	@Nonnull
+	private final DbItem dbItem;
 
-    public DbItemListItem(@Nonnull DbItem dbItem) {
-        this.dbItem = dbItem;
-    }
+	public DbItemListItem(@Nonnull DbItem dbItem) {
+		this.dbItem = dbItem;
+	}
 
-    @Override
-    public OnClickAction getOnClickAction() {
-        return null;
-    }
+	@Override
+	public OnClickAction getOnClickAction() {
+		return null;
+	}
 
-    @Override
-    public OnClickAction getOnLongClickAction() {
-        return null;
-    }
+	@Override
+	public OnClickAction getOnLongClickAction() {
+		return null;
+	}
 
-    @Nonnull
-    @Override
-    public View updateView(@Nonnull Context context, @Nonnull View view) {
-        if (this.getTag().equals(view.getTag())) {
-            fillView(context, (TextView) view);
-            return view;
-        } else {
-            return build(context);
-        }
-    }
+	@Nonnull
+	@Override
+	public View updateView(@Nonnull Context context, @Nonnull View view) {
+		if (this.getTag().equals(view.getTag())) {
+			fillView(context, (TextView) view);
+			return view;
+		} else {
+			return build(context);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public View build(@Nonnull Context context) {
-        final TextView view = TextViewBuilder.newInstance(R.layout.acl_db_list_item, getTag()).build(context);
+	@Nonnull
+	@Override
+	public View build(@Nonnull Context context) {
+		final TextView view = TextViewBuilder.newInstance(R.layout.acl_db_list_item, getTag()).build(context);
 
-        fillView(context, view);
+		fillView(context, view);
 
-        return view;
-    }
+		return view;
+	}
 
-    @Nonnull
-    private String getTag() {
-        return "db_list_item";
-    }
+	@Nonnull
+	private String getTag() {
+		return "db_list_item";
+	}
 
-    private void fillView(@Nonnull Context context, @Nonnull TextView view) {
-        view.setText(dbItem.getName());
-    }
+	private void fillView(@Nonnull Context context, @Nonnull TextView view) {
+		view.setText(dbItem.getName());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DbItemListItem)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof DbItemListItem)) return false;
 
-        DbItemListItem that = (DbItemListItem) o;
+		DbItemListItem that = (DbItemListItem) o;
 
-        if (!dbItem.equals(that.dbItem)) return false;
+		if (!dbItem.equals(that.dbItem)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return dbItem.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return dbItem.hashCode();
+	}
 }

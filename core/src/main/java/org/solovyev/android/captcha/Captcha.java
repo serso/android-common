@@ -24,6 +24,7 @@ package org.solovyev.android.captcha;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,40 +34,40 @@ import javax.annotation.Nonnull;
  */
 public class Captcha implements Parcelable {
 
-    @Nonnull
-    private final String captchaSid;
+	@Nonnull
+	private final String captchaSid;
 
-    @Nonnull
-    private final String captchaImage;
+	@Nonnull
+	private final String captchaImage;
 
-    public Captcha(@Nonnull String captchaSid, @Nonnull String captchaImage) {
-        this.captchaSid = captchaSid;
-        this.captchaImage = captchaImage;
-    }
+	public Captcha(@Nonnull String captchaSid, @Nonnull String captchaImage) {
+		this.captchaSid = captchaSid;
+		this.captchaImage = captchaImage;
+	}
 
-    @Nonnull
-    public String getCaptchaSid() {
-        return captchaSid;
-    }
+	@Nonnull
+	public String getCaptchaSid() {
+		return captchaSid;
+	}
 
-    @Nonnull
-    public String getCaptchaImage() {
-        return captchaImage;
-    }
+	@Nonnull
+	public String getCaptchaImage() {
+		return captchaImage;
+	}
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+	@Override
+	public int describeContents() {
+		return 0;
+	}
 
-    @Override
-    public void writeToParcel(Parcel out, int i) {
-        out.writeString(captchaSid);
-        out.writeString(captchaImage);
-    }
+	@Override
+	public void writeToParcel(Parcel out, int i) {
+		out.writeString(captchaSid);
+		out.writeString(captchaImage);
+	}
 
-    @Nonnull
-    public ResolvedCaptcha resolve(@Nonnull String captchaKey) {
-        return new ResolvedCaptcha(captchaSid, captchaKey);
-    }
+	@Nonnull
+	public ResolvedCaptcha resolve(@Nonnull String captchaKey) {
+		return new ResolvedCaptcha(captchaSid, captchaKey);
+	}
 }

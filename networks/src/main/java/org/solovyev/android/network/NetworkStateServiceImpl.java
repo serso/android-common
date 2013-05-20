@@ -37,80 +37,80 @@ import javax.annotation.Nullable;
 
 public final class NetworkStateServiceImpl implements NetworkStateService {
 
-    private static final boolean DEBUG = false;
+	private static final boolean DEBUG = false;
 
-    @Nullable
-    private Context context;
+	@Nullable
+	private Context context;
 
-    @Nonnull
-    private final JListeners<NetworkStateListener> listeners = Listeners.newHardRefListeners();
+	@Nonnull
+	private final JListeners<NetworkStateListener> listeners = Listeners.newHardRefListeners();
 
-    @Nonnull
-    private NetworkData networkData;
+	@Nonnull
+	private NetworkData networkData;
 
-    @Nonnull
-    private BroadcastReceiver receiver;
+	@Nonnull
+	private BroadcastReceiver receiver;
 
-    private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(@Nonnull Context context, @Nonnull Intent intent) {
-            final String action = intent.getAction();
+	private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(@Nonnull Context context, @Nonnull Intent intent) {
+			final String action = intent.getAction();
 
-            if (!action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                return;
-            }
+			if (!action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+				return;
+			}
 
-            final NetworkData localNetworkData = NetworkDataImpl.fromIntent(intent);
+			final NetworkData localNetworkData = NetworkDataImpl.fromIntent(intent);
 
-            networkData = localNetworkData;
+			networkData = localNetworkData;
 
-            if (DEBUG) {
-                Log.d(TAG, "onReceive(): " + localNetworkData);
-            }
+			if (DEBUG) {
+				Log.d(TAG, "onReceive(): " + localNetworkData);
+			}
 
-            // notify listeners
-            for (NetworkStateListener localListener : listeners.getListeners()) {
-                localListener.onNetworkEvent(localNetworkData);
-            }
-        }
-    }
+			// notify listeners
+			for (NetworkStateListener localListener : listeners.getListeners()) {
+				localListener.onNetworkEvent(localNetworkData);
+			}
+		}
+	}
 
-    public NetworkStateServiceImpl() {
-        networkData = NetworkDataImpl.newUnknownNetworkData();
-        receiver = new ConnectivityBroadcastReceiver();
-    }
+	public NetworkStateServiceImpl() {
+		networkData = NetworkDataImpl.newUnknownNetworkData();
+		receiver = new ConnectivityBroadcastReceiver();
+	}
 
-    @Override
-    public synchronized void startListening(@Nonnull Context context) {
-        this.context = context.getApplicationContext();
+	@Override
+	public synchronized void startListening(@Nonnull Context context) {
+		this.context = context.getApplicationContext();
 
-        final IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(receiver, filter);
-    }
+		final IntentFilter filter = new IntentFilter();
+		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		context.registerReceiver(receiver, filter);
+	}
 
-    @Override
-    public boolean addListener(@Nonnull NetworkStateListener listener) {
-        return listeners.addListener(listener);
-    }
+	@Override
+	public boolean addListener(@Nonnull NetworkStateListener listener) {
+		return listeners.addListener(listener);
+	}
 
-    @Override
-    public boolean removeListener(@Nonnull NetworkStateListener listener) {
-        return listeners.removeListener(listener);
-    }
+	@Override
+	public boolean removeListener(@Nonnull NetworkStateListener listener) {
+		return listeners.removeListener(listener);
+	}
 
-    @Override
-    public synchronized void stopListening() {
-        if (context != null) {
-            context.unregisterReceiver(receiver);
-        }
-        context = null;
-        networkData = NetworkDataImpl.newUnknownNetworkData();
-    }
+	@Override
+	public synchronized void stopListening() {
+		if (context != null) {
+			context.unregisterReceiver(receiver);
+		}
+		context = null;
+		networkData = NetworkDataImpl.newUnknownNetworkData();
+	}
 
-    @Override
-    @Nonnull
-    public NetworkData getNetworkData() {
-        return networkData;
-    }
+	@Override
+	@Nonnull
+	public NetworkData getNetworkData() {
+		return networkData;
+	}
 }

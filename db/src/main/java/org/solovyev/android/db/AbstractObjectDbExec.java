@@ -32,21 +32,21 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractObjectDbExec<T> implements DbExec {
 
-    @Nullable
-    private T object;
+	@Nullable
+	private T object;
 
-    protected AbstractObjectDbExec(@Nullable T object) {
-        this.object = object;
-    }
+	protected AbstractObjectDbExec(@Nullable T object) {
+		this.object = object;
+	}
 
-    @Nullable
-    protected T getObject() {
-        return object;
-    }
+	@Nullable
+	protected T getObject() {
+		return object;
+	}
 
-    @Nonnull
-    protected T getNotNullObject() {
-        assert object != null;
-        return object;
-    }
+	@Nonnull
+	protected T getNotNullObject() {
+		assert object != null;
+		return object;
+	}
 }

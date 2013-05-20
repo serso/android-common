@@ -23,10 +23,10 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.text.Mapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -37,124 +37,124 @@ import java.util.StringTokenizer;
  */
 public class LocalePreference implements Preference<Locale> {
 
-    @Nonnull
-    private final StringPreference<Locale> stringPreference;
+	@Nonnull
+	private final StringPreference<Locale> stringPreference;
 
-    private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
-        this.stringPreference = new StringPreference<Locale>(id, defaultValue, localeMapper);
-    }
+	private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
+		this.stringPreference = new StringPreference<Locale>(id, defaultValue, localeMapper);
+	}
 
-    private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue) {
-        this.stringPreference = new StringPreference<Locale>(id, defaultValue, DefaultLocaleMapper.getInstance());
-    }
+	private LocalePreference(@Nonnull String id, @Nullable Locale defaultValue) {
+		this.stringPreference = new StringPreference<Locale>(id, defaultValue, DefaultLocaleMapper.getInstance());
+	}
 
-    @Nonnull
-    public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
-        return new LocalePreference(id, defaultValue, localeMapper);
-    }
+	@Nonnull
+	public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue, @Nonnull Mapper<Locale> localeMapper) {
+		return new LocalePreference(id, defaultValue, localeMapper);
+	}
 
-    @Nonnull
-    public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue) {
-        return new LocalePreference(id, defaultValue);
-    }
+	@Nonnull
+	public static LocalePreference of(@Nonnull String id, @Nullable Locale defaultValue) {
+		return new LocalePreference(id, defaultValue);
+	}
 
-    @Override
-    @Nonnull
-    public String getKey() {
-        return stringPreference.getKey();
-    }
+	@Override
+	@Nonnull
+	public String getKey() {
+		return stringPreference.getKey();
+	}
 
-    @Override
-    public Locale getDefaultValue() {
-        return stringPreference.getDefaultValue();
-    }
+	@Override
+	public Locale getDefaultValue() {
+		return stringPreference.getDefaultValue();
+	}
 
-    @Override
-    public Locale getPreference(@Nonnull SharedPreferences preferences) {
-        return stringPreference.getPreference(preferences);
-    }
+	@Override
+	public Locale getPreference(@Nonnull SharedPreferences preferences) {
+		return stringPreference.getPreference(preferences);
+	}
 
-    @Override
-    public Locale getPreferenceNoError(@Nonnull SharedPreferences preferences) {
-        return stringPreference.getPreferenceNoError(preferences);
-    }
+	@Override
+	public Locale getPreferenceNoError(@Nonnull SharedPreferences preferences) {
+		return stringPreference.getPreferenceNoError(preferences);
+	}
 
-    @Override
-    public void putDefault(@Nonnull SharedPreferences preferences) {
-        stringPreference.putDefault(preferences);
-    }
+	@Override
+	public void putDefault(@Nonnull SharedPreferences preferences) {
+		stringPreference.putDefault(preferences);
+	}
 
-    @Override
-    public void putPreference(@Nonnull SharedPreferences preferences, @Nullable Locale value) {
-        stringPreference.putPreference(preferences, value);
-    }
+	@Override
+	public void putPreference(@Nonnull SharedPreferences preferences, @Nullable Locale value) {
+		stringPreference.putPreference(preferences, value);
+	}
 
-    @Override
-    public boolean isSet(@Nonnull SharedPreferences preferences) {
-        return stringPreference.isSet(preferences);
-    }
+	@Override
+	public boolean isSet(@Nonnull SharedPreferences preferences) {
+		return stringPreference.isSet(preferences);
+	}
 
-    @Override
-    public boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
-        return stringPreference.tryPutDefault(preferences);
-    }
+	@Override
+	public boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
+		return stringPreference.tryPutDefault(preferences);
+	}
 
-    @Override
-    public boolean isSameKey(@Nonnull String key) {
-        return stringPreference.isSameKey(key);
-    }
+	@Override
+	public boolean isSameKey(@Nonnull String key) {
+		return stringPreference.isSameKey(key);
+	}
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           STATIC
     *
     **********************************************************************
     */
 
-    private static final class DefaultLocaleMapper implements Mapper<Locale> {
+	private static final class DefaultLocaleMapper implements Mapper<Locale> {
 
-        @Nonnull
-        private static final String delimiter = ";";
+		@Nonnull
+		private static final String delimiter = ";";
 
-        @Nonnull
-        private static Mapper<Locale> instance = new DefaultLocaleMapper();
+		@Nonnull
+		private static Mapper<Locale> instance = new DefaultLocaleMapper();
 
-        private DefaultLocaleMapper() {
-        }
+		private DefaultLocaleMapper() {
+		}
 
-        @Nonnull
-        public static Mapper<Locale> getInstance() {
-            return instance;
-        }
+		@Nonnull
+		public static Mapper<Locale> getInstance() {
+			return instance;
+		}
 
-        @Override
-        public String formatValue(@Nullable Locale locale) throws IllegalArgumentException {
-            assert locale != null;
-            return locale.getLanguage() + delimiter + locale.getCountry() + delimiter + locale.getVariant();
-        }
+		@Override
+		public String formatValue(@Nullable Locale locale) throws IllegalArgumentException {
+			assert locale != null;
+			return locale.getLanguage() + delimiter + locale.getCountry() + delimiter + locale.getVariant();
+		}
 
-        @Override
-        public Locale parseValue(@Nullable String s) throws IllegalArgumentException {
-            final StringTokenizer st = new StringTokenizer(s, delimiter, false);
+		@Override
+		public Locale parseValue(@Nullable String s) throws IllegalArgumentException {
+			final StringTokenizer st = new StringTokenizer(s, delimiter, false);
 
-            final String language = st.nextToken();
+			final String language = st.nextToken();
 
-            final String country;
-            if (st.hasMoreTokens()) {
-                country = st.nextToken();
-            } else {
-                country = "";
-            }
+			final String country;
+			if (st.hasMoreTokens()) {
+				country = st.nextToken();
+			} else {
+				country = "";
+			}
 
-            final String variant;
-            if (st.hasMoreTokens()) {
-                variant = st.nextToken();
-            } else {
-                variant = "";
-            }
+			final String variant;
+			if (st.hasMoreTokens()) {
+				variant = st.nextToken();
+			} else {
+				variant = "";
+			}
 
-            return new Locale(language, country, variant);
-        }
-    }
+			return new Locale(language, country, variant);
+		}
+	}
 }

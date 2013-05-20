@@ -23,6 +23,7 @@
 package org.solovyev.android.sherlock;
 
 import android.support.v4.app.FragmentTransaction;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,7 +33,7 @@ import javax.annotation.Nonnull;
  */
 public interface FragmentItem {
 
-    public void onSelected(@Nonnull FragmentTransaction ft);
+	public void onSelected(@Nonnull FragmentTransaction ft);
 
-    public void onUnselected(@Nonnull FragmentTransaction ft);
+	public void onUnselected(@Nonnull FragmentTransaction ft);
 }

@@ -37,33 +37,33 @@ import net.robotmedia.billing.utils.AESObfuscator;
 import net.robotmedia.billing.utils.Compatibility;
 import net.robotmedia.billing.utils.ObfuscateUtils;
 import net.robotmedia.billing.utils.Security;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.solovyev.common.security.CiphererException;
 import org.solovyev.common.security.SecurityService;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.crypto.SecretKey;
 import java.util.*;
 
 public class BillingController {
 
-    @Nullable
-    private static SecretKey secretKey;
+	@Nullable
+	private static SecretKey secretKey;
 
-    @Nonnull
-    public static SecretKey getSecretKey(@Nonnull Context context) throws CiphererException {
-        if ( secretKey == null ) {
-            final byte[] salt = getSalt();
-            final String password = BillingSecurity.generatePassword(context);
-            secretKey = getTransactionObfuscator().getSecretKeyProvider().getSecretKey(password, salt);
-        }
-        return secretKey;
-    }
+	@Nonnull
+	public static SecretKey getSecretKey(@Nonnull Context context) throws CiphererException {
+		if (secretKey == null) {
+			final byte[] salt = getSalt();
+			final String password = BillingSecurity.generatePassword(context);
+			secretKey = getTransactionObfuscator().getSecretKeyProvider().getSecretKey(password, salt);
+		}
+		return secretKey;
+	}
 
-    public static enum BillingStatus {
+	public static enum BillingStatus {
 		UNKNOWN,
 		SUPPORTED,
 		UNSUPPORTED
@@ -121,14 +121,14 @@ public class BillingController {
 	@Nonnull
 	private static final Map<Long, IBillingRequest> pendingRequests = new HashMap<Long, IBillingRequest>();
 
-    @Nullable
-    private static SecurityService<Transaction, Transaction, byte[]> transactionObfuscator;
+	@Nullable
+	private static SecurityService<Transaction, Transaction, byte[]> transactionObfuscator;
 
 	/**
 	 * Adds the specified notification to the set of manual confirmations of the
 	 * specified item.
 	 *
-	 * @param productId	  id of the item.
+	 * @param productId      id of the item.
 	 * @param notificationId id of the notification.
 	 */
 	private static void addManualConfirmation(@Nonnull String productId, @Nonnull String notificationId) {
@@ -147,9 +147,7 @@ public class BillingController {
 	 * This method calls billing service to determine the exact status and notify listeners through IBillingObserver#onCheckBillingSupportedResponse(boolean) method
 	 *
 	 * @param context context
-	 *
 	 * @return the current billing status (unknown, supported or unsupported)
-	 *
 	 * @see IBillingObserver#onCheckBillingSupportedResponse(boolean)
 	 */
 	@Nonnull
@@ -275,7 +273,7 @@ public class BillingController {
 		return transactions;
 	}
 
-    /**
+	/**
 	 * Lists all transactions of the specified item, stored locally.
 	 *
 	 * @param context   context
@@ -332,7 +330,7 @@ public class BillingController {
 	 * received. Registers all transactions in local memory and confirms those
 	 * who can be confirmed automatically.
 	 *
-	 * @param context	context
+	 * @param context    context
 	 * @param signedData signed JSON data received from the Market Billing service.
 	 * @param signature  data signature.
 	 */
@@ -418,7 +416,7 @@ public class BillingController {
 	 * Called after a {@link BillingRequest} is
 	 * sent.
 	 *
-	 * @param requestId	the id of the request.
+	 * @param requestId    the id of the request.
 	 * @param responseCode the response code.
 	 * @see ResponseCode
 	 */
@@ -474,8 +472,8 @@ public class BillingController {
 	 * Requests the purchase of the specified item with optional automatic
 	 * confirmation.
 	 *
-	 * @param context		  context
-	 * @param productId		id of the item to be purchased.
+	 * @param context          context
+	 * @param productId        id of the item to be purchased.
 	 * @param autoConfirmation if true, the transaction will be confirmed automatically. If
 	 *                         false, the transaction will have to be confirmed with a call
 	 *                         to {@link #confirmNotifications(android.content.Context, String)}.
@@ -523,11 +521,11 @@ public class BillingController {
 		BillingController.debug = debug;
 	}
 
-    public static boolean isDebug() {
-        return debug;
-    }
+	public static boolean isDebug() {
+		return debug;
+	}
 
-    /**
+	/**
 	 * Sets a custom signature validator. If no custom signature validator is
 	 * provided,
 	 * {@link net.robotmedia.billing.security.DefaultSignatureValidator} will
@@ -548,9 +546,9 @@ public class BillingController {
 	/**
 	 * Starts the specified purchase intent with the specified activity.
 	 *
-	 * @param context	   context
+	 * @param context        context
 	 * @param purchaseIntent purchase intent.
-	 * @param intent		 intent
+	 * @param intent         intent
 	 */
 	public static void startPurchaseIntent(@Nonnull Context context,
 										   @Nonnull PendingIntent purchaseIntent,
@@ -620,11 +618,11 @@ public class BillingController {
 		BillingObserverRegistry.unregisterObserver(billingObserver);
 	}
 
-    @Nonnull
-    static SecurityService<Transaction, Transaction, byte[]> getTransactionObfuscator() {
-        if ( transactionObfuscator == null ) {
-            transactionObfuscator = BillingSecurity.getObfuscationSecurityService(AESObfuscator.IV, AESObfuscator.SECURITY_PREFIX);
-        }
-        return transactionObfuscator;
-    }
+	@Nonnull
+	static SecurityService<Transaction, Transaction, byte[]> getTransactionObfuscator() {
+		if (transactionObfuscator == null) {
+			transactionObfuscator = BillingSecurity.getObfuscationSecurityService(AESObfuscator.IV, AESObfuscator.SECURITY_PREFIX);
+		}
+		return transactionObfuscator;
+	}
 }

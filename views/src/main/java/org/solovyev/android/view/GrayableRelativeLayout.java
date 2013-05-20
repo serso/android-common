@@ -26,6 +26,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -35,32 +36,32 @@ import javax.annotation.Nonnull;
  */
 public class GrayableRelativeLayout extends RelativeLayout implements Grayable {
 
-    @Nonnull
-    private ViewGrayable grayable = new GrayableImpl();
+	@Nonnull
+	private ViewGrayable grayable = new GrayableImpl();
 
-    public GrayableRelativeLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	public GrayableRelativeLayout(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
-    public GrayableRelativeLayout(Context context) {
-        super(context);
-    }
+	public GrayableRelativeLayout(Context context) {
+		super(context);
+	}
 
-    @Override
-    public void grayOut() {
-        grayable.grayOut();
-    }
+	@Override
+	public void grayOut() {
+		grayable.grayOut();
+	}
 
-    @Override
-    public void grayIn() {
-        grayable.grayIn();
-    }
+	@Override
+	public void grayIn() {
+		grayable.grayIn();
+	}
 
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
+	@Override
+	protected void dispatchDraw(Canvas canvas) {
+		super.dispatchDraw(canvas);
 
-        this.grayable.dispatchDraw(this, canvas);
-    }
+		this.grayable.dispatchDraw(this, canvas);
+	}
 }
 

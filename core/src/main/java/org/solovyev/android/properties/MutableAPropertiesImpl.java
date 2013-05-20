@@ -39,110 +39,110 @@ import java.util.Map;
  */
 class MutableAPropertiesImpl extends JObject implements MutableAProperties {
 
-    @Nonnull
-    private Map<String, AProperty> properties = new HashMap<String, AProperty>();
+	@Nonnull
+	private Map<String, AProperty> properties = new HashMap<String, AProperty>();
 
-    public MutableAPropertiesImpl() {
-    }
+	public MutableAPropertiesImpl() {
+	}
 
-    @Nonnull
-    static MutableAProperties copyOf(@Nonnull MutableAProperties propertiesContainer) {
-        return propertiesContainer.clone();
-    }
+	@Nonnull
+	static MutableAProperties copyOf(@Nonnull MutableAProperties propertiesContainer) {
+		return propertiesContainer.clone();
+	}
 
-    @Nonnull
-    static MutableAProperties newInstance(@Nonnull Collection<AProperty> properties) {
-        final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
+	@Nonnull
+	static MutableAProperties newInstance(@Nonnull Collection<AProperty> properties) {
+		final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
-        for (AProperty property : properties) {
-            result.setProperty(property);
-        }
+		for (AProperty property : properties) {
+			result.setProperty(property);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    static MutableAProperties newInstance(@Nonnull Map<String, AProperty> properties) {
-        final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
+	@Nonnull
+	static MutableAProperties newInstance(@Nonnull Map<String, AProperty> properties) {
+		final MutableAPropertiesImpl result = new MutableAPropertiesImpl();
 
-        for (AProperty property : properties.values()) {
-            result.setProperty(property);
-        }
+		for (AProperty property : properties.values()) {
+			result.setProperty(property);
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public MutableAPropertiesImpl clone() {
-        final MutableAPropertiesImpl clone = (MutableAPropertiesImpl) super.clone();
+	@Nonnull
+	@Override
+	public MutableAPropertiesImpl clone() {
+		final MutableAPropertiesImpl clone = (MutableAPropertiesImpl) super.clone();
 
-        clone.properties = Cloneables.cloneMap(this.properties);
+		clone.properties = Cloneables.cloneMap(this.properties);
 
-        return clone;
-    }
+		return clone;
+	}
 
-    @Override
-    @Nonnull
-    public AProperty setProperty(@Nonnull String name, @Nonnull String value) {
-        final AProperty property = APropertyImpl.newInstance(name, value);
+	@Override
+	@Nonnull
+	public AProperty setProperty(@Nonnull String name, @Nonnull String value) {
+		final AProperty property = APropertyImpl.newInstance(name, value);
 
-        properties.put(name, property);
+		properties.put(name, property);
 
-        return property;
-    }
+		return property;
+	}
 
-    @Override
-    public void setProperty(@Nonnull AProperty property) {
-        properties.put(property.getName(), property);
-    }
+	@Override
+	public void setProperty(@Nonnull AProperty property) {
+		properties.put(property.getName(), property);
+	}
 
-    @Override
-    public void setPropertiesFrom(@Nonnull MutableAProperties that) {
-        for (AProperty property : that.getProperties().values()) {
-              setProperty(property);
-        }
-    }
+	@Override
+	public void setPropertiesFrom(@Nonnull MutableAProperties that) {
+		for (AProperty property : that.getProperties().values()) {
+			setProperty(property);
+		}
+	}
 
-    @Override
-    public void setPropertiesFrom(@Nonnull Collection<AProperty> properties) {
-        for (AProperty property : properties) {
-            setProperty(property);
-        }
-    }
+	@Override
+	public void setPropertiesFrom(@Nonnull Collection<AProperty> properties) {
+		for (AProperty property : properties) {
+			setProperty(property);
+		}
+	}
 
-    @Override
-    @Nullable
-    public AProperty removeProperty(@Nonnull String name) {
-        return properties.remove(name);
-    }
+	@Override
+	@Nullable
+	public AProperty removeProperty(@Nonnull String name) {
+		return properties.remove(name);
+	}
 
-    @Override
-    @Nullable
-    public AProperty getProperty(@Nonnull String name) {
-        return properties.get(name);
-    }
+	@Override
+	@Nullable
+	public AProperty getProperty(@Nonnull String name) {
+		return properties.get(name);
+	}
 
-    @Override
-    public String getPropertyValue(@Nonnull String name) {
-        final AProperty property = properties.get(name);
-        return property == null ? null : property.getValue();
-    }
+	@Override
+	public String getPropertyValue(@Nonnull String name) {
+		final AProperty property = properties.get(name);
+		return property == null ? null : property.getValue();
+	}
 
-    @Override
-    public void clearProperties() {
-        properties.clear();
-    }
+	@Override
+	public void clearProperties() {
+		properties.clear();
+	}
 
-    @Override
-    @Nonnull
-    public Map<String, AProperty> getProperties() {
-        return Collections.unmodifiableMap(this.properties);
-    }
+	@Override
+	@Nonnull
+	public Map<String, AProperty> getProperties() {
+		return Collections.unmodifiableMap(this.properties);
+	}
 
-    @Override
-    @Nonnull
-    public Collection<AProperty> getPropertiesCollection() {
-       return Collections.unmodifiableCollection(this.properties.values());
-    }
+	@Override
+	@Nonnull
+	public Collection<AProperty> getPropertiesCollection() {
+		return Collections.unmodifiableCollection(this.properties.values());
+	}
 }

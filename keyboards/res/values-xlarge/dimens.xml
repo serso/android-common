@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,11 +21,11 @@
   -->
 
 <resources>
-    <dimen name="keyboard_button_text_size">40dp</dimen>
+	<dimen name="keyboard_button_text_size">40dp</dimen>
 
-    <dimen name="keyboard_button_padding">20dp</dimen>
-    <dimen name="keyboard_preview_padding">20dp</dimen>
-    <dimen name="keyboard_preview_padding_left">40dp</dimen>
-    <dimen name="keyboard_preview_padding_right">40dp</dimen>
+	<dimen name="keyboard_button_padding">20dp</dimen>
+	<dimen name="keyboard_preview_padding">20dp</dimen>
+	<dimen name="keyboard_preview_padding_left">40dp</dimen>
+	<dimen name="keyboard_preview_padding_right">40dp</dimen>
 
 </resources>

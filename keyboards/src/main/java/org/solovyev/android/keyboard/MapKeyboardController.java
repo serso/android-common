@@ -24,8 +24,8 @@ package org.solovyev.android.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,23 +40,23 @@ public abstract class MapKeyboardController extends AbstractKeyboardController {
 	@Nonnull
 	private final Map<String, AKeyboard> keyboards = new HashMap<String, AKeyboard>();
 
-    @Nonnull
-    @Override
-    protected AKeyboardControllerState onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
-        synchronized (this.keyboards) {
+	@Nonnull
+	@Override
+	protected AKeyboardControllerState onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
+		synchronized (this.keyboards) {
 
-            this.keyboards.clear();
+			this.keyboards.clear();
 
-            final List<AKeyboard> keyboards = createKeyboard(inputMethodService);
-            for (AKeyboard keyboard : keyboards) {
-                this.keyboards.put(keyboard.getKeyboardId(), keyboard);
-            }
+			final List<AKeyboard> keyboards = createKeyboard(inputMethodService);
+			for (AKeyboard keyboard : keyboards) {
+				this.keyboards.put(keyboard.getKeyboardId(), keyboard);
+			}
 
-            return AKeyboardControllerStateImpl.newDefaultState(this.keyboards.get(getDefaultKeyboardId()));
-        }
-    }
+			return AKeyboardControllerStateImpl.newDefaultState(this.keyboards.get(getDefaultKeyboardId()));
+		}
+	}
 
-    @Nonnull
+	@Nonnull
 	protected abstract List<AKeyboard> createKeyboard(@Nonnull Context context);
 
 	@Nonnull

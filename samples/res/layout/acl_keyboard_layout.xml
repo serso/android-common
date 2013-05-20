@@ -23,41 +23,44 @@
   -->
 
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-			  a:layout_width="match_parent"
-			  a:layout_height="match_parent"
-			  a:orientation="vertical">
+	a:layout_width="match_parent"
+	a:layout_height="match_parent"
+	a:orientation="vertical">
 
 	<TextView
-			a:layout_height="wrap_content"
-			a:layout_width="match_parent"
-			a:text="Mutli line text"/>
+		a:layout_height="wrap_content"
+		a:layout_width="match_parent"
+		a:text="Mutli line text" />
 
-	<EditText a:id="@+id/text_edit_text"
-			  a:inputType="textMultiLine"
-			  a:layout_height="0dp"
-			  a:layout_width="match_parent"
-			  a:layout_weight="1"/>
-
-	<TextView
-			a:layout_height="wrap_content"
-			a:layout_width="match_parent"
-			a:text="Digits"/>
-
-	<EditText a:id="@+id/digits_edit_text"
-			  a:inputType="numberDecimal"
-			  a:layout_height="0dp"
-			  a:layout_weight="1"
-			  a:layout_width="match_parent"/>
+	<EditText
+		a:id="@+id/text_edit_text"
+		a:inputType="textMultiLine"
+		a:layout_height="0dp"
+		a:layout_width="match_parent"
+		a:layout_weight="1" />
 
 	<TextView
-			a:layout_height="wrap_content"
-			a:layout_width="match_parent"
-			a:text="Phone"/>
+		a:layout_height="wrap_content"
+		a:layout_width="match_parent"
+		a:text="Digits" />
 
-	<EditText a:id="@+id/phone_edit_text"
-			  a:inputType="phone"
-			  a:layout_height="0dp"
-			  a:layout_weight="1"
-			  a:layout_width="match_parent"/>
+	<EditText
+		a:id="@+id/digits_edit_text"
+		a:inputType="numberDecimal"
+		a:layout_height="0dp"
+		a:layout_weight="1"
+		a:layout_width="match_parent" />
+
+	<TextView
+		a:layout_height="wrap_content"
+		a:layout_width="match_parent"
+		a:text="Phone" />
+
+	<EditText
+		a:id="@+id/phone_edit_text"
+		a:inputType="phone"
+		a:layout_height="0dp"
+		a:layout_weight="1"
+		a:layout_width="match_parent" />
 
 </LinearLayout>

@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.solovyev.android</groupId>
-        <artifactId>android-common</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.solovyev.android</groupId>
+		<artifactId>android-common</artifactId>
+		<version>1.1.0-SNAPSHOT</version>
+	</parent>
 
-    <groupId>org.solovyev.android</groupId>
-    <artifactId>android-common-networks</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+	<groupId>org.solovyev.android</groupId>
+	<artifactId>android-common-networks</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
 
-    <name>Android Common Library Network</name>
+	<name>Android Common Library Network</name>
 
-    <packaging>apklib</packaging>
+	<packaging>apklib</packaging>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
-            <groupId>org.solovyev</groupId>
-            <artifactId>common-listeners</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev</groupId>
+			<artifactId>common-listeners</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-        </dependency>
+	</dependencies>
 
-    </dependencies>
+	<build>
 
-    <build>
+		<extensions>
+			<extension>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+			</extension>
+		</extensions>
 
-        <extensions>
-            <extension>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-            </extension>
-        </extensions>
-
-    </build>
+	</build>
 
 </project>

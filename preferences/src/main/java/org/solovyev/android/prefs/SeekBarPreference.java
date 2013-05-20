@@ -27,8 +27,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.NumberMapper;
+
+import javax.annotation.Nonnull;
 
 
 /* The following code was written by Matthew Wiggins
@@ -39,75 +40,75 @@ import org.solovyev.common.text.NumberMapper;
 
 public class SeekBarPreference extends AbstractDialogPreference<Integer> implements SeekBar.OnSeekBarChangeListener {
 
-    private int max = 0;
+	private int max = 0;
 
-    public SeekBarPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, "50", true, NumberMapper.of(Integer.class));
+	public SeekBarPreference(Context context, AttributeSet attrs) {
+		super(context, attrs, "50", true, NumberMapper.of(Integer.class));
 
-        max = attrs.getAttributeIntValue(androidns, "max", 100);
-    }
+		max = attrs.getAttributeIntValue(androidns, "max", 100);
+	}
 
-    @Override
-    protected LinearLayout.LayoutParams getParams() {
-        return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-    }
+	@Override
+	protected LinearLayout.LayoutParams getParams() {
+		return new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+	}
 
-    @Nonnull
-    @Override
-    protected View createPreferenceView(@Nonnull Context context) {
-        final SeekBar result = new SeekBar(context);
+	@Nonnull
+	@Override
+	protected View createPreferenceView(@Nonnull Context context) {
+		final SeekBar result = new SeekBar(context);
 
-        result.setOnSeekBarChangeListener(this);
+		result.setOnSeekBarChangeListener(this);
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    protected void initPreferenceView(@Nonnull View v, Integer value) {
-        ((SeekBar) v).setMax(max);
-        if (value != null) {
-            ((SeekBar) v).setProgress(value);
-            setValueText(value);
-        }
-    }
+	@Override
+	protected void initPreferenceView(@Nonnull View v, Integer value) {
+		((SeekBar) v).setMax(max);
+		if (value != null) {
+			((SeekBar) v).setProgress(value);
+			setValueText(value);
+		}
+	}
 
-    public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
-        setValueText(value);
+	public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
+		setValueText(value);
 
-        persistValue(value);
-    }
+		persistValue(value);
+	}
 
-    private void setValueText(int value) {
-        String t = String.valueOf(value);
-        final String valueText = getValueText();
-        updateValueText(valueText == null ? t : t.concat(valueText));
-    }
+	private void setValueText(int value) {
+		String t = String.valueOf(value);
+		final String valueText = getValueText();
+		updateValueText(valueText == null ? t : t.concat(valueText));
+	}
 
-    public void onStartTrackingTouch(SeekBar seek) {
-    }
+	public void onStartTrackingTouch(SeekBar seek) {
+	}
 
-    public void onStopTrackingTouch(SeekBar seek) {
-    }
+	public void onStopTrackingTouch(SeekBar seek) {
+	}
 
-    public void setMax(int max) {
-        this.max = max;
-    }
+	public void setMax(int max) {
+		this.max = max;
+	}
 
-    public int getMax() {
-        return max;
-    }
+	public int getMax() {
+		return max;
+	}
 
-    public void setProgress(int progress) {
-        setValue(progress);
-        final View preferenceView = getPreferenceView();
-        if (preferenceView != null) {
-            ((SeekBar) preferenceView).setProgress(progress);
-        }
-    }
+	public void setProgress(int progress) {
+		setValue(progress);
+		final View preferenceView = getPreferenceView();
+		if (preferenceView != null) {
+			((SeekBar) preferenceView).setProgress(progress);
+		}
+	}
 
-    public int getProgress() {
-        final Integer value = getValue();
-        return value == null ? 0 : value;
-    }
+	public int getProgress() {
+		final Integer value = getValue();
+		return value == null ? 0 : value;
+	}
 }
 

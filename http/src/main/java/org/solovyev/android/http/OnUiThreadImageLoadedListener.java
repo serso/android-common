@@ -24,9 +24,9 @@ package org.solovyev.android.http;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -36,40 +36,40 @@ import java.lang.ref.WeakReference;
  */
 public abstract class OnUiThreadImageLoadedListener implements OnImageLoadedListener {
 
-    @Nonnull
-    private final WeakReference<Activity> activityRef;
+	@Nonnull
+	private final WeakReference<Activity> activityRef;
 
-    public OnUiThreadImageLoadedListener(@Nonnull Activity activity) {
-        this.activityRef = new WeakReference<Activity>(activity);
-    }
+	public OnUiThreadImageLoadedListener(@Nonnull Activity activity) {
+		this.activityRef = new WeakReference<Activity>(activity);
+	}
 
-    @Override
-    public void onImageLoaded(@Nullable final Bitmap image) {
-        final Activity activity = this.activityRef.get();
-        if (activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    onImageLoadedOnUiThread(image);
-                }
-            });
-        }
-    }
+	@Override
+	public void onImageLoaded(@Nullable final Bitmap image) {
+		final Activity activity = this.activityRef.get();
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					onImageLoadedOnUiThread(image);
+				}
+			});
+		}
+	}
 
-    protected abstract void onImageLoadedOnUiThread(@Nullable Bitmap image);
+	protected abstract void onImageLoadedOnUiThread(@Nullable Bitmap image);
 
-    @Override
-    public void setDefaultImage() {
-        final Activity activity = this.activityRef.get();
-        if (activity != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    setDefaultImageOnUiThread();
-                }
-            });
-        }
-    }
+	@Override
+	public void setDefaultImage() {
+		final Activity activity = this.activityRef.get();
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					setDefaultImageOnUiThread();
+				}
+			});
+		}
+	}
 
-    protected abstract void setDefaultImageOnUiThread();
+	protected abstract void setDefaultImageOnUiThread();
 }

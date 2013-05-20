@@ -25,10 +25,10 @@ package org.solovyev.android.view.drag;
 import javax.annotation.Nonnull;
 
 /**
-* User: serso
-* Date: 10/26/11
-* Time: 10:37 PM
-*/
+ * User: serso
+ * Date: 10/26/11
+ * Time: 10:37 PM
+ */
 public class OnDragListenerWrapper implements OnDragListener {
 
 	@Nonnull

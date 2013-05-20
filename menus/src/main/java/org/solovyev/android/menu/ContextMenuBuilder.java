@@ -25,9 +25,10 @@ package org.solovyev.android.menu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import javax.annotation.Nonnull;
 import org.solovyev.android.DialogFragmentShower;
 import org.solovyev.common.BuilderWithData;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,24 +38,24 @@ import org.solovyev.common.BuilderWithData;
 public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements BuilderWithData<DialogFragmentShower, D> {
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           FIELDS
     *
     **********************************************************************
     */
 
-    @Nonnull
-    private final FragmentActivity fragmentActivity;
+	@Nonnull
+	private final FragmentActivity fragmentActivity;
 
-    @Nonnull
-    private final String fragmentTag;
+	@Nonnull
+	private final String fragmentTag;
 
-    @Nonnull
-    private final AlertDialog.Builder menuBuilder;
+	@Nonnull
+	private final AlertDialog.Builder menuBuilder;
 
-    @Nonnull
-    private final ContextMenu<T, D> menu;
+	@Nonnull
+	private final ContextMenu<T, D> menu;
 
     /*
     **********************************************************************
@@ -64,28 +65,28 @@ public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements Buil
     **********************************************************************
     */
 
-    @Nonnull
-    public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
-                                                                                                @Nonnull String fragmentTag,
-                                                                                                @Nonnull Class<T> enumClass) {
-        return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, EnumContextMenu.<T, D>newInstance(enumClass));
-    }
+	@Nonnull
+	public static <T extends Enum & LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
+																								@Nonnull String fragmentTag,
+																								@Nonnull Class<T> enumClass) {
+		return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, EnumContextMenu.<T, D>newInstance(enumClass));
+	}
 
-    @Nonnull
-    public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
-                                                                                         @Nonnull String fragmentTag,
-                                                                                         @Nonnull ContextMenu<T, D> menu) {
-        return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, menu);
-    }
+	@Nonnull
+	public static <T extends LabeledMenuItem<D>, D> ContextMenuBuilder<T, D> newInstance(@Nonnull FragmentActivity fragmentActivity,
+																						 @Nonnull String fragmentTag,
+																						 @Nonnull ContextMenu<T, D> menu) {
+		return new ContextMenuBuilder<T, D>(fragmentActivity, fragmentTag, menu);
+	}
 
-    private ContextMenuBuilder(@Nonnull FragmentActivity fragmentActivity,
-                               @Nonnull String fragmentTag,
-                               @Nonnull ContextMenu<T, D> menu) {
-        this.fragmentActivity = fragmentActivity;
-        this.fragmentTag = fragmentTag;
-        this.menuBuilder = new AlertDialog.Builder(fragmentActivity);
-        this.menu = menu;
-    }
+	private ContextMenuBuilder(@Nonnull FragmentActivity fragmentActivity,
+							   @Nonnull String fragmentTag,
+							   @Nonnull ContextMenu<T, D> menu) {
+		this.fragmentActivity = fragmentActivity;
+		this.fragmentTag = fragmentTag;
+		this.menuBuilder = new AlertDialog.Builder(fragmentActivity);
+		this.menu = menu;
+	}
 
     /*
     **********************************************************************
@@ -95,22 +96,22 @@ public class ContextMenuBuilder<T extends LabeledMenuItem<D>, D> implements Buil
     **********************************************************************
     */
 
-    @Nonnull
-    public AlertDialog.Builder getMenuBuilder() {
-        return menuBuilder;
-    }
+	@Nonnull
+	public AlertDialog.Builder getMenuBuilder() {
+		return menuBuilder;
+	}
 
-    @Nonnull
-    public DialogFragmentShower build(@Nonnull final D data) {
-        menuBuilder.setItems(menu.getMenuCaptions(fragmentActivity), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                final LabeledMenuItem<D> menuItem = menu.itemAt(item);
-                if (menuItem != null) {
-                    menuItem.onClick(data, fragmentActivity);
-                }
-            }
-        });
+	@Nonnull
+	public DialogFragmentShower build(@Nonnull final D data) {
+		menuBuilder.setItems(menu.getMenuCaptions(fragmentActivity), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				final LabeledMenuItem<D> menuItem = menu.itemAt(item);
+				if (menuItem != null) {
+					menuItem.onClick(data, fragmentActivity);
+				}
+			}
+		});
 
-        return new DialogFragmentShower(fragmentActivity, fragmentTag, menuBuilder);
-    }
+		return new DialogFragmentShower(fragmentActivity, fragmentTag, menuBuilder);
+	}
 }

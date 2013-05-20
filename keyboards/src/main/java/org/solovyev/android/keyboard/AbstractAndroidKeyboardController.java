@@ -26,10 +26,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,129 +42,129 @@ import java.util.List;
  */
 public abstract class AbstractAndroidKeyboardController<K extends AKeyboard> extends AbstractKeyboardController<K> {
 
-    @Override
-    public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
-        super.onStartInput(attribute, restarting);
+	@Override
+	public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
+		super.onStartInput(attribute, restarting);
 
-        updateCandidates();
+		updateCandidates();
 
-        getKeyboardView().setCompletions(Collections.<CompletionInfo>emptyList());
-    }
+		getKeyboardView().setCompletions(Collections.<CompletionInfo>emptyList());
+	}
 
-    @Nonnull
-    @Override
-    public AKeyboardViewWithSuggestions<K> getKeyboardView() {
-        return (AKeyboardViewWithSuggestions<K>) super.getKeyboardView();
-    }
+	@Nonnull
+	@Override
+	public AKeyboardViewWithSuggestions<K> getKeyboardView() {
+		return (AKeyboardViewWithSuggestions<K>) super.getKeyboardView();
+	}
 
-    @Override
-    public void onFinishInput() {
-        super.onFinishInput();
+	@Override
+	public void onFinishInput() {
+		super.onFinishInput();
 
-        updateCandidates();
-    }
+		updateCandidates();
+	}
 
-    @Override
-    public boolean handleBackspace() {
-        boolean changed = super.handleBackspace();
+	@Override
+	public boolean handleBackspace() {
+		boolean changed = super.handleBackspace();
 
-        if (changed) {
-            updateCandidates();
-        }
+		if (changed) {
+			updateCandidates();
+		}
 
-        return changed;
-    }
+		return changed;
+	}
 
-    @Nonnull
-    @Override
-    protected abstract AKeyboardViewWithSuggestions<K> createKeyboardView0(@Nonnull Context context);
+	@Nonnull
+	@Override
+	protected abstract AKeyboardViewWithSuggestions<K> createKeyboardView0(@Nonnull Context context);
 
-    public void setSuggestions(@Nonnull List<String> suggestions,
-                               boolean completions,
-                               boolean typedWordValid) {
-        final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();
+	public void setSuggestions(@Nonnull List<String> suggestions,
+							   boolean completions,
+							   boolean typedWordValid) {
+		final AKeyboardViewWithSuggestions keyboardView = getKeyboardView();
 
-        if (suggestions.size() > 0) {
-            keyboardView.setCandidatesViewShown(true);
-        } else if (keyboardView.isExtractViewShown()) {
-            keyboardView.setCandidatesViewShown(true);
-        }
+		if (suggestions.size() > 0) {
+			keyboardView.setCandidatesViewShown(true);
+		} else if (keyboardView.isExtractViewShown()) {
+			keyboardView.setCandidatesViewShown(true);
+		}
 
-        keyboardView.setSuggestions(suggestions, completions, typedWordValid);
-    }
+		keyboardView.setSuggestions(suggestions, completions, typedWordValid);
+	}
 
-    @Override
-    public void onDisplayCompletions(@Nullable CompletionInfo[] completions) {
-        super.onDisplayCompletions(completions);
+	@Override
+	public void onDisplayCompletions(@Nullable CompletionInfo[] completions) {
+		super.onDisplayCompletions(completions);
 
-        if (getState().isCompletion()) {
+		if (getState().isCompletion()) {
 
-            if (completions == null) {
-                setSuggestions(Collections.<String>emptyList(), false, false);
-            } else {
-                final List<String> suggestions = new ArrayList<String>();
-                for (CompletionInfo completion : Arrays.asList(completions)) {
-                    if (completion != null) {
-                        suggestions.add(completion.getText().toString());
-                    }
-                }
+			if (completions == null) {
+				setSuggestions(Collections.<String>emptyList(), false, false);
+			} else {
+				final List<String> suggestions = new ArrayList<String>();
+				for (CompletionInfo completion : Arrays.asList(completions)) {
+					if (completion != null) {
+						suggestions.add(completion.getText().toString());
+					}
+				}
 
-                setSuggestions(suggestions, true, true);
-            }
-        }
-    }
+				setSuggestions(suggestions, true, true);
+			}
+		}
+	}
 
-    /**
-     * Update the list of available candidates from the current composing
-     * text.  This will need to be filled in by however you are determining
-     * candidates.
-     */
-    protected void updateCandidates() {
-        if (!getState().isCompletion()) {
-            final CharSequence text = getKeyboardInput().getTypedText();
-            if (!Strings.isEmpty(text)) {
-                final List<String> list = new ArrayList<String>();
-                list.add(text.toString());
-                setSuggestions(list, true, true);
-            } else {
-                setSuggestions(Collections.<String>emptyList(), false, false);
-            }
-        }
-    }
+	/**
+	 * Update the list of available candidates from the current composing
+	 * text.  This will need to be filled in by however you are determining
+	 * candidates.
+	 */
+	protected void updateCandidates() {
+		if (!getState().isCompletion()) {
+			final CharSequence text = getKeyboardInput().getTypedText();
+			if (!Strings.isEmpty(text)) {
+				final List<String> list = new ArrayList<String>();
+				list.add(text.toString());
+				setSuggestions(list, true, true);
+			} else {
+				setSuggestions(Collections.<String>emptyList(), false, false);
+			}
+		}
+	}
 
-    @Override
-    public void handleClose() {
-        super.handleClose();
+	@Override
+	public void handleClose() {
+		super.handleClose();
 
-        updateCandidates();
-    }
+		updateCandidates();
+	}
 
-    @Override
-    public void pickSuggestionManually(int index) {
-        super.pickSuggestionManually(index);
+	@Override
+	public void pickSuggestionManually(int index) {
+		super.pickSuggestionManually(index);
 
-        final AKeyboardViewWithSuggestions<K> keyboardView = getKeyboardView();
-        final AKeyboardInput keyboardInput = getKeyboardInput();
+		final AKeyboardViewWithSuggestions<K> keyboardView = getKeyboardView();
+		final AKeyboardInput keyboardInput = getKeyboardInput();
 
-        final List<CompletionInfo> completions = keyboardView.getCompletions();
+		final List<CompletionInfo> completions = keyboardView.getCompletions();
 
-        final CharSequence text = keyboardInput.getTypedText();
+		final CharSequence text = keyboardInput.getTypedText();
 
-        if (getState().isCompletion() && index >= 0 && index < completions.size()) {
-            final CompletionInfo ci = completions.get(index);
-            keyboardInput.commitCompletion(ci);
-            keyboardView.clearCandidateView();
-            updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
-        } else if (!Strings.isEmpty(text)) {
-            // If we were generating candidate suggestions for the current
-            // text, we would commit one of them here.  But for this sample,
-            // we will just commit the current text.
-            keyboardInput.commitTyped();
-        }
-    }
+		if (getState().isCompletion() && index >= 0 && index < completions.size()) {
+			final CompletionInfo ci = completions.get(index);
+			keyboardInput.commitCompletion(ci);
+			keyboardView.clearCandidateView();
+			updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
+		} else if (!Strings.isEmpty(text)) {
+			// If we were generating candidate suggestions for the current
+			// text, we would commit one of them here.  But for this sample,
+			// we will just commit the current text.
+			keyboardInput.commitTyped();
+		}
+	}
 
-    @Override
-    public View onCreateCandidatesView() {
-        return this.getKeyboardView().onCreateCandidatesView();
-    }
+	@Override
+	public View onCreateCandidatesView() {
+		return this.getKeyboardView().onCreateCandidatesView();
+	}
 }

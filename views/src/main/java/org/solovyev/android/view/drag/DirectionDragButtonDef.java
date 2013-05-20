@@ -32,6 +32,6 @@ import javax.annotation.Nullable;
  */
 public interface DirectionDragButtonDef extends DragButtonDef {
 
-    @Nullable
-    CharSequence getText(@Nonnull DragDirection dragDirection);
+	@Nullable
+	CharSequence getText(@Nonnull DragDirection dragDirection);
 }

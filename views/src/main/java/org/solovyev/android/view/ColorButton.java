@@ -33,9 +33,10 @@ import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Button;
-import javax.annotation.Nonnull;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
+
+import javax.annotation.Nonnull;
 
 /**
  * NOTE: copied from com.android.calculator2.ColorButton
@@ -64,7 +65,7 @@ public class ColorButton extends Button {
 
 	private float hTextPosition = H_TEXT_POSITION_DEFAULT_VALUE;
 
-    private boolean showText = true;
+	private boolean showText = true;
 
 	public ColorButton(Context context, AttributeSet attrs) {
 		this(context, attrs, true);
@@ -88,12 +89,12 @@ public class ColorButton extends Button {
 				}
 			}
 		}
-		
+
 		if (init) {
 			init(context);
 		}
 
-		this.onClickListener = new OnClickListenerVibrator((Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context));
+		this.onClickListener = new OnClickListenerVibrator((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context));
 	}
 
 	protected void init(Context context) {
@@ -165,16 +166,16 @@ public class ColorButton extends Button {
 		}
 
 		CharSequence text = getText();
-		if ( !Strings.isEmpty(text) && textPosition != null) {
-            if (showText) {
-                canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
-            }
-        } else {
+		if (!Strings.isEmpty(text) && textPosition != null) {
+			if (showText) {
+				canvas.drawText(text, 0, text.length(), textPosition.getX(), textPosition.getY(), getPaint());
+			}
+		} else {
 			AndroidViewUtils.drawDrawables(canvas, this);
 		}
 	}
 
-    public void animateClickFeedback() {
+	public void animateClickFeedback() {
 		animationStart = System.currentTimeMillis();
 		invalidate();
 	}
@@ -192,7 +193,7 @@ public class ColorButton extends Button {
 	}
 
 	private void vibrate() {
-	 	this.onClickListener.onClick(this);
+		this.onClickListener.onClick(this);
 	}
 
 	@Override
@@ -218,11 +219,11 @@ public class ColorButton extends Button {
 		this.drawMagicFlame = drawMagicFlame;
 	}
 
-    public boolean isShowText() {
-        return showText;
-    }
+	public boolean isShowText() {
+		return showText;
+	}
 
-    public void setShowText(boolean showText) {
-        this.showText = showText;
-    }
+	public void setShowText(boolean showText) {
+		this.showText = showText;
+	}
 }

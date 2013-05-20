@@ -24,6 +24,7 @@ package org.solovyev.android.view;
 
 import android.content.Context;
 import android.view.View;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,6 +34,6 @@ import javax.annotation.Nonnull;
  */
 public interface ViewBuilder<V extends View> {
 
-    @Nonnull
-    V build(@Nonnull Context context);
+	@Nonnull
+	V build(@Nonnull Context context);
 }

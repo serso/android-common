@@ -44,76 +44,76 @@ import javax.annotation.Nonnull;
  */
 public class SamplesApplication extends Application implements Locator {
 
-    @Nonnull
-    private CommonSQLiteOpenHelper sqliteOpenHelper;
+	@Nonnull
+	private CommonSQLiteOpenHelper sqliteOpenHelper;
 
-    @Nonnull
-    private DbItemService dbItemService;
+	@Nonnull
+	private DbItemService dbItemService;
 
-    @Nonnull
-    private TaskService taskService;
+	@Nonnull
+	private TaskService taskService;
 
-    public SamplesApplication() {
-    }
+	public SamplesApplication() {
+	}
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		super.onCreate();
 
-        App.init(this);
+		App.init(this);
 
-        sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
-        dbItemService = new DbItemServiceImpl();
-        taskService = Tasks.newTaskService();
-    }
+		sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
+		dbItemService = new DbItemServiceImpl();
+		taskService = Tasks.newTaskService();
+	}
 
-    @Nonnull
-    @Override
-    public SQLiteOpenHelper getSqliteOpenHelper() {
-        return this.sqliteOpenHelper;
-    }
+	@Nonnull
+	@Override
+	public SQLiteOpenHelper getSqliteOpenHelper() {
+		return this.sqliteOpenHelper;
+	}
 
-    @Nonnull
-    @Override
-    public DbItemDao getDbItemDao() {
-        // even can have multiple instances as they are synchronized on ONE SQLiteOpenHelper
-        // and daos have no states
-        return new SqliteDbItemDao(this, getSqliteOpenHelper());
-    }
+	@Nonnull
+	@Override
+	public DbItemDao getDbItemDao() {
+		// even can have multiple instances as they are synchronized on ONE SQLiteOpenHelper
+		// and daos have no states
+		return new SqliteDbItemDao(this, getSqliteOpenHelper());
+	}
 
-    @Nonnull
-    @Override
-    public DbItemService getDbItemService() {
-        return this.dbItemService;
-    }
+	@Nonnull
+	@Override
+	public DbItemService getDbItemService() {
+		return this.dbItemService;
+	}
 
-    @Nonnull
-    @Override
-    public TaskService getTaskService() {
-        return taskService;
-    }
+	@Nonnull
+	@Override
+	public TaskService getTaskService() {
+		return taskService;
+	}
 
-    @Nonnull
-    private SQLiteOpenHelperConfiguration getSqliteOpenHelperConfiguration() {
-        return new DbConfiguration();
-    }
+	@Nonnull
+	private SQLiteOpenHelperConfiguration getSqliteOpenHelperConfiguration() {
+		return new DbConfiguration();
+	}
 
-    private static final class DbConfiguration implements SQLiteOpenHelperConfiguration {
+	private static final class DbConfiguration implements SQLiteOpenHelperConfiguration {
 
-        @Nonnull
-        @Override
-        public String getName() {
-            return "samples";
-        }
+		@Nonnull
+		@Override
+		public String getName() {
+			return "samples";
+		}
 
-        @Override
-        public SQLiteDatabase.CursorFactory getCursorFactory() {
-            return null;
-        }
+		@Override
+		public SQLiteDatabase.CursorFactory getCursorFactory() {
+			return null;
+		}
 
-        @Override
-        public int getVersion() {
-            return 3;
-        }
-    }
+		@Override
+		public int getVersion() {
+			return 3;
+		}
+	}
 }

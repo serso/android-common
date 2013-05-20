@@ -31,9 +31,9 @@ import javax.annotation.Nullable;
  */
 public interface ButtonDef extends ViewDef {
 
-    @Nullable
-    Integer getDrawableResId();
+	@Nullable
+	Integer getDrawableResId();
 
-    @Nullable
-    CharSequence getText();
+	@Nullable
+	CharSequence getText();
 }

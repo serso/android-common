@@ -23,9 +23,10 @@
 package org.solovyev.android;
 
 import android.content.Context;
+import org.solovyev.common.text.Formatter;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -34,16 +35,16 @@ import org.solovyev.common.text.Formatter;
  */
 public final class LabeledFormatter<T extends Labeled> implements Formatter<T> {
 
-    @Nonnull
-    private Context context;
+	@Nonnull
+	private Context context;
 
-    public LabeledFormatter(@Nonnull Context context) {
-        this.context = context;
-    }
+	public LabeledFormatter(@Nonnull Context context) {
+		this.context = context;
+	}
 
-    @Override
-    public String formatValue(@Nullable T value) throws IllegalArgumentException {
-        assert value != null;
-        return context.getString(value.getCaptionResId());
-    }
+	@Override
+	public String formatValue(@Nullable T value) throws IllegalArgumentException {
+		assert value != null;
+		return context.getString(value.getCaptionResId());
+	}
 }

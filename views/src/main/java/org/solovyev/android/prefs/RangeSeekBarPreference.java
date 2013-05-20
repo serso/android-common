@@ -26,12 +26,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
-import javax.annotation.Nonnull;
 import org.solovyev.android.view.AbstractRangeSeekBar;
 import org.solovyev.android.view.NumberRangeSeekBar;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.interval.Intervals;
 import org.solovyev.common.text.NumberIntervalMapper;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -43,7 +44,7 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 	@Nonnull
 	private final Interval<T> boundaries;
 
-    @Nonnull
+	@Nonnull
 	private final T step;
 
 	public RangeSeekBarPreference(@Nonnull Context context, AttributeSet attrs, @Nonnull NumberIntervalMapper<T> mapper) {
@@ -53,35 +54,35 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 		boundaries = mapper.parseValue(attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "boundaries"));
 
 		final String stepValue = attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "step");
-        if ( stepValue == null ) {
-           step = getDefaultStep();
-        } else {
-           step = mapper.getMapper().parseValue(stepValue);
-        }
+		if (stepValue == null) {
+			step = getDefaultStep();
+		} else {
+			step = mapper.getMapper().parseValue(stepValue);
+		}
 
 	}
 
-    @Nonnull
-    protected abstract T getDefaultStep();
+	@Nonnull
+	protected abstract T getDefaultStep();
 
-    @Nonnull
+	@Nonnull
 	protected View createPreferenceView(@Nonnull Context context) {
-        int count = 0;
-        for ( T t = boundaries.getLeftLimit(); t.compareTo(boundaries.getRightLimit()) <= 0; t = add(t, step) ) {
-            count += 1;
-        }
-        final NumberRangeSeekBar<T> result = new NumberRangeSeekBar<T>(boundaries, count, context);
+		int count = 0;
+		for (T t = boundaries.getLeftLimit(); t.compareTo(boundaries.getRightLimit()) <= 0; t = add(t, step)) {
+			count += 1;
+		}
+		final NumberRangeSeekBar<T> result = new NumberRangeSeekBar<T>(boundaries, count, context);
 
-        result.setNotifyWhileDragging(true);
+		result.setNotifyWhileDragging(true);
 		result.setOnRangeSeekBarChangeListener(this);
 
 		return result;
 	}
 
-    @Nonnull
-    protected abstract T add(@Nonnull T l, @Nonnull T r);
+	@Nonnull
+	protected abstract T add(@Nonnull T l, @Nonnull T r);
 
-    @Override
+	@Override
 	protected LinearLayout.LayoutParams getParams() {
 		return null;
 	}
@@ -108,7 +109,7 @@ public abstract class RangeSeekBarPreference<T extends Number & Comparable<T>> e
 
 	private void setValueText(@Nonnull Interval<T> interval) {
 		final String t = String.valueOf(interval);
-        final String valueText = getValueText();
+		final String valueText = getValueText();
 		updateValueText(valueText == null ? t : t.concat(valueText));
 	}
 }

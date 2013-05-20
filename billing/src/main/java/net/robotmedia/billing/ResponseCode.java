@@ -25,10 +25,10 @@ package net.robotmedia.billing;
 import javax.annotation.Nonnull;
 
 /**
-* User: serso
-* Date: 1/17/12
-* Time: 1:29 PM
-*/
+ * User: serso
+ * Date: 1/17/12
+ * Time: 1:29 PM
+ */
 
 /**
  * Possible response codes from billing service

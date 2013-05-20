@@ -31,65 +31,65 @@ import javax.annotation.Nonnull;
  */
 public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeyboardControllerState<K> {
 
-    private boolean shifted;
+	private boolean shifted;
 
 	private boolean capsLock;
 
 	private boolean completion;
 
-    private boolean prediction;
+	private boolean prediction;
 
 	@Nonnull
 	private K keyboard;
 
-    private AKeyboardControllerStateImpl() {
-    }
+	private AKeyboardControllerStateImpl() {
+	}
 
-    @Nonnull
-    public static <K extends AKeyboard> AKeyboardControllerState<K> newDefaultState(@Nonnull K keyboard) {
-        final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
+	@Nonnull
+	public static <K extends AKeyboard> AKeyboardControllerState<K> newDefaultState(@Nonnull K keyboard) {
+		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
-        result.shifted = false;
-        result.capsLock = false;
-        result.completion = false;
-        result.prediction = false;
-        result.keyboard = keyboard;
+		result.shifted = false;
+		result.capsLock = false;
+		result.completion = false;
+		result.prediction = false;
+		result.keyboard = keyboard;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static <K extends AKeyboard> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @Nonnull K keyboard) {
-        final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
+	@Nonnull
+	public static <K extends AKeyboard> AKeyboardControllerState<K> newInstance(boolean prediction, boolean completion, @Nonnull K keyboard) {
+		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
 
-        result.shifted = false;
-        result.capsLock = false;
-        result.completion = completion;
-        result.prediction = prediction;
-        result.keyboard = keyboard;
+		result.shifted = false;
+		result.capsLock = false;
+		result.completion = completion;
+		result.prediction = prediction;
+		result.keyboard = keyboard;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean isShifted() {
-        return shifted;
-    }
+	@Override
+	public boolean isShifted() {
+		return shifted;
+	}
 
-    @Override
-    public boolean isCapsLock() {
-        return capsLock;
-    }
+	@Override
+	public boolean isCapsLock() {
+		return capsLock;
+	}
 
-    @Override
-    public boolean isCompletion() {
-        return completion;
-    }
+	@Override
+	public boolean isCompletion() {
+		return completion;
+	}
 
-    @Override
-    public boolean isPrediction() {
-        return prediction;
-    }
+	@Override
+	public boolean isPrediction() {
+		return prediction;
+	}
 
 	@Override
 	@Nonnull
@@ -100,34 +100,34 @@ public class AKeyboardControllerStateImpl<K extends AKeyboard> implements AKeybo
 	@Nonnull
 	@Override
 	public AKeyboardControllerState<K> copyForNewKeyboard(@Nonnull K keyboard) {
-        final AKeyboardControllerStateImpl<K> result = copy();
-        result.keyboard = keyboard;
-        return result;
+		final AKeyboardControllerStateImpl<K> result = copy();
+		result.keyboard = keyboard;
+		return result;
 	}
 
-    private AKeyboardControllerStateImpl<K> copy() {
-        final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
-        result.capsLock = this.capsLock;
-        result.prediction = this.prediction;
-        result.shifted = this.shifted;
-        result.completion = this.completion;
-        result.keyboard = this.keyboard;
-        return result;
-    }
+	private AKeyboardControllerStateImpl<K> copy() {
+		final AKeyboardControllerStateImpl<K> result = new AKeyboardControllerStateImpl<K>();
+		result.capsLock = this.capsLock;
+		result.prediction = this.prediction;
+		result.shifted = this.shifted;
+		result.completion = this.completion;
+		result.keyboard = this.keyboard;
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock) {
-        final AKeyboardControllerStateImpl<K> result = copy();
-        result.capsLock = capsLock;
-        return result;
-    }
+	@Nonnull
+	@Override
+	public AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock) {
+		final AKeyboardControllerStateImpl<K> result = copy();
+		result.capsLock = capsLock;
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public AKeyboardControllerState<K> copyForNewShift(boolean shifted) {
-        final AKeyboardControllerStateImpl<K> result = copy();
-        result.shifted = shifted;
-        return result;
-    }
+	@Nonnull
+	@Override
+	public AKeyboardControllerState<K> copyForNewShift(boolean shifted) {
+		final AKeyboardControllerStateImpl<K> result = copy();
+		result.shifted = shifted;
+		return result;
+	}
 }

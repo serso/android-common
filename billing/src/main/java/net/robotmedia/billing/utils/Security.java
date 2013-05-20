@@ -26,9 +26,9 @@ import android.content.Context;
 import android.util.Log;
 import net.robotmedia.billing.security.BillingSecurity;
 import net.robotmedia.billing.utils.AESObfuscator.ValidationException;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,9 +46,10 @@ public class Security {
 	private static final Object obfuscatorLock = new Object();
 
 
-	/** Generate and register nonce
-	 * @return nonce. This method guarantees that created nonce will be unique (i.e. there is only one instance of registered nonce)
+	/**
+	 * Generate and register nonce
 	 *
+	 * @return nonce. This method guarantees that created nonce will be unique (i.e. there is only one instance of registered nonce)
 	 */
 	public static long generateNonce() {
 		long nonce;
@@ -81,9 +82,8 @@ public class Security {
 	 * Obfuscates the source string using AES algorithm with specified salt
 	 *
 	 * @param context context
-	 * @param salt salt to beb used for obfuscation
-	 * @param source string to be obfuscated
-	 *
+	 * @param salt    salt to beb used for obfuscation
+	 * @param source  string to be obfuscated
 	 * @return obfuscated string. Null can be returned only if source string is null
 	 */
 	@Nullable
@@ -98,7 +98,7 @@ public class Security {
 		synchronized (obfuscatorLock) {
 			if (obfuscator == null) {
 
-                final String password = BillingSecurity.generatePassword(context);
+				final String password = BillingSecurity.generatePassword(context);
 
 				obfuscator = new AESObfuscator(salt, password);
 			}
@@ -107,13 +107,12 @@ public class Security {
 		}
 	}
 
-    /**
+	/**
 	 * Method unobfuscates the string using AES algorithm with specified salt.
 	 *
-	 * @param context context
-	 * @param salt unobfuscation salt (must be provided the same as was used in obfuscation)
+	 * @param context    context
+	 * @param salt       unobfuscation salt (must be provided the same as was used in obfuscation)
 	 * @param obfuscated string to be unobfuscated
-	 *
 	 * @return unobfuscated string. Null returned in two cases: either obfuscated string is null or unobfuscation failed due to some errors
 	 */
 	@Nullable

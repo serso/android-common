@@ -24,7 +24,6 @@ package org.solovyev.android.history;
 
 import android.util.Log;
 import android.view.MotionEvent;
-import javax.annotation.Nonnull;
 import org.solovyev.android.view.drag.DragButton;
 import org.solovyev.android.view.drag.DragDirection;
 import org.solovyev.android.view.drag.SimpleOnDragListener;
@@ -32,11 +31,13 @@ import org.solovyev.common.history.HistoryAction;
 import org.solovyev.common.history.HistoryControl;
 import org.solovyev.common.math.Point2d;
 
+import javax.annotation.Nonnull;
+
 /**
-* User: serso
-* Date: 9/16/11
-* Time: 11:36 PM
-*/
+ * User: serso
+ * Date: 9/16/11
+ * Time: 11:36 PM
+ */
 public class HistoryDragProcessor<T> implements SimpleOnDragListener.DragProcessor {
 
 	@Nonnull
@@ -53,9 +54,9 @@ public class HistoryDragProcessor<T> implements SimpleOnDragListener.DragProcess
 		Log.d(String.valueOf(dragButton.getId()), "History on drag event start: " + dragDirection);
 
 		final HistoryAction historyAction;
-		if ( dragDirection == DragDirection.up ) {
+		if (dragDirection == DragDirection.up) {
 			historyAction = HistoryAction.undo;
-		} else if ( dragDirection == DragDirection.down ) {
+		} else if (dragDirection == DragDirection.down) {
 			historyAction = HistoryAction.redo;
 		} else {
 			historyAction = null;

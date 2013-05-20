@@ -32,15 +32,18 @@ import android.view.*;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.Views;
 import org.solovyev.android.view.AndroidViewUtils;
 import org.solovyev.android.view.VibratorContainer;
-import org.solovyev.android.view.drag.*;
+import org.solovyev.android.view.drag.DirectionDragButton;
+import org.solovyev.android.view.drag.DragButton;
+import org.solovyev.android.view.drag.DragDirection;
+import org.solovyev.android.view.drag.SimpleOnDragListener;
 import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,267 +54,267 @@ import java.util.Map;
  */
 public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyboardView<DragAKeyboard>, SimpleOnDragListener.DragProcessor, View.OnTouchListener, View.OnClickListener {
 
-    @Nullable
-    private KeyboardView.OnKeyboardActionListener keyboardActionListener;
+	@Nullable
+	private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
-    @Nonnull
-    private AKeyboardButtonPreview preview;
+	@Nonnull
+	private AKeyboardButtonPreview preview;
 
-    @Nonnull
-    private final RepeatHelper repeatHelper = new RepeatHelper();
+	@Nonnull
+	private final RepeatHelper repeatHelper = new RepeatHelper();
 
-    @Nonnull
-    private final Map<View, DragAKeyboardButtonDef> defs = new HashMap<View, DragAKeyboardButtonDef>();
+	@Nonnull
+	private final Map<View, DragAKeyboardButtonDef> defs = new HashMap<View, DragAKeyboardButtonDef>();
 
-    @Nonnull
-    private final VibratorContainer vibrator;
+	@Nonnull
+	private final VibratorContainer vibrator;
 
-    @Nullable
-    private DragAKeyboard keyboard;
+	@Nullable
+	private DragAKeyboard keyboard;
 
-    public DragAndroidKeyboardView(Context context) {
-        super(context);
-        preview = new AKeyboardButtonPreview(this);
-        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
-    }
+	public DragAndroidKeyboardView(Context context) {
+		super(context);
+		preview = new AKeyboardButtonPreview(this);
+		vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
+	}
 
-    public DragAndroidKeyboardView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        preview = new AKeyboardButtonPreview(this);
-        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
-    }
+	public DragAndroidKeyboardView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		preview = new AKeyboardButtonPreview(this);
+		vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
+	}
 
-    public DragAndroidKeyboardView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        preview = new AKeyboardButtonPreview(this);
-        vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
-    }
+	public DragAndroidKeyboardView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		preview = new AKeyboardButtonPreview(this);
+		vibrator = new VibratorContainer((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE), PreferenceManager.getDefaultSharedPreferences(context), 1f);
+	}
 
-    @Override
-    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
-        this.keyboardActionListener = keyboardActionListener;
-    }
+	@Override
+	public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+		this.keyboardActionListener = keyboardActionListener;
+	}
 
-    @Override
-    public void setKeyboard(@Nonnull DragAKeyboard keyboard) {
-        setKeyboard(keyboard, null);
-    }
+	@Override
+	public void setKeyboard(@Nonnull DragAKeyboard keyboard) {
+		setKeyboard(keyboard, null);
+	}
 
-    @Override
-    public void close() {
+	@Override
+	public void close() {
 		this.preview.hide();
-    }
+	}
 
-    @Override
-    public void dismiss() {
-        this.preview.hide();
-    }
+	@Override
+	public void dismiss() {
+		this.preview.hide();
+	}
 
-    @Override
-    public void reload() {
-        if (keyboard != null) {
-            reloadView(keyboard, null);
-        }
-    }
+	@Override
+	public void reload() {
+		if (keyboard != null) {
+			reloadView(keyboard, null);
+		}
+	}
 
-    private void setKeyboard(@Nullable DragAKeyboard keyboard,
-                             @Nullable LayoutInflater layoutInflater) {
-        if (keyboard != null) {
-            this.keyboard = keyboard;
-            reloadView(keyboard, layoutInflater);
-        }
-    }
+	private void setKeyboard(@Nullable DragAKeyboard keyboard,
+							 @Nullable LayoutInflater layoutInflater) {
+		if (keyboard != null) {
+			this.keyboard = keyboard;
+			reloadView(keyboard, layoutInflater);
+		}
+	}
 
-    private void reloadView(@Nonnull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
-        dismiss();
+	private void reloadView(@Nonnull DragAKeyboard keyboard, @Nullable LayoutInflater layoutInflater) {
+		dismiss();
 
-        final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
+		final DragAKeyboard.KeyboardDef keyboardDef = keyboard.getKeyboardDef();
 
-        final Context context = this.getContext();
-        int buttonMargin = Views.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
+		final Context context = this.getContext();
+		int buttonMargin = Views.toPixels(context.getResources().getDisplayMetrics(), 0.5f);
 
-        if (layoutInflater == null) {
-            layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        }
+		if (layoutInflater == null) {
+			layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		}
 
-        preview.createPreviewView(layoutInflater);
+		preview.createPreviewView(layoutInflater);
 
-        final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
-        this.removeAllViews();
+		final SimpleOnDragListener.Preferences defaultPreferences = SimpleOnDragListener.getDefaultPreferences(context);
+		this.removeAllViews();
 
-        this.defs.clear();
+		this.defs.clear();
 
-        for (DragAKeyboard.RowDef rowDef : keyboardDef.getRowDefs()) {
-            final LinearLayout rowLayout = new LinearLayout(context);
-            rowLayout.setOrientation(LinearLayout.HORIZONTAL);
-            for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {
+		for (DragAKeyboard.RowDef rowDef : keyboardDef.getRowDefs()) {
+			final LinearLayout rowLayout = new LinearLayout(context);
+			rowLayout.setOrientation(LinearLayout.HORIZONTAL);
+			for (DragAKeyboardButtonDef buttonDef : rowDef.getButtonDefs()) {
 
-                Float weight = buttonDef.getLayoutWeight();
-                if (weight == null) {
-                    weight = 1f;
-                }
-                final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight);
+				Float weight = buttonDef.getLayoutWeight();
+				if (weight == null) {
+					weight = 1f;
+				}
+				final LayoutParams params = new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight);
 
-                Integer layoutMarginLeft = buttonDef.getLayoutMarginLeft();
-                if (layoutMarginLeft != null) {
-                    params.leftMargin = layoutMarginLeft;
-                } else {
-                    params.leftMargin = buttonMargin;
-                }
+				Integer layoutMarginLeft = buttonDef.getLayoutMarginLeft();
+				if (layoutMarginLeft != null) {
+					params.leftMargin = layoutMarginLeft;
+				} else {
+					params.leftMargin = buttonMargin;
+				}
 
-                Integer layoutMarginRight = buttonDef.getLayoutMarginRight();
-                if (layoutMarginRight != null) {
-                    params.rightMargin = layoutMarginRight;
-                } else {
-                    params.rightMargin = buttonMargin;
-                }
+				Integer layoutMarginRight = buttonDef.getLayoutMarginRight();
+				if (layoutMarginRight != null) {
+					params.rightMargin = layoutMarginRight;
+				} else {
+					params.rightMargin = buttonMargin;
+				}
 
-                params.topMargin = buttonMargin;
-                params.bottomMargin = buttonMargin;
+				params.topMargin = buttonMargin;
+				params.bottomMargin = buttonMargin;
 
-                final Integer drawableResId = buttonDef.getDrawableResId();
-                if (drawableResId == null) {
-                    final DirectionDragButton directionDragButton = (DirectionDragButton) layoutInflater.inflate(R.layout.drag_keyboard_drag_button, null);
-                    directionDragButton.applyDef(buttonDef);
-                    directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
-                    // we cannot use on touch listener here (in order to get repeat) as it will conflict with default DragButton logic
-                    directionDragButton.setOnClickListener(this);
-                    defs.put(directionDragButton, buttonDef);
-                    rowLayout.addView(directionDragButton, params);
-                } else {
-                    final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
-                    AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
-                    imageButton.setOnTouchListener(this);
-                    defs.put(imageButton, buttonDef);
-                    rowLayout.addView(imageButton, params);
-                }
-            }
-            final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
-            this.addView(rowLayout, params);
-        }
-    }
+				final Integer drawableResId = buttonDef.getDrawableResId();
+				if (drawableResId == null) {
+					final DirectionDragButton directionDragButton = (DirectionDragButton) layoutInflater.inflate(R.layout.drag_keyboard_drag_button, null);
+					directionDragButton.applyDef(buttonDef);
+					directionDragButton.setOnDragListener(new SimpleOnDragListener(this, defaultPreferences));
+					// we cannot use on touch listener here (in order to get repeat) as it will conflict with default DragButton logic
+					directionDragButton.setOnClickListener(this);
+					defs.put(directionDragButton, buttonDef);
+					rowLayout.addView(directionDragButton, params);
+				} else {
+					final ImageButton imageButton = (ImageButton) layoutInflater.inflate(R.layout.drag_keyboard_image_button, null);
+					AndroidViewUtils.applyButtonDef(imageButton, buttonDef);
+					imageButton.setOnTouchListener(this);
+					defs.put(imageButton, buttonDef);
+					rowLayout.addView(imageButton, params);
+				}
+			}
+			final LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
+			params.gravity = Gravity.CENTER_HORIZONTAL;
+			this.addView(rowLayout, params);
+		}
+	}
 
-    @Override
-    public boolean processDragEvent(@Nonnull DragDirection dragDirection, @Nonnull DragButton dragButton, @Nonnull Point2d startPoint2d, @Nonnull MotionEvent motionEvent) {
-        if (dragButton instanceof DirectionDragButton) {
-            final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
+	@Override
+	public boolean processDragEvent(@Nonnull DragDirection dragDirection, @Nonnull DragButton dragButton, @Nonnull Point2d startPoint2d, @Nonnull MotionEvent motionEvent) {
+		if (dragButton instanceof DirectionDragButton) {
+			final DirectionDragButton directionDragButton = (DirectionDragButton) dragButton;
 
-            vibrator.vibrate();
+			vibrator.vibrate();
 
-            final Integer keycode = getKeycode(dragDirection, dragButton);
+			final Integer keycode = getKeycode(dragDirection, dragButton);
 
-            return handleTextOrCode(dragButton, directionDragButton.getText(dragDirection), keycode, true, dragDirection);
-        }
-        return false;
-    }
+			return handleTextOrCode(dragButton, directionDragButton.getText(dragDirection), keycode, true, dragDirection);
+		}
+		return false;
+	}
 
-    private Integer getKeycode(@Nullable DragDirection dragDirection,
-                               @Nonnull View view) {
-        Integer keycode = null;
-        final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
-        if ( buttonDef != null ) {
-            if (dragDirection != null) {
-                keycode = buttonDef.getDirectionKeycode(dragDirection);
-            } else {
-                keycode = buttonDef.getKeycode();
-            }
+	private Integer getKeycode(@Nullable DragDirection dragDirection,
+							   @Nonnull View view) {
+		Integer keycode = null;
+		final DragAKeyboardButtonDef buttonDef = this.defs.get(view);
+		if (buttonDef != null) {
+			if (dragDirection != null) {
+				keycode = buttonDef.getDirectionKeycode(dragDirection);
+			} else {
+				keycode = buttonDef.getKeycode();
+			}
 
-        }
-        return keycode;
-    }
+		}
+		return keycode;
+	}
 
-    private boolean handleTextOrCode(@Nonnull View view,
-                                     @Nullable CharSequence text,
-                                     @Nullable Integer keycode,
-                                     boolean withPreview,
-                                     @Nullable DragDirection dragDirection) {
-        // we need to check if there is something in the tag
+	private boolean handleTextOrCode(@Nonnull View view,
+									 @Nullable CharSequence text,
+									 @Nullable Integer keycode,
+									 boolean withPreview,
+									 @Nullable DragDirection dragDirection) {
+		// we need to check if there is something in the tag
 
-        if (keycode != null) {
-            return handleKeycode(view, text, keycode, withPreview, dragDirection);
-        } else {
-            return handleText(view, text, withPreview, dragDirection);
-        }
-    }
+		if (keycode != null) {
+			return handleKeycode(view, text, keycode, withPreview, dragDirection);
+		} else {
+			return handleText(view, text, withPreview, dragDirection);
+		}
+	}
 
-    private boolean handleKeycode(@Nonnull View view,
-                                  @Nullable CharSequence text,
-                                  @Nonnull Integer keycode,
-                                  boolean withPreview,
-                                  @Nullable DragDirection dragDirection) {
-        if (withPreview) {
-            showPreview(view, text, dragDirection);
-        }
+	private boolean handleKeycode(@Nonnull View view,
+								  @Nullable CharSequence text,
+								  @Nonnull Integer keycode,
+								  boolean withPreview,
+								  @Nullable DragDirection dragDirection) {
+		if (withPreview) {
+			showPreview(view, text, dragDirection);
+		}
 
-        if (keyboardActionListener != null) {
-            keyboardActionListener.onKey(keycode, null);
-        }
+		if (keyboardActionListener != null) {
+			keyboardActionListener.onKey(keycode, null);
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    private boolean handleText(@Nonnull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
-        if (!Strings.isEmpty(text)) {
+	private boolean handleText(@Nonnull View view, @Nullable CharSequence text, boolean withPreview, @Nullable DragDirection dragDirection) {
+		if (!Strings.isEmpty(text)) {
 
-            if (withPreview) {
-                showPreview(view, text, dragDirection);
-            }
+			if (withPreview) {
+				showPreview(view, text, dragDirection);
+			}
 
-            if (keyboardActionListener != null) {
-                keyboardActionListener.onText(text);
-            }
+			if (keyboardActionListener != null) {
+				keyboardActionListener.onText(text);
+			}
 
-            return true;
-        }
-        return false;
-    }
+			return true;
+		}
+		return false;
+	}
 
-    private void showPreview(@Nonnull View view,
-                             @Nullable CharSequence text,
-                             @Nullable DragDirection direction) {
+	private void showPreview(@Nonnull View view,
+							 @Nullable CharSequence text,
+							 @Nullable DragDirection direction) {
 
-        final DragAKeyboardButtonDef buttonDef = defs.get(view);
+		final DragAKeyboardButtonDef buttonDef = defs.get(view);
 
-        if (buttonDef != null) {
+		if (buttonDef != null) {
 
-            CharSequence previewText;
-            if ( direction != null ) {
-                previewText = buttonDef.getPreviewDirectionText(direction);
-            } else {
-                previewText = buttonDef.getPreviewText();
-            }
+			CharSequence previewText;
+			if (direction != null) {
+				previewText = buttonDef.getPreviewDirectionText(direction);
+			} else {
+				previewText = buttonDef.getPreviewText();
+			}
 
 			Integer previewDrawableResId = null;
 
-            if (direction == null) {
-                previewDrawableResId = buttonDef.getPreviewDrawableResId();
-            }
+			if (direction == null) {
+				previewDrawableResId = buttonDef.getPreviewDrawableResId();
+			}
 
-            if (previewDrawableResId == null) {
+			if (previewDrawableResId == null) {
 				previewDrawableResId = buttonDef.getDrawableResId();
 			}
 
-            if ( previewText == null && previewDrawableResId == null ) {
-                previewText = text;
-            }
+			if (previewText == null && previewDrawableResId == null) {
+				previewText = text;
+			}
 
 			preview.showPreview(view, previewText, previewDrawableResId);
-        } else {
-            preview.showPreview(view, text, null);
-        }
-    }
+		} else {
+			preview.showPreview(view, text, null);
+		}
+	}
 
-    @Override
-    public boolean onTouch(@Nonnull final View v, @Nonnull MotionEvent event) {
+	@Override
+	public boolean onTouch(@Nonnull final View v, @Nonnull MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-                if ( isRepeatAllowed(v) ) {
-                    repeatHelper.keyDown(v, new RepeatKeydownRunnable(v));
-                } else {
-                    repeatHelper.keyDown(v, null);
-                    doKeydown(v);
-                }
+				if (isRepeatAllowed(v)) {
+					repeatHelper.keyDown(v, new RepeatKeydownRunnable(v));
+				} else {
+					repeatHelper.keyDown(v, null);
+					doKeydown(v);
+				}
 				return true;
 
 			case MotionEvent.ACTION_UP:
@@ -319,32 +322,32 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 				return true;
 		}
 
-        return false;
-    }
+		return false;
+	}
 
-    private boolean isRepeatAllowed(View v) {
-        boolean allowRepeat = false;
+	private boolean isRepeatAllowed(View v) {
+		boolean allowRepeat = false;
 
-        final DragAKeyboardButtonDef buttonDef = defs.get(v);
-        if ( buttonDef != null ) {
-            allowRepeat = buttonDef.allowRepeat();
-        }
+		final DragAKeyboardButtonDef buttonDef = defs.get(v);
+		if (buttonDef != null) {
+			allowRepeat = buttonDef.allowRepeat();
+		}
 
-        return allowRepeat;
-    }
+		return allowRepeat;
+	}
 
-    @Override
-    public void onClick(View v) {
-        vibrator.vibrate();
+	@Override
+	public void onClick(View v) {
+		vibrator.vibrate();
 
-        final Integer keycode = getKeycode(null, v);
+		final Integer keycode = getKeycode(null, v);
 
-        if (v instanceof TextView) {
-            handleTextOrCode(v, ((TextView) v).getText(), keycode, true, null);
-        } else {
-            handleTextOrCode(v, null, keycode, true, null);
-        }
-    }
+		if (v instanceof TextView) {
+			handleTextOrCode(v, ((TextView) v).getText(), keycode, true, null);
+		} else {
+			handleTextOrCode(v, null, keycode, true, null);
+		}
+	}
 
 	private class RepeatKeydownRunnable implements Runnable {
 
@@ -354,19 +357,19 @@ public class DragAndroidKeyboardView extends LinearLayout implements AndroidKeyb
 			this.view = view;
 		}
 
-        @Override
-        public void run() {
-            doKeydown(view);
-        }
-    }
+		@Override
+		public void run() {
+			doKeydown(view);
+		}
+	}
 
-    private void doKeydown(@Nonnull View view) {
-        final Integer keycode = getKeycode(null, view);
+	private void doKeydown(@Nonnull View view) {
+		final Integer keycode = getKeycode(null, view);
 
-        if (view instanceof TextView) {
-            handleTextOrCode(view, ((TextView) view).getText(), keycode, true, null);
-        } else {
-            handleTextOrCode(view, null, keycode, true, null);
-        }
-    }
+		if (view instanceof TextView) {
+			handleTextOrCode(view, ((TextView) view).getText(), keycode, true, null);
+		} else {
+			handleTextOrCode(view, null, keycode, true, null);
+		}
+	}
 }

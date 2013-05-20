@@ -24,6 +24,7 @@ package org.solovyev.android.http;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,8 +34,8 @@ import javax.annotation.Nonnull;
  */
 public interface HttpTransaction<R> {
 
-    @Nonnull
-    HttpUriRequest createRequest();
+	@Nonnull
+	HttpUriRequest createRequest();
 
-    R getResponse(@Nonnull HttpResponse response);
+	R getResponse(@Nonnull HttpResponse response);
 }

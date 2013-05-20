@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="acl_view_sidebar" type="id"/>
-    <item name="acl_view_main" type="id"/>
+	<item name="acl_view_sidebar" type="id" />
+	<item name="acl_view_main" type="id" />
 </resources>

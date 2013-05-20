@@ -22,10 +22,10 @@
 
 package org.solovyev.android.properties;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.JCloneable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
@@ -37,24 +37,24 @@ import java.util.Map;
  */
 public interface MutableAProperties extends AProperties, JCloneable<MutableAProperties>, Serializable {
 
-    @Nonnull
-    @Override
-    MutableAProperties clone();
+	@Nonnull
+	@Override
+	MutableAProperties clone();
 
-    @Nonnull
-    AProperty setProperty(@Nonnull String name, @Nonnull String value);
+	@Nonnull
+	AProperty setProperty(@Nonnull String name, @Nonnull String value);
 
-    void setProperty(@Nonnull AProperty property);
+	void setProperty(@Nonnull AProperty property);
 
-    @Nullable
-    AProperty removeProperty(@Nonnull String name);
+	@Nullable
+	AProperty removeProperty(@Nonnull String name);
 
-    void clearProperties();
+	void clearProperties();
 
-    @Nonnull
-    Map<String, AProperty> getProperties();
+	@Nonnull
+	Map<String, AProperty> getProperties();
 
-    void setPropertiesFrom(@Nonnull MutableAProperties that);
+	void setPropertiesFrom(@Nonnull MutableAProperties that);
 
-    void setPropertiesFrom(@Nonnull Collection<AProperty> properties);
+	void setPropertiesFrom(@Nonnull Collection<AProperty> properties);
 }

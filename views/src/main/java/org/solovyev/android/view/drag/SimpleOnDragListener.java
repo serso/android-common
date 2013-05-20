@@ -26,8 +26,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.MotionEvent;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.MutableObject;
 import org.solovyev.common.interval.Interval;
@@ -37,6 +35,8 @@ import org.solovyev.common.math.Point2d;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.NumberIntervalMapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -209,7 +209,7 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 				if (value != null) {
 					final Interval<Float> intervalPref = transformInterval(preferenceType, dragDirection, mapper.parseValue(value));
 
-					Log.d(SimpleOnDragListener.class.getName(), "Preference loaded for " + dragDirection +". Id: " + preferenceId + ", value: " + intervalPref.toString());
+					Log.d(SimpleOnDragListener.class.getName(), "Preference loaded for " + dragDirection + ". Id: " + preferenceId + ", value: " + intervalPref.toString());
 
 					final DragPreference directionPreference = new DragPreference(dragDirection, intervalPref);
 
@@ -229,36 +229,36 @@ public class SimpleOnDragListener implements OnDragListener, DragPreferencesChan
 
 	@Nonnull
 	public static Interval<Float> transformInterval(@Nonnull PreferenceType preferenceType,
-                                                    @Nonnull DragDirection dragDirection,
-                                                    @Nonnull Interval<Float> interval) {
+													@Nonnull DragDirection dragDirection,
+													@Nonnull Interval<Float> interval) {
 
-        if (preferenceType == PreferenceType.angle) {
+		if (preferenceType == PreferenceType.angle) {
 			final Float leftLimit = interval.getLeftLimit();
 			final Float rightLimit = interval.getRightLimit();
 
-            if (leftLimit != null && rightLimit != null) {
-                final Float newLeftLimit;
-                final Float newRightLimit;
+			if (leftLimit != null && rightLimit != null) {
+				final Float newLeftLimit;
+				final Float newRightLimit;
 
-                if (dragDirection == DragDirection.up) {
-                    newLeftLimit = 180f - rightLimit;
-                    newRightLimit = 180f - leftLimit;
-                } else if (dragDirection == DragDirection.left) {
-                    newLeftLimit = 90f - rightLimit;
-                    newRightLimit = 90f + rightLimit;
-                } else if (dragDirection == DragDirection.right) {
-                    newLeftLimit = 90f - rightLimit;
-                    newRightLimit = 90f + rightLimit;
-                } else {
-                    newLeftLimit = leftLimit;
-                    newRightLimit = rightLimit;
-                }
+				if (dragDirection == DragDirection.up) {
+					newLeftLimit = 180f - rightLimit;
+					newRightLimit = 180f - leftLimit;
+				} else if (dragDirection == DragDirection.left) {
+					newLeftLimit = 90f - rightLimit;
+					newRightLimit = 90f + rightLimit;
+				} else if (dragDirection == DragDirection.right) {
+					newLeftLimit = 90f - rightLimit;
+					newRightLimit = 90f + rightLimit;
+				} else {
+					newLeftLimit = leftLimit;
+					newRightLimit = rightLimit;
+				}
 
-                return Intervals.newClosedInterval(newLeftLimit, newRightLimit);
-            }
-        }
+				return Intervals.newClosedInterval(newLeftLimit, newRightLimit);
+			}
+		}
 
-        return interval;
+		return interval;
 	}
 
 

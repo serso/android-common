@@ -26,8 +26,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -40,69 +40,69 @@ import java.util.Scanner;
  */
 public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "DbOperation";
+	private static final String TAG = "DbOperation";
 
-    @Nonnull
-    protected final Context context;
+	@Nonnull
+	protected final Context context;
 
-    @Nonnull
-    private String databaseName;
+	@Nonnull
+	private String databaseName;
 
-    private int version;
+	private int version;
 
-    public CommonSQLiteOpenHelper(@Nonnull Context context, @Nonnull SQLiteOpenHelperConfiguration configuration) {
-        super(context.getApplicationContext(), configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
-        this.context = context.getApplicationContext();
-        this.databaseName = configuration.getName();
-        this.version = configuration.getVersion();
-    }
+	public CommonSQLiteOpenHelper(@Nonnull Context context, @Nonnull SQLiteOpenHelperConfiguration configuration) {
+		super(context.getApplicationContext(), configuration.getName(), configuration.getCursorFactory(), configuration.getVersion());
+		this.context = context.getApplicationContext();
+		this.databaseName = configuration.getName();
+		this.version = configuration.getVersion();
+	}
 
-    @Override
-    public void onCreate(@Nonnull SQLiteDatabase db) {
-        onUpgrade(db, 0, this.version);
-    }
+	@Override
+	public void onCreate(@Nonnull SQLiteDatabase db) {
+		onUpgrade(db, 0, this.version);
+	}
 
-    @Override
-    public void onUpgrade(@Nonnull SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "Upgrading database, old version: " + oldVersion + ", new version: " + newVersion);
+	@Override
+	public void onUpgrade(@Nonnull SQLiteDatabase db, int oldVersion, int newVersion) {
+		Log.d(TAG, "Upgrading database, old version: " + oldVersion + ", new version: " + newVersion);
 
-        final DecimalFormat decimalFormat = new DecimalFormat("000");
+		final DecimalFormat decimalFormat = new DecimalFormat("000");
 
-        for (int version = oldVersion + 1; version <= newVersion; version++) {
-            try {
-                // prepare version based postfix
-                final String fileVersionPostfix = decimalFormat.format(version);
+		for (int version = oldVersion + 1; version <= newVersion; version++) {
+			try {
+				// prepare version based postfix
+				final String fileVersionPostfix = decimalFormat.format(version);
 
-                final String fileName = "db_" + databaseName + "_" + fileVersionPostfix + ".sql";
+				final String fileName = "db_" + databaseName + "_" + fileVersionPostfix + ".sql";
 
-                Log.d(TAG, "Reading " + fileName + "...");
+				Log.d(TAG, "Reading " + fileName + "...");
 
-                // read sqls from file
-                final String sqls = convertStreamToString(context.getAssets().open(fileName));
+				// read sqls from file
+				final String sqls = convertStreamToString(context.getAssets().open(fileName));
 
-                Log.d(TAG, fileName + " successfully read, size: " + sqls.length());
+				Log.d(TAG, fileName + " successfully read, size: " + sqls.length());
 
 
-                // batch execute
-                new BatchDbTransaction(sqls, ";\n").batchQuery(db);
+				// batch execute
+				new BatchDbTransaction(sqls, ";\n").batchQuery(db);
 
-            } catch (FileNotFoundException e) {
-                Log.d(TAG, e.getMessage());
-                // ok, probably file not exists
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                throw new RuntimeException(e);
-            }
-        }
-    }
+			} catch (FileNotFoundException e) {
+				Log.d(TAG, e.getMessage());
+				// ok, probably file not exists
+			} catch (IOException e) {
+				Log.e(TAG, e.getMessage());
+				throw new RuntimeException(e);
+			}
+		}
+	}
 
-    @Nonnull
-    public String convertStreamToString(java.io.InputStream is) {
-        try {
-            return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
-        } catch (java.util.NoSuchElementException e) {
-            return "";
-        }
-    }
+	@Nonnull
+	public String convertStreamToString(java.io.InputStream is) {
+		try {
+			return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
+		} catch (java.util.NoSuchElementException e) {
+			return "";
+		}
+	}
 }
 

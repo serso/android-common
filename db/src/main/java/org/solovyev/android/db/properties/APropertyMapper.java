@@ -36,23 +36,23 @@ import javax.annotation.Nonnull;
  */
 public class APropertyMapper implements Converter<Cursor, AProperty> {
 
-    @Nonnull
-    private static final APropertyMapper instance = new APropertyMapper();
+	@Nonnull
+	private static final APropertyMapper instance = new APropertyMapper();
 
-    private APropertyMapper() {
-    }
+	private APropertyMapper() {
+	}
 
-    @Nonnull
-    public static APropertyMapper getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static APropertyMapper getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public AProperty convert(@Nonnull Cursor cursor) {
-        final String id = cursor.getString(0);
-        final String name = cursor.getString(1);
-        final String value = cursor.getString(2);
-        return Properties.newProperty(name, value);
-    }
+	@Nonnull
+	@Override
+	public AProperty convert(@Nonnull Cursor cursor) {
+		final String id = cursor.getString(0);
+		final String name = cursor.getString(1);
+		final String value = cursor.getString(2);
+		return Properties.newProperty(name, value);
+	}
 }

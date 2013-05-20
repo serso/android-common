@@ -24,6 +24,7 @@ package org.solovyev.android.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,24 +34,24 @@ import javax.annotation.Nonnull;
  */
 public abstract class AbstractDbQuery<R> implements DbQuery<R> {
 
-    @Nonnull
-    private final Context context;
+	@Nonnull
+	private final Context context;
 
-    @Nonnull
-    private final SQLiteOpenHelper sqliteOpenHelper;
+	@Nonnull
+	private final SQLiteOpenHelper sqliteOpenHelper;
 
-    protected AbstractDbQuery(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
-        this.context = context;
-        this.sqliteOpenHelper = sqliteOpenHelper;
-    }
+	protected AbstractDbQuery(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
+		this.context = context;
+		this.sqliteOpenHelper = sqliteOpenHelper;
+	}
 
-    @Nonnull
-    protected Context getContext() {
-        return context;
-    }
+	@Nonnull
+	protected Context getContext() {
+		return context;
+	}
 
-    @Nonnull
-    protected SQLiteOpenHelper getSqliteOpenHelper() {
-        return sqliteOpenHelper;
-    }
+	@Nonnull
+	protected SQLiteOpenHelper getSqliteOpenHelper() {
+		return sqliteOpenHelper;
+	}
 }

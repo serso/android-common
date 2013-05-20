@@ -26,20 +26,20 @@ import javax.annotation.Nonnull;
 
 public class FloatPreferenceTest extends AbstractPreferenceTest<Float> {
 
-    @Nonnull
-    @Override
-    protected Preference<Float> createPreference(@Nonnull String key, @Nonnull Float defaultValue) {
-        return FloatPreference.of(key, defaultValue);
-    }
+	@Nonnull
+	@Override
+	protected Preference<Float> createPreference(@Nonnull String key, @Nonnull Float defaultValue) {
+		return FloatPreference.of(key, defaultValue);
+	}
 
-    @Nonnull
-    @Override
-    protected Float createDefaultValue() {
-        return 23423f;
-    }
+	@Nonnull
+	@Override
+	protected Float createDefaultValue() {
+		return 23423f;
+	}
 
-    @Override
-    protected Float createValue() {
-        return -0f;
-    }
+	@Override
+	protected Float createValue() {
+		return -0f;
+	}
 }

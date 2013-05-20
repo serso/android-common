@@ -35,10 +35,10 @@ import org.solovyev.common.interval.Intervals;
  * Time: 3:01 AM
  */
 public final class Preferences {
-    public static final Preference<Choice> toBeOrNotTobe = StringPreference.ofEnum("to_be_or_not_to_be", Choice.to_be, Choice.class);
-    public static final Preference<Integer> integerNumber = NumberToStringPreference.of("integer_number", 5, Integer.class);
-    public static final Preference<Double> doubleNumber = NumberToStringPreference.of("double_number", 0.5d, Double.class);
-    public static final Preference<Country> country = StringPreference.ofEnum("country", Country.russia, Country.class);
-    public static final Preference<Interval<Float>> floatInterval = NumberIntervalPreference.of("float_interval", Intervals.newClosedInterval(35f, 350f), Float.class);
-    public static final Preference<Interval<Integer>> integerInterval = NumberIntervalPreference.of("integer_interval", Intervals.newClosedInterval(35, 350), Integer.class);
+	public static final Preference<Choice> toBeOrNotTobe = StringPreference.ofEnum("to_be_or_not_to_be", Choice.to_be, Choice.class);
+	public static final Preference<Integer> integerNumber = NumberToStringPreference.of("integer_number", 5, Integer.class);
+	public static final Preference<Double> doubleNumber = NumberToStringPreference.of("double_number", 0.5d, Double.class);
+	public static final Preference<Country> country = StringPreference.ofEnum("country", Country.russia, Country.class);
+	public static final Preference<Interval<Float>> floatInterval = NumberIntervalPreference.of("float_interval", Intervals.newClosedInterval(35f, 350f), Float.class);
+	public static final Preference<Interval<Integer>> integerInterval = NumberIntervalPreference.of("integer_interval", Intervals.newClosedInterval(35, 350), Integer.class);
 }

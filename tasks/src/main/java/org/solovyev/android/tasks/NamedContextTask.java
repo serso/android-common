@@ -11,6 +11,6 @@ import javax.annotation.Nonnull;
  */
 public interface NamedContextTask<C extends Context, V> extends ContextTask<C, V> {
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 }

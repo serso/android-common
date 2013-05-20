@@ -29,7 +29,7 @@ package org.solovyev.android.keyboard;
  */
 public class LatinDragInputMethodService extends AbstractAKeyboardInputMethodService {
 
-    public LatinDragInputMethodService() {
-        super(new LatinDragKeyboardController());
-    }
+	public LatinDragInputMethodService() {
+		super(new LatinDragKeyboardController());
+	}
 }

@@ -26,27 +26,27 @@ import javax.annotation.Nonnull;
 
 public class DoubleToStringPreferenceTest extends NumberToStringPreferenceTest<Double> {
 
-    @Override
-    public void testPreferences() throws Exception {
-        super.testPreferences();
+	@Override
+	public void testPreferences() throws Exception {
+		super.testPreferences();
 
-        runPreferenceTest(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY);
-    }
+		runPreferenceTest(Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY);
+	}
 
-    @Nonnull
-    @Override
-    protected Class<Double> getNumberClass() {
-        return Double.class;
-    }
+	@Nonnull
+	@Override
+	protected Class<Double> getNumberClass() {
+		return Double.class;
+	}
 
-    @Nonnull
-    @Override
-    protected Double createDefaultValue() {
-        return 324d;
-    }
+	@Nonnull
+	@Override
+	protected Double createDefaultValue() {
+		return 324d;
+	}
 
-    @Override
-    protected Double createValue() {
-        return -0d;
-    }
+	@Override
+	protected Double createValue() {
+		return -0d;
+	}
 }

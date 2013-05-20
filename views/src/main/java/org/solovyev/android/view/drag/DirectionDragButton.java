@@ -30,15 +30,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.R;
 import org.solovyev.common.math.Point2d;
+import org.solovyev.common.text.NumberParser;
 import org.solovyev.common.text.StringCollections;
 import org.solovyev.common.text.Strings;
-import org.solovyev.common.text.NumberParser;
-import org.solovyev.common.text.Strings;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +56,7 @@ public class DirectionDragButton extends DragButton {
 	@Nonnull
 	private final static Integer DEFAULT_DIRECTION_TEXT_ALPHA = 140;
 
-	private final static int  DEFAULT_DIRECTION_TEXT_COLOR = Color.WHITE;
+	private final static int DEFAULT_DIRECTION_TEXT_COLOR = Color.WHITE;
 
 	@Nonnull
 	private final static String DEFAULT_DIRECTION_TEXT_SCALE = "0.33;0.33;0.33;0.33";
@@ -276,31 +275,31 @@ public class DirectionDragButton extends DragButton {
 		init(context, attrs);
 	}
 
-    public DirectionDragButton(Context context, @Nonnull DirectionDragButtonDef directionDragButtonDef) {
-        super(context, directionDragButtonDef);
-        init(context, directionDragButtonDef);
-    }
+	public DirectionDragButton(Context context, @Nonnull DirectionDragButtonDef directionDragButtonDef) {
+		super(context, directionDragButtonDef);
+		init(context, directionDragButtonDef);
+	}
 
-    private void init(@Nonnull Context context,
-                      @Nonnull DirectionDragButtonDef directionDragButtonDef) {
-        for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
-            final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
-            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, Strings.getNotEmpty(directionText, "")));
-        }
+	private void init(@Nonnull Context context,
+					  @Nonnull DirectionDragButtonDef directionDragButtonDef) {
+		for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
+			final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
+			this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, Strings.getNotEmpty(directionText, "")));
+		}
 
-        this.initialized = true;
-    }
+		this.initialized = true;
+	}
 
-    public void applyDef(@Nonnull DirectionDragButtonDef directionDragButtonDef) {
-        super.applyDef(directionDragButtonDef);
+	public void applyDef(@Nonnull DirectionDragButtonDef directionDragButtonDef) {
+		super.applyDef(directionDragButtonDef);
 
-        for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
-            final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
-            this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, Strings.getNotEmpty(directionText, "")));
-        }
-    }
+		for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
+			final CharSequence directionText = directionDragButtonDef.getText(guiDragDirection.dragDirection);
+			this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, Strings.getNotEmpty(directionText, "")));
+		}
+	}
 
-    private void init(@Nonnull Context context, @Nonnull AttributeSet attrs) {
+	private void init(@Nonnull Context context, @Nonnull AttributeSet attrs) {
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionDragButton);
 
@@ -313,7 +312,7 @@ public class DirectionDragButton extends DragButton {
 						this.directionTextColor = a.getColor(attr, DEFAULT_DIRECTION_TEXT_COLOR);
 						break;
 					case R.styleable.DirectionDragButton_directionTextScale:
-                        this.directionTextScale = a.getString(attr);
+						this.directionTextScale = a.getString(attr);
 						break;
 					case R.styleable.DirectionDragButton_directionTextAlpha:
 						this.directionTextAlpha = a.getInt(attr, DEFAULT_DIRECTION_TEXT_ALPHA);
@@ -357,16 +356,16 @@ public class DirectionDragButton extends DragButton {
 			final Paint basePaint = getPaint();
 			final Resources resources = getResources();
 
-            for (DirectionTextData directionTextData : directionTextDataMap.values()) {
-                initDirectionTextPaint(basePaint, directionTextData, resources);
+			for (DirectionTextData directionTextData : directionTextDataMap.values()) {
+				initDirectionTextPaint(basePaint, directionTextData, resources);
 
-                final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
-                final String directionText = directionTextData.getText();
-                final Paint directionPaint = directionTextData.getPaint();
+				final GuiDragDirection guiDragDirection = directionTextData.getGuiDragDirection();
+				final String directionText = directionTextData.getText();
+				final Paint directionPaint = directionTextData.getPaint();
 
-                directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
-            }
-        }
+				directionTextData.setPosition(guiDragDirection.getTextPosition(directionPaint, basePaint, directionText, getText(), getWidth(), getHeight()));
+			}
+		}
 	}
 
 
@@ -425,7 +424,7 @@ public class DirectionDragButton extends DragButton {
 	public void showDirectionText(boolean showDirectionText, @Nonnull DragDirection direction) {
 		final GuiDragDirection guiDragDirection = GuiDragDirection.valueOf(direction);
 		final DirectionTextData directionTextData = this.directionTextDataMap.get(guiDragDirection);
-		if ( directionTextData != null ) {
+		if (directionTextData != null) {
 			directionTextData.setShowText(showDirectionText);
 		}
 	}
@@ -433,10 +432,10 @@ public class DirectionDragButton extends DragButton {
 	@Nullable
 	private String getText(@Nonnull GuiDragDirection direction) {
 		DirectionTextData directionTextData = this.directionTextDataMap.get(direction);
-		if ( directionTextData == null ) {
+		if (directionTextData == null) {
 			return null;
 		} else {
-			if ( directionTextData.isShowText() ) {
+			if (directionTextData.isShowText()) {
 				return directionTextData.getText();
 			} else {
 				return null;

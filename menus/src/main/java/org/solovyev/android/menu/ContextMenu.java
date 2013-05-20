@@ -23,6 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ import javax.annotation.Nullable;
  * Note: if you want android menu (menu for Activity or Fragment) use {@link ActivityMenu}
  *
  * @param <MI> menu item
- * @param <D> data to be passed to menu item
+ * @param <D>  data to be passed to menu item
  */
 public interface ContextMenu<MI extends LabeledMenuItem<D>, D> {
 
-    @Nullable
-    MI itemAt(int i);
+	@Nullable
+	MI itemAt(int i);
 
 	@Nonnull
 	CharSequence[] getMenuCaptions(@Nonnull final Context context);

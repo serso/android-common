@@ -24,6 +24,7 @@ package org.solovyev.android.view;
 
 import android.graphics.Canvas;
 import android.view.View;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,5 +34,5 @@ import javax.annotation.Nonnull;
  */
 public interface ViewGrayable extends Grayable {
 
-    void dispatchDraw(@Nonnull View view, @Nonnull Canvas canvas);
+	void dispatchDraw(@Nonnull View view, @Nonnull Canvas canvas);
 }

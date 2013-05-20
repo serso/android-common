@@ -24,6 +24,7 @@ package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
 import android.inputmethodservice.Keyboard;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,37 +34,37 @@ import javax.annotation.Nonnull;
  */
 public class AndroidAKeyboard extends AbstractAKeyboard {
 
-    @Nonnull
-    private Keyboard keyboard;
+	@Nonnull
+	private Keyboard keyboard;
 
-    private AndroidAKeyboard(@Nonnull String keyboardId) {
+	private AndroidAKeyboard(@Nonnull String keyboardId) {
 		super(keyboardId);
 	}
 
-    @Nonnull
-    public static AndroidAKeyboard newInstance(@Nonnull String keyboardId, @Nonnull Keyboard keyboard) {
-        final AndroidAKeyboard result = new AndroidAKeyboard(keyboardId);
-        result.keyboard = keyboard;
-        return result;
-    }
+	@Nonnull
+	public static AndroidAKeyboard newInstance(@Nonnull String keyboardId, @Nonnull Keyboard keyboard) {
+		final AndroidAKeyboard result = new AndroidAKeyboard(keyboardId);
+		result.keyboard = keyboard;
+		return result;
+	}
 
-    @Nonnull
-    public Keyboard getKeyboard() {
-        return keyboard;
-    }
+	@Nonnull
+	public Keyboard getKeyboard() {
+		return keyboard;
+	}
 
-    @Override
-    public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
-        // todo serso: refactor
-        if ( keyboard instanceof LatinKeyboard) {
-            ((LatinKeyboard) keyboard).setImeOptions(resources, imeOptions);
-        }
-    }
+	@Override
+	public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
+		// todo serso: refactor
+		if (keyboard instanceof LatinKeyboard) {
+			((LatinKeyboard) keyboard).setImeOptions(resources, imeOptions);
+		}
+	}
 
-    @Override
-    public void setShifted(boolean shiftState) {
-        keyboard.setShifted(shiftState);
-    }
+	@Override
+	public void setShifted(boolean shiftState) {
+		keyboard.setShifted(shiftState);
+	}
 
 
 }

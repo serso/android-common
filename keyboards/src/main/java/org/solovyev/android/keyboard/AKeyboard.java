@@ -23,6 +23,7 @@
 package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,9 +33,9 @@ import javax.annotation.Nonnull;
  */
 public interface AKeyboard {
 
-    void setImeOptions(@Nonnull Resources resources, int imeOptions);
+	void setImeOptions(@Nonnull Resources resources, int imeOptions);
 
-    void setShifted(boolean shifted);
+	void setShifted(boolean shifted);
 
 	@Nonnull
 	String getKeyboardId();

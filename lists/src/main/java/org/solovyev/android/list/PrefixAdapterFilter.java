@@ -34,13 +34,13 @@ import javax.annotation.Nullable;
  */
 public class PrefixAdapterFilter<T> extends AdapterFilter<T> {
 
-    @Override
-    protected JPredicate<T> getFilter(@Nullable CharSequence prefix) {
-        return new PrefixFilter<T>(prefix == null ? "" : prefix.toString().toLowerCase());
-    }
+	@Override
+	protected JPredicate<T> getFilter(@Nullable CharSequence prefix) {
+		return new PrefixFilter<T>(prefix == null ? "" : prefix.toString().toLowerCase());
+	}
 
-    public PrefixAdapterFilter(@Nonnull Helper<T> helper) {
-        super(helper);
-    }
+	public PrefixAdapterFilter(@Nonnull Helper<T> helper) {
+		super(helper);
+	}
 }
 

@@ -23,9 +23,9 @@
 package net.robotmedia.billing.model;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
 import org.solovyev.android.db.AndroidDbUtils;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TransactionManager {

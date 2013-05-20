@@ -23,6 +23,6 @@
   -->
 
 <resources>
-    <string name="c_confirmation">Confirmation</string>
-    <string name="c_error">Error</string>
+	<string name="c_confirmation">Confirmation</string>
+	<string name="c_error">Error</string>
 </resources>

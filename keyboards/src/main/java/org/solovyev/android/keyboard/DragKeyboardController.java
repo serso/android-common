@@ -25,6 +25,7 @@ package org.solovyev.android.keyboard;
 import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.EditorInfo;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -34,29 +35,29 @@ import javax.annotation.Nonnull;
  */
 public abstract class DragKeyboardController extends AbstractAndroidKeyboardController<DragAKeyboard> {
 
-    @Nonnull
-    @Override
-    protected AKeyboardViewWithSuggestions<DragAKeyboard> createKeyboardView0(@Nonnull Context context) {
-        return new AKeyboardViewWithSuggestionsImpl<DragAKeyboard, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
-    }
+	@Nonnull
+	@Override
+	protected AKeyboardViewWithSuggestions<DragAKeyboard> createKeyboardView0(@Nonnull Context context) {
+		return new AKeyboardViewWithSuggestionsImpl<DragAKeyboard, DragAndroidKeyboardView>(R.layout.drag_keyboard, this, getInputMethodService());
+	}
 
-    @Nonnull
-    @Override
-    protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
-        return AKeyboardControllerStateImpl.newDefaultState(createKeyboardDef(inputMethodService));
-    }
+	@Nonnull
+	@Override
+	protected AKeyboardControllerState<DragAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
+		return AKeyboardControllerStateImpl.newDefaultState(createKeyboardDef(inputMethodService));
+	}
 
-    protected abstract DragAKeyboard createKeyboardDef(@Nonnull Context context);
+	protected abstract DragAKeyboard createKeyboardDef(@Nonnull Context context);
 
-    @Nonnull
-    @Override
-    public AKeyboardControllerState<DragAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
-        return getState();
-    }
+	@Nonnull
+	@Override
+	public AKeyboardControllerState<DragAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
+		return getState();
+	}
 
-    @Nonnull
-    @Override
-    protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
-        return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
-    }
+	@Nonnull
+	@Override
+	protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
+		return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
+	}
 }

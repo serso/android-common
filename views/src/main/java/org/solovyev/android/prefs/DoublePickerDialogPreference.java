@@ -24,14 +24,14 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.DoubleRange;
 import org.solovyev.android.view.NumberRange;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.Formatter;
 import org.solovyev.common.text.NumberIntervalMapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 
 /**
@@ -41,49 +41,49 @@ import java.text.DecimalFormat;
  */
 public class DoublePickerDialogPreference extends NumberPickerDialogPreference<Double> {
 
-    @Nonnull
-    private static final Formatter<Double> simpleFormatter = new DoubleFormatter(2);
+	@Nonnull
+	private static final Formatter<Double> simpleFormatter = new DoubleFormatter(2);
 
-    @Nonnull
-    @Override
-    protected Double getDefaultStep() {
-        return 1d;
-    }
+	@Nonnull
+	@Override
+	protected Double getDefaultStep() {
+		return 1d;
+	}
 
-    @Nonnull
-    @Override
-    protected NumberRange<Double> createRange(@Nonnull Interval<Double> boundaries, @Nonnull Double step, @Nonnull Double selected) {
-        return DoubleRange.newInstance(boundaries.getLeftLimit(), boundaries.getRightLimit(), step, selected, simpleFormatter);
-    }
+	@Nonnull
+	@Override
+	protected NumberRange<Double> createRange(@Nonnull Interval<Double> boundaries, @Nonnull Double step, @Nonnull Double selected) {
+		return DoubleRange.newInstance(boundaries.getLeftLimit(), boundaries.getRightLimit(), step, selected, simpleFormatter);
+	}
 
-    public DoublePickerDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, NumberIntervalMapper.of(Double.class));
-    }
+	public DoublePickerDialogPreference(Context context, AttributeSet attrs) {
+		super(context, attrs, NumberIntervalMapper.of(Double.class));
+	}
 
-    private static class DoubleFormatter implements Formatter<Double> {
+	private static class DoubleFormatter implements Formatter<Double> {
 
-        @Nonnull
-        private final DecimalFormat df;
+		@Nonnull
+		private final DecimalFormat df;
 
-        private DoubleFormatter(int numberOfDecimalDigits) {
-            final StringBuilder sb = new StringBuilder("#.#");
-            for (int i = 1; i < numberOfDecimalDigits; i++) {
-                sb.append("#");
-            }
+		private DoubleFormatter(int numberOfDecimalDigits) {
+			final StringBuilder sb = new StringBuilder("#.#");
+			for (int i = 1; i < numberOfDecimalDigits; i++) {
+				sb.append("#");
+			}
 
-            this.df = new DecimalFormat(sb.toString());
-        }
+			this.df = new DecimalFormat(sb.toString());
+		}
 
-        @Override
-        public String formatValue(@Nullable Double value) throws IllegalArgumentException {
+		@Override
+		public String formatValue(@Nullable Double value) throws IllegalArgumentException {
 
-            if (value == null) {
-                return "null";
-            } else {
-                synchronized (df) {
-                    return df.format(value);
-                }
-            }
-        }
-    }
+			if (value == null) {
+				return "null";
+			} else {
+				synchronized (df) {
+					return df.format(value);
+				}
+			}
+		}
+	}
 }

@@ -24,14 +24,14 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.Labeled;
 import org.solovyev.android.LabeledFormatter;
 import org.solovyev.android.view.ListRange;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.text.EnumMapper;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
 /**
@@ -41,21 +41,21 @@ import java.util.Arrays;
  */
 public abstract class AbstractEnumPickerDialogPreference<T extends Enum & Labeled> extends AbstractPickerDialogPreference<T> {
 
-    @Nonnull
-    private final Class<T> enumClass;
+	@Nonnull
+	private final Class<T> enumClass;
 
-    protected AbstractEnumPickerDialogPreference(Context context,
-                                                 AttributeSet attrs,
-                                                 @Nullable String defaultStringValue,
-                                                 boolean needValueText,
-                                                 @Nonnull Class<T> enumClass) {
-        super(context, attrs, defaultStringValue, needValueText, EnumMapper.of(enumClass));
-        this.enumClass = enumClass;
-    }
+	protected AbstractEnumPickerDialogPreference(Context context,
+												 AttributeSet attrs,
+												 @Nullable String defaultStringValue,
+												 boolean needValueText,
+												 @Nonnull Class<T> enumClass) {
+		super(context, attrs, defaultStringValue, needValueText, EnumMapper.of(enumClass));
+		this.enumClass = enumClass;
+	}
 
-    @Nonnull
-    @Override
-    protected Picker.Range<T> createRange(@Nonnull T selected) {
-        return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected, new LabeledFormatter<T>(getContext()));
-    }
+	@Nonnull
+	@Override
+	protected Picker.Range<T> createRange(@Nonnull T selected) {
+		return new ListRange<T>(Arrays.asList(enumClass.getEnumConstants()), selected, new LabeledFormatter<T>(getContext()));
+	}
 }

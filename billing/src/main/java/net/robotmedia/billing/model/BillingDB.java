@@ -103,7 +103,7 @@ public class BillingDB {
 	}
 
 	@Nonnull
-	protected static Transaction createTransaction( @Nonnull Cursor cursor) {
+	protected static Transaction createTransaction(@Nonnull Cursor cursor) {
 		final Transaction purchase = new Transaction();
 
 		purchase.orderId = cursor.getString(0);

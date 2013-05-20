@@ -37,13 +37,13 @@ import org.solovyev.android.security.AndroidStringCiphererTest;
  */
 public class AllTests extends TestSuite {
 
-    public static Test suite() {
-        return new TestSuiteBuilder(AllTests.class)
-                .includeAllPackagesUnderHere()
-                .includePackages(ObfuscateUtilsTest.class.getPackage().getName())
-                .includePackages(AndroidStringCiphererTest.class.getPackage().getName())
-                .includePackages(AbstractPreferenceTest.class.getPackage().getName())
-                .includePackages(APropertyTest.class.getPackage().getName())
-                .build();
-    }
+	public static Test suite() {
+		return new TestSuiteBuilder(AllTests.class)
+				.includeAllPackagesUnderHere()
+				.includePackages(ObfuscateUtilsTest.class.getPackage().getName())
+				.includePackages(AndroidStringCiphererTest.class.getPackage().getName())
+				.includePackages(AbstractPreferenceTest.class.getPackage().getName())
+				.includePackages(APropertyTest.class.getPackage().getName())
+				.build();
+	}
 }

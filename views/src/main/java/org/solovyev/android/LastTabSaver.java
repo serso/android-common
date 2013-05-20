@@ -25,8 +25,9 @@ package org.solovyev.android;
 import android.app.TabActivity;
 import android.preference.PreferenceManager;
 import android.widget.TabHost;
-import javax.annotation.Nonnull;
 import org.solovyev.android.prefs.StringPreference;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -55,7 +56,7 @@ public class LastTabSaver implements TabHost.OnTabChangeListener {
 	 * Constructor applies saved preference value on tabHost returned by  android.app.TabActivity#getTabHost() method
 	 * and registers as onTabChangeListener
 	 *
-	 * @param tabActivity tab activity
+	 * @param tabActivity  tab activity
 	 * @param defaultTabId default tab (if no preference value is not defined)
 	 */
 	public LastTabSaver(@Nonnull TabActivity tabActivity, @Nonnull String defaultTabId) {

@@ -21,23 +21,23 @@
   -->
 
 <resources>
-    <string name="menu">Menu</string>
+	<string name="menu">Menu</string>
 
-    <string name="restart_activity">Restart activity</string>
-    <string name="show_text">Show some text</string>
-    <string name="show_text_text">Hey! It works!</string>
-    <string name="reverse_sort">Reverse sort</string>
+	<string name="restart_activity">Restart activity</string>
+	<string name="show_text">Show some text</string>
+	<string name="show_text_text">Hey! It works!</string>
+	<string name="reverse_sort">Reverse sort</string>
 
 
-    <string name="menu_01">Menu #1 (long click to open)</string>
-    <string name="menu_02">Menu #2</string>
-    <string name="menu_03">Menu #3</string>
-    <string name="asc_sort_menu_item_text">This menu item is shown only when list is sorted in ascending order!</string>
-    <string name="show_menu_number">Show menu number</string>
-    <string name="show_menu_name">Show menu name</string>
-    <string name="show_menu_number_text">Menu number is: %1$s</string>
-    <string name="show_menu_name_text">Menu name is: %1$s</string>
-    <string name="long_press_to_open_menu">Long press to open menu!</string>
-    <string name="asc_menu_item">Asc menu item</string>
+	<string name="menu_01">Menu #1 (long click to open)</string>
+	<string name="menu_02">Menu #2</string>
+	<string name="menu_03">Menu #3</string>
+	<string name="asc_sort_menu_item_text">This menu item is shown only when list is sorted in ascending order!</string>
+	<string name="show_menu_number">Show menu number</string>
+	<string name="show_menu_name">Show menu name</string>
+	<string name="show_menu_number_text">Menu number is: %1$s</string>
+	<string name="show_menu_name_text">Menu name is: %1$s</string>
+	<string name="long_press_to_open_menu">Long press to open menu!</string>
+	<string name="asc_menu_item">Asc menu item</string>
 
 </resources>

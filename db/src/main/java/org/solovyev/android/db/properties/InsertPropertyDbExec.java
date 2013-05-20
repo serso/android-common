@@ -36,47 +36,47 @@ import javax.annotation.Nonnull;
  */
 public class InsertPropertyDbExec implements DbExec {
 
-    @Nonnull
-    private final Object id;
+	@Nonnull
+	private final Object id;
 
-    @Nonnull
-    private final AProperty property;
+	@Nonnull
+	private final AProperty property;
 
-    @Nonnull
-    private final String tableName;
+	@Nonnull
+	private final String tableName;
 
-    @Nonnull
-    private final String idColumnName;
+	@Nonnull
+	private final String idColumnName;
 
-    @Nonnull
-    private final String propertyNameColumnName;
+	@Nonnull
+	private final String propertyNameColumnName;
 
-    @Nonnull
-    private final String propertyValueColumnName;
+	@Nonnull
+	private final String propertyValueColumnName;
 
 
-    public InsertPropertyDbExec(@Nonnull Object id,
-                                @Nonnull AProperty property,
-                                @Nonnull String tableName,
-                                @Nonnull String idColumnName,
-                                @Nonnull String propertyNameColumnName,
-                                @Nonnull String propertyValueColumnName) {
-        this.id = id;
-        this.property = property;
-        this.tableName = tableName;
-        this.idColumnName = idColumnName;
-        this.propertyNameColumnName = propertyNameColumnName;
-        this.propertyValueColumnName = propertyValueColumnName;
-    }
+	public InsertPropertyDbExec(@Nonnull Object id,
+								@Nonnull AProperty property,
+								@Nonnull String tableName,
+								@Nonnull String idColumnName,
+								@Nonnull String propertyNameColumnName,
+								@Nonnull String propertyValueColumnName) {
+		this.id = id;
+		this.property = property;
+		this.tableName = tableName;
+		this.idColumnName = idColumnName;
+		this.propertyNameColumnName = propertyNameColumnName;
+		this.propertyValueColumnName = propertyValueColumnName;
+	}
 
-    @Override
-    public long exec(@Nonnull SQLiteDatabase db) {
-        final ContentValues values = new ContentValues();
+	@Override
+	public long exec(@Nonnull SQLiteDatabase db) {
+		final ContentValues values = new ContentValues();
 
-        values.put(idColumnName, String.valueOf(id));
-        values.put(propertyNameColumnName, property.getName());
-        values.put(propertyValueColumnName, property.getValue());
+		values.put(idColumnName, String.valueOf(id));
+		values.put(propertyNameColumnName, property.getName());
+		values.put(propertyValueColumnName, property.getValue());
 
-        return db.insert(tableName, null, values);
-    }
+		return db.insert(tableName, null, values);
+	}
 }

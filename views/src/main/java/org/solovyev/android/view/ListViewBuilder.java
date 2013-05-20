@@ -25,6 +25,7 @@ package org.solovyev.android.view;
 import android.content.Context;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,47 +36,47 @@ import javax.annotation.Nullable;
  */
 public class ListViewBuilder implements ViewBuilder<ListView> {
 
-    @Nullable
-    private Integer layoutId;
+	@Nullable
+	private Integer layoutId;
 
-    @Nonnull
-    private ListAdapter listAdapter;
+	@Nonnull
+	private ListAdapter listAdapter;
 
-    private ListViewBuilder() {
-    }
+	private ListViewBuilder() {
+	}
 
-    @Nonnull
-    public static ViewBuilder<ListView> newInstance(@Nonnull ListAdapter listAdapter) {
-        final ListViewBuilder result = new ListViewBuilder();
+	@Nonnull
+	public static ViewBuilder<ListView> newInstance(@Nonnull ListAdapter listAdapter) {
+		final ListViewBuilder result = new ListViewBuilder();
 
-        result.layoutId = null;
-        result.listAdapter = listAdapter;
+		result.layoutId = null;
+		result.listAdapter = listAdapter;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static ViewBuilder<ListView> newInstance(int layoutId, @Nonnull ListAdapter listAdapter) {
-        final ListViewBuilder result = new ListViewBuilder();
+	@Nonnull
+	public static ViewBuilder<ListView> newInstance(int layoutId, @Nonnull ListAdapter listAdapter) {
+		final ListViewBuilder result = new ListViewBuilder();
 
-        result.layoutId = layoutId;
-        result.listAdapter = listAdapter;
+		result.layoutId = layoutId;
+		result.listAdapter = listAdapter;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public ListView build(@Nonnull Context context) {
-        final ListView result;
-        if (layoutId != null) {
-            result = ViewFromLayoutBuilder.<ListView>newInstance(layoutId).build(context);
-        } else {
-            result = new ListView(context);
-        }
+	@Nonnull
+	@Override
+	public ListView build(@Nonnull Context context) {
+		final ListView result;
+		if (layoutId != null) {
+			result = ViewFromLayoutBuilder.<ListView>newInstance(layoutId).build(context);
+		} else {
+			result = new ListView(context);
+		}
 
-        result.setAdapter(listAdapter);
+		result.setAdapter(listAdapter);
 
-        return result;
-    }
+		return result;
+	}
 }

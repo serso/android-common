@@ -23,6 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,5 +33,5 @@ import javax.annotation.Nonnull;
  */
 public interface AMenuItem<T> {
 
-    void onClick(@Nonnull T data, @Nonnull Context context);
+	void onClick(@Nonnull T data, @Nonnull Context context);
 }

@@ -22,9 +22,9 @@
 
 package org.solovyev.android.db.properties;
 
-import javax.annotation.Nonnull;
 import org.solovyev.android.properties.AProperty;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,12 +35,12 @@ import java.util.List;
  */
 public interface APropertyDao {
 
-    @Nonnull
-    List<AProperty> loadPropertiesById(@Nonnull Object id);
+	@Nonnull
+	List<AProperty> loadPropertiesById(@Nonnull Object id);
 
-    void removePropertiesById(@Nonnull Object id);
+	void removePropertiesById(@Nonnull Object id);
 
-    void insertProperty(@Nonnull Object id, @Nonnull AProperty property);
+	void insertProperty(@Nonnull Object id, @Nonnull AProperty property);
 
-    void insertProperties(@Nonnull Object id, @Nonnull Collection<AProperty> properties);
+	void insertProperties(@Nonnull Object id, @Nonnull Collection<AProperty> properties);
 }

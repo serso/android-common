@@ -22,9 +22,10 @@
 
 package org.solovyev.android.view;
 
+import org.solovyev.common.text.Formatter;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -33,39 +34,39 @@ import org.solovyev.common.text.Formatter;
  */
 public class IntegerRange extends NumberRange<Integer> {
 
-    public IntegerRange(@Nonnull Integer min,
-                        @Nonnull Integer max,
-                        @Nonnull Integer step,
-                        int startPosition,
-                        @Nullable Formatter<Integer> formatter) {
-        super(min, max, step, startPosition, formatter);
-    }
+	public IntegerRange(@Nonnull Integer min,
+						@Nonnull Integer max,
+						@Nonnull Integer step,
+						int startPosition,
+						@Nullable Formatter<Integer> formatter) {
+		super(min, max, step, startPosition, formatter);
+	}
 
-    @Nonnull
-    public static NumberRange<Integer> newInstance(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step, @Nonnull Integer selected) {
-        if (selected < min || selected > max) {
-            throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
-        }
+	@Nonnull
+	public static NumberRange<Integer> newInstance(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step, @Nonnull Integer selected) {
+		if (selected < min || selected > max) {
+			throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
+		}
 
-        int startPosition = 0;
-        for ( int i = min; i < selected; i += step ) {
-            startPosition += 1;
-        }
+		int startPosition = 0;
+		for (int i = min; i < selected; i += step) {
+			startPosition += 1;
+		}
 
-        return new IntegerRange(min, max, step, startPosition, null);
-    }
+		return new IntegerRange(min, max, step, startPosition, null);
+	}
 
-    @Override
-    protected int getCount(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
-        // (4 - 0)/1 + 1= 5
-        // (4 - 0)/2 + 1 = 3
-        // (4 - 1)/2 + 1 = 2
-        return (max - min) / step + 1;
-    }
+	@Override
+	protected int getCount(@Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
+		// (4 - 0)/1 + 1= 5
+		// (4 - 0)/2 + 1 = 3
+		// (4 - 1)/2 + 1 = 2
+		return (max - min) / step + 1;
+	}
 
-    @Nonnull
-    @Override
-    protected Integer getValueAt(int position, @Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
-        return min + position * step;
-    }
+	@Nonnull
+	@Override
+	protected Integer getValueAt(int position, @Nonnull Integer min, @Nonnull Integer max, @Nonnull Integer step) {
+		return min + position * step;
+	}
 }

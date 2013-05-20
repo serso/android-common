@@ -24,7 +24,6 @@ package net.robotmedia.billing.utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
@@ -43,7 +42,7 @@ public class AESObfuscator {
 	private static final String KEYGEN_ALGORITHM = "PBEWITHSHAAND256BITAES-CBC-BC";
 	private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
-    public static final byte[] IV = {16, 74, 71, -80, 32, 101, -47, 72, 117, -14, 0, -29, 70, 65, -12, 74};
+	public static final byte[] IV = {16, 74, 71, -80, 32, 101, -47, 72, 117, -14, 0, -29, 70, 65, -12, 74};
 
 	public static final String SECURITY_PREFIX = "net.robotmedia.billing.utils.AESObfuscator-1|";
 
@@ -82,10 +81,10 @@ public class AESObfuscator {
 
 		try {
 			// Header is appended as an integrity check
-            final String in = SECURITY_PREFIX + source;
-            byte[] inBytes = in.getBytes(UTF8);
-            byte[] encrypted = encryptor.doFinal(inBytes);
-            return Base64.encode(encrypted);
+			final String in = SECURITY_PREFIX + source;
+			byte[] inBytes = in.getBytes(UTF8);
+			byte[] encrypted = encryptor.doFinal(inBytes);
+			return Base64.encode(encrypted);
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("Invalid environment", e);
 		} catch (GeneralSecurityException e) {
@@ -99,9 +98,9 @@ public class AESObfuscator {
 		}
 
 		try {
-            final byte[] encryptedBytes = Base64.decode(obfuscated);
-            final byte[] decryptedBytes = decryptor.doFinal(encryptedBytes);
-            String result = new String(decryptedBytes, UTF8);
+			final byte[] encryptedBytes = Base64.decode(obfuscated);
+			final byte[] decryptedBytes = decryptor.doFinal(encryptedBytes);
+			String result = new String(decryptedBytes, UTF8);
 			// Check for presence of header. This serves as a final integrity check, for cases
 			// where the block size is correct during decryption.
 			int headerIndex = result.indexOf(SECURITY_PREFIX);

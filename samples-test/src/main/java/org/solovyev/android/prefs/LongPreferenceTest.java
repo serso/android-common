@@ -26,20 +26,20 @@ import javax.annotation.Nonnull;
 
 public class LongPreferenceTest extends AbstractPreferenceTest<Long> {
 
-    @Nonnull
-    @Override
-    protected Preference<Long> createPreference(@Nonnull String key, @Nonnull Long defaultValue) {
-        return LongPreference.of(key, defaultValue);
-    }
+	@Nonnull
+	@Override
+	protected Preference<Long> createPreference(@Nonnull String key, @Nonnull Long defaultValue) {
+		return LongPreference.of(key, defaultValue);
+	}
 
-    @Nonnull
-    @Override
-    protected Long createDefaultValue() {
-        return 1231231232132131L;
-    }
+	@Nonnull
+	@Override
+	protected Long createDefaultValue() {
+		return 1231231232132131L;
+	}
 
-    @Override
-    protected Long createValue() {
-        return -1231231232132131L;
-    }
+	@Override
+	protected Long createValue() {
+		return -1231231232132131L;
+	}
 }

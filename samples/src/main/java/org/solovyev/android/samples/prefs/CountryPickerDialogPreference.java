@@ -33,7 +33,7 @@ import org.solovyev.android.prefs.AbstractEnumPickerDialogPreference;
  */
 public class CountryPickerDialogPreference extends AbstractEnumPickerDialogPreference<Country> {
 
-    public CountryPickerDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, null, false, Country.class);
-    }
+	public CountryPickerDialogPreference(Context context, AttributeSet attrs) {
+		super(context, attrs, null, false, Country.class);
+	}
 }

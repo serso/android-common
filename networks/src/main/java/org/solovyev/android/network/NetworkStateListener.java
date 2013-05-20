@@ -9,5 +9,5 @@ import javax.annotation.Nonnull;
  */
 public interface NetworkStateListener {
 
-    void onNetworkEvent(@Nonnull NetworkData networkData);
+	void onNetworkEvent(@Nonnull NetworkData networkData);
 }

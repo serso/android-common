@@ -6,11 +6,11 @@ import javax.annotation.Nonnull;
 
 public interface FragmentDef {
 
-    @Nonnull
-    String getFragmentTag();
+	@Nonnull
+	String getFragmentTag();
 
-    @Nonnull
-    Class<? extends Fragment> getFragmentClass();
+	@Nonnull
+	Class<? extends Fragment> getFragmentClass();
 
-    boolean isAddToBackStack();
+	boolean isAddToBackStack();
 }

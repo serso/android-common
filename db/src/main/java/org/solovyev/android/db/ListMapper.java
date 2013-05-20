@@ -23,9 +23,9 @@
 package org.solovyev.android.db;
 
 import android.database.Cursor;
-import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,26 +36,26 @@ import java.util.List;
  */
 public class ListMapper<T> implements Converter<Cursor, List<T>> {
 
-    @Nonnull
-    private final Converter<Cursor, ? extends T> elementMapper;
+	@Nonnull
+	private final Converter<Cursor, ? extends T> elementMapper;
 
-    public ListMapper(@Nonnull Converter<Cursor, ? extends T> elementMapper) {
-        this.elementMapper = elementMapper;
-    }
+	public ListMapper(@Nonnull Converter<Cursor, ? extends T> elementMapper) {
+		this.elementMapper = elementMapper;
+	}
 
-    @Nonnull
-    @Override
-    public List<T> convert(@Nonnull Cursor cursor) {
-        final List<T> result = new ArrayList<T>();
+	@Nonnull
+	@Override
+	public List<T> convert(@Nonnull Cursor cursor) {
+		final List<T> result = new ArrayList<T>();
 
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                result.add(elementMapper.convert(cursor));
-                cursor.moveToNext();
-            }
-        }
+		if (cursor.moveToFirst()) {
+			while (!cursor.isAfterLast()) {
+				result.add(elementMapper.convert(cursor));
+				cursor.moveToNext();
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 }
 

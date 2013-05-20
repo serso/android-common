@@ -26,8 +26,8 @@ import android.app.PendingIntent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-
 import com.android.vending.billing.IMarketBillingService;
+
 import javax.annotation.Nonnull;
 
 abstract class BillingRequest implements IBillingRequest {
@@ -140,10 +140,10 @@ abstract class BillingRequest implements IBillingRequest {
 	}
 
 	/**
-	* User: serso
-	* Date: 1/17/12
-	* Time: 12:45 PM
-	*/
+	 * User: serso
+	 * Date: 1/17/12
+	 * Time: 12:45 PM
+	 */
 	static class CheckBillingSupported extends BillingRequest {
 
 		public CheckBillingSupported(String packageName, int startId) {
@@ -164,10 +164,10 @@ abstract class BillingRequest implements IBillingRequest {
 	}
 
 	/**
-	* User: serso
-	* Date: 1/17/12
-	* Time: 12:45 PM
-	*/
+	 * User: serso
+	 * Date: 1/17/12
+	 * Time: 12:45 PM
+	 */
 	static class ConfirmNotifications extends BillingRequest {
 
 		@Nonnull
@@ -194,10 +194,10 @@ abstract class BillingRequest implements IBillingRequest {
 	}
 
 	/**
-	* User: serso
-	* Date: 1/17/12
-	* Time: 12:45 PM
-	*/
+	 * User: serso
+	 * Date: 1/17/12
+	 * Time: 12:45 PM
+	 */
 	static class GetPurchaseInformation extends BillingRequest {
 
 		private String[] notifyIds;
@@ -205,7 +205,7 @@ abstract class BillingRequest implements IBillingRequest {
 		private static final String KEY_NOTIFY_IDS = "NOTIFY_IDS";
 
 		public GetPurchaseInformation(String packageName, int startId, String[] notifyIds, long nonce) {
-			super(packageName,startId, nonce);
+			super(packageName, startId, nonce);
 			this.notifyIds = notifyIds;
 		}
 
@@ -220,15 +220,18 @@ abstract class BillingRequest implements IBillingRequest {
 			return BillingRequestType.GET_PURCHASE_INFORMATION;
 		}
 
-		@Override public boolean hasNonce() { return true; }
+		@Override
+		public boolean hasNonce() {
+			return true;
+		}
 
 	}
 
 	/**
-	* User: serso
-	* Date: 1/17/12
-	* Time: 12:45 PM
-	*/
+	 * User: serso
+	 * Date: 1/17/12
+	 * Time: 12:45 PM
+	 */
 	static class Purchase extends BillingRequest {
 
 		private String productId;
@@ -277,10 +280,10 @@ abstract class BillingRequest implements IBillingRequest {
 	}
 
 	/**
-	* User: serso
-	* Date: 1/17/12
-	* Time: 12:45 PM
-	*/
+	 * User: serso
+	 * Date: 1/17/12
+	 * Time: 12:45 PM
+	 */
 	static class RestoreTransactions extends BillingRequest {
 
 		public RestoreTransactions(String packageName, int startId, long nonce) {
@@ -293,17 +296,20 @@ abstract class BillingRequest implements IBillingRequest {
 			return BillingRequestType.RESTORE_TRANSACTIONS;
 		}
 
-		@Override public boolean hasNonce() { return true; }
+		@Override
+		public boolean hasNonce() {
+			return true;
+		}
 
 		@Override
 		public void onResponseCode(@Nonnull ResponseCode response) {
 			super.onResponseCode(response);
 
 			if (response == ResponseCode.RESULT_OK) {
-    			BillingController.onTransactionsRestored();
-    		} else {
-    			BillingController.onErrorRestoreTransactions(response);
-    		}
+				BillingController.onTransactionsRestored();
+			} else {
+				BillingController.onErrorRestoreTransactions(response);
+			}
 		}
 
 	}

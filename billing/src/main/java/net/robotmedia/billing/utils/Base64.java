@@ -193,12 +193,12 @@ public class Base64 {
 	 * The actual number of significant bytes in your array is
 	 * given by <var>numSigBytes</var>.
 	 *
-	 * @param source	  the array to convert
+	 * @param source      the array to convert
 	 * @param srcOffset   the index where conversion begins
 	 * @param numSigBytes the number of significant bytes in your array
 	 * @param destination the array to hold the conversion
 	 * @param destOffset  the index where output will be put
-	 * @param alphabet	is the encoding alphabet
+	 * @param alphabet    is the encoding alphabet
 	 * @return the <var>destination</var> array
 	 * @since 1.3
 	 */
@@ -259,7 +259,7 @@ public class Base64 {
 	/**
 	 * Encodes a byte array into web safe Base64 notation.
 	 *
-	 * @param source	The data to convert
+	 * @param source    The data to convert
 	 * @param doPadding is {@code true} to pad result with '=' chars
 	 *                  if it does not fall on 3 byte boundaries
 	 */
@@ -270,9 +270,9 @@ public class Base64 {
 	/**
 	 * Encodes a byte array into Base64 notation.
 	 *
-	 * @param source	the data to convert
-	 * @param off	   offset in array where conversion should begin
-	 * @param len	   length of data to convert
+	 * @param source    the data to convert
+	 * @param off       offset in array where conversion should begin
+	 * @param len       length of data to convert
 	 * @param alphabet  the encoding alphabet
 	 * @param doPadding is {@code true} to pad result with '=' chars
 	 *                  if it does not fall on 3 byte boundaries
@@ -298,10 +298,10 @@ public class Base64 {
 	/**
 	 * Encodes a byte array into Base64 notation.
 	 *
-	 * @param source		the data to convert
-	 * @param off		   offset in array where conversion should begin
-	 * @param len		   length of data to convert
-	 * @param alphabet	  is the encoding alphabet
+	 * @param source        the data to convert
+	 * @param off           offset in array where conversion should begin
+	 * @param len           length of data to convert
+	 * @param alphabet      is the encoding alphabet
 	 * @param maxLineLength maximum length of one line.
 	 * @return the BASE64-encoded byte array
 	 */
@@ -372,7 +372,7 @@ public class Base64 {
 	 * This method returns the actual number of bytes that
 	 * were converted from the Base64 encoding.
 	 *
-	 * @param source	  the array to convert
+	 * @param source      the array to convert
 	 * @param srcOffset   the index where conversion begins
 	 * @param destination the array to hold the conversion
 	 * @param destOffset  the index where output will be put
@@ -471,8 +471,8 @@ public class Base64 {
 	 * the decoded byte array.
 	 *
 	 * @param source the Base64 encoded data
-	 * @param off	the offset of where to begin decoding
-	 * @param len	the length of characters to decode
+	 * @param off    the offset of where to begin decoding
+	 * @param len    the length of characters to decode
 	 * @return decoded data
 	 * @throws Base64DecoderException
 	 * @since 1.3
@@ -488,8 +488,8 @@ public class Base64 {
 	 * Web safe encoding uses '-' instead of '+', '_' instead of '/'
 	 *
 	 * @param source the Base64 encoded data
-	 * @param off	the offset of where to begin decoding
-	 * @param len	the length of characters to decode
+	 * @param off    the offset of where to begin decoding
+	 * @param len    the length of characters to decode
 	 * @return decoded data
 	 */
 	public static byte[] decodeWebSafe(byte[] source, int off, int len)
@@ -501,9 +501,9 @@ public class Base64 {
 	 * Decodes Base64 content using the supplied decodabet and returns
 	 * the decoded byte array.
 	 *
-	 * @param source	the Base64 encoded data
-	 * @param off	   the offset of where to begin decoding
-	 * @param len	   the length of characters to decode
+	 * @param source    the Base64 encoded data
+	 * @param off       the offset of where to begin decoding
+	 * @param len       the length of characters to decode
 	 * @param decodabet the decodabet for decoding Base64 content
 	 * @return decoded data
 	 */

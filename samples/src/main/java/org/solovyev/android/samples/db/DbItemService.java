@@ -23,8 +23,8 @@
 package org.solovyev.android.samples.db;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -34,14 +34,14 @@ import java.util.List;
  */
 public interface DbItemService {
 
-    @Nonnull
-    List<DbItem> getAllDbItems(@Nonnull Context context);
+	@Nonnull
+	List<DbItem> getAllDbItems(@Nonnull Context context);
 
-    @Nonnull
-    List<DbItem> getAllStartsWith(@Nonnull String prefix, @Nonnull Context context);
+	@Nonnull
+	List<DbItem> getAllStartsWith(@Nonnull String prefix, @Nonnull Context context);
 
-    void addItem(@Nonnull DbItem dbItem, @Nonnull Context context);
+	void addItem(@Nonnull DbItem dbItem, @Nonnull Context context);
 
-    @Nonnull
-    List<DbItem> removeItemByName(@Nonnull String name, @Nonnull Context context);
+	@Nonnull
+	List<DbItem> removeItemByName(@Nonnull String name, @Nonnull Context context);
 }

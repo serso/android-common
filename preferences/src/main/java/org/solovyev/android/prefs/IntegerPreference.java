@@ -23,6 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ public class IntegerPreference extends AbstractPreference<Integer> {
 		super(key, defaultValue);
 	}
 
-    @Nonnull
-    public static IntegerPreference of(@Nonnull String key, @Nullable Integer defaultValue) {
-        return new IntegerPreference(key, defaultValue);
-    }
+	@Nonnull
+	public static IntegerPreference of(@Nonnull String key, @Nullable Integer defaultValue) {
+		return new IntegerPreference(key, defaultValue);
+	}
 
-    @Override
+	@Override
 	protected Integer getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getInt(getKey(), -1);
 	}

@@ -25,20 +25,20 @@ package org.solovyev.android.prefs;
 import javax.annotation.Nonnull;
 
 public class FloatToStringPreferenceTest extends NumberToStringPreferenceTest<Float> {
-    @Nonnull
-    @Override
-    protected Class<Float> getNumberClass() {
-        return Float.class;
-    }
+	@Nonnull
+	@Override
+	protected Class<Float> getNumberClass() {
+		return Float.class;
+	}
 
-    @Nonnull
-    @Override
-    protected Float createDefaultValue() {
-        return 123123f;
-    }
+	@Nonnull
+	@Override
+	protected Float createDefaultValue() {
+		return 123123f;
+	}
 
-    @Override
-    protected Float createValue() {
-        return -123123f;
-    }
+	@Override
+	protected Float createValue() {
+		return -123123f;
+	}
 }

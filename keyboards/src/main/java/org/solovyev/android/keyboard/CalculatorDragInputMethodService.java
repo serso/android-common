@@ -29,7 +29,7 @@ package org.solovyev.android.keyboard;
  */
 public class CalculatorDragInputMethodService extends AbstractAKeyboardInputMethodService {
 
-    public CalculatorDragInputMethodService() {
-        super(new CalculatorKeyboardController());
-    }
+	public CalculatorDragInputMethodService() {
+		super(new CalculatorKeyboardController());
+	}
 }

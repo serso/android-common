@@ -23,6 +23,7 @@
 package org.solovyev.android.http;
 
 import android.widget.ImageView;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -33,10 +34,10 @@ import javax.annotation.Nullable;
  */
 public interface ImageLoader {
 
-    void loadImage(@Nonnull String url, @Nonnull ImageView imageView, @Nullable Integer defaultImageId);
+	void loadImage(@Nonnull String url, @Nonnull ImageView imageView, @Nullable Integer defaultImageId);
 
-    void loadImage(@Nonnull String url, @Nonnull OnImageLoadedListener imageLoadedListener);
+	void loadImage(@Nonnull String url, @Nonnull OnImageLoadedListener imageLoadedListener);
 
-    void loadImage(@Nonnull String url);
+	void loadImage(@Nonnull String url);
 
 }

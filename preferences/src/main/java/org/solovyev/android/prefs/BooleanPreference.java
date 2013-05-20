@@ -23,6 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -31,18 +32,18 @@ import javax.annotation.Nullable;
  * Date: 12/25/11
  * Time: 1:06 PM
  */
-public class BooleanPreference extends AbstractPreference<Boolean>{
+public class BooleanPreference extends AbstractPreference<Boolean> {
 
 	private BooleanPreference(@Nonnull String key, @Nullable Boolean defaultValue) {
 		super(key, defaultValue);
 	}
 
-    @Nonnull
-    public static BooleanPreference of(@Nonnull String key, @Nullable Boolean defaultValue) {
-        return new BooleanPreference(key, defaultValue);
-    }
+	@Nonnull
+	public static BooleanPreference of(@Nonnull String key, @Nullable Boolean defaultValue) {
+		return new BooleanPreference(key, defaultValue);
+	}
 
-    @Override
+	@Override
 	protected Boolean getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getBoolean(getKey(), false);
 	}

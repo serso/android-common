@@ -31,13 +31,13 @@ import javax.annotation.Nonnull;
  */
 public interface AKeyboardControllerState<K extends AKeyboard> {
 
-    boolean isShifted();
+	boolean isShifted();
 
-    boolean isCapsLock();
+	boolean isCapsLock();
 
-    boolean isCompletion();
+	boolean isCompletion();
 
-    boolean isPrediction();
+	boolean isPrediction();
 
 	@Nonnull
 	K getKeyboard();
@@ -48,6 +48,6 @@ public interface AKeyboardControllerState<K extends AKeyboard> {
 	@Nonnull
 	AKeyboardControllerState<K> copyForNewCapsLock(boolean capsLock);
 
-    @Nonnull
-    AKeyboardControllerState<K> copyForNewShift(boolean newState);
+	@Nonnull
+	AKeyboardControllerState<K> copyForNewShift(boolean newState);
 }

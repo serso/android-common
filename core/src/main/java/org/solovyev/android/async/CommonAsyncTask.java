@@ -39,128 +39,128 @@ import java.util.List;
  */
 public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask<PARAM, PROGRESS, CommonAsyncTask.Result<RESULT>> {
 
-    @Nonnull
-    private static final String TAG = "CommonAsyncTask";
+	@Nonnull
+	private static final String TAG = "CommonAsyncTask";
 
-    @Nonnull
-    private final WeakReference<Context> contextRef;
+	@Nonnull
+	private final WeakReference<Context> contextRef;
 
-    protected CommonAsyncTask() {
-        this.contextRef = new WeakReference<Context>(null);
-    }
+	protected CommonAsyncTask() {
+		this.contextRef = new WeakReference<Context>(null);
+	}
 
-    protected CommonAsyncTask(@Nonnull Context context) {
-        this.contextRef = new WeakReference<Context>(context);
-    }
+	protected CommonAsyncTask(@Nonnull Context context) {
+		this.contextRef = new WeakReference<Context>(context);
+	}
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+	}
 
-    @Override
-    protected final Result<RESULT> doInBackground(PARAM... params) {
-        try {
-            return new CommonResult<RESULT>(doWork(Collections.asList(params)));
-        } catch (CommonAsyncTaskRuntimeException e) {
-            return new CommonResult<RESULT>(e.getException());
-        } catch (Exception e) {
-            return new CommonResult<RESULT>(e);
-        }
-    }
+	@Override
+	protected final Result<RESULT> doInBackground(PARAM... params) {
+		try {
+			return new CommonResult<RESULT>(doWork(Collections.asList(params)));
+		} catch (CommonAsyncTaskRuntimeException e) {
+			return new CommonResult<RESULT>(e.getException());
+		} catch (Exception e) {
+			return new CommonResult<RESULT>(e);
+		}
+	}
 
-    protected abstract RESULT doWork(@Nonnull List<PARAM> params);
+	protected abstract RESULT doWork(@Nonnull List<PARAM> params);
 
-    @Override
-    protected final void onPostExecute(@Nonnull Result<RESULT> r) {
-        super.onPostExecute(r);
+	@Override
+	protected final void onPostExecute(@Nonnull Result<RESULT> r) {
+		super.onPostExecute(r);
 
-        if (r.isFailure()) {
-            onFailurePostExecute(r.getFailureResult());
-        } else {
-            onSuccessPostExecute(r.getSuccessResult());
-        }
+		if (r.isFailure()) {
+			onFailurePostExecute(r.getFailureResult());
+		} else {
+			onSuccessPostExecute(r.getSuccessResult());
+		}
 
-    }
+	}
 
-    @Nullable
-    protected Context getContext() {
-        return contextRef.get();
-    }
+	@Nullable
+	protected Context getContext() {
+		return contextRef.get();
+	}
 
-    protected abstract void onSuccessPostExecute(@Nullable RESULT result);
+	protected abstract void onSuccessPostExecute(@Nullable RESULT result);
 
-    protected abstract void onFailurePostExecute(@Nonnull Exception e);
+	protected abstract void onFailurePostExecute(@Nonnull Exception e);
 
-    private static class CommonResult<SR> implements Result<SR> {
+	private static class CommonResult<SR> implements Result<SR> {
 
-        @Nullable
-        private SR successResult;
+		@Nullable
+		private SR successResult;
 
-        @Nullable
-        private Exception failureResult;
+		@Nullable
+		private Exception failureResult;
 
-        public CommonResult(@Nullable SR result) {
-            this.successResult = result;
-        }
+		public CommonResult(@Nullable SR result) {
+			this.successResult = result;
+		}
 
-        public CommonResult(@Nonnull Exception e) {
-            this.failureResult = e;
-        }
+		public CommonResult(@Nonnull Exception e) {
+			this.failureResult = e;
+		}
 
-        @Override
-        @Nullable
-        public SR getSuccessResult() {
-            return successResult;
-        }
+		@Override
+		@Nullable
+		public SR getSuccessResult() {
+			return successResult;
+		}
 
-        @Nullable
-        @Override
-        public Exception getFailureResult() {
-            return this.failureResult;
-        }
+		@Nullable
+		@Override
+		public Exception getFailureResult() {
+			return this.failureResult;
+		}
 
-        @Override
-        public boolean isFailure() {
-            return this.failureResult != null;
-        }
-    }
+		@Override
+		public boolean isFailure() {
+			return this.failureResult != null;
+		}
+	}
 
-    protected static interface Result<SR> {
+	protected static interface Result<SR> {
 
-        boolean isFailure();
+		boolean isFailure();
 
-        @Nullable
-        Exception getFailureResult();
+		@Nullable
+		Exception getFailureResult();
 
-        @Nullable
-        SR getSuccessResult();
-    }
+		@Nullable
+		SR getSuccessResult();
+	}
 
-    protected void throwException(@Nonnull Exception e) {
-        throw new CommonAsyncTaskRuntimeException(e);
-    }
+	protected void throwException(@Nonnull Exception e) {
+		throw new CommonAsyncTaskRuntimeException(e);
+	}
 
-    protected void defaultOnFailurePostExecute(@Nonnull Exception e) {
-        if (e instanceof RuntimeException) {
-            throw (RuntimeException) e;
-        } else {
-            Log.e(TAG, e.getMessage(), e);
-        }
-    }
+	protected void defaultOnFailurePostExecute(@Nonnull Exception e) {
+		if (e instanceof RuntimeException) {
+			throw (RuntimeException) e;
+		} else {
+			Log.e(TAG, e.getMessage(), e);
+		}
+	}
 
-    private static class CommonAsyncTaskRuntimeException extends RuntimeException {
+	private static class CommonAsyncTaskRuntimeException extends RuntimeException {
 
-        @Nonnull
-        private Exception exception;
+		@Nonnull
+		private Exception exception;
 
-        public CommonAsyncTaskRuntimeException(@Nonnull Exception exception) {
-            this.exception = exception;
-        }
+		public CommonAsyncTaskRuntimeException(@Nonnull Exception exception) {
+			this.exception = exception;
+		}
 
-        @Nonnull
-        public Exception getException() {
-            return exception;
-        }
-    }
+		@Nonnull
+		public Exception getException() {
+			return exception;
+		}
+	}
 }

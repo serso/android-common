@@ -23,10 +23,11 @@
 package org.solovyev.android.listeners;
 
 import android.os.Handler;
-import javax.annotation.Nonnull;
 import org.solovyev.android.Threads;
 import org.solovyev.common.listeners.AbstractJEventListener;
 import org.solovyev.common.listeners.JEvent;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -35,27 +36,28 @@ import org.solovyev.common.listeners.JEvent;
  */
 public abstract class AbstractUiThreadJEventListener<E extends JEvent> extends AbstractJEventListener<E> {
 
-    @Nonnull
-    private final Handler uiHandler;
+	@Nonnull
+	private final Handler uiHandler;
 
-    protected AbstractUiThreadJEventListener(@Nonnull Class<E> eventType) {
-        super(eventType);
-        uiHandler = Threads.newUiHandler();
-    }
+	protected AbstractUiThreadJEventListener(@Nonnull Class<E> eventType) {
+		super(eventType);
+		uiHandler = Threads.newUiHandler();
+	}
 
-    @Override
-    public void onEvent(@Nonnull final E event) {
-        uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                handleEvent(event);
-            }
-        });
-    }
+	@Override
+	public void onEvent(@Nonnull final E event) {
+		uiHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				handleEvent(event);
+			}
+		});
+	}
 
-    /**
-     * Called on UI thread
-     * @param event event to be processed
-     */
-    protected abstract void handleEvent(@Nonnull E event);
+	/**
+	 * Called on UI thread
+	 *
+	 * @param event event to be processed
+	 */
+	protected abstract void handleEvent(@Nonnull E event);
 }

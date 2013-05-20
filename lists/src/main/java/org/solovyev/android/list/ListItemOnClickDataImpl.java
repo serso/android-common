@@ -23,6 +23,7 @@
 package org.solovyev.android.list;
 
 import android.widget.ListView;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,36 +33,36 @@ import javax.annotation.Nonnull;
  */
 public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
 
-    @Nonnull
-    private T dataObject;
+	@Nonnull
+	private T dataObject;
 
-    @Nonnull
-    private ListAdapter<? extends ListItem> adapter;
+	@Nonnull
+	private ListAdapter<? extends ListItem> adapter;
 
-    @Nonnull
-    private ListView listView;
+	@Nonnull
+	private ListView listView;
 
-    public ListItemOnClickDataImpl(@Nonnull T dataObject, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
-        this.dataObject = dataObject;
-        this.adapter = adapter;
-        this.listView = listView;
-    }
+	public ListItemOnClickDataImpl(@Nonnull T dataObject, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+		this.dataObject = dataObject;
+		this.adapter = adapter;
+		this.listView = listView;
+	}
 
-    @Nonnull
-    @Override
-    public T getDataObject() {
-        return this.dataObject;
-    }
+	@Nonnull
+	@Override
+	public T getDataObject() {
+		return this.dataObject;
+	}
 
-    @Nonnull
-    @Override
-    public ListAdapter<? extends ListItem> getAdapter() {
-        return this.adapter;
-    }
+	@Nonnull
+	@Override
+	public ListAdapter<? extends ListItem> getAdapter() {
+		return this.adapter;
+	}
 
-    @Nonnull
-    @Override
-    public ListView getListView() {
-        return this.listView;
-    }
+	@Nonnull
+	@Override
+	public ListView getListView() {
+		return this.listView;
+	}
 }

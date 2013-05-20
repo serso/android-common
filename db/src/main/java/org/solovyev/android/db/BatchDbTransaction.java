@@ -24,8 +24,8 @@ package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.StringTokenizer;
 
 /**
@@ -35,37 +35,37 @@ import java.util.StringTokenizer;
  */
 public class BatchDbTransaction {
 
-    private static final String TAG = "BatchDbOperation";
+	private static final String TAG = "BatchDbOperation";
 
-    @Nonnull
-    private final String sqls;
+	@Nonnull
+	private final String sqls;
 
-    @Nonnull
-    private final String delimiters;
+	@Nonnull
+	private final String delimiters;
 
-    public BatchDbTransaction(@Nonnull String sqls, @Nonnull String delimiters) {
-        this.sqls = sqls;
-        this.delimiters = delimiters;
-    }
+	public BatchDbTransaction(@Nonnull String sqls, @Nonnull String delimiters) {
+		this.sqls = sqls;
+		this.delimiters = delimiters;
+	}
 
-    public void batchQuery(@Nonnull SQLiteDatabase db) {
-        try {
-            db.beginTransaction();
+	public void batchQuery(@Nonnull SQLiteDatabase db) {
+		try {
+			db.beginTransaction();
 
-            final StringTokenizer st = new StringTokenizer(sqls, delimiters, false);
-            while (st.hasMoreTokens()) {
-                final String sql = st.nextToken();
-                if ( sql.startsWith("--") ) {
-                    Log.d(TAG, "Comments: " + sql);
-                    continue;
-                }
-                Log.d(TAG, "Executing sql: " + sql);
-                db.execSQL(sql);
-            }
+			final StringTokenizer st = new StringTokenizer(sqls, delimiters, false);
+			while (st.hasMoreTokens()) {
+				final String sql = st.nextToken();
+				if (sql.startsWith("--")) {
+					Log.d(TAG, "Comments: " + sql);
+					continue;
+				}
+				Log.d(TAG, "Executing sql: " + sql);
+				db.execSQL(sql);
+			}
 
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-    }
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+		}
+	}
 }

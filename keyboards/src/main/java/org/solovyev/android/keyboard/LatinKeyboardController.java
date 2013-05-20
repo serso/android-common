@@ -26,6 +26,7 @@ import android.content.Context;
 import android.inputmethodservice.InputMethodService;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -46,17 +47,17 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 	@Nonnull
 	private AndroidAKeyboard symbolsShiftedKeyboard;
 
-    @Nonnull
-    @Override
-    protected AKeyboardControllerState<AndroidAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
-        qwertyKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.qwerty));
-        symbolsKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols));
-        symbolsShiftedKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols_shift));
+	@Nonnull
+	@Override
+	protected AKeyboardControllerState<AndroidAKeyboard> onInitializeInterface0(@Nonnull InputMethodService inputMethodService) {
+		qwertyKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.qwerty));
+		symbolsKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols));
+		symbolsShiftedKeyboard = AndroidAKeyboard.newInstance(String.valueOf(R.xml.qwerty), new LatinKeyboard(inputMethodService, R.xml.symbols_shift));
 
-        return AKeyboardControllerStateImpl.newDefaultState(qwertyKeyboard);
-    }
+		return AKeyboardControllerStateImpl.newDefaultState(qwertyKeyboard);
+	}
 
-    @Nonnull
+	@Nonnull
 	@Override
 	public AKeyboardControllerState<AndroidAKeyboard> onStartInput0(@Nonnull EditorInfo attribute, boolean restarting) {
 		final AKeyboardControllerState<AndroidAKeyboard> result;
@@ -137,29 +138,29 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 		setCurrentKeyboard(qwertyKeyboard);
 	}
 
-    @Override
-    protected void handleModeChange() {
-        super.handleModeChange();
+	@Override
+	protected void handleModeChange() {
+		super.handleModeChange();
 
-        AndroidAKeyboard current = getCurrentKeyboard();
-        if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
-            current = qwertyKeyboard;
-        } else {
-            current = symbolsKeyboard;
-        }
-        setCurrentKeyboard(current);
-        if (current == symbolsKeyboard) {
-            current.setShifted(false);
-        }
-    }
+		AndroidAKeyboard current = getCurrentKeyboard();
+		if (current == symbolsKeyboard || current == symbolsShiftedKeyboard) {
+			current = qwertyKeyboard;
+		} else {
+			current = symbolsKeyboard;
+		}
+		setCurrentKeyboard(current);
+		if (current == symbolsKeyboard) {
+			current.setShifted(false);
+		}
+	}
 
-    @Nonnull
-    @Override
-    protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
-        return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
-    }
+	@Nonnull
+	@Override
+	protected AKeyboardConfiguration onCreate0(@Nonnull Context context) {
+		return new AKeyboardConfigurationImpl(context.getResources().getString(R.string.word_separators));
+	}
 
-    @Nonnull
+	@Nonnull
 	@Override
 	public AKeyboardViewWithSuggestions<AndroidAKeyboard> createKeyboardView0(@Nonnull Context context) {
 		return new AKeyboardViewWithSuggestionsImpl<AndroidAKeyboard, KeyboardViewAKeyboardView>(R.layout.latin_keyboard, this, getInputMethodService());
@@ -168,7 +169,7 @@ final class LatinKeyboardController extends AbstractAndroidKeyboardController<An
 	private void checkToggleCapsLock() {
 		long now = System.currentTimeMillis();
 		if (lastShiftTime + 800 > now) {
-            setState(getState().copyForNewCapsLock(!getState().isCapsLock()));
+			setState(getState().copyForNewCapsLock(!getState().isCapsLock()));
 			lastShiftTime = 0;
 		} else {
 			lastShiftTime = now;

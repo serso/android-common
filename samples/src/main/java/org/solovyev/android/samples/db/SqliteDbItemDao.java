@@ -40,93 +40,94 @@ import java.util.List;
  */
 public class SqliteDbItemDao extends AbstractSQLiteHelper implements DbItemDao {
 
-    public SqliteDbItemDao(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
-        super(context, sqliteOpenHelper);
-    }
+	public SqliteDbItemDao(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
+		super(context, sqliteOpenHelper);
+	}
 
-    @Nonnull
-    @Override
-    public List<DbItem> loadAll() {
-        return AndroidDbUtils.doDbQuery(getSqliteOpenHelper(), new LoadAll(getContext(), getSqliteOpenHelper()));
-    }
+	@Nonnull
+	@Override
+	public List<DbItem> loadAll() {
+		return AndroidDbUtils.doDbQuery(getSqliteOpenHelper(), new LoadAll(getContext(), getSqliteOpenHelper()));
+	}
 
-    @Override
-    public void insert(@Nonnull DbItem dbItem) {
-        AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new Insert(dbItem));
-    }
+	@Override
+	public void insert(@Nonnull DbItem dbItem) {
+		AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new Insert(dbItem));
+	}
 
-    @Override
-    public void removeByName(@Nonnull String name) {
-        AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new RemoveByName(name));
-    }
+	@Override
+	public void removeByName(@Nonnull String name) {
+		AndroidDbUtils.doDbExec(getSqliteOpenHelper(), new RemoveByName(name));
+	}
 
 
-    private static final class RemoveByName extends AbstractObjectDbExec<String> {
+	private static final class RemoveByName extends AbstractObjectDbExec<String> {
 
-        protected RemoveByName(@Nonnull String name) {
-            super(name);
-        }
+		protected RemoveByName(@Nonnull String name) {
+			super(name);
+		}
 
-        @Override
-        public long exec(@Nonnull SQLiteDatabase db) {
-            final String name = getNotNullObject();
+		@Override
+		public long exec(@Nonnull SQLiteDatabase db) {
+			final String name = getNotNullObject();
 
-            return db.delete("items", "name = ?", new String[]{name});
-        }
-    }
-    private static final class Insert extends AbstractObjectDbExec<DbItem> {
+			return db.delete("items", "name = ?", new String[]{name});
+		}
+	}
 
-        protected Insert(@Nonnull DbItem object) {
-            super(object);
-        }
+	private static final class Insert extends AbstractObjectDbExec<DbItem> {
 
-        @Override
-        public long exec(@Nonnull SQLiteDatabase db) {
-            final DbItem dbItem = getNotNullObject();
+		protected Insert(@Nonnull DbItem object) {
+			super(object);
+		}
 
-            final ContentValues values = new ContentValues();
-            values.put("name", dbItem.getName());
-            return db.insert("items", null, values);
-        }
-    }
+		@Override
+		public long exec(@Nonnull SQLiteDatabase db) {
+			final DbItem dbItem = getNotNullObject();
 
-    private static final class LoadAll extends AbstractDbQuery<List<DbItem>> {
+			final ContentValues values = new ContentValues();
+			values.put("name", dbItem.getName());
+			return db.insert("items", null, values);
+		}
+	}
 
-        protected LoadAll(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
-            super(context, sqliteOpenHelper);
-        }
+	private static final class LoadAll extends AbstractDbQuery<List<DbItem>> {
 
-        @Nonnull
-        @Override
-        public Cursor createCursor(@Nonnull SQLiteDatabase db) {
-            return db.query("items", null, null, null, null, null, null);
-        }
+		protected LoadAll(@Nonnull Context context, @Nonnull SQLiteOpenHelper sqliteOpenHelper) {
+			super(context, sqliteOpenHelper);
+		}
 
-        @Nonnull
-        @Override
-        public List<DbItem> retrieveData(@Nonnull Cursor cursor) {
-            return new ListMapper<DbItem>(DbItemMapper.getInstance()).convert(cursor);
-        }
-    }
+		@Nonnull
+		@Override
+		public Cursor createCursor(@Nonnull SQLiteDatabase db) {
+			return db.query("items", null, null, null, null, null, null);
+		}
 
-    private static final class DbItemMapper implements Converter<Cursor, DbItem> {
+		@Nonnull
+		@Override
+		public List<DbItem> retrieveData(@Nonnull Cursor cursor) {
+			return new ListMapper<DbItem>(DbItemMapper.getInstance()).convert(cursor);
+		}
+	}
 
-        @Nonnull
-        private static final DbItemMapper instance = new DbItemMapper();
+	private static final class DbItemMapper implements Converter<Cursor, DbItem> {
 
-        private DbItemMapper() {
-        }
+		@Nonnull
+		private static final DbItemMapper instance = new DbItemMapper();
 
-        @Nonnull
-        public static DbItemMapper getInstance() {
-            return instance;
-        }
+		private DbItemMapper() {
+		}
 
-        @Nonnull
-        @Override
-        public DbItem convert(@Nonnull Cursor cursor) {
-            final String name = cursor.getString(0);
-            return new DbItemImpl(name);
-        }
-    }
+		@Nonnull
+		public static DbItemMapper getInstance() {
+			return instance;
+		}
+
+		@Nonnull
+		@Override
+		public DbItem convert(@Nonnull Cursor cursor) {
+			final String name = cursor.getString(0);
+			return new DbItemImpl(name);
+		}
+	}
 }

@@ -31,9 +31,9 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -64,10 +64,10 @@ public final class AdsController {
 
 	@Nonnull
 	public AdView createAndInflateAdView(@Nonnull Activity activity,
-												@Nonnull String admobAccountId,
-												@Nullable ViewGroup parentView,
-												int layoutId,
-												@Nonnull List<String> keywords) {
+										 @Nonnull String admobAccountId,
+										 @Nullable ViewGroup parentView,
+										 int layoutId,
+										 @Nonnull List<String> keywords) {
 		final ViewGroup layout = parentView != null ? parentView : (ViewGroup) activity.findViewById(layoutId);
 
 		// Create the adView
@@ -102,16 +102,16 @@ public final class AdsController {
 	}
 
 	private boolean isAdFreePurchased(@Nonnull Context context) {
-        // todo serso: this piece of code is shared between two branches in Android Calculator project (Calculator++) don't forget to change code below for correct work
-        // Blackberry playbook doesn't support billing => this it the only one point where we can stop application to communicate with billing service
+		// todo serso: this piece of code is shared between two branches in Android Calculator project (Calculator++) don't forget to change code below for correct work
+		// Blackberry playbook doesn't support billing => this it the only one point where we can stop application to communicate with billing service
 		//return true;
-        return BillingController.isPurchased(context.getApplicationContext(), adFreeProductId);
+		return BillingController.isPurchased(context.getApplicationContext(), adFreeProductId);
 	}
 
 	public boolean isAdFree(@Nonnull Context context) {
 		// check if user already bought this product
 		boolean purchased = isAdFreePurchased(context);
-		if ( !purchased ) {
+		if (!purchased) {
 			if (!AbstractBillingObserver.isTransactionsRestored(context)) {
 				// we must to restore all transactions done by user to guarantee that product was purchased or not
 				BillingController.restoreTransactions(context);

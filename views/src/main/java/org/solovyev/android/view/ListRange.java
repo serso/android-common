@@ -22,10 +22,10 @@
 
 package org.solovyev.android.view;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.text.Formatter;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -35,48 +35,48 @@ import java.util.List;
  */
 public class ListRange<T> implements Picker.Range<T> {
 
-    @Nonnull
-    private List<T> elements;
+	@Nonnull
+	private List<T> elements;
 
-    private int startPosition;
+	private int startPosition;
 
-    @Nullable
-    private Formatter<T> formatter;
+	@Nullable
+	private Formatter<T> formatter;
 
-    public ListRange(@Nonnull List<T> elements, @Nullable T selected) {
-        this.elements = elements;
-        this.startPosition = elements.indexOf(selected);
-        if ( this.startPosition < 0 ) {
-            this.startPosition = 0;
-        }
-        this.formatter = null;
-    }
+	public ListRange(@Nonnull List<T> elements, @Nullable T selected) {
+		this.elements = elements;
+		this.startPosition = elements.indexOf(selected);
+		if (this.startPosition < 0) {
+			this.startPosition = 0;
+		}
+		this.formatter = null;
+	}
 
-    public ListRange(@Nonnull List<T> elements, @Nullable T selected, @Nullable Formatter<T> formatter) {
-        this(elements, selected);
-        this.formatter = formatter;
-    }
+	public ListRange(@Nonnull List<T> elements, @Nullable T selected, @Nullable Formatter<T> formatter) {
+		this(elements, selected);
+		this.formatter = formatter;
+	}
 
-    @Override
-    public int getStartPosition() {
-        return this.startPosition;
-    }
+	@Override
+	public int getStartPosition() {
+		return this.startPosition;
+	}
 
-    @Override
-    public int getCount() {
-        return this.elements.size();
-    }
+	@Override
+	public int getCount() {
+		return this.elements.size();
+	}
 
-    @Nonnull
-    @Override
-    public String getStringValueAt(int position) {
-        final T value = getValueAt(position);
-        return formatter == null ? value.toString() : formatter.formatValue(value);
-    }
+	@Nonnull
+	@Override
+	public String getStringValueAt(int position) {
+		final T value = getValueAt(position);
+		return formatter == null ? value.toString() : formatter.formatValue(value);
+	}
 
-    @Nonnull
-    @Override
-    public T getValueAt(int position) {
-        return this.elements.get(position);
-    }
+	@Nonnull
+	@Override
+	public T getValueAt(int position) {
+		return this.elements.get(position);
+	}
 }

@@ -26,10 +26,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.MenuItem;
 import android.widget.Toast;
-import javax.annotation.Nonnull;
 import org.solovyev.android.Activities;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.samples.R;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -40,32 +41,32 @@ import org.solovyev.android.samples.R;
 /**
  * Context independent menu
  */
-public enum SamplesStaticMenu implements LabeledMenuItem<MenuItem>  {
-    
-    show_text(R.string.show_text) {
-        @Override
-        public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
-            Toast.makeText(context, context.getString(R.string.show_text_text), Toast.LENGTH_SHORT).show();
-        }
-    },
+public enum SamplesStaticMenu implements LabeledMenuItem<MenuItem> {
 
-    restart_activity(R.string.restart_activity) {
-        @Override
-        public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
-            Activities.restartActivity((Activity) context);
-        }
-    };
+	show_text(R.string.show_text) {
+		@Override
+		public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
+			Toast.makeText(context, context.getString(R.string.show_text_text), Toast.LENGTH_SHORT).show();
+		}
+	},
 
-    private int captionResId;
+	restart_activity(R.string.restart_activity) {
+		@Override
+		public void onClick(@Nonnull MenuItem data, @Nonnull Context context) {
+			Activities.restartActivity((Activity) context);
+		}
+	};
 
-    private SamplesStaticMenu(int captionResId) {
-        this.captionResId = captionResId;
-    }
+	private int captionResId;
+
+	private SamplesStaticMenu(int captionResId) {
+		this.captionResId = captionResId;
+	}
 
 
-    @Nonnull
-    @Override
-    public String getCaption(@Nonnull Context context) {
-        return context.getString(captionResId);
-    }
+	@Nonnull
+	@Override
+	public String getCaption(@Nonnull Context context) {
+		return context.getString(captionResId);
+	}
 }

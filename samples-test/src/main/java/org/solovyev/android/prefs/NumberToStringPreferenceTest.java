@@ -27,12 +27,12 @@ import javax.annotation.Nullable;
 
 public abstract class NumberToStringPreferenceTest<N extends Number> extends AbstractPreferenceTest<N> {
 
-    @Nonnull
-    @Override
-    protected Preference<N> createPreference(@Nonnull String key, @Nullable N defaultValue) {
-        return NumberToStringPreference.of(key, defaultValue, getNumberClass());
-    }
+	@Nonnull
+	@Override
+	protected Preference<N> createPreference(@Nonnull String key, @Nullable N defaultValue) {
+		return NumberToStringPreference.of(key, defaultValue, getNumberClass());
+	}
 
-    @Nonnull
-    protected abstract Class<N> getNumberClass();
+	@Nonnull
+	protected abstract Class<N> getNumberClass();
 }

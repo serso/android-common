@@ -23,7 +23,6 @@
 package org.solovyev.android.samples.db;
 
 import javax.annotation.Nonnull;
-
 import java.util.List;
 
 /**
@@ -33,10 +32,10 @@ import java.util.List;
  */
 public interface DbItemDao {
 
-    @Nonnull
-    List<DbItem> loadAll();
+	@Nonnull
+	List<DbItem> loadAll();
 
-    void insert(@Nonnull DbItem dbItem);
+	void insert(@Nonnull DbItem dbItem);
 
-    void removeByName(@Nonnull String name);
+	void removeByName(@Nonnull String name);
 }

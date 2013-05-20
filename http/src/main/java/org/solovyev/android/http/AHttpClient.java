@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface AHttpClient {
 
-    @Nonnull
-    DefaultHttpClient getHttpClient();
+	@Nonnull
+	DefaultHttpClient getHttpClient();
 
-    <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException;
+	<R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException;
 
-    @Nonnull
-    <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException;
+	@Nonnull
+	<R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException;
 }

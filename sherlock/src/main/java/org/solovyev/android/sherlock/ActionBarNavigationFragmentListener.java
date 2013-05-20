@@ -27,9 +27,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -39,53 +39,53 @@ import java.util.List;
  */
 public class ActionBarNavigationFragmentListener<T extends Fragment> implements ActionBar.OnNavigationListener {
 
-    @Nonnull
-    private final SherlockFragmentActivity activity;
+	@Nonnull
+	private final SherlockFragmentActivity activity;
 
-    @Nonnull
-    private List<? extends FragmentItem> items;
+	@Nonnull
+	private List<? extends FragmentItem> items;
 
-    private int selected = -1;
+	private int selected = -1;
 
-    @Nonnull
-    private ListAdapter<String> adapter;
+	@Nonnull
+	private ListAdapter<String> adapter;
 
-    public ActionBarNavigationFragmentListener(@Nonnull SherlockFragmentActivity activity,
-                                               @Nonnull List<? extends FragmentItem> items,
-                                               @Nonnull List<String> itemLabels) {
-        assert  items.size() == itemLabels.size();
-        this.activity = activity;
-        this.items = items;
-        this.adapter = AndroidSherlockUtils.newSherlockDefaultAdapter(activity, itemLabels);
-    }
+	public ActionBarNavigationFragmentListener(@Nonnull SherlockFragmentActivity activity,
+											   @Nonnull List<? extends FragmentItem> items,
+											   @Nonnull List<String> itemLabels) {
+		assert items.size() == itemLabels.size();
+		this.activity = activity;
+		this.items = items;
+		this.adapter = AndroidSherlockUtils.newSherlockDefaultAdapter(activity, itemLabels);
+	}
 
-    @Nonnull
-    public synchronized ListAdapter getAdapter() {
-        return adapter;
-    }
+	@Nonnull
+	public synchronized ListAdapter getAdapter() {
+		return adapter;
+	}
 
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        final FragmentManager fragmentManager =  this.activity.getSupportFragmentManager();
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		final FragmentManager fragmentManager = this.activity.getSupportFragmentManager();
 
-        final FragmentTransaction ft = fragmentManager.beginTransaction();
-        try {
-            if (selected != itemPosition) {
-                if (selected >= 0 && selected < items.size()) {
-                    items.get(selected).onUnselected(ft);
-                }
+		final FragmentTransaction ft = fragmentManager.beginTransaction();
+		try {
+			if (selected != itemPosition) {
+				if (selected >= 0 && selected < items.size()) {
+					items.get(selected).onUnselected(ft);
+				}
 
-                if (itemPosition < items.size()) {
-                    items.get(itemPosition).onSelected(ft);
-                    selected = itemPosition;
-                }
-            }
-        } finally {
-            if (ft != null && !ft.isEmpty()) {
-                ft.commit();
-            }
-        }
+				if (itemPosition < items.size()) {
+					items.get(itemPosition).onSelected(ft);
+					selected = itemPosition;
+				}
+			}
+		} finally {
+			if (ft != null && !ft.isEmpty()) {
+				ft.commit();
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

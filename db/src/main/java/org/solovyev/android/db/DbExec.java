@@ -23,6 +23,7 @@
 package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,14 +33,14 @@ import javax.annotation.Nonnull;
  */
 public interface DbExec {
 
-    long SQL_ERROR = -1;
+	long SQL_ERROR = -1;
 
-    /**
-     * Method executes database operation.
-     * If insert operation is done and error is occurred {@link DbExec#SQL_ERROR} is returned.
-     *
-     * @param db sqlite database instance
-     * @return number of affected rows (for update or delete) or newly generated ID (for insert)
-     */
-    long exec(@Nonnull SQLiteDatabase db);
+	/**
+	 * Method executes database operation.
+	 * If insert operation is done and error is occurred {@link DbExec#SQL_ERROR} is returned.
+	 *
+	 * @param db sqlite database instance
+	 * @return number of affected rows (for update or delete) or newly generated ID (for insert)
+	 */
+	long exec(@Nonnull SQLiteDatabase db);
 }

@@ -18,32 +18,32 @@ import java.util.List;
  */
 class AHttpClientImpl implements AHttpClient {
 
-    @Nonnull
-    private final DefaultHttpClient httpClient = new DefaultHttpClient();
+	@Nonnull
+	private final DefaultHttpClient httpClient = new DefaultHttpClient();
 
-    @Nonnull
-    @Override
-    public DefaultHttpClient getHttpClient() {
-        return httpClient;
-    }
+	@Nonnull
+	@Override
+	public DefaultHttpClient getHttpClient() {
+		return httpClient;
+	}
 
-    @Override
-    public <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
-        return Collections.getFirstListElement(execute(Arrays.asList(httpTransaction)));
-    }
+	@Override
+	public <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
+		return Collections.getFirstListElement(execute(Arrays.asList(httpTransaction)));
+	}
 
-    @Override
-    @Nonnull
-    public <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
-        final List<R> result = new ArrayList<R>();
-        for (HttpTransaction<R> httpTransaction : httpTransactions) {
-            final HttpUriRequest request = httpTransaction.createRequest();
-            final HttpResponse httpResponse = httpClient.execute(request);
+	@Override
+	@Nonnull
+	public <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
+		final List<R> result = new ArrayList<R>();
+		for (HttpTransaction<R> httpTransaction : httpTransactions) {
+			final HttpUriRequest request = httpTransaction.createRequest();
+			final HttpResponse httpResponse = httpClient.execute(request);
 
-            final R response = httpTransaction.getResponse(httpResponse);
-            result.add(response);
-        }
+			final R response = httpTransaction.getResponse(httpResponse);
+			result.add(response);
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

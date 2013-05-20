@@ -29,7 +29,6 @@ package org.solovyev.android.view;
  */
 
 
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -42,66 +41,66 @@ import android.widget.ImageButton;
  */
 public class PickerButton extends ImageButton {
 
-    private Picker numberPicker;
+	private Picker numberPicker;
 
-    public PickerButton(Context context, AttributeSet attrs,
-                        int defStyle) {
-        super(context, attrs, defStyle);
-    }
+	public PickerButton(Context context, AttributeSet attrs,
+						int defStyle) {
+		super(context, attrs, defStyle);
+	}
 
-    public PickerButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	public PickerButton(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
-    public PickerButton(Context context) {
-        super(context);
-    }
+	public PickerButton(Context context) {
+		super(context);
+	}
 
-    public void setNumberPicker(Picker picker) {
-        numberPicker = picker;
-    }
+	public void setNumberPicker(Picker picker) {
+		numberPicker = picker;
+	}
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        cancelLongPressIfRequired(event);
-        return super.onTouchEvent(event);
-    }
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		cancelLongPressIfRequired(event);
+		return super.onTouchEvent(event);
+	}
 
-    @Override
-    public boolean onTrackballEvent(MotionEvent event) {
-        cancelLongPressIfRequired(event);
-        return super.onTrackballEvent(event);
-    }
+	@Override
+	public boolean onTrackballEvent(MotionEvent event) {
+		cancelLongPressIfRequired(event);
+		return super.onTrackballEvent(event);
+	}
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
-                || (keyCode == KeyEvent.KEYCODE_ENTER)) {
-            cancelLongpress();
-        }
-        return super.onKeyUp(keyCode, event);
-    }
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER)
+				|| (keyCode == KeyEvent.KEYCODE_ENTER)) {
+			cancelLongpress();
+		}
+		return super.onKeyUp(keyCode, event);
+	}
 
-    private void cancelLongPressIfRequired(MotionEvent event) {
-        if ((event.getAction() == MotionEvent.ACTION_CANCEL)
-                || (event.getAction() == MotionEvent.ACTION_UP)) {
-            cancelLongpress();
-        }
-    }
+	private void cancelLongPressIfRequired(MotionEvent event) {
+		if ((event.getAction() == MotionEvent.ACTION_CANCEL)
+				|| (event.getAction() == MotionEvent.ACTION_UP)) {
+			cancelLongpress();
+		}
+	}
 
-    private void cancelLongpress() {
-        if (R.id.increment == getId()) {
-            numberPicker.cancelIncrement();
-        } else if (R.id.decrement == getId()) {
-            numberPicker.cancelDecrement();
-        }
-    }
+	private void cancelLongpress() {
+		if (R.id.increment == getId()) {
+			numberPicker.cancelIncrement();
+		} else if (R.id.decrement == getId()) {
+			numberPicker.cancelDecrement();
+		}
+	}
 
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        if (!hasWindowFocus) {
-            cancelLongpress();
-        }
-    }
+	public void onWindowFocusChanged(boolean hasWindowFocus) {
+		super.onWindowFocusChanged(hasWindowFocus);
+		if (!hasWindowFocus) {
+			cancelLongpress();
+		}
+	}
 
 }

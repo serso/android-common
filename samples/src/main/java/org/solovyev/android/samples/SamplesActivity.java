@@ -37,16 +37,16 @@ import java.util.List;
  */
 public class SamplesActivity extends ListActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.acl_samples_list);
+		setContentView(R.layout.acl_samples_list);
 
-        final List<SampleType> listItems = new ArrayList<SampleType>();
-        Collections.addAll(listItems, SampleType.values());
-        ListItemAdapter.createAndAttach(this, listItems);
-    }
+		final List<SampleType> listItems = new ArrayList<SampleType>();
+		Collections.addAll(listItems, SampleType.values());
+		ListItemAdapter.createAndAttach(this, listItems);
+	}
 
 
 }

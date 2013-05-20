@@ -23,6 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -34,12 +35,13 @@ import javax.annotation.Nullable;
 
 /**
  * Base class for {@link Preference} implementation. Contains preference key and default value
+ *
  * @param <T> type of preference
  */
 public abstract class AbstractPreference<T> implements Preference<T> {
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           FIELDS
     *
@@ -83,27 +85,27 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 
 	@Override
 	public final T getPreference(@Nonnull SharedPreferences preferences) {
-		if ( isSet(preferences) ) {
+		if (isSet(preferences)) {
 			return getPersistedValue(preferences);
 		} else {
 			return this.defaultValue;
 		}
 	}
 
-    @Override
-    public T getPreferenceNoError(@Nonnull SharedPreferences preferences) {
-        if (isSet(preferences)) {
-            try {
-                return getPersistedValue(preferences);
-            } catch (RuntimeException e) {
-                return this.defaultValue;
-            }
-        } else {
-            return this.defaultValue;
-        }
-    }
+	@Override
+	public T getPreferenceNoError(@Nonnull SharedPreferences preferences) {
+		if (isSet(preferences)) {
+			try {
+				return getPersistedValue(preferences);
+			} catch (RuntimeException e) {
+				return this.defaultValue;
+			}
+		} else {
+			return this.defaultValue;
+		}
+	}
 
-    @Override
+	@Override
 	public void putDefault(@Nonnull SharedPreferences preferences) {
 		putPreference(preferences, this.defaultValue);
 	}
@@ -122,24 +124,24 @@ public abstract class AbstractPreference<T> implements Preference<T> {
 		return preferences.contains(this.key);
 	}
 
-    @Override
-    public final boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
-        final boolean result;
+	@Override
+	public final boolean tryPutDefault(@Nonnull SharedPreferences preferences) {
+		final boolean result;
 
-        if (isSet(preferences)) {
-            result = false;
-        } else {
-            putDefault(preferences);
-            result = true;
-        }
+		if (isSet(preferences)) {
+			result = false;
+		} else {
+			putDefault(preferences);
+			result = true;
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public final boolean isSameKey(@Nonnull String key) {
-        return this.key.equals(key);
-    }
+	@Override
+	public final boolean isSameKey(@Nonnull String key) {
+		return this.key.equals(key);
+	}
 
     /*
     **********************************************************************
@@ -149,18 +151,19 @@ public abstract class AbstractPreference<T> implements Preference<T> {
     **********************************************************************
     */
 
-    /**
-     * @param preferences preferences container
-     * @return preference value from preferences with key defined by {@link #getKey()} method
-     */
-    @Nullable
-    protected abstract T getPersistedValue(@Nonnull SharedPreferences preferences);
+	/**
+	 * @param preferences preferences container
+	 * @return preference value from preferences with key defined by {@link #getKey()} method
+	 */
+	@Nullable
+	protected abstract T getPersistedValue(@Nonnull SharedPreferences preferences);
 
-    /**
-     * Method saved preference to preferences container editor
-     * @param editor editor in which value must be saved
-     * @param value value to be saved
-     */
-    protected abstract void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull T value);
+	/**
+	 * Method saved preference to preferences container editor
+	 *
+	 * @param editor editor in which value must be saved
+	 * @param value  value to be saved
+	 */
+	protected abstract void putPersistedValue(@Nonnull SharedPreferences.Editor editor, @Nonnull T value);
 
 }

@@ -25,10 +25,10 @@
 <resources>
 	<color name="magic_flame">#00ffffff</color>
 	<color name="metro_button_dark_text_color">#ffffffff</color>
-    <color name="metro_button_dark_background">#ff1f1f1f</color>
-    <color name="metro_button_gray_background">#ff393939</color>
-    <color name="metro_button_blue_background">#ff10648c</color>
-    <color name="button_operator_text_color">#ffffff99</color>
+	<color name="metro_button_dark_background">#ff1f1f1f</color>
+	<color name="metro_button_gray_background">#ff393939</color>
+	<color name="metro_button_blue_background">#ff10648c</color>
+	<color name="button_operator_text_color">#ffffff99</color>
 	<color name="button_ce_text_color">#ffffffff</color>
 	<color name="default_text_color">#ffffffff</color>
 	<color name="selected_angle_unit_text_color">#ffffff99</color>

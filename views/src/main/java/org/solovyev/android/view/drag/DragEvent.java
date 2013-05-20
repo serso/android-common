@@ -23,8 +23,9 @@
 package org.solovyev.android.view.drag;
 
 import android.view.MotionEvent;
-import javax.annotation.Nonnull;
 import org.solovyev.common.math.Point2d;
+
+import javax.annotation.Nonnull;
 
 public class DragEvent {
 

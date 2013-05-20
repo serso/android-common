@@ -23,7 +23,6 @@
 package org.solovyev.android.view.drag;
 
 import javax.annotation.Nonnull;
-
 import java.util.EventListener;
 
 /**
@@ -31,7 +30,7 @@ import java.util.EventListener;
  * Date: 9/18/11
  * Time: 8:48 PM
  */
-public interface DragPreferencesChangeListener extends EventListener{
+public interface DragPreferencesChangeListener extends EventListener {
 
-	void onDragPreferencesChange(@Nonnull SimpleOnDragListener.Preferences preferences );
+	void onDragPreferencesChange(@Nonnull SimpleOnDragListener.Preferences preferences);
 }

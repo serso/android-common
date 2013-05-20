@@ -23,8 +23,8 @@
 package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,49 +36,49 @@ import java.util.List;
  */
 public class DragAKeyboard extends AbstractAKeyboard {
 
-    @Nonnull
-    private final KeyboardDef keyboardDef;
+	@Nonnull
+	private final KeyboardDef keyboardDef;
 
-    public DragAKeyboard(@Nonnull String keyboardId, @Nonnull KeyboardDef keyboardDef) {
+	public DragAKeyboard(@Nonnull String keyboardId, @Nonnull KeyboardDef keyboardDef) {
 		super(keyboardId);
 		this.keyboardDef = keyboardDef;
-    }
+	}
 
-    @Override
-    public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
-        keyboardDef.setImeOptions(resources, imeOptions);
-    }
+	@Override
+	public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
+		keyboardDef.setImeOptions(resources, imeOptions);
+	}
 
-    @Override
-    public void setShifted(boolean shifted) {
-        keyboardDef.setShifted(shifted);
-    }
+	@Override
+	public void setShifted(boolean shifted) {
+		keyboardDef.setShifted(shifted);
+	}
 
-    @Nonnull
-    public KeyboardDef getKeyboardDef() {
-        return keyboardDef;
-    }
+	@Nonnull
+	public KeyboardDef getKeyboardDef() {
+		return keyboardDef;
+	}
 
-    public static final class KeyboardDef {
+	public static final class KeyboardDef {
 
-        @Nonnull
-        private final List<RowDef> rowDefs = new ArrayList<RowDef>();
+		@Nonnull
+		private final List<RowDef> rowDefs = new ArrayList<RowDef>();
 
-        public KeyboardDef() {
-        }
+		public KeyboardDef() {
+		}
 
-        public boolean add(RowDef object) {
-            return rowDefs.add(object);
-        }
+		public boolean add(RowDef object) {
+			return rowDefs.add(object);
+		}
 
-        private void clear() {
-            rowDefs.clear();
-        }
+		private void clear() {
+			rowDefs.clear();
+		}
 
-        @Nonnull
-        public List<RowDef> getRowDefs() {
-            return Collections.unmodifiableList(rowDefs);
-        }
+		@Nonnull
+		public List<RowDef> getRowDefs() {
+			return Collections.unmodifiableList(rowDefs);
+		}
 
 		public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
 			for (RowDef rowDef : rowDefs) {
@@ -93,26 +93,26 @@ public class DragAKeyboard extends AbstractAKeyboard {
 		}
 	}
 
-    public static final class RowDef {
+	public static final class RowDef {
 
-        @Nonnull
-        private final List<DragAKeyboardButtonDef> buttonDefs = new ArrayList<DragAKeyboardButtonDef>();
+		@Nonnull
+		private final List<DragAKeyboardButtonDef> buttonDefs = new ArrayList<DragAKeyboardButtonDef>();
 
-        public RowDef() {
-        }
+		public RowDef() {
+		}
 
-        public boolean add(@Nonnull DragAKeyboardButtonDef dragButtonDef) {
-            return buttonDefs.add(dragButtonDef);
-        }
+		public boolean add(@Nonnull DragAKeyboardButtonDef dragButtonDef) {
+			return buttonDefs.add(dragButtonDef);
+		}
 
-        private void clear() {
-            buttonDefs.clear();
-        }
+		private void clear() {
+			buttonDefs.clear();
+		}
 
-        @Nonnull
-        public List<DragAKeyboardButtonDef> getButtonDefs() {
-            return Collections.unmodifiableList(buttonDefs);
-        }
+		@Nonnull
+		public List<DragAKeyboardButtonDef> getButtonDefs() {
+			return Collections.unmodifiableList(buttonDefs);
+		}
 
 		public void setImeOptions(@Nonnull Resources resources, int imeOptions) {
 			for (DragAKeyboardButtonDef buttonDef : buttonDefs) {
@@ -125,5 +125,5 @@ public class DragAKeyboard extends AbstractAKeyboard {
 				buttonDef.setShifted(shifted);
 			}
 		}
-    }
+	}
 }

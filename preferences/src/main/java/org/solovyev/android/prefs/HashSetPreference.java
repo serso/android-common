@@ -22,19 +22,19 @@
 
 package org.solovyev.android.prefs;
 
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.EnumMapper;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.StringMapper;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class HashSetPreference<T> extends CollectionSetPreference<Set<T>, T> {
 
-    private HashSetPreference(@Nonnull String id, @Nonnull Set<T> defaultValue, @Nonnull Mapper<T> mapper) {
-        super(id, defaultValue, mapper);
-    }
+	private HashSetPreference(@Nonnull String id, @Nonnull Set<T> defaultValue, @Nonnull Mapper<T> mapper) {
+		super(id, defaultValue, mapper);
+	}
 
 	@Nonnull
 	public static HashSetPreference<String> ofStrings(@Nonnull String key, @Nonnull Set<String> defaultValue) {

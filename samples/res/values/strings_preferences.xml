@@ -24,34 +24,34 @@
 
 <resources>
 
-    <string name="preferences">Preferences</string>
+	<string name="preferences">Preferences</string>
 
-    <string name="to_be_or_not_to_be">To be or not to be?</string>
-    <string name="answer">Answer</string>
-    <string name="to_be">To be</string>
-    <string name="not_to_be">Not to be</string>
+	<string name="to_be_or_not_to_be">To be or not to be?</string>
+	<string name="answer">Answer</string>
+	<string name="to_be">To be</string>
+	<string name="not_to_be">Not to be</string>
 
-    <array name="choice_ids">
-        <item>to_be</item>
-        <item>not_to_be</item>
-    </array>
+	<array name="choice_ids">
+		<item>to_be</item>
+		<item>not_to_be</item>
+	</array>
 
-    <array name="choice_labels">
-        <item>@string/to_be</item>
-        <item>@string/not_to_be</item>
-    </array>
+	<array name="choice_labels">
+		<item>@string/to_be</item>
+		<item>@string/not_to_be</item>
+	</array>
 
-    <string name="pick_integer_number">Pick integer number</string>
-    <string name="pick_double_number">Pick double number</string>
-    <string name="select_float_interval">Select float interval</string>
-    <string name="select_integer_interval">Select integer interval</string>
-    <string name="choose_country">Choose country</string>
+	<string name="pick_integer_number">Pick integer number</string>
+	<string name="pick_double_number">Pick double number</string>
+	<string name="select_float_interval">Select float interval</string>
+	<string name="select_integer_interval">Select integer interval</string>
+	<string name="choose_country">Choose country</string>
 
-    <string name="sweden">Sweden</string>
-    <string name="usa">USA</string>
-    <string name="russia">Russia</string>
-    <string name="ukraine">Ukraine</string>
-    <string name="germany">Germany</string>
+	<string name="sweden">Sweden</string>
+	<string name="usa">USA</string>
+	<string name="russia">Russia</string>
+	<string name="ukraine">Ukraine</string>
+	<string name="germany">Germany</string>
 
 
 </resources>

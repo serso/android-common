@@ -23,9 +23,9 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
 import org.solovyev.android.Labeled;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -35,25 +35,25 @@ import java.util.List;
  */
 public final class ListAdapterUtils {
 
-    private ListAdapterUtils() {
-        throw new AssertionError();
-    }
+	private ListAdapterUtils() {
+		throw new AssertionError();
+	}
 
-    @Nonnull
-    public static <E extends Enum & Labeled> ListAdapter<LabeledEnum<E>> newDefaultAdapterForEnum(@Nonnull Context context,
-                                                                                                  @Nonnull Class<E> enumClass) {
-        final List<LabeledEnum<E>> labeledEnums = LabeledEnum.toLabeledEnums(enumClass, context);
+	@Nonnull
+	public static <E extends Enum & Labeled> ListAdapter<LabeledEnum<E>> newDefaultAdapterForEnum(@Nonnull Context context,
+																								  @Nonnull Class<E> enumClass) {
+		final List<LabeledEnum<E>> labeledEnums = LabeledEnum.toLabeledEnums(enumClass, context);
 
-        return newDefaultAdapter(context, labeledEnums);
-    }
+		return newDefaultAdapter(context, labeledEnums);
+	}
 
-    @Nonnull
-    public static <T> ListAdapter<T> newDefaultAdapter(@Nonnull Context context,
-                                                       @Nonnull List<T> items) {
+	@Nonnull
+	public static <T> ListAdapter<T> newDefaultAdapter(@Nonnull Context context,
+													   @Nonnull List<T> items) {
 
-        final ListAdapter<T> result = new ListAdapter<T>(context, android.R.layout.simple_spinner_item, items);
-        result.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		final ListAdapter<T> result = new ListAdapter<T>(context, android.R.layout.simple_spinner_item, items);
+		result.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        return result;
-    }
+		return result;
+	}
 }

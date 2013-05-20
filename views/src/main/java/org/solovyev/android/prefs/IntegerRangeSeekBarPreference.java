@@ -24,8 +24,9 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.NumberIntervalMapper;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -38,15 +39,15 @@ public class IntegerRangeSeekBarPreference extends RangeSeekBarPreference<Intege
 		super(context, attrs, NumberIntervalMapper.of(Integer.class));
 	}
 
-    @Nonnull
-    @Override
-    protected Integer getDefaultStep() {
-        return 1;
-    }
+	@Nonnull
+	@Override
+	protected Integer getDefaultStep() {
+		return 1;
+	}
 
-    @Nonnull
-    @Override
-    protected Integer add(@Nonnull Integer l, @Nonnull Integer r) {
-        return l + r;
-    }
+	@Nonnull
+	@Override
+	protected Integer add(@Nonnull Integer l, @Nonnull Integer r) {
+		return l + r;
+	}
 }

@@ -23,10 +23,11 @@
 package org.solovyev.android.keyboard;
 
 import android.content.res.Resources;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.view.drag.DirectionDragButtonDef;
 import org.solovyev.android.view.drag.DragDirection;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
 
@@ -45,9 +46,9 @@ public interface DragAKeyboardButtonDef extends DirectionDragButtonDef {
 
 	void setShifted(boolean shifted);
 
-    @Nullable
-    CharSequence getPreviewText();
+	@Nullable
+	CharSequence getPreviewText();
 
-    @Nullable
-    CharSequence getPreviewDirectionText(@Nonnull DragDirection direction);
+	@Nullable
+	CharSequence getPreviewDirectionText(@Nonnull DragDirection direction);
 }

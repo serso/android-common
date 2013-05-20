@@ -33,9 +33,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import org.solovyev.android.Views;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.Views;
 
 /**
  * User: serso
@@ -44,68 +45,68 @@ import org.solovyev.android.Views;
  */
 public class AKeyboardButtonPreview {
 
-    private static final String TAG = AKeyboardButtonPreview.class.getSimpleName();
+	private static final String TAG = AKeyboardButtonPreview.class.getSimpleName();
 
-    private static final int MSG_SHOW_PREVIEW = 1;
-    private static final int MSG_REMOVE_PREVIEW = 2;
+	private static final int MSG_SHOW_PREVIEW = 1;
+	private static final int MSG_REMOVE_PREVIEW = 2;
 
-    private static final long DELAY_AFTER_PREVIEW = 200;
-    private static final long DELAY_BEFORE_PREVIEW = 0;
+	private static final long DELAY_AFTER_PREVIEW = 200;
+	private static final long DELAY_BEFORE_PREVIEW = 0;
 
-    @Nonnull
-    private PopupWindow popup;
+	@Nonnull
+	private PopupWindow popup;
 
-    @Nonnull
-    private final View popupParent;
+	@Nonnull
+	private final View popupParent;
 
-    private View previewView;
+	private View previewView;
 
-    @Nonnull
-    private final Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_SHOW_PREVIEW:
-                    Log.d(TAG, "Show preview for " + msg.obj);
-                    showText0((PreviewParams) msg.obj);
-                    break;
-                case MSG_REMOVE_PREVIEW:
-                    Log.d(TAG, "Hide preview for " + msg.obj);
-                    hide();
-                    break;
-            }
-        }
-    };
+	@Nonnull
+	private final Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case MSG_SHOW_PREVIEW:
+					Log.d(TAG, "Show preview for " + msg.obj);
+					showText0((PreviewParams) msg.obj);
+					break;
+				case MSG_REMOVE_PREVIEW:
+					Log.d(TAG, "Hide preview for " + msg.obj);
+					hide();
+					break;
+			}
+		}
+	};
 
-    public AKeyboardButtonPreview(@Nonnull View popupParent) {
-        this.popupParent = popupParent;
-    }
+	public AKeyboardButtonPreview(@Nonnull View popupParent) {
+		this.popupParent = popupParent;
+	}
 
-    public void createPreviewView(@Nonnull LayoutInflater layoutInflater) {
-        Log.d(TAG, "Creating preview view and popup window...");
+	public void createPreviewView(@Nonnull LayoutInflater layoutInflater) {
+		Log.d(TAG, "Creating preview view and popup window...");
 
-        previewView = layoutInflater.inflate(R.layout.drag_keyboard_preview, null);
-        previewView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        popup = new PopupWindow(previewView);
-    }
+		previewView = layoutInflater.inflate(R.layout.drag_keyboard_preview, null);
+		previewView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		popup = new PopupWindow(previewView);
+	}
 
-    public void showPreview(@Nonnull View view, @Nullable CharSequence text, @Nullable Integer drawableResId) {
-        final int[] location = new int[2];
-        view.getLocationInWindow(location);
-        int x = location[0] + view.getWidth() / 2;
-        int y = location[1];
+	public void showPreview(@Nonnull View view, @Nullable CharSequence text, @Nullable Integer drawableResId) {
+		final int[] location = new int[2];
+		view.getLocationInWindow(location);
+		int x = location[0] + view.getWidth() / 2;
+		int y = location[1];
 
-        final PreviewParams previewParams;
-        if (text == null) {
-            if (drawableResId != null) {
-                previewParams = PreviewParams.newDrawableInstance(x, y, drawableResId);
-            } else {
-                previewParams = PreviewParams.newTextInstance(x, y, "");
-                Log.e(AKeyboardButtonPreview.class.getSimpleName(), "For view: " + view + " neither text nor drawable resource is specified!");
-            }
-        } else {
-            previewParams = PreviewParams.newTextInstance(x, y, text.toString());
-        }
+		final PreviewParams previewParams;
+		if (text == null) {
+			if (drawableResId != null) {
+				previewParams = PreviewParams.newDrawableInstance(x, y, drawableResId);
+			} else {
+				previewParams = PreviewParams.newTextInstance(x, y, "");
+				Log.e(AKeyboardButtonPreview.class.getSimpleName(), "For view: " + view + " neither text nor drawable resource is specified!");
+			}
+		} else {
+			previewParams = PreviewParams.newTextInstance(x, y, text.toString());
+		}
 
 		synchronized (handler) {
 			// remove all 'remove' runnable for current params
@@ -116,56 +117,56 @@ public class AKeyboardButtonPreview {
 		}
 	}
 
-    private void showText0(@Nonnull PreviewParams previewParams) {
+	private void showText0(@Nonnull PreviewParams previewParams) {
 		synchronized (handler) {
 			handler.removeMessages(MSG_REMOVE_PREVIEW, previewParams);
 		}
 
-        final PopupWindow popup = this.popup;
+		final PopupWindow popup = this.popup;
 
-        boolean image = false;
+		boolean image = false;
 
-        final TextView previewTextView = (TextView) previewView.findViewById(R.id.preview_text_view);
-        previewTextView.setText(previewParams.getText());
+		final TextView previewTextView = (TextView) previewView.findViewById(R.id.preview_text_view);
+		previewTextView.setText(previewParams.getText());
 
-        final Integer drawableResId = previewParams.getDrawableResId();
-        final ImageView previewImageView = (ImageView) previewView.findViewById(R.id.preview_image_view);
-        if (drawableResId != null) {
-            final Drawable drawable = previewView.getContext().getResources().getDrawable(drawableResId);
-            previewImageView.setImageDrawable(drawable);
-            if (drawable != null) {
-                image = true;
-            }
-        } else {
-            previewImageView.setImageDrawable(null);
-        }
+		final Integer drawableResId = previewParams.getDrawableResId();
+		final ImageView previewImageView = (ImageView) previewView.findViewById(R.id.preview_image_view);
+		if (drawableResId != null) {
+			final Drawable drawable = previewView.getContext().getResources().getDrawable(drawableResId);
+			previewImageView.setImageDrawable(drawable);
+			if (drawable != null) {
+				image = true;
+			}
+		} else {
+			previewImageView.setImageDrawable(null);
+		}
 
-        if (image) {
-            previewTextView.setVisibility(View.GONE);
-            previewImageView.setVisibility(View.VISIBLE);
-        } else {
-            previewImageView.setVisibility(View.GONE);
-            previewTextView.setVisibility(View.VISIBLE);
-        }
+		if (image) {
+			previewTextView.setVisibility(View.GONE);
+			previewImageView.setVisibility(View.VISIBLE);
+		} else {
+			previewImageView.setVisibility(View.GONE);
+			previewTextView.setVisibility(View.VISIBLE);
+		}
 
-        previewView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+		previewView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 
-        final int popupWidth = previewView.getMeasuredWidth();
-        final int popupHeight = previewView.getMeasuredHeight();
-        final int popupMargin = Views.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
+		final int popupWidth = previewView.getMeasuredWidth();
+		final int popupHeight = previewView.getMeasuredHeight();
+		final int popupMargin = Views.toPixels(popupParent.getContext().getResources().getDisplayMetrics(), 10);
 
-        int popupX = previewParams.getX() - popupWidth / 2;
-        int popupY = previewParams.getY() - popupHeight - popupMargin;
+		int popupX = previewParams.getX() - popupWidth / 2;
+		int popupY = previewParams.getY() - popupHeight - popupMargin;
 
-        if (popup.isShowing()) {
-            popup.update(popupX, popupY, popupWidth, popupHeight);
-        } else {
-            popup.setWidth(popupWidth);
-            popup.setHeight(popupHeight);
-            popup.showAtLocation(popupParent, Gravity.NO_GRAVITY, popupX, popupY);
-        }
+		if (popup.isShowing()) {
+			popup.update(popupX, popupY, popupWidth, popupHeight);
+		} else {
+			popup.setWidth(popupWidth);
+			popup.setHeight(popupHeight);
+			popup.showAtLocation(popupParent, Gravity.NO_GRAVITY, popupX, popupY);
+		}
 
-        previewView.setVisibility(View.VISIBLE);
+		previewView.setVisibility(View.VISIBLE);
 
 		synchronized (handler) {
 			handler.sendMessageDelayed(handler.obtainMessage(MSG_REMOVE_PREVIEW, previewParams), DELAY_AFTER_PREVIEW);
@@ -173,8 +174,8 @@ public class AKeyboardButtonPreview {
 	}
 
 	public void hide() {
-        if (previewView != null) {
-            previewView.setVisibility(View.INVISIBLE);
-        }
-    }
+		if (previewView != null) {
+			previewView.setVisibility(View.INVISIBLE);
+		}
+	}
 }

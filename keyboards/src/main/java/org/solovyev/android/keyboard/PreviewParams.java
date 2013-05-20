@@ -24,9 +24,9 @@ package org.solovyev.android.keyboard;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -162,13 +162,13 @@ public final class PreviewParams implements Parcelable {
 		return result;
 	}
 
-    @Override
-    public String toString() {
-        return "PreviewParams{" +
-                "x=" + x +
-                ", y=" + y +
-                ", text='" + text + '\'' +
-                ", drawableResId=" + drawableResId +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "PreviewParams{" +
+				"x=" + x +
+				", y=" + y +
+				", text='" + text + '\'' +
+				", drawableResId=" + drawableResId +
+				'}';
+	}
 }

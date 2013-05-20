@@ -32,10 +32,14 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.*;
+import android.view.inputmethod.CompletionInfo;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
+import org.solovyev.common.text.Strings;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.text.Strings;
 
 /**
  * User: Solovyev_S
@@ -45,7 +49,7 @@ import org.solovyev.common.text.Strings;
 public abstract class AbstractKeyboardController<K extends AKeyboard> implements AKeyboardController {
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           STATIC
     *
@@ -61,16 +65,16 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	 */
 	private static final boolean PROCESS_HARD_KEYS = false;
 
-    public static final int KEYCODE_CLEAR = -800;
-    public static final int KEYCODE_COPY = -801;
-    public static final int KEYCODE_ENTER = 10;
-    public static final int KEYCODE_PASTE = -802;
-    public static final int KEYCODE_CURSOR_LEFT = -803;
-    public static final int KEYCODE_CURSOR_RIGHT = -804;
-    public static final int KEYCODE_PREV_KEYBOARD = -805;
-    public static final int KEYCODE_NEXT_KEYBOARD = -806;
-    public static final int KEYCODE_UNDO = -807;
-    public static final int KEYCODE_REDO = -808;
+	public static final int KEYCODE_CLEAR = -800;
+	public static final int KEYCODE_COPY = -801;
+	public static final int KEYCODE_ENTER = 10;
+	public static final int KEYCODE_PASTE = -802;
+	public static final int KEYCODE_CURSOR_LEFT = -803;
+	public static final int KEYCODE_CURSOR_RIGHT = -804;
+	public static final int KEYCODE_PREV_KEYBOARD = -805;
+	public static final int KEYCODE_NEXT_KEYBOARD = -806;
+	public static final int KEYCODE_UNDO = -807;
+	public static final int KEYCODE_REDO = -808;
 
     /*
     **********************************************************************
@@ -97,7 +101,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	@Nonnull
 	private InputMethodManager inputMethodManager;
 
-    @Nonnull
+	@Nonnull
 	private AKeyboardConfiguration configuration;
 
     /*
@@ -108,8 +112,8 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     **********************************************************************
     */
 
-    protected AbstractKeyboardController() {
-    }
+	protected AbstractKeyboardController() {
+	}
 
     /*
     **********************************************************************
@@ -119,22 +123,22 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     **********************************************************************
     */
 
-    @Override
-    public final void onCreate(@Nonnull Context context) {
-        this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.configuration = onCreate0(context);
-    }
+	@Override
+	public final void onCreate(@Nonnull Context context) {
+		this.inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		this.configuration = onCreate0(context);
+	}
 
-    @Nonnull
-    protected abstract AKeyboardConfiguration onCreate0(@Nonnull Context context);
+	@Nonnull
+	protected abstract AKeyboardConfiguration onCreate0(@Nonnull Context context);
 
-    @Override
+	@Override
 	public final void onInitializeInterface(@Nonnull InputMethodService inputMethodService) {
 		this.inputMethodService = inputMethodService;
 		this.state = onInitializeInterface0(inputMethodService);
 		this.keyboardInput = createKeyboardInput0(inputMethodService);
-        this.keyboardView = createKeyboardView0(inputMethodService);
-    }
+		this.keyboardView = createKeyboardView0(inputMethodService);
+	}
 
 	@Nonnull
 	protected abstract AKeyboardControllerState<K> onInitializeInterface0(@Nonnull InputMethodService inputMethodService);
@@ -147,42 +151,42 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	@Nonnull
 	protected abstract AKeyboardView<K> createKeyboardView0(@Nonnull Context context);
 
-    @Nonnull
-    @Override
-    public final AKeyboardView createKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
-        keyboardView.createAndroidKeyboardView(context, layoutInflater);
-        keyboardView.setKeyboard(getCurrentKeyboard());
-        keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
-        return keyboardView;
-    }
+	@Nonnull
+	@Override
+	public final AKeyboardView createKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
+		keyboardView.createAndroidKeyboardView(context, layoutInflater);
+		keyboardView.setKeyboard(getCurrentKeyboard());
+		keyboardView.setOnKeyboardActionListener(new DefaultKeyboardActionListener(this));
+		return keyboardView;
+	}
 
-    @Override
-    public View onCreateCandidatesView() {
-        return null;
-    }
+	@Override
+	public View onCreateCandidatesView() {
+		return null;
+	}
 
-    @Override
-    public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
-        if (!restarting) {
-            // Clear shift states.
-            metaState = 0;
-        }
+	@Override
+	public void onStartInput(@Nonnull EditorInfo attribute, boolean restarting) {
+		if (!restarting) {
+			// Clear shift states.
+			metaState = 0;
+		}
 
-        this.state = onStartInput0(attribute, restarting);
+		this.state = onStartInput0(attribute, restarting);
 
-        keyboardInput.clearTypedText();
+		keyboardInput.clearTypedText();
 
-        // Update the label on the enter key, depending on what the application
-        // says it will do.
-        getCurrentKeyboard().setImeOptions(inputMethodService.getResources(), attribute.imeOptions);
-    }
+		// Update the label on the enter key, depending on what the application
+		// says it will do.
+		getCurrentKeyboard().setImeOptions(inputMethodService.getResources(), attribute.imeOptions);
+	}
 
 
-    @Override
-    public void onFinishInput() {
-        keyboardInput.clearTypedText();
-        keyboardView.close();
-    }
+	@Override
+	public void onFinishInput() {
+		keyboardInput.clearTypedText();
+		keyboardView.close();
+	}
 
     /*
     **********************************************************************
@@ -192,134 +196,134 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
     **********************************************************************
     */
 
-    @Override
-    public void onStartInputView(EditorInfo attribute, boolean restarting) {
-        // Apply the selected keyboard to the input view.
-        keyboardView.setKeyboard(getCurrentKeyboard());
-        keyboardView.close();
+	@Override
+	public void onStartInputView(EditorInfo attribute, boolean restarting) {
+		// Apply the selected keyboard to the input view.
+		keyboardView.setKeyboard(getCurrentKeyboard());
+		keyboardView.close();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
-            keyboardView.setSubtypeOnSpaceKey(subtype);
-        }
-    }
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			final InputMethodSubtype subtype = inputMethodManager.getCurrentInputMethodSubtype();
+			keyboardView.setSubtypeOnSpaceKey(subtype);
+		}
+	}
 
 	@Nonnull
 	protected InputMethodService getInputMethodService() {
 		return inputMethodService;
 	}
 
-    @Override
-    public final boolean onKey(int primaryCode, @Nullable int[] keyCodes) {
-        boolean consumed = handleSpecialKey(primaryCode);
+	@Override
+	public final boolean onKey(int primaryCode, @Nullable int[] keyCodes) {
+		boolean consumed = handleSpecialKey(primaryCode);
 
-        if ( !consumed ) {
+		if (!consumed) {
 
-            if (isWordSeparator(primaryCode)) {
-                // Handle separator
-                if (!Strings.isEmpty(getKeyboardInput().getTypedText())) {
-                    getKeyboardInput().commitTyped();
-                }
-                sendKey(primaryCode);
-                updateShiftKeyState(getInputMethodService().getCurrentInputEditorInfo());
-                consumed = true;
-            } else {
-                handleCharacter(primaryCode, keyCodes);
-            }
-        }
+			if (isWordSeparator(primaryCode)) {
+				// Handle separator
+				if (!Strings.isEmpty(getKeyboardInput().getTypedText())) {
+					getKeyboardInput().commitTyped();
+				}
+				sendKey(primaryCode);
+				updateShiftKeyState(getInputMethodService().getCurrentInputEditorInfo());
+				consumed = true;
+			} else {
+				handleCharacter(primaryCode, keyCodes);
+			}
+		}
 
-        return consumed;
-    }
+		return consumed;
+	}
 
-    protected boolean handleSpecialKey(int primaryCode) {
-        boolean consumed = false;
+	protected boolean handleSpecialKey(int primaryCode) {
+		boolean consumed = false;
 
-        switch (primaryCode) {
-            case Keyboard.KEYCODE_MODE_CHANGE:
-                handleModeChange();
-                consumed = true;
-                break;
-            case Keyboard.KEYCODE_DELETE:
-                handleBackspace();
-                consumed = true;
-                break;
-            case Keyboard.KEYCODE_CANCEL:
-                handleClose();
-                consumed = true;
-                break;
-            case Keyboard.KEYCODE_SHIFT:
-                handleShift();
-                consumed = true;
-                break;
-            case KEYCODE_COPY:
-                getKeyboardInput().handleCopy();
-                consumed = true;
-                break;
-            case KEYCODE_PASTE:
-                getKeyboardInput().handlePaste();
-                consumed = true;
-                break;
-            case KEYCODE_CLEAR:
-                getKeyboardInput().handleClear();
-                consumed = true;
-                break;
-            case KEYCODE_CURSOR_LEFT:
-                getKeyboardInput().handleCursorLeft();
-                consumed = true;
-                break;
-            case KEYCODE_CURSOR_RIGHT:
-                getKeyboardInput().handleCursorRight();
-                consumed = true;
-                break;
-            case KEYCODE_PREV_KEYBOARD:
-                handlePrevKeyboard();
-                consumed = true;
-                break;
-            case KEYCODE_NEXT_KEYBOARD:
-                handleNextKeyboard();
-                consumed = true;
-                break;
-            case KEYCODE_UNDO:
-                getKeyboardInput().undo();
-                consumed = true;
-                break;
-            case KEYCODE_REDO:
-                getKeyboardInput().redo();
-                consumed = true;
-                break;
-        }
+		switch (primaryCode) {
+			case Keyboard.KEYCODE_MODE_CHANGE:
+				handleModeChange();
+				consumed = true;
+				break;
+			case Keyboard.KEYCODE_DELETE:
+				handleBackspace();
+				consumed = true;
+				break;
+			case Keyboard.KEYCODE_CANCEL:
+				handleClose();
+				consumed = true;
+				break;
+			case Keyboard.KEYCODE_SHIFT:
+				handleShift();
+				consumed = true;
+				break;
+			case KEYCODE_COPY:
+				getKeyboardInput().handleCopy();
+				consumed = true;
+				break;
+			case KEYCODE_PASTE:
+				getKeyboardInput().handlePaste();
+				consumed = true;
+				break;
+			case KEYCODE_CLEAR:
+				getKeyboardInput().handleClear();
+				consumed = true;
+				break;
+			case KEYCODE_CURSOR_LEFT:
+				getKeyboardInput().handleCursorLeft();
+				consumed = true;
+				break;
+			case KEYCODE_CURSOR_RIGHT:
+				getKeyboardInput().handleCursorRight();
+				consumed = true;
+				break;
+			case KEYCODE_PREV_KEYBOARD:
+				handlePrevKeyboard();
+				consumed = true;
+				break;
+			case KEYCODE_NEXT_KEYBOARD:
+				handleNextKeyboard();
+				consumed = true;
+				break;
+			case KEYCODE_UNDO:
+				getKeyboardInput().undo();
+				consumed = true;
+				break;
+			case KEYCODE_REDO:
+				getKeyboardInput().redo();
+				consumed = true;
+				break;
+		}
 
-        return consumed;
-    }
+		return consumed;
+	}
 
-    protected void handleModeChange() {
-    }
+	protected void handleModeChange() {
+	}
 
-    protected void handleNextKeyboard() {
-    }
+	protected void handleNextKeyboard() {
+	}
 
-    protected void handlePrevKeyboard() {
-    }
+	protected void handlePrevKeyboard() {
+	}
 
-    private void handleShift() {
-        boolean newState = !this.state.isShifted();
+	private void handleShift() {
+		boolean newState = !this.state.isShifted();
 
-        setShifted(newState);
-    }
+		setShifted(newState);
+	}
 
-    protected final void setShifted(boolean shifted) {
-        if ( shifted != this.state.isShifted() ) {
-            this.state = this.state.copyForNewShift(shifted);
-            this.state.getKeyboard().setShifted(shifted);
-            this.keyboardView.reloadAndroidKeyboardView();
-            this.setShifted0(shifted);
-        }
-    }
+	protected final void setShifted(boolean shifted) {
+		if (shifted != this.state.isShifted()) {
+			this.state = this.state.copyForNewShift(shifted);
+			this.state.getKeyboard().setShifted(shifted);
+			this.keyboardView.reloadAndroidKeyboardView();
+			this.setShifted0(shifted);
+		}
+	}
 
-    protected void setShifted0(boolean shifted) {
-    }
+	protected void setShifted0(boolean shifted) {
+	}
 
-    @Nonnull
+	@Nonnull
 	protected K getCurrentKeyboard() {
 		return state.getKeyboard();
 	}
@@ -339,7 +343,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	}
 
 	@Nonnull
-    protected AKeyboardView<K> getKeyboardView() {
+	protected AKeyboardView<K> getKeyboardView() {
 		return keyboardView;
 	}
 
@@ -379,11 +383,11 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 
 			int caps = 0;
 			if (editorInfo.inputType != InputType.TYPE_NULL) {
-                caps = keyboardInput.getCursorCapsMode(attr.inputType);
+				caps = keyboardInput.getCursorCapsMode(attr.inputType);
 			}
 
-            boolean shifted = state.isCapsLock() || caps != 0;
-            setShifted(shifted);
+			boolean shifted = state.isCapsLock() || caps != 0;
+			setShifted(shifted);
 		}
 	}
 
@@ -395,14 +399,14 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 		if (!Strings.isEmpty(text) && (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
 			keyboardInput.clearTypedText();
 			updateCandidates();
-            keyboardInput.finishComposingText();
+			keyboardInput.finishComposingText();
 		}
 	}
 
-    protected void updateCandidates() {
-    }
+	protected void updateCandidates() {
+	}
 
-    @Override
+	@Override
 	public boolean onKeyDown(int keyCode, @Nonnull KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BACK:
@@ -440,19 +444,19 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 						// A silly example: in our input method, Alt+Space
 						// is a shortcut for 'android' in lower case.
 
-                        // First, tell the editor that it is no longer in the
-                        // shift state, since we are consuming this.
-                        keyboardInput.clearMetaKeyStates(KeyEvent.META_ALT_ON);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_A);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_N);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_R);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_O);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_I);
-                        keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
-                        // And we consume this event.
-                        return true;
-                    }
+						// First, tell the editor that it is no longer in the
+						// shift state, since we are consuming this.
+						keyboardInput.clearMetaKeyStates(KeyEvent.META_ALT_ON);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_A);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_N);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_R);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_O);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_I);
+						keyboardInput.keyDownUp(KeyEvent.KEYCODE_D);
+						// And we consume this event.
+						return true;
+					}
 					if (state.isPrediction() && translateKeyDown(keyCode, event)) {
 						return true;
 					}
@@ -463,21 +467,21 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 	}
 
 	public boolean handleBackspace() {
-        boolean changed = keyboardInput.handleBackspace();
-        if (!changed) {
-            keyDownUp(KeyEvent.KEYCODE_DEL);
-        }
+		boolean changed = keyboardInput.handleBackspace();
+		if (!changed) {
+			keyDownUp(KeyEvent.KEYCODE_DEL);
+		}
 
-        updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
+		updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
 
-        return changed;
+		return changed;
 	}
 
 	/**
 	 * Helper to send a key down / key up pair to the current editor.
 	 */
 	public void keyDownUp(int keyEventCode) {
-        keyboardInput.keyDownUp(keyEventCode);
+		keyboardInput.keyDownUp(keyEventCode);
 	}
 
 	/**
@@ -516,7 +520,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 			}
 		}
 
-        return false;
+		return false;
 	}
 
 	/**
@@ -531,16 +535,16 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 				if (keyCode >= '0' && keyCode <= '9') {
 					keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
 				} else {
-                    keyboardInput.commitText(String.valueOf((char) keyCode), 1);
+					keyboardInput.commitText(String.valueOf((char) keyCode), 1);
 				}
 				break;
 		}
 	}
 
 	public void pickDefaultCandidate() {
-        if (state.isCompletion()) {
-            pickSuggestionManually(0);
-        }
+		if (state.isCompletion()) {
+			pickSuggestionManually(0);
+		}
 	}
 
 	public void pickSuggestionManually(int index) {
@@ -554,7 +558,7 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 		}
 
 		if (isAlphabet(primaryCode) && state.isPrediction()) {
-			keyboardInput.append((char)primaryCode);
+			keyboardInput.append((char) primaryCode);
 			updateShiftKeyState(keyboardInput.getCurrentInputEditorInfo());
 			updateCandidates();
 		} else {
@@ -574,8 +578,8 @@ public abstract class AbstractKeyboardController<K extends AKeyboard> implements
 		keyboardView.setSubtypeOnSpaceKey(subtype);
 	}
 
-    public boolean isWordSeparator(int code) {
-        final String separators = configuration.getWordSeparators();
-        return separators.contains(String.valueOf((char) code));
-    }
+	public boolean isWordSeparator(int code) {
+		final String separators = configuration.getWordSeparators();
+		return separators.contains(String.valueOf((char) code));
+	}
 }

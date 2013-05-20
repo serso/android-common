@@ -23,6 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,15 +33,15 @@ import javax.annotation.Nonnull;
  */
 public abstract class AbstractLabeledMenuItem<T> implements LabeledMenuItem<T> {
 
-    private final int captionResId;
+	private final int captionResId;
 
-    protected AbstractLabeledMenuItem(int captionResId) {
-        this.captionResId = captionResId;
-    }
+	protected AbstractLabeledMenuItem(int captionResId) {
+		this.captionResId = captionResId;
+	}
 
-    @Nonnull
-    @Override
-    public String getCaption(@Nonnull Context context) {
-        return context.getString(captionResId);
-    }
+	@Nonnull
+	@Override
+	public String getCaption(@Nonnull Context context) {
+		return context.getString(captionResId);
+	}
 }

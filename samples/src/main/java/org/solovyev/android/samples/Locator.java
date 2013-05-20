@@ -31,21 +31,21 @@ import org.solovyev.tasks.TaskService;
 import javax.annotation.Nonnull;
 
 /**
-* User: serso
-* Date: 8/10/12
-* Time: 4:38 PM
-*/
+ * User: serso
+ * Date: 8/10/12
+ * Time: 4:38 PM
+ */
 public interface Locator extends ServiceLocator {
 
-    @Nonnull
-    SQLiteOpenHelper getSqliteOpenHelper();
+	@Nonnull
+	SQLiteOpenHelper getSqliteOpenHelper();
 
-    @Nonnull
-    DbItemDao getDbItemDao();
+	@Nonnull
+	DbItemDao getDbItemDao();
 
-    @Nonnull
-    DbItemService getDbItemService();
+	@Nonnull
+	DbItemService getDbItemService();
 
-    @Nonnull
-    TaskService getTaskService();
+	@Nonnull
+	TaskService getTaskService();
 }

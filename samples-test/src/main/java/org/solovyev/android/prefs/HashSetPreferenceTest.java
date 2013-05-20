@@ -24,27 +24,26 @@ package org.solovyev.android.prefs;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class HashSetPreferenceTest extends AbstractPreferenceTest<Set<String>> {
 
-    @Nonnull
-    @Override
-    protected Preference<Set<String>> createPreference(@Nonnull String key, @Nullable Set<String> defaultValue) {
-        return HashSetPreference.ofStrings(key, defaultValue);
-    }
+	@Nonnull
+	@Override
+	protected Preference<Set<String>> createPreference(@Nonnull String key, @Nullable Set<String> defaultValue) {
+		return HashSetPreference.ofStrings(key, defaultValue);
+	}
 
-    @Nonnull
-    @Override
-    protected Set<String> createDefaultValue() {
-        return new HashSet<String>(Arrays.asList("1", "2", "3", "4"));
-    }
+	@Nonnull
+	@Override
+	protected Set<String> createDefaultValue() {
+		return new HashSet<String>(Arrays.asList("1", "2", "3", "4"));
+	}
 
-    @Override
-    protected Set<String> createValue() {
-        return new HashSet<String>(Arrays.asList("5", "4", "3", "2", "1"));
-    }
+	@Override
+	protected Set<String> createValue() {
+		return new HashSet<String>(Arrays.asList("5", "4", "3", "2", "1"));
+	}
 }

@@ -26,8 +26,9 @@ import android.content.Context;
 import android.os.Build;
 import android.text.ClipboardManager;
 import android.view.inputmethod.InputConnection;
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.Strings;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -36,48 +37,48 @@ import org.solovyev.common.text.Strings;
  */
 public final class AndroidKeyboardUtils {
 
-    private AndroidKeyboardUtils() {
-        throw new AssertionError();
-    }
+	private AndroidKeyboardUtils() {
+		throw new AssertionError();
+	}
 
-    public static void copyWholeTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
-        String text = getTextFromInputConnection(ic);
+	public static void copyWholeTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
+		String text = getTextFromInputConnection(ic);
 
-        if (!Strings.isEmpty(text)) {
-            final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboardManager.setText(text);
-        }
-    }
+		if (!Strings.isEmpty(text)) {
+			final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+			clipboardManager.setText(text);
+		}
+	}
 
-    @Nonnull
-    public static String getTextFromInputConnection(@Nonnull InputConnection ic) {
-        final CharSequence textAfter = ic.getTextAfterCursor(DefaultKeyboardInput.MAX_INT, 0);
-        final CharSequence textBefore = ic.getTextBeforeCursor(DefaultKeyboardInput.MAX_INT, 0);
+	@Nonnull
+	public static String getTextFromInputConnection(@Nonnull InputConnection ic) {
+		final CharSequence textAfter = ic.getTextAfterCursor(DefaultKeyboardInput.MAX_INT, 0);
+		final CharSequence textBefore = ic.getTextBeforeCursor(DefaultKeyboardInput.MAX_INT, 0);
 
-        String text = "";
-        if (textBefore != null) {
-            text += textBefore.toString();
-        }
+		String text = "";
+		if (textBefore != null) {
+			text += textBefore.toString();
+		}
 
-        if (textAfter != null) {
-            text += textAfter.toString();
-        }
+		if (textAfter != null) {
+			text += textAfter.toString();
+		}
 
-        return text;
-    }
+		return text;
+	}
 
-    static void copyTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            CharSequence text = ic.getSelectedText(0);
-            if (!Strings.isEmpty(text)) {
-                final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboardManager.setText(text);
-            } else {
-                copyWholeTextFromInputConnection(ic, context);
-            }
-        } else {
-            copyWholeTextFromInputConnection(ic, context);
-        }
+	static void copyTextFromInputConnection(@Nonnull InputConnection ic, @Nonnull Context context) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+			CharSequence text = ic.getSelectedText(0);
+			if (!Strings.isEmpty(text)) {
+				final ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+				clipboardManager.setText(text);
+			} else {
+				copyWholeTextFromInputConnection(ic, context);
+			}
+		} else {
+			copyWholeTextFromInputConnection(ic, context);
+		}
 
-    }
+	}
 }

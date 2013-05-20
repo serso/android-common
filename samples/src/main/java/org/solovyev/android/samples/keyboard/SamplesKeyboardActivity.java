@@ -33,10 +33,10 @@ import org.solovyev.android.samples.R;
  */
 public class SamplesKeyboardActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.acl_keyboard_layout);
-    }
+		setContentView(R.layout.acl_keyboard_layout);
+	}
 }

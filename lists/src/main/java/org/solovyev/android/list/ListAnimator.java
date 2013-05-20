@@ -27,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.ListView;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,91 +38,91 @@ import javax.annotation.Nullable;
  */
 public class ListAnimator {
 
-    public static enum AnimationType {
-        left_to_right {
-            @Nonnull
-            @Override
-            public Animation create() {
-                return new TranslateAnimation(
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, -1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f);
-            }
-        },
-        right_to_left{
-            @Nonnull
-            @Override
-            public Animation create() {
-                return new TranslateAnimation(
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f);
-            }
-        },
-        top_to_bottom {
-            @Nonnull
-            @Override
-            public Animation create() {
-                return new TranslateAnimation(
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.0f);
-            }
-        };
+	public static enum AnimationType {
+		left_to_right {
+			@Nonnull
+			@Override
+			public Animation create() {
+				return new TranslateAnimation(
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, -1.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f);
+			}
+		},
+		right_to_left {
+			@Nonnull
+			@Override
+			public Animation create() {
+				return new TranslateAnimation(
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 1.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f);
+			}
+		},
+		top_to_bottom {
+			@Nonnull
+			@Override
+			public Animation create() {
+				return new TranslateAnimation(
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 0.0f,
+						Animation.RELATIVE_TO_SELF, 1.0f);
+			}
+		};
 
-        @Nonnull
-        public abstract Animation create();
-    }
+		@Nonnull
+		public abstract Animation create();
+	}
 
-    @Nonnull
-    private final ListView listView;
+	@Nonnull
+	private final ListView listView;
 
-    @Nonnull
-    private final AnimationType animationType;
+	@Nonnull
+	private final AnimationType animationType;
 
-    @Nullable
-    private final Runnable postAction;
+	@Nullable
+	private final Runnable postAction;
 
-    public ListAnimator(@Nonnull ListView listView, @Nonnull AnimationType animationType, @Nullable Runnable postAction) {
-        this.listView = listView;
-        this.animationType = animationType;
-        this.postAction = postAction;
-    }
+	public ListAnimator(@Nonnull ListView listView, @Nonnull AnimationType animationType, @Nullable Runnable postAction) {
+		this.listView = listView;
+		this.animationType = animationType;
+		this.postAction = postAction;
+	}
 
-    public void animate() {
+	public void animate() {
 
-        final AnimationSet animationSet = new AnimationSet(false);
+		final AnimationSet animationSet = new AnimationSet(false);
 
-        final AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0.25f);
-        alphaAnimation.setDuration(350);
-        animationSet.addAnimation(alphaAnimation);
+		final AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0.25f);
+		alphaAnimation.setDuration(350);
+		animationSet.addAnimation(alphaAnimation);
 
-        final Animation moveAnimation = animationType.create();
-        moveAnimation.setDuration(500);
-        animationSet.addAnimation(moveAnimation);
+		final Animation moveAnimation = animationType.create();
+		moveAnimation.setDuration(500);
+		animationSet.addAnimation(moveAnimation);
 
-        animationSet.setRepeatCount(0);
+		animationSet.setRepeatCount(0);
 
-        if (postAction != null) {
-            animationSet.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
+		if (postAction != null) {
+			animationSet.setAnimationListener(new Animation.AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    postAction.run();
-                }
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					postAction.run();
+				}
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
-            });
-        }
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+			});
+		}
 
-        listView.startAnimation(animationSet);
-    }
+		listView.startAnimation(animationSet);
+	}
 }

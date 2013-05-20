@@ -23,6 +23,7 @@
 package org.solovyev.android.db;
 
 import android.database.sqlite.SQLiteDatabase;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -33,11 +34,11 @@ import javax.annotation.Nullable;
  */
 public interface SQLiteOpenHelperConfiguration {
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 
-    @Nullable
-    SQLiteDatabase.CursorFactory getCursorFactory();
+	@Nullable
+	SQLiteDatabase.CursorFactory getCursorFactory();
 
-    int getVersion();
+	int getVersion();
 }

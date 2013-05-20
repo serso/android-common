@@ -23,6 +23,7 @@
 package org.solovyev.android.list;
 
 import android.widget.ListView;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,12 +33,12 @@ import javax.annotation.Nonnull;
  */
 public interface ListItemOnClickData<T> {
 
-    @Nonnull
-    T getDataObject();
+	@Nonnull
+	T getDataObject();
 
-    @Nonnull
-    ListAdapter<? extends ListItem> getAdapter();
+	@Nonnull
+	ListAdapter<? extends ListItem> getAdapter();
 
-    @Nonnull
-    ListView getListView();
+	@Nonnull
+	ListView getListView();
 }

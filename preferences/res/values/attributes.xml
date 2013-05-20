@@ -23,8 +23,8 @@
   -->
 
 <resources>
-    <declare-styleable name="NumberRangeSeekBar">
-        <attr name="boundaries" format="string"/>
-        <attr name="step" format="string"/>
-    </declare-styleable>
+	<declare-styleable name="NumberRangeSeekBar">
+		<attr name="boundaries" format="string" />
+		<attr name="step" format="string" />
+	</declare-styleable>
 </resources>

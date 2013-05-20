@@ -29,9 +29,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.protocol.HTTP;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
@@ -43,154 +43,154 @@ import java.util.List;
  */
 public enum HttpMethod {
 
-    DELETE(ParamsLocation.in_uri) {
-        @Nonnull
-        @Override
-        protected HttpRequestBase createRequest() {
-            return new HttpDelete();
-        }
+	DELETE(ParamsLocation.in_uri) {
+		@Nonnull
+		@Override
+		protected HttpRequestBase createRequest() {
+			return new HttpDelete();
+		}
 
-        @Override
-        public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-            assert requestParams == null;
-            client.delete(uri, asyncHttpResponseHandler);
-        }
-    },
+		@Override
+		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
+			assert requestParams == null;
+			client.delete(uri, asyncHttpResponseHandler);
+		}
+	},
 
-    GET(ParamsLocation.in_uri) {
-        @Nonnull
-        @Override
-        protected HttpRequestBase createRequest() {
-            return new HttpGet();
-        }
+	GET(ParamsLocation.in_uri) {
+		@Nonnull
+		@Override
+		protected HttpRequestBase createRequest() {
+			return new HttpGet();
+		}
 
-        @Override
-        public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-            client.get(uri, requestParams, asyncHttpResponseHandler);
-        }
-    },
+		@Override
+		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
+			client.get(uri, requestParams, asyncHttpResponseHandler);
+		}
+	},
 
-    HEAD(ParamsLocation.in_uri) {
-        @Nonnull
-        @Override
-        protected HttpRequestBase createRequest() {
-            return new HttpHead();
-        }
+	HEAD(ParamsLocation.in_uri) {
+		@Nonnull
+		@Override
+		protected HttpRequestBase createRequest() {
+			return new HttpHead();
+		}
 
-        @Override
-        public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-            throw new UnsupportedOperationException();
-        }
-    },
+		@Override
+		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
+			throw new UnsupportedOperationException();
+		}
+	},
 
-    POST(ParamsLocation.in_headers) {
-        @Nonnull
-        @Override
-        protected HttpRequestBase createRequest() {
-            return new HttpPost();
-        }
+	POST(ParamsLocation.in_headers) {
+		@Nonnull
+		@Override
+		protected HttpRequestBase createRequest() {
+			return new HttpPost();
+		}
 
-        @Override
-        public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-            client.post(uri, requestParams, asyncHttpResponseHandler);
-        }
-    },
+		@Override
+		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
+			client.post(uri, requestParams, asyncHttpResponseHandler);
+		}
+	},
 
-    PUT(ParamsLocation.in_headers) {
-        @Nonnull
-        @Override
-        protected HttpRequestBase createRequest() {
-            return new HttpPut();
-        }
+	PUT(ParamsLocation.in_headers) {
+		@Nonnull
+		@Override
+		protected HttpRequestBase createRequest() {
+			return new HttpPut();
+		}
 
-        @Override
-        public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-            client.put(uri, requestParams, asyncHttpResponseHandler);
-        }
-    };
+		@Override
+		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
+			client.put(uri, requestParams, asyncHttpResponseHandler);
+		}
+	};
 
-    private HttpMethod(@Nonnull ParamsLocation paramsLocation) {
-        this.paramsLocation = paramsLocation;
-    }
+	private HttpMethod(@Nonnull ParamsLocation paramsLocation) {
+		this.paramsLocation = paramsLocation;
+	}
 
-    private static enum ParamsLocation {
-        in_uri {
-            @Nonnull
-            @Override
-            public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
-                final StringBuilder result = new StringBuilder(uri);
+	private static enum ParamsLocation {
+		in_uri {
+			@Nonnull
+			@Override
+			public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
+				final StringBuilder result = new StringBuilder(uri);
 
-                if (!params.isEmpty()) {
-                    result.append("?");
-                }
+				if (!params.isEmpty()) {
+					result.append("?");
+				}
 
-                boolean first = true;
-                for (NameValuePair param : params) {
-                    if (first) {
-                        first = false;
-                    } else {
-                        result.append("&");
-                    }
-                    result.append(param.getName()).append("=").append(param.getValue());
-                }
+				boolean first = true;
+				for (NameValuePair param : params) {
+					if (first) {
+						first = false;
+					} else {
+						result.append("&");
+					}
+					result.append(param.getName()).append("=").append(param.getValue());
+				}
 
-                return result.toString();
-            }
+				return result.toString();
+			}
 
-            @Override
-            public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
-                // no additional parameters
-            }
-        },
+			@Override
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
+				// no additional parameters
+			}
+		},
 
-        in_headers {
-            @Nonnull
-            @Override
-            public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
-                return uri;
-            }
+		in_headers {
+			@Nonnull
+			@Override
+			public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
+				return uri;
+			}
 
-            @Override
-            public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
-                if (request instanceof HttpEntityEnclosingRequestBase) {
-                    try {
-                        ((HttpEntityEnclosingRequestBase) request).setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    throw new IllegalArgumentException("Not known request type: " + request.getClass());
-                }
-            }
-        };
+			@Override
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
+				if (request instanceof HttpEntityEnclosingRequestBase) {
+					try {
+						((HttpEntityEnclosingRequestBase) request).setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+					} catch (UnsupportedEncodingException e) {
+						throw new RuntimeException(e);
+					}
+				} else {
+					throw new IllegalArgumentException("Not known request type: " + request.getClass());
+				}
+			}
+		};
 
-        @Nonnull
-        public abstract String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params);
+		@Nonnull
+		public abstract String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params);
 
-        public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params);
-    }
+		public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params);
+	}
 
-    @Nonnull
-    private final ParamsLocation paramsLocation;
+	@Nonnull
+	private final ParamsLocation paramsLocation;
 
-    @Nonnull
-    protected abstract HttpRequestBase createRequest();
+	@Nonnull
+	protected abstract HttpRequestBase createRequest();
 
-    @Nonnull
-    public HttpUriRequest createRequest(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
-        return createRequest(URI.create(paramsLocation.prepareUri(uri, params)), params);
-    }
+	@Nonnull
+	public HttpUriRequest createRequest(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
+		return createRequest(URI.create(paramsLocation.prepareUri(uri, params)), params);
+	}
 
-    @Nonnull
-    public HttpUriRequest createRequest(@Nonnull URI uri, @Nonnull List<NameValuePair> params) {
-        final HttpRequestBase result = createRequest();
-        result.setURI(uri);
-        paramsLocation.addParams(result, params);
-        return result;
-    }
+	@Nonnull
+	public HttpUriRequest createRequest(@Nonnull URI uri, @Nonnull List<NameValuePair> params) {
+		final HttpRequestBase result = createRequest();
+		result.setURI(uri);
+		paramsLocation.addParams(result, params);
+		return result;
+	}
 
-    public abstract void doAsyncRequest(@Nonnull AsyncHttpClient client,
-                                        @Nonnull String uri,
-                                        @Nullable RequestParams requestParams,
-                                        @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler);
+	public abstract void doAsyncRequest(@Nonnull AsyncHttpClient client,
+										@Nonnull String uri,
+										@Nullable RequestParams requestParams,
+										@Nullable AsyncHttpResponseHandler asyncHttpResponseHandler);
 }

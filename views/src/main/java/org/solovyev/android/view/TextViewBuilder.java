@@ -25,6 +25,7 @@ package org.solovyev.android.view;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,46 +36,46 @@ import javax.annotation.Nullable;
  */
 public class TextViewBuilder implements UpdatableViewBuilder<TextView> {
 
-    private int textViewLayoutId;
+	private int textViewLayoutId;
 
-    @Nullable
-    private String tag;
+	@Nullable
+	private String tag;
 
-    private TextViewBuilder() {
-    }
+	private TextViewBuilder() {
+	}
 
-    @Nonnull
-    public static UpdatableViewBuilder<TextView> newInstance(int textViewLayoutId, @Nullable String tag) {
-        final TextViewBuilder result = new TextViewBuilder();
+	@Nonnull
+	public static UpdatableViewBuilder<TextView> newInstance(int textViewLayoutId, @Nullable String tag) {
+		final TextViewBuilder result = new TextViewBuilder();
 
-        result.textViewLayoutId = textViewLayoutId;
-        result.tag = tag;
+		result.textViewLayoutId = textViewLayoutId;
+		result.tag = tag;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    @Override
-    public TextView build(@Nonnull Context context) {
-        final TextView result = ViewFromLayoutBuilder.<TextView>newInstance(textViewLayoutId).build(context);
+	@Nonnull
+	@Override
+	public TextView build(@Nonnull Context context) {
+		final TextView result = ViewFromLayoutBuilder.<TextView>newInstance(textViewLayoutId).build(context);
 
-        result.setTag(createViewTag());
+		result.setTag(createViewTag());
 
-        return updateView(context, result);
-    }
+		return updateView(context, result);
+	}
 
-    @Nonnull
-    private String createViewTag() {
-        return tag == null ? this.getClass().getName() : tag;
-    }
+	@Nonnull
+	private String createViewTag() {
+		return tag == null ? this.getClass().getName() : tag;
+	}
 
-    @Nonnull
-    @Override
-    public TextView updateView(@Nonnull Context context, @Nonnull View view) {
-        if (createViewTag().equals(view.getTag())) {
-            return (TextView) view;
-        } else {
-            return build(context);
-        }
-    }
+	@Nonnull
+	@Override
+	public TextView updateView(@Nonnull Context context, @Nonnull View view) {
+		if (createViewTag().equals(view.getTag())) {
+			return (TextView) view;
+		} else {
+			return build(context);
+		}
+	}
 }

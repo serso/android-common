@@ -23,55 +23,63 @@
   -->
 
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-              a:layout_width="match_parent"
-              a:layout_height="match_parent"
-              a:orientation="vertical">
+	a:layout_width="match_parent"
+	a:layout_height="match_parent"
+	a:orientation="vertical">
 
-    <LinearLayout a:layout_width="match_parent"
-                  a:layout_height="wrap_content"
-                  a:orientation="horizontal">
+	<LinearLayout
+		a:layout_width="match_parent"
+		a:layout_height="wrap_content"
+		a:orientation="horizontal">
 
-        <Button a:id="@+id/add_item_button"
-                a:text="@string/save"
-                a:layout_height="wrap_content"
-                a:layout_width="0dp"
-                a:layout_weight="1"/>
+		<Button
+			a:id="@+id/add_item_button"
+			a:text="@string/save"
+			a:layout_height="wrap_content"
+			a:layout_width="0dp"
+			a:layout_weight="1" />
 
-        <EditText a:id="@+id/add_item_name"
-                  a:inputType="text"
-                  a:layout_height="wrap_content"
-                  a:layout_width="0dp"
-                  a:layout_weight="3"/>
+		<EditText
+			a:id="@+id/add_item_name"
+			a:inputType="text"
+			a:layout_height="wrap_content"
+			a:layout_width="0dp"
+			a:layout_weight="3" />
 
-    </LinearLayout>
+	</LinearLayout>
 
-    <LinearLayout a:layout_width="match_parent"
-                  a:layout_height="wrap_content"
-                  a:orientation="horizontal">
+	<LinearLayout
+		a:layout_width="match_parent"
+		a:layout_height="wrap_content"
+		a:orientation="horizontal">
 
-        <Button a:id="@+id/remove_item_button"
-                a:text="@string/remove"
-                a:layout_height="wrap_content"
-                a:layout_width="0dp"
-                a:layout_weight="1"/>
+		<Button
+			a:id="@+id/remove_item_button"
+			a:text="@string/remove"
+			a:layout_height="wrap_content"
+			a:layout_width="0dp"
+			a:layout_weight="1" />
 
-        <EditText a:id="@+id/remove_item_name"
-                  a:inputType="text"
-                  a:layout_height="wrap_content"
-                  a:layout_width="0dp"
-                  a:layout_weight="3"/>
+		<EditText
+			a:id="@+id/remove_item_name"
+			a:inputType="text"
+			a:layout_height="wrap_content"
+			a:layout_width="0dp"
+			a:layout_weight="3" />
 
-    </LinearLayout>
+	</LinearLayout>
 
-    <EditText a:id="@+id/item_filter"
-              a:inputType="text"
-              a:hint="@string/type_to_filter"
-              a:layout_height="wrap_content"
-              a:layout_width="match_parent"/>
+	<EditText
+		a:id="@+id/item_filter"
+		a:inputType="text"
+		a:hint="@string/type_to_filter"
+		a:layout_height="wrap_content"
+		a:layout_width="match_parent" />
 
-    <ListView a:layout_width="match_parent"
-              a:layout_height="match_parent"
-              a:fadingEdge="none"
-              a:id="@android:id/list"/>
+	<ListView
+		a:layout_width="match_parent"
+		a:layout_height="match_parent"
+		a:fadingEdge="none"
+		a:id="@android:id/list" />
 
 </LinearLayout>

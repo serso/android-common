@@ -23,9 +23,9 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
 import org.solovyev.android.Labeled;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,73 +36,73 @@ import java.util.List;
  */
 public class LabeledEnum<E> {
 
-    @Nonnull
-    private E enumConstant;
+	@Nonnull
+	private E enumConstant;
 
-    @Nonnull
-    private String label;
+	@Nonnull
+	private String label;
 
-    private LabeledEnum() {
-    }
+	private LabeledEnum() {
+	}
 
-    @Nonnull
-    public static <E> LabeledEnum<E> newInstance(@Nonnull E enumConstant, @Nonnull String label) {
-        final LabeledEnum<E> result = new LabeledEnum<E>();
+	@Nonnull
+	public static <E> LabeledEnum<E> newInstance(@Nonnull E enumConstant, @Nonnull String label) {
+		final LabeledEnum<E> result = new LabeledEnum<E>();
 
-        result.enumConstant = enumConstant;
-        result.label = label;
+		result.enumConstant = enumConstant;
+		result.label = label;
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public static <E extends Enum & Labeled> LabeledEnum<E> newInstance(@Nonnull E enumConstant,
-                                                                        @Nonnull Context context) {
-        return LabeledEnum.newInstance(enumConstant, context.getString(enumConstant.getCaptionResId()));
-    }
+	@Nonnull
+	public static <E extends Enum & Labeled> LabeledEnum<E> newInstance(@Nonnull E enumConstant,
+																		@Nonnull Context context) {
+		return LabeledEnum.newInstance(enumConstant, context.getString(enumConstant.getCaptionResId()));
+	}
 
-    @Nonnull
-    public static <E extends Enum & Labeled> List<LabeledEnum<E>> toLabeledEnums(@Nonnull Class<E> enumClass,
-                                                                                 @Nonnull Context context) {
-        final E[] enumConstants = enumClass.getEnumConstants();
+	@Nonnull
+	public static <E extends Enum & Labeled> List<LabeledEnum<E>> toLabeledEnums(@Nonnull Class<E> enumClass,
+																				 @Nonnull Context context) {
+		final E[] enumConstants = enumClass.getEnumConstants();
 
-        final List<LabeledEnum<E>> result = new ArrayList<LabeledEnum<E>>(enumConstants.length);
-        for (E enumConstant : enumConstants) {
-            result.add(LabeledEnum.newInstance(enumConstant, context));
-        }
+		final List<LabeledEnum<E>> result = new ArrayList<LabeledEnum<E>>(enumConstants.length);
+		for (E enumConstant : enumConstants) {
+			result.add(LabeledEnum.newInstance(enumConstant, context));
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Nonnull
-    public E getEnumConstant() {
-        return enumConstant;
-    }
+	@Nonnull
+	public E getEnumConstant() {
+		return enumConstant;
+	}
 
-    @Nonnull
-    public String getLabel() {
-        return label;
-    }
+	@Nonnull
+	public String getLabel() {
+		return label;
+	}
 
-    @Override
-    public String toString() {
-        return label;
-    }
+	@Override
+	public String toString() {
+		return label;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LabeledEnum)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof LabeledEnum)) return false;
 
-        LabeledEnum that = (LabeledEnum) o;
+		LabeledEnum that = (LabeledEnum) o;
 
-        if (!enumConstant.equals(that.enumConstant)) return false;
+		if (!enumConstant.equals(that.enumConstant)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return enumConstant.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return enumConstant.hashCode();
+	}
 }

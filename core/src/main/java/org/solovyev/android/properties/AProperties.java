@@ -24,7 +24,6 @@ package org.solovyev.android.properties;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 
 /**
@@ -34,15 +33,15 @@ import java.util.Collection;
  */
 public interface AProperties extends Cloneable {
 
-    @Nonnull
-    AProperties clone();
+	@Nonnull
+	AProperties clone();
 
-    @Nullable
-    AProperty getProperty(@Nonnull String name);
+	@Nullable
+	AProperty getProperty(@Nonnull String name);
 
-    @Nullable
-    String getPropertyValue(@Nonnull String name);
+	@Nullable
+	String getPropertyValue(@Nonnull String name);
 
-    @Nonnull
-    Collection<AProperty> getPropertiesCollection();
+	@Nonnull
+	Collection<AProperty> getPropertiesCollection();
 }

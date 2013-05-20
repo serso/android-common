@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,79 +38,79 @@ import javax.annotation.Nullable;
  */
 public class FragmentItemImpl implements FragmentItem {
 
-    @Nonnull
-    private final SherlockFragmentActivity activity;
+	@Nonnull
+	private final SherlockFragmentActivity activity;
 
-    // Fragment
+	// Fragment
 
-    @Nonnull
-    private final String tag;
+	@Nonnull
+	private final String tag;
 
-    @Nonnull
-    private final Class<? extends Fragment> fragmentClass;
+	@Nonnull
+	private final Class<? extends Fragment> fragmentClass;
 
-    @Nullable
-    private Bundle fragmentArgs;
+	@Nullable
+	private Bundle fragmentArgs;
 
-    @Nullable
-    private Fragment fragment;
+	@Nullable
+	private Fragment fragment;
 
-    @Nullable
-    private final Integer parentViewId;
+	@Nullable
+	private final Integer parentViewId;
 
-    /**
-     * Constructor used each time a new tab is created.
-     *
-     * @param activity      The host Activity, used to instantiate the fragment
-     * @param tag           The identifier tag for the fragment
-     * @param fragmentClass The fragment's Class, used to instantiate the fragment
-     * @param fragmentArgs  arguments to be passed to fragment
-     * @param parentViewId parent view id
-     */
+	/**
+	 * Constructor used each time a new tab is created.
+	 *
+	 * @param activity      The host Activity, used to instantiate the fragment
+	 * @param tag           The identifier tag for the fragment
+	 * @param fragmentClass The fragment's Class, used to instantiate the fragment
+	 * @param fragmentArgs  arguments to be passed to fragment
+	 * @param parentViewId  parent view id
+	 */
 
-    public FragmentItemImpl(@Nonnull SherlockFragmentActivity activity,
-                            @Nonnull String tag,
-                            @Nonnull Class<? extends Fragment> fragmentClass,
-                            @Nullable Bundle fragmentArgs,
-                            @Nullable Integer parentViewId) {
-        this.activity = activity;
-        this.tag = tag;
-        this.fragmentClass = fragmentClass;
-        this.fragmentArgs = fragmentArgs;
-        this.parentViewId = parentViewId;
+	public FragmentItemImpl(@Nonnull SherlockFragmentActivity activity,
+							@Nonnull String tag,
+							@Nonnull Class<? extends Fragment> fragmentClass,
+							@Nullable Bundle fragmentArgs,
+							@Nullable Integer parentViewId) {
+		this.activity = activity;
+		this.tag = tag;
+		this.fragmentClass = fragmentClass;
+		this.fragmentArgs = fragmentArgs;
+		this.parentViewId = parentViewId;
 
-        final FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
-        this.fragment = supportFragmentManager.findFragmentByTag(tag);
-    }
+		final FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
+		this.fragment = supportFragmentManager.findFragmentByTag(tag);
+	}
 
 
-    @Override
-    public void onSelected(@Nonnull FragmentTransaction ft) {
+	@Override
+	public void onSelected(@Nonnull FragmentTransaction ft) {
 		if (fragment == null) {
 			fragment = activity.getSupportFragmentManager().findFragmentByTag(this.tag);
 		}
 
 		// Check if the fragment is already initialized
-        if (fragment == null) {
-            // If not, instantiate and add it to the activity
-            fragment = Fragment.instantiate(activity, fragmentClass.getName(), fragmentArgs);
-            if (parentViewId != null) {
-                ft.add(parentViewId, fragment, tag);
-            } else {
-                ft.add(fragment, tag);
-            }
-        } else {
-            if (fragment.isDetached()) {
-                // If it exists, simply attach it in order to show it
-                ft.attach(fragment);
-            }
-        }
-    }
+		if (fragment == null) {
+			// If not, instantiate and add it to the activity
+			fragment = Fragment.instantiate(activity, fragmentClass.getName(), fragmentArgs);
+			if (parentViewId != null) {
+				ft.add(parentViewId, fragment, tag);
+			} else {
+				ft.add(fragment, tag);
+			}
+		} else {
+			if (fragment.isDetached()) {
+				// If it exists, simply attach it in order to show it
+				ft.attach(fragment);
+			}
+		}
+	}
 
-    @Override
-    public void onUnselected(@Nonnull FragmentTransaction ft) {
-        if (fragment != null) {
-            ft.detach(fragment);
-        }
-    }
+	@Override
+	public void onUnselected(@Nonnull FragmentTransaction ft) {
+		if (fragment != null) {
+			ft.detach(fragment);
+		}
+	}
 }

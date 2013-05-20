@@ -24,32 +24,33 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
 import org.solovyev.android.view.IntegerRange;
 import org.solovyev.android.view.NumberRange;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.NumberIntervalMapper;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
  * Date: 9/26/11
  * Time: 10:31 PM
  */
-public class IntegerPickerDialogPreference extends NumberPickerDialogPreference<Integer>{
+public class IntegerPickerDialogPreference extends NumberPickerDialogPreference<Integer> {
 
-    public IntegerPickerDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs, NumberIntervalMapper.of(Integer.class));
-    }
+	public IntegerPickerDialogPreference(Context context, AttributeSet attrs) {
+		super(context, attrs, NumberIntervalMapper.of(Integer.class));
+	}
 
-    @Nonnull
-    @Override
-    protected Integer getDefaultStep() {
-        return 1;
-    }
+	@Nonnull
+	@Override
+	protected Integer getDefaultStep() {
+		return 1;
+	}
 
-    @Nonnull
-    @Override
-    protected NumberRange<Integer> createRange(@Nonnull Interval<Integer> boundaries, @Nonnull Integer step, @Nonnull Integer selected) {
-        return IntegerRange.newInstance(boundaries.getLeftLimit(), boundaries.getRightLimit(), step, selected);
-    }
+	@Nonnull
+	@Override
+	protected NumberRange<Integer> createRange(@Nonnull Interval<Integer> boundaries, @Nonnull Integer step, @Nonnull Integer selected) {
+		return IntegerRange.newInstance(boundaries.getLeftLimit(), boundaries.getRightLimit(), step, selected);
+	}
 }

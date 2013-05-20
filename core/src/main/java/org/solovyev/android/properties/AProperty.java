@@ -36,13 +36,13 @@ import java.io.Serializable;
  */
 public interface AProperty extends Parcelable, JCloneable<AProperty>, Serializable {
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 
-    @Nullable
-    String getValue();
+	@Nullable
+	String getValue();
 
-    boolean equals(Object o);
+	boolean equals(Object o);
 
-    int hashCode();
+	int hashCode();
 }

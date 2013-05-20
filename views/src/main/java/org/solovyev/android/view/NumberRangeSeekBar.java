@@ -23,11 +23,12 @@
 package org.solovyev.android.view;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.math.NumberValuer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -49,7 +50,7 @@ public class NumberRangeSeekBar<T extends Number & Comparable<T>> extends Abstra
 	 *
 	 * @param minValue The minimum value of the selectable range.
 	 * @param maxValue The maximum value of the selectable range.
-	 * @param steps	number of steps of range
+	 * @param steps    number of steps of range
 	 * @param context  parent context
 	 * @throws IllegalArgumentException Will be thrown if min/max value types are not one of Long, Double, Integer, Float, Short, Byte or BigDecimal.
 	 */

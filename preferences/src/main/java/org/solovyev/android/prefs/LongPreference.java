@@ -23,6 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ public class LongPreference extends AbstractPreference<Long> {
 		super(key, defaultValue);
 	}
 
-    @Nonnull
-    public static LongPreference of(@Nonnull String key, @Nullable Long defaultValue) {
-        return new LongPreference(key, defaultValue);
-    }
+	@Nonnull
+	public static LongPreference of(@Nonnull String key, @Nullable Long defaultValue) {
+		return new LongPreference(key, defaultValue);
+	}
 
-    @Override
+	@Override
 	protected Long getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getLong(getKey(), -1);
 	}

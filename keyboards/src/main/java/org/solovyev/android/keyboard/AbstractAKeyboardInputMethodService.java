@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodSubtype;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -40,121 +41,121 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractAKeyboardInputMethodService extends InputMethodService {
 
-    /*
-    **********************************************************************
-    *
-    *                           CONSTANTS
-    *
-    **********************************************************************
-    */
-    private static final boolean DEBUG = false;
+	/*
+	**********************************************************************
+	*
+	*                           CONSTANTS
+	*
+	**********************************************************************
+	*/
+	private static final boolean DEBUG = false;
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           FIELDS
     *
     **********************************************************************
     */
 
-    @Nonnull
-    private final AKeyboardController keyboardController;
+	@Nonnull
+	private final AKeyboardController keyboardController;
 
-    protected AbstractAKeyboardInputMethodService(@Nonnull AKeyboardController keyboardController) {
-        this.keyboardController = keyboardController;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        keyboardController.onCreate(this);
-    }
-
-    @Override
-    public void onInitializeInterface() {
-        keyboardController.onInitializeInterface(this);
-    }
-
-    @Override
-    public View onCreateInputView() {
-        return keyboardController.createKeyboardView(this,  getLayoutInflater()).getAndroidKeyboardView();
-    }
-
-    @Override
-    public View onCreateCandidatesView() {
-        return keyboardController.onCreateCandidatesView();
-    }
-
-    @Override
-    public void onStartInput(@Nonnull EditorInfo attribute,
-                             boolean restarting) {
-        super.onStartInput(attribute, restarting);
-
-        this.keyboardController.onStartInput(attribute, restarting);
-    }
-
-    @Override
-    public void onFinishInput() {
-        super.onFinishInput();
-
-        // Clear current composing text and candidates.
-
-        // We only hide the candidates window when finishing input on
-        // a particular editor, to avoid popping the underlying application
-        // up and down if the user is entering text into the bottom of
-        // its window.
-        setCandidatesViewShown(false);
-
-        keyboardController.onFinishInput();
+	protected AbstractAKeyboardInputMethodService(@Nonnull AKeyboardController keyboardController) {
+		this.keyboardController = keyboardController;
 	}
 
-    @Override
-    public void onStartInputView(EditorInfo attribute, boolean restarting) {
-        super.onStartInputView(attribute, restarting);
+	@Override
+	public void onCreate() {
+		super.onCreate();
+
+		keyboardController.onCreate(this);
+	}
+
+	@Override
+	public void onInitializeInterface() {
+		keyboardController.onInitializeInterface(this);
+	}
+
+	@Override
+	public View onCreateInputView() {
+		return keyboardController.createKeyboardView(this, getLayoutInflater()).getAndroidKeyboardView();
+	}
+
+	@Override
+	public View onCreateCandidatesView() {
+		return keyboardController.onCreateCandidatesView();
+	}
+
+	@Override
+	public void onStartInput(@Nonnull EditorInfo attribute,
+							 boolean restarting) {
+		super.onStartInput(attribute, restarting);
+
+		this.keyboardController.onStartInput(attribute, restarting);
+	}
+
+	@Override
+	public void onFinishInput() {
+		super.onFinishInput();
+
+		// Clear current composing text and candidates.
+
+		// We only hide the candidates window when finishing input on
+		// a particular editor, to avoid popping the underlying application
+		// up and down if the user is entering text into the bottom of
+		// its window.
+		setCandidatesViewShown(false);
+
+		keyboardController.onFinishInput();
+	}
+
+	@Override
+	public void onStartInputView(EditorInfo attribute, boolean restarting) {
+		super.onStartInputView(attribute, restarting);
 
 		keyboardController.onStartInputView(attribute, restarting);
-    }
+	}
 
-    @Override
-    public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
+	@Override
+	public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
 		keyboardController.onCurrentInputMethodSubtypeChanged(subtype);
 	}
 
-    @Override
-    public void onUpdateSelection(int oldSelStart, int oldSelEnd,
-                                  int newSelStart, int newSelEnd,
-                                  int candidatesStart, int candidatesEnd) {
-        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
+	@Override
+	public void onUpdateSelection(int oldSelStart, int oldSelEnd,
+								  int newSelStart, int newSelEnd,
+								  int candidatesStart, int candidatesEnd) {
+		super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
 
 		keyboardController.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
 
 	}
 
-    @Override
-    public void onDisplayCompletions(@Nullable CompletionInfo[] completions) {
-        keyboardController.onDisplayCompletions(completions);
-    }
+	@Override
+	public void onDisplayCompletions(@Nullable CompletionInfo[] completions) {
+		keyboardController.onDisplayCompletions(completions);
+	}
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        boolean consumed = keyboardController.onKeyDown(keyCode, event);
-        if ( !consumed ) {
-            return super.onKeyDown(keyCode, event);
-        } else {
-            return consumed;
-        }
-    }
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		boolean consumed = keyboardController.onKeyDown(keyCode, event);
+		if (!consumed) {
+			return super.onKeyDown(keyCode, event);
+		} else {
+			return consumed;
+		}
+	}
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        boolean consumed = keyboardController.onKeyUp(keyCode, event);
-        if ( !consumed ) {
-            return super.onKeyUp(keyCode, event);
-        } else {
-            return consumed;
-        }
-    }
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		boolean consumed = keyboardController.onKeyUp(keyCode, event);
+		if (!consumed) {
+			return super.onKeyUp(keyCode, event);
+		} else {
+			return consumed;
+		}
+	}
 
 
 }

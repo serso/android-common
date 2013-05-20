@@ -23,13 +23,14 @@
   -->
 
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-              a:layout_width="match_parent"
-              a:layout_height="match_parent"
-              a:orientation="vertical">
+	a:layout_width="match_parent"
+	a:layout_height="match_parent"
+	a:orientation="vertical">
 
-    <Button a:id="@+id/start_task_button"
-            a:text="@string/acl_start_task"
-            a:layout_height="wrap_content"
-            a:layout_width="match_parent"/>
+	<Button
+		a:id="@+id/start_task_button"
+		a:text="@string/acl_start_task"
+		a:layout_height="wrap_content"
+		a:layout_width="match_parent" />
 
 </LinearLayout>

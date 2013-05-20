@@ -24,6 +24,7 @@ package org.solovyev.android.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,30 +34,30 @@ import javax.annotation.Nonnull;
  */
 public class MaxIdLoader implements DbQuery<Integer> {
 
-    @Nonnull
-    private final String tableName;
+	@Nonnull
+	private final String tableName;
 
-    @Nonnull
-    private final String columnName;
+	@Nonnull
+	private final String columnName;
 
-    public MaxIdLoader(@Nonnull String tableName, @Nonnull String columnName) {
-        this.tableName = tableName;
-        this.columnName = columnName;
-    }
+	public MaxIdLoader(@Nonnull String tableName, @Nonnull String columnName) {
+		this.tableName = tableName;
+		this.columnName = columnName;
+	}
 
-    @Nonnull
-    @Override
-    public Cursor createCursor(@Nonnull SQLiteDatabase db) {
-        final StringBuilder query = new StringBuilder();
-        query.append("select max(").append(columnName).append(") from ").append(tableName);
-        return db.rawQuery(query.toString(), null);
-    }
+	@Nonnull
+	@Override
+	public Cursor createCursor(@Nonnull SQLiteDatabase db) {
+		final StringBuilder query = new StringBuilder();
+		query.append("select max(").append(columnName).append(") from ").append(tableName);
+		return db.rawQuery(query.toString(), null);
+	}
 
-    @Nonnull
-    @Override
-    public Integer retrieveData(@Nonnull Cursor cursor) {
-        cursor.moveToNext();
-        return cursor.getInt(0);
-    }
+	@Nonnull
+	@Override
+	public Integer retrieveData(@Nonnull Cursor cursor) {
+		cursor.moveToNext();
+		return cursor.getInt(0);
+	}
 }
 

@@ -25,12 +25,12 @@ package org.solovyev.android.menu;
 import javax.annotation.Nonnull;
 
 /**
-* User: serso
-* Date: 4/30/12
-* Time: 11:06 AM
-*/
+ * User: serso
+ * Date: 4/30/12
+ * Time: 11:06 AM
+ */
 public interface IdentifiableMenuItem<MI> extends AMenuItem<MI> {
 
-    @Nonnull
-    Integer getItemId();
+	@Nonnull
+	Integer getItemId();
 }

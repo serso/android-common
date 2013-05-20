@@ -25,6 +25,7 @@ package org.solovyev.android.menu;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -34,52 +35,52 @@ import javax.annotation.Nonnull;
  */
 public final class AndroidMenuHelper implements MenuHelper<Menu, MenuItem> {
 
-    @Nonnull
-    private static final AndroidMenuHelper instance = new AndroidMenuHelper();
+	@Nonnull
+	private static final AndroidMenuHelper instance = new AndroidMenuHelper();
 
-    @Nonnull
-    public static MenuHelper<Menu, MenuItem> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static MenuHelper<Menu, MenuItem> getInstance() {
+		return instance;
+	}
 
-    private AndroidMenuHelper() {
-    }
+	private AndroidMenuHelper() {
+	}
 
-    @Override
-    public int size(@Nonnull Menu menu) {
-        return menu.size();
-    }
+	@Override
+	public int size(@Nonnull Menu menu) {
+		return menu.size();
+	}
 
-    @Nonnull
-    @Override
-    public MenuItem add(@Nonnull Menu menu, int groupId, int itemId, int orderId, @Nonnull String caption) {
-        return menu.add(groupId, itemId, orderId, caption);
-    }
+	@Nonnull
+	@Override
+	public MenuItem add(@Nonnull Menu menu, int groupId, int itemId, int orderId, @Nonnull String caption) {
+		return menu.add(groupId, itemId, orderId, caption);
+	}
 
-    @Override
-    public void setOnMenuItemClickListener(@Nonnull final MenuItem menuItem, @Nonnull final AMenuItem<MenuItem> onMenuItemClick, @Nonnull final Activity activity) {
-        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                onMenuItemClick.onClick(menuItem, activity);
-                return true;
-            }
-        });
-    }
+	@Override
+	public void setOnMenuItemClickListener(@Nonnull final MenuItem menuItem, @Nonnull final AMenuItem<MenuItem> onMenuItemClick, @Nonnull final Activity activity) {
+		menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				onMenuItemClick.onClick(menuItem, activity);
+				return true;
+			}
+		});
+	}
 
-    @Override
-    public void removeItem(@Nonnull Menu menu, @Nonnull Integer menuItemId) {
-        menu.removeItem(menuItemId);
-    }
+	@Override
+	public void removeItem(@Nonnull Menu menu, @Nonnull Integer menuItemId) {
+		menu.removeItem(menuItemId);
+	}
 
-    @Override
-    public void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull Menu menu) {
-        activity.getMenuInflater().inflate(layoutId, menu);
-    }
+	@Override
+	public void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull Menu menu) {
+		activity.getMenuInflater().inflate(layoutId, menu);
+	}
 
-    @Nonnull
-    @Override
-    public Integer getItemId(@Nonnull MenuItem item) {
-        return item.getItemId();
-    }
+	@Nonnull
+	@Override
+	public Integer getItemId(@Nonnull MenuItem item) {
+		return item.getItemId();
+	}
 }

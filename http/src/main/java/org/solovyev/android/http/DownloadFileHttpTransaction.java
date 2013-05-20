@@ -24,9 +24,9 @@ package org.solovyev.android.http;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -39,26 +39,26 @@ import java.util.List;
  */
 public class DownloadFileHttpTransaction<R> extends AbstractHttpTransaction<R> {
 
-    @Nonnull
-    private final Converter<InputStream, R> fileConverter;
+	@Nonnull
+	private final Converter<InputStream, R> fileConverter;
 
-    public DownloadFileHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod, @Nonnull Converter<InputStream, R> fileConverter) {
-        super(uri, httpMethod);
-        this.fileConverter = fileConverter;
-    }
+	public DownloadFileHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod, @Nonnull Converter<InputStream, R> fileConverter) {
+		super(uri, httpMethod);
+		this.fileConverter = fileConverter;
+	}
 
-    @Nonnull
-    @Override
-    public List<NameValuePair> getRequestParameters() {
-        return Collections.emptyList();
-    }
+	@Nonnull
+	@Override
+	public List<NameValuePair> getRequestParameters() {
+		return Collections.emptyList();
+	}
 
-    @Override
-    public R getResponse(@Nonnull HttpResponse response) {
-        try {
-            return fileConverter.convert(response.getEntity().getContent());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	public R getResponse(@Nonnull HttpResponse response) {
+		try {
+			return fileConverter.convert(response.getEntity().getContent());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

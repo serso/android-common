@@ -24,33 +24,34 @@ package org.solovyev.android;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import javax.annotation.Nonnull;
 
 /**
-* User: serso
-* Date: 2/2/13
-* Time: 6:08 PM
-*/
+ * User: serso
+ * Date: 2/2/13
+ * Time: 6:08 PM
+ */
 final class StringParcelableCreator implements Parcelable.Creator<String> {
 
-    @Nonnull
-    private final static Parcelable.Creator<String> instance = new StringParcelableCreator();
+	@Nonnull
+	private final static Parcelable.Creator<String> instance = new StringParcelableCreator();
 
-    @Nonnull
-    static Parcelable.Creator<String> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	static Parcelable.Creator<String> getInstance() {
+		return instance;
+	}
 
-    private StringParcelableCreator() {
-    }
+	private StringParcelableCreator() {
+	}
 
-    @Override
-    public String createFromParcel(Parcel in) {
-        return in.readString();
-    }
+	@Override
+	public String createFromParcel(Parcel in) {
+		return in.readString();
+	}
 
-    @Override
-    public String[] newArray(int size) {
-        return new String[size];
-    }
+	@Override
+	public String[] newArray(int size) {
+		return new String[size];
+	}
 }

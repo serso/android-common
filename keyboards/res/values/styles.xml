@@ -22,21 +22,21 @@
 
 <resources>
 
-    <style name="keyboard_metro_button_dark_style" parent="metro_button_dark_style">
-        <item name="android:textSize">@dimen/keyboard_button_text_size</item>
-        <item name="android:padding">@dimen/keyboard_button_padding</item>
-        <item name="android:minHeight">@dimen/keyboard_button_min_height</item>
-    </style>
+	<style name="keyboard_metro_button_dark_style" parent="metro_button_dark_style">
+		<item name="android:textSize">@dimen/keyboard_button_text_size</item>
+		<item name="android:padding">@dimen/keyboard_button_padding</item>
+		<item name="android:minHeight">@dimen/keyboard_button_min_height</item>
+	</style>
 
-    <style name="keyboard_metro_preview_dark_style" parent="metro_button_dark_style">
-        <item name="android:textSize">@dimen/keyboard_button_text_size</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingTop">@dimen/keyboard_preview_padding</item>
-        <item name="android:paddingBottom">@dimen/keyboard_preview_padding</item>
-        <item name="android:paddingLeft">@dimen/keyboard_preview_padding_left</item>
-        <item name="android:paddingRight">@dimen/keyboard_preview_padding_right</item>
-        <item name="android:minHeight">@dimen/keyboard_button_min_height</item>
-        <item name="android:background">@drawable/metro_dark_preview</item>
-    </style>
+	<style name="keyboard_metro_preview_dark_style" parent="metro_button_dark_style">
+		<item name="android:textSize">@dimen/keyboard_button_text_size</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingTop">@dimen/keyboard_preview_padding</item>
+		<item name="android:paddingBottom">@dimen/keyboard_preview_padding</item>
+		<item name="android:paddingLeft">@dimen/keyboard_preview_padding_left</item>
+		<item name="android:paddingRight">@dimen/keyboard_preview_padding_right</item>
+		<item name="android:minHeight">@dimen/keyboard_button_min_height</item>
+		<item name="android:background">@drawable/metro_dark_preview</item>
+	</style>
 
 </resources>

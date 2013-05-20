@@ -20,20 +20,19 @@ import java.lang.ref.WeakReference;
  *
  * @param <V> type of the task result
  * @param <C> type of context
- *
  * @see ContextCallback
  */
 abstract class ContextAwareFutureCallback<V, C extends Context> implements FutureCallback<V> {
 
-    @Nonnull
-    private final WeakReference<C> contextRef;
+	@Nonnull
+	private final WeakReference<C> contextRef;
 
-    ContextAwareFutureCallback(@Nonnull C context) {
-        this.contextRef = new WeakReference<C>(context);
-    }
+	ContextAwareFutureCallback(@Nonnull C context) {
+		this.contextRef = new WeakReference<C>(context);
+	}
 
-    @Nullable
-    protected C getContext() {
-        return contextRef.get();
-    }
+	@Nullable
+	protected C getContext() {
+		return contextRef.get();
+	}
 }

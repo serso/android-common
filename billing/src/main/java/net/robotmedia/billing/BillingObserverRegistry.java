@@ -24,8 +24,8 @@ package net.robotmedia.billing;
 
 import android.app.PendingIntent;
 import net.robotmedia.billing.model.Transaction;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,7 +58,7 @@ class BillingObserverRegistry {
 	 * {@link net.robotmedia.billing.BillingRequest.Purchase} request is
 	 * received.
 	 *
-	 * @param productId		 id of the item whose purchase was requested.
+	 * @param productId      id of the item whose purchase was requested.
 	 * @param purchaseIntent intent to purchase the item.
 	 */
 	static void onPurchaseIntent(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
@@ -104,7 +104,7 @@ class BillingObserverRegistry {
 	 * Notifies observers of the purchase state change of the specified item.
 	 *
 	 * @param productId id of the item whose purchase state has changed.
-	 * @param state  new purchase state of the item.
+	 * @param state     new purchase state of the item.
 	 */
 	static void notifyPurchaseStateChange(@Nonnull String productId, @Nonnull Transaction.PurchaseState state) {
 		for (IBillingObserver o : getSynchronizedObservers()) {

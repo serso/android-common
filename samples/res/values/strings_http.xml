@@ -22,8 +22,8 @@
 
 <resources>
 
-    <string name="acl_http">Http</string>
-    <string name="acl_fetch_data_text">Fetch data from internet</string>
-    <string name="acl_http_response">Response:</string>
+	<string name="acl_http">Http</string>
+	<string name="acl_fetch_data_text">Fetch data from internet</string>
+	<string name="acl_http_response">Response:</string>
 
 </resources>

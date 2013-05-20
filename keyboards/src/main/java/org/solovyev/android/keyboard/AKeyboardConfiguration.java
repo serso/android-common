@@ -31,6 +31,6 @@ import javax.annotation.Nonnull;
  */
 public interface AKeyboardConfiguration {
 
-    @Nonnull
-    String getWordSeparators();
+	@Nonnull
+	String getWordSeparators();
 }

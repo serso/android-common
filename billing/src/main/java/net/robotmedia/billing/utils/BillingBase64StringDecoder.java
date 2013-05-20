@@ -1,7 +1,8 @@
 package net.robotmedia.billing.utils;
 
-import javax.annotation.Nonnull;
 import org.solovyev.common.Converter;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -10,24 +11,24 @@ import org.solovyev.common.Converter;
  */
 public class BillingBase64StringDecoder implements Converter<String, byte[]> {
 
-    @Nonnull
-    private static Converter<String, byte[]> instance = new BillingBase64StringDecoder();
+	@Nonnull
+	private static Converter<String, byte[]> instance = new BillingBase64StringDecoder();
 
-    private BillingBase64StringDecoder() {
-    }
+	private BillingBase64StringDecoder() {
+	}
 
-    @Nonnull
-    public static Converter<String, byte[]> getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static Converter<String, byte[]> getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public byte[] convert(@Nonnull String s) {
-        try {
-            return Base64.decode(s);
-        } catch (Base64DecoderException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Nonnull
+	@Override
+	public byte[] convert(@Nonnull String s) {
+		try {
+			return Base64.decode(s);
+		} catch (Base64DecoderException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

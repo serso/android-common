@@ -22,10 +22,10 @@
 
 package org.solovyev.android.view;
 
-import android.os.Bundle;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.*;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -206,7 +206,7 @@ public class ColorPickerDialog extends Dialog {
 						if (inCenter) {
 							mListener.colorChanged(mCenterPaint.getColor());
 						}
-						mTrackingCenter = false;	// so we draw w/o halo
+						mTrackingCenter = false;    // so we draw w/o halo
 						invalidate();
 					}
 					break;

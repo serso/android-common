@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +20,10 @@
   ~ Site:  http://se.solovyev.org
   -->
 
-<org.solovyev.android.keyboard.DragAndroidKeyboardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/keyboard"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@color/default_background"
-        android:layout_alignParentBottom="true"/>
+<org.solovyev.android.keyboard.DragAndroidKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/keyboard"
+	android:layout_height="wrap_content"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:background="@color/default_background"
+	android:layout_alignParentBottom="true" />

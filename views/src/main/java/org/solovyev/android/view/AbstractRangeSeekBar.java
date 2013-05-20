@@ -33,11 +33,12 @@ import android.graphics.*;
 import android.graphics.Paint.Style;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 import org.solovyev.common.math.LinearNormalizer;
 import org.solovyev.common.math.Normalizer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Widget that lets users select a minimum and maximum value on a given numerical range.
@@ -86,8 +87,8 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 *
 	 * @param minValue The minimum value of the selectable range.
 	 * @param maxValue The maximum value of the selectable range.
-	 * @param steps number of steps to be used in range seek bar
-	 * @param context parent context
+	 * @param steps    number of steps to be used in range seek bar
+	 * @param context  parent context
 	 * @throws IllegalArgumentException Will be thrown if min/max value types are not one of Long, Double, Integer, Float, Short, Byte or BigDecimal.
 	 */
 	public AbstractRangeSeekBar(@Nonnull T minValue, @Nonnull T maxValue, @Nullable Integer steps, Context context) throws IllegalArgumentException {
@@ -124,10 +125,10 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	}
 
 	@Nonnull
-	protected abstract Converter<Double,T> getToTConverter();
+	protected abstract Converter<Double, T> getToTConverter();
 
 	@Nonnull
-	protected abstract Converter<T,Double> getToDoubleConverter();
+	protected abstract Converter<T, Double> getToDoubleConverter();
 
 	public boolean isNotifyWhileDragging() {
 		return notifyWhileDragging;
@@ -291,8 +292,8 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 * Draws the "normal" resp. "pressed" thumb image on specified x-coordinate.
 	 *
 	 * @param normalizedToScreenValue The x-coordinate in screen space where to draw the image.
-	 * @param pressed	 Is the thumb currently in "pressed" state?
-	 * @param canvas	  The canvas to draw upon.
+	 * @param pressed                 Is the thumb currently in "pressed" state?
+	 * @param canvas                  The canvas to draw upon.
 	 */
 	private void drawThumb(float normalizedToScreenValue, boolean pressed, Canvas canvas) {
 		canvas.drawBitmap(tc.getImage(pressed), normalizedToScreenValue - tc.thumbHalfWidth, (float) ((0.5f * getHeight()) - tc.thumbHalfHeight), paint);
@@ -322,7 +323,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	/**
 	 * Decides if given x-coordinate in screen space needs to be interpreted as "within" the normalized thumb x-coordinate.
 	 *
-	 * @param touchX			   The x-coordinate in screen space to check.
+	 * @param touchX               The x-coordinate in screen space to check.
 	 * @param normalizedThumbValue The normalized x-coordinate of the thumb to check.
 	 * @return true if x-coordinate is in thumb range, false otherwise.
 	 */
@@ -380,7 +381,7 @@ public abstract class AbstractRangeSeekBar<T> extends ImageView {
 	 * @return The converted value in screen space.
 	 */
 	private float convertToScreenValue(double normalizedValue) {
-		return (float)this.fromScreenNormalizer.denormalize(normalizedValue);
+		return (float) this.fromScreenNormalizer.denormalize(normalizedValue);
 	}
 
 	/**

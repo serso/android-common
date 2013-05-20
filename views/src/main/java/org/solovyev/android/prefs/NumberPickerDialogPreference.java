@@ -24,11 +24,12 @@ package org.solovyev.android.prefs;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import javax.annotation.Nonnull;
 import org.solovyev.android.view.NumberRange;
 import org.solovyev.android.view.Picker;
 import org.solovyev.common.interval.Interval;
 import org.solovyev.common.text.NumberIntervalMapper;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -37,38 +38,38 @@ import org.solovyev.common.text.NumberIntervalMapper;
  */
 public abstract class NumberPickerDialogPreference<N extends Number & Comparable<N>> extends AbstractPickerDialogPreference<N> {
 
-    @Nonnull
-    private final Interval<N> boundaries;
+	@Nonnull
+	private final Interval<N> boundaries;
 
-    @Nonnull
-    private final N step;
+	@Nonnull
+	private final N step;
 
-    protected NumberPickerDialogPreference(Context context,
-                                           AttributeSet attrs,
-                                           @Nonnull NumberIntervalMapper<N> mapper) {
-        super(context, attrs, null, false, mapper.getMapper());
+	protected NumberPickerDialogPreference(Context context,
+										   AttributeSet attrs,
+										   @Nonnull NumberIntervalMapper<N> mapper) {
+		super(context, attrs, null, false, mapper.getMapper());
 
-        //noinspection ConstantConditions
-        boundaries = mapper.parseValue(attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "boundaries"));
+		//noinspection ConstantConditions
+		boundaries = mapper.parseValue(attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "boundaries"));
 
-        final String stringStep = attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "step");
-        if (stringStep == null) {
-            step = getDefaultStep();
-        } else {
-            step = mapper.getMapper().parseValue(stringStep);
-        }
-    }
+		final String stringStep = attrs.getAttributeValue(AbstractDialogPreference.localNameSpace, "step");
+		if (stringStep == null) {
+			step = getDefaultStep();
+		} else {
+			step = mapper.getMapper().parseValue(stringStep);
+		}
+	}
 
-    @Nonnull
-    protected abstract N getDefaultStep();
+	@Nonnull
+	protected abstract N getDefaultStep();
 
-    @Nonnull
-    @Override
-    protected Picker.Range<N> createRange(@Nonnull N selected) {
-        return createRange(boundaries, step, selected);
-    }
+	@Nonnull
+	@Override
+	protected Picker.Range<N> createRange(@Nonnull N selected) {
+		return createRange(boundaries, step, selected);
+	}
 
-    @Nonnull
-    protected abstract NumberRange<N> createRange(@Nonnull Interval<N> boundaries, @Nonnull N step, @Nonnull N selected);
+	@Nonnull
+	protected abstract NumberRange<N> createRange(@Nonnull Interval<N> boundaries, @Nonnull N step, @Nonnull N selected);
 
 }

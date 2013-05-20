@@ -31,16 +31,16 @@ import javax.annotation.Nonnull;
  */
 public class AKeyboardConfigurationImpl implements AKeyboardConfiguration {
 
-    @Nonnull
-    private final String wordSeparators;
+	@Nonnull
+	private final String wordSeparators;
 
-    public AKeyboardConfigurationImpl(@Nonnull String wordSeparators) {
-        this.wordSeparators = wordSeparators;
-    }
+	public AKeyboardConfigurationImpl(@Nonnull String wordSeparators) {
+		this.wordSeparators = wordSeparators;
+	}
 
-    @Nonnull
-    @Override
-    public String getWordSeparators() {
-        return wordSeparators;
-    }
+	@Nonnull
+	@Override
+	public String getWordSeparators() {
+		return wordSeparators;
+	}
 }

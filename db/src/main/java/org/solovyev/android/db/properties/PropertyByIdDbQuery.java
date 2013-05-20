@@ -26,11 +26,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import javax.annotation.Nonnull;
-import org.solovyev.android.properties.AProperty;
 import org.solovyev.android.db.AbstractDbQuery;
 import org.solovyev.android.db.ListMapper;
+import org.solovyev.android.properties.AProperty;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -40,35 +40,35 @@ import java.util.List;
  */
 public class PropertyByIdDbQuery extends AbstractDbQuery<List<AProperty>> {
 
-    @Nonnull
-    private String tableName;
+	@Nonnull
+	private String tableName;
 
-    @Nonnull
-    private String idColumnName;
+	@Nonnull
+	private String idColumnName;
 
-    @Nonnull
-    private Object id;
+	@Nonnull
+	private Object id;
 
-    public PropertyByIdDbQuery(@Nonnull Context context,
-                               @Nonnull SQLiteOpenHelper sqliteOpenHelper,
-                               @Nonnull String tableName,
-                               @Nonnull String idColumnName,
-                               @Nonnull Object id) {
-        super(context, sqliteOpenHelper);
-        this.tableName = tableName;
-        this.idColumnName = idColumnName;
-        this.id = id;
-    }
+	public PropertyByIdDbQuery(@Nonnull Context context,
+							   @Nonnull SQLiteOpenHelper sqliteOpenHelper,
+							   @Nonnull String tableName,
+							   @Nonnull String idColumnName,
+							   @Nonnull Object id) {
+		super(context, sqliteOpenHelper);
+		this.tableName = tableName;
+		this.idColumnName = idColumnName;
+		this.id = id;
+	}
 
-    @Nonnull
-    @Override
-    public Cursor createCursor(@Nonnull SQLiteDatabase db) {
-        return db.query(tableName, null, idColumnName + " = ? ", new String[]{String.valueOf(id)}, null, null, null);
-    }
+	@Nonnull
+	@Override
+	public Cursor createCursor(@Nonnull SQLiteDatabase db) {
+		return db.query(tableName, null, idColumnName + " = ? ", new String[]{String.valueOf(id)}, null, null, null);
+	}
 
-    @Nonnull
-    @Override
-    public List<AProperty> retrieveData(@Nonnull Cursor cursor) {
-        return new ListMapper<AProperty>(APropertyMapper.getInstance()).convert(cursor);
-    }
+	@Nonnull
+	@Override
+	public List<AProperty> retrieveData(@Nonnull Cursor cursor) {
+		return new ListMapper<AProperty>(APropertyMapper.getInstance()).convert(cursor);
+	}
 }

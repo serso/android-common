@@ -23,9 +23,9 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import javax.annotation.Nonnull;
 import org.solovyev.common.text.Mapper;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

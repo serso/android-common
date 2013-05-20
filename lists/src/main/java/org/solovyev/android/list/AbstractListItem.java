@@ -23,12 +23,13 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
-import org.solovyev.android.view.TextViewBuilder;
 import android.view.View;
 import android.widget.TextView;
+import org.solovyev.android.view.TextViewBuilder;
+import org.solovyev.android.view.UpdatableViewBuilder;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.view.UpdatableViewBuilder;
 
 /**
  * User: serso
@@ -37,35 +38,35 @@ import org.solovyev.android.view.UpdatableViewBuilder;
  */
 public abstract class AbstractListItem implements UpdatableViewBuilder<TextView> {
 
-    @Nonnull
-    private final UpdatableViewBuilder<TextView> textViewCreator;
+	@Nonnull
+	private final UpdatableViewBuilder<TextView> textViewCreator;
 
-    protected AbstractListItem(int textViewLayoutId, @Nonnull String tag) {
-        this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, tag);
-    }
+	protected AbstractListItem(int textViewLayoutId, @Nonnull String tag) {
+		this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, tag);
+	}
 
-    protected AbstractListItem(int textViewLayoutId) {
-        this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, null);
-    }
+	protected AbstractListItem(int textViewLayoutId) {
+		this.textViewCreator = TextViewBuilder.newInstance(textViewLayoutId, null);
+	}
 
-    @Override
-    @Nonnull
-    public TextView updateView(@Nonnull Context context, @Nonnull View view) {
-        return fillView(context, textViewCreator.updateView(context, view));
-    }
+	@Override
+	@Nonnull
+	public TextView updateView(@Nonnull Context context, @Nonnull View view) {
+		return fillView(context, textViewCreator.updateView(context, view));
+	}
 
-    @Override
-    @Nonnull
-    public TextView build(@Nonnull Context context) {
-        return fillView(context, textViewCreator.build(context));
-    }
+	@Override
+	@Nonnull
+	public TextView build(@Nonnull Context context) {
+		return fillView(context, textViewCreator.build(context));
+	}
 
-    @Nonnull
-    private TextView fillView(@Nonnull Context context, @Nonnull TextView textView) {
-        textView.setText(getText(context));
-        return textView;
-    }
+	@Nonnull
+	private TextView fillView(@Nonnull Context context, @Nonnull TextView textView) {
+		textView.setText(getText(context));
+		return textView;
+	}
 
-    @Nullable
-    protected abstract CharSequence getText(@Nonnull Context context);
+	@Nullable
+	protected abstract CharSequence getText(@Nonnull Context context);
 }

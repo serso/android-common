@@ -24,28 +24,14 @@
 
 <selector xmlns:a="http://schemas.android.com/apk/res/android">
 
-    <item a:state_pressed="false"
-		  a:state_enabled="true"
-          a:state_focused="false"
-		  a:drawable="@drawable/timepicker_down_normal_horizontal" />
+	<item a:state_pressed="false" a:state_enabled="true" a:state_focused="false" a:drawable="@drawable/timepicker_down_normal_horizontal" />
 
-	<item a:state_pressed="true"
-		  a:state_enabled="true"
-          a:drawable="@drawable/timepicker_down_pressed_horizontal" />
+	<item a:state_pressed="true" a:state_enabled="true" a:drawable="@drawable/timepicker_down_pressed_horizontal" />
 
-	<item a:state_pressed="false"
-		  a:state_enabled="true"
-          a:state_focused="true"
-		  a:drawable="@drawable/timepicker_down_selected_horizontal" />
+	<item a:state_pressed="false" a:state_enabled="true" a:state_focused="true" a:drawable="@drawable/timepicker_down_selected_horizontal" />
 
-	<item a:state_pressed="false"
-		  a:state_enabled="false"
-          a:state_focused="false"
-		  a:drawable="@drawable/timepicker_down_disabled_horizontal" />
+	<item a:state_pressed="false" a:state_enabled="false" a:state_focused="false" a:drawable="@drawable/timepicker_down_disabled_horizontal" />
 
-	<item a:state_pressed="false"
-		  a:state_enabled="false"
-          a:state_focused="true"
-		  a:drawable="@drawable/timepicker_down_disabled_focused_horizontal" />
+	<item a:state_pressed="false" a:state_enabled="false" a:state_focused="true" a:drawable="@drawable/timepicker_down_disabled_focused_horizontal" />
 
 </selector>

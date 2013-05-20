@@ -25,10 +25,11 @@ package org.solovyev.android.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentActivity;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.DialogFragmentShower;
 import org.solovyev.common.Builder;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -38,32 +39,32 @@ import org.solovyev.common.Builder;
 public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> {
 
     /*
-    **********************************************************************
+	**********************************************************************
     *
     *                           FIELDS
     *
     **********************************************************************
     */
 
-    @Nonnull
-    private final FragmentActivity fragmentActivity;
+	@Nonnull
+	private final FragmentActivity fragmentActivity;
 
-    @Nonnull
-    private final String fragmentTag;
+	@Nonnull
+	private final String fragmentTag;
 
-    private final int messageResId;
+	private final int messageResId;
 
-    private int titleResId = R.string.c_confirmation;
+	private int titleResId = R.string.c_confirmation;
 
-    private int positiveButtonTextResId = android.R.string.ok;
+	private int positiveButtonTextResId = android.R.string.ok;
 
-    private int negativeButtonTextResId = android.R.string.cancel;
+	private int negativeButtonTextResId = android.R.string.cancel;
 
-    @Nullable
-    private DialogInterface.OnClickListener positiveHandler;
+	@Nullable
+	private DialogInterface.OnClickListener positiveHandler;
 
-    @Nullable
-    private DialogInterface.OnClickListener negativeHandler;
+	@Nullable
+	private DialogInterface.OnClickListener negativeHandler;
 
     /*
     **********************************************************************
@@ -73,16 +74,16 @@ public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> 
     **********************************************************************
     */
 
-    private ConfirmationDialogBuilder(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
-        this.fragmentActivity = fragmentActivity;
-        this.fragmentTag = fragmentTag;
-        this.messageResId = messageResId;
-    }
+	private ConfirmationDialogBuilder(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
+		this.fragmentActivity = fragmentActivity;
+		this.fragmentTag = fragmentTag;
+		this.messageResId = messageResId;
+	}
 
-    @Nonnull
-    public static ConfirmationDialogBuilder newInstance(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
-        return new ConfirmationDialogBuilder(fragmentActivity, fragmentTag, messageResId);
-    }
+	@Nonnull
+	public static ConfirmationDialogBuilder newInstance(@Nonnull FragmentActivity fragmentActivity, @Nonnull String fragmentTag, int messageResId) {
+		return new ConfirmationDialogBuilder(fragmentActivity, fragmentTag, messageResId);
+	}
 
     /*
     **********************************************************************
@@ -92,61 +93,61 @@ public class ConfirmationDialogBuilder implements Builder<DialogFragmentShower> 
     **********************************************************************
     */
 
-    @Nonnull
-    public ConfirmationDialogBuilder setTitleResId(int titleResId) {
-        this.titleResId = titleResId;
-        return this;
-    }
+	@Nonnull
+	public ConfirmationDialogBuilder setTitleResId(int titleResId) {
+		this.titleResId = titleResId;
+		return this;
+	}
 
-    @Nonnull
-    public ConfirmationDialogBuilder setPositiveButtonTextResId(int positiveButtonTextResId) {
-        this.positiveButtonTextResId = positiveButtonTextResId;
-        return this;
-    }
+	@Nonnull
+	public ConfirmationDialogBuilder setPositiveButtonTextResId(int positiveButtonTextResId) {
+		this.positiveButtonTextResId = positiveButtonTextResId;
+		return this;
+	}
 
-    @Nonnull
-    public ConfirmationDialogBuilder setNegativeButtonTextResId(int negativeButtonTextResId) {
-        this.negativeButtonTextResId = negativeButtonTextResId;
-        return this;
-    }
+	@Nonnull
+	public ConfirmationDialogBuilder setNegativeButtonTextResId(int negativeButtonTextResId) {
+		this.negativeButtonTextResId = negativeButtonTextResId;
+		return this;
+	}
 
-    @Nonnull
-    public ConfirmationDialogBuilder setPositiveHandler(@Nullable DialogInterface.OnClickListener positiveHandler) {
-        this.positiveHandler = positiveHandler;
-        return this;
-    }
+	@Nonnull
+	public ConfirmationDialogBuilder setPositiveHandler(@Nullable DialogInterface.OnClickListener positiveHandler) {
+		this.positiveHandler = positiveHandler;
+		return this;
+	}
 
-    @Nonnull
-    public ConfirmationDialogBuilder setNegativeHandler(@Nullable DialogInterface.OnClickListener negativeHandler) {
-        this.negativeHandler = negativeHandler;
-        return this;
-    }
+	@Nonnull
+	public ConfirmationDialogBuilder setNegativeHandler(@Nullable DialogInterface.OnClickListener negativeHandler) {
+		this.negativeHandler = negativeHandler;
+		return this;
+	}
 
-    @Nonnull
-    @Override
-    public DialogFragmentShower build() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity);
+	@Nonnull
+	@Override
+	public DialogFragmentShower build() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(fragmentActivity);
 
-        builder.setTitle(titleResId);
-        builder.setMessage(messageResId);
-        builder.setPositiveButton(positiveButtonTextResId, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if ( positiveHandler != null ) {
-                    positiveHandler.onClick(dialog, which);
-                }
-            }
-        });
+		builder.setTitle(titleResId);
+		builder.setMessage(messageResId);
+		builder.setPositiveButton(positiveButtonTextResId, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (positiveHandler != null) {
+					positiveHandler.onClick(dialog, which);
+				}
+			}
+		});
 
-        builder.setNegativeButton(negativeButtonTextResId, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if ( negativeHandler != null ) {
-                    negativeHandler.onClick(dialog, which);
-                }
-            }
-        });
+		builder.setNegativeButton(negativeButtonTextResId, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (negativeHandler != null) {
+					negativeHandler.onClick(dialog, which);
+				}
+			}
+		});
 
-        return new DialogFragmentShower(fragmentActivity, fragmentTag, builder);
-    }
+		return new DialogFragmentShower(fragmentActivity, fragmentTag, builder);
+	}
 }

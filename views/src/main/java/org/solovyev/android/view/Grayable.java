@@ -29,7 +29,7 @@ package org.solovyev.android.view;
  */
 public interface Grayable {
 
-    void grayOut();
+	void grayOut();
 
-    void grayIn();
+	void grayIn();
 }

@@ -22,20 +22,15 @@
 
 package net.robotmedia.billing.security;
 
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.SignatureException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
-
 import android.text.TextUtils;
 import android.util.Log;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.utils.Base64;
 import net.robotmedia.billing.utils.Base64DecoderException;
+
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
 public class DefaultSignatureValidator implements ISignatureValidator {
 
@@ -45,11 +40,9 @@ public class DefaultSignatureValidator implements ISignatureValidator {
 	/**
 	 * Generates a PublicKey instance from a string containing the
 	 * Base64-encoded public key.
-	 * 
-	 * @param encodedPublicKey
-	 *            Base64-encoded public key
-	 * @throws IllegalArgumentException
-	 *             if encodedPublicKey is invalid
+	 *
+	 * @param encodedPublicKey Base64-encoded public key
+	 * @throws IllegalArgumentException if encodedPublicKey is invalid
 	 */
 	protected PublicKey generatePublicKey(String encodedPublicKey) {
 		try {

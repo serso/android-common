@@ -24,6 +24,7 @@ package org.solovyev.android.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,9 +34,9 @@ import javax.annotation.Nonnull;
  */
 public interface DbQuery<R> {
 
-    @Nonnull
-    Cursor createCursor(@Nonnull SQLiteDatabase db);
+	@Nonnull
+	Cursor createCursor(@Nonnull SQLiteDatabase db);
 
-    @Nonnull
-    R retrieveData(@Nonnull Cursor cursor);
+	@Nonnull
+	R retrieveData(@Nonnull Cursor cursor);
 }

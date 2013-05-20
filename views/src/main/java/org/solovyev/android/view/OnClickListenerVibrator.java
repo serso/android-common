@@ -25,20 +25,21 @@ package org.solovyev.android.view;
 import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.view.View;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
-* User: serso
-* Date: 10/26/11
-* Time: 11:25 PM
-*/
+ * User: serso
+ * Date: 10/26/11
+ * Time: 11:25 PM
+ */
 public class OnClickListenerVibrator implements View.OnClickListener {
 
 	private static final float VIBRATION_TIME_SCALE = 1.0f;
 
 	@Nonnull
-   	private VibratorContainer vibrator;
+	private VibratorContainer vibrator;
 
 	public OnClickListenerVibrator(@Nullable Vibrator vibrator,
 								   @Nonnull SharedPreferences preferences) {

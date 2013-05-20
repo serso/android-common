@@ -26,8 +26,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import javax.annotation.Nonnull;
 import org.solovyev.android.samples.R;
+
+import javax.annotation.Nonnull;
 
 /**
  * User: serso
@@ -35,61 +36,61 @@ import org.solovyev.android.samples.R;
  * Time: 2:09 AM
  */
 public class SamplesPreferencesActivity
-        extends PreferenceActivity
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+		extends PreferenceActivity
+		implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.preferences);
+		addPreferencesFromResource(R.xml.preferences);
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.registerOnSharedPreferenceChangeListener(this);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		prefs.registerOnSharedPreferenceChangeListener(this);
 
-        updateAnswer(Preferences.toBeOrNotTobe.getKey(), getString(Preferences.toBeOrNotTobe.getPreference(prefs).getCaptionResId()));
-        updateAnswer(Preferences.integerNumber.getKey(), String.valueOf(Preferences.integerNumber.getPreference(prefs)));
-        updateAnswer(Preferences.doubleNumber.getKey(), String.valueOf(Preferences.doubleNumber.getPreference(prefs)));
-        updateAnswer(Preferences.country.getKey(), String.valueOf(Preferences.country.getPreference(prefs)));
-        updateAnswer(Preferences.floatInterval.getKey(), String.valueOf(Preferences.floatInterval.getPreference(prefs)));
-        updateAnswer(Preferences.integerInterval.getKey(), String.valueOf(Preferences.integerInterval.getPreference(prefs)));
-    }
+		updateAnswer(Preferences.toBeOrNotTobe.getKey(), getString(Preferences.toBeOrNotTobe.getPreference(prefs).getCaptionResId()));
+		updateAnswer(Preferences.integerNumber.getKey(), String.valueOf(Preferences.integerNumber.getPreference(prefs)));
+		updateAnswer(Preferences.doubleNumber.getKey(), String.valueOf(Preferences.doubleNumber.getPreference(prefs)));
+		updateAnswer(Preferences.country.getKey(), String.valueOf(Preferences.country.getPreference(prefs)));
+		updateAnswer(Preferences.floatInterval.getKey(), String.valueOf(Preferences.floatInterval.getPreference(prefs)));
+		updateAnswer(Preferences.integerInterval.getKey(), String.valueOf(Preferences.integerInterval.getPreference(prefs)));
+	}
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        if (Preferences.toBeOrNotTobe.getKey().equals(key)) {
-            final String answer = getString(Preferences.toBeOrNotTobe.getPreference(prefs).getCaptionResId());
-            updateAnswer(key, answer);
-        }
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+		if (Preferences.toBeOrNotTobe.getKey().equals(key)) {
+			final String answer = getString(Preferences.toBeOrNotTobe.getPreference(prefs).getCaptionResId());
+			updateAnswer(key, answer);
+		}
 
-        if (Preferences.integerNumber.getKey().equals(key)) {
-            final String answer = String.valueOf(Preferences.integerNumber.getPreference(prefs));
-            updateAnswer(key, answer);
-        }
+		if (Preferences.integerNumber.getKey().equals(key)) {
+			final String answer = String.valueOf(Preferences.integerNumber.getPreference(prefs));
+			updateAnswer(key, answer);
+		}
 
-        if (Preferences.doubleNumber.getKey().equals(key)) {
-            final String answer = String.valueOf(Preferences.doubleNumber.getPreference(prefs));
-            updateAnswer(key, answer);
-        }
+		if (Preferences.doubleNumber.getKey().equals(key)) {
+			final String answer = String.valueOf(Preferences.doubleNumber.getPreference(prefs));
+			updateAnswer(key, answer);
+		}
 
-        if (Preferences.country.getKey().equals(key)) {
-            final String answer = String.valueOf(Preferences.country.getPreference(prefs));
-            updateAnswer(key, answer);
-        }
+		if (Preferences.country.getKey().equals(key)) {
+			final String answer = String.valueOf(Preferences.country.getPreference(prefs));
+			updateAnswer(key, answer);
+		}
 
-        if (Preferences.floatInterval.getKey().equals(key)) {
-            final String answer = String.valueOf(Preferences.floatInterval.getPreference(prefs));
-            updateAnswer(key, answer);
-        }
+		if (Preferences.floatInterval.getKey().equals(key)) {
+			final String answer = String.valueOf(Preferences.floatInterval.getPreference(prefs));
+			updateAnswer(key, answer);
+		}
 
-        if (Preferences.integerInterval.getKey().equals(key)) {
-            final String answer = String.valueOf(Preferences.integerInterval.getPreference(prefs));
-            updateAnswer(key, answer);
-        }
-    }
+		if (Preferences.integerInterval.getKey().equals(key)) {
+			final String answer = String.valueOf(Preferences.integerInterval.getPreference(prefs));
+			updateAnswer(key, answer);
+		}
+	}
 
-    private void updateAnswer(@Nonnull String key, @Nonnull String answer) {
-        final android.preference.Preference preference = findPreference(key);
-        preference.setSummary(getString(R.string.answer) + ": " + answer);
-    }
+	private void updateAnswer(@Nonnull String key, @Nonnull String answer) {
+		final android.preference.Preference preference = findPreference(key);
+		preference.setSummary(getString(R.string.answer) + ": " + answer);
+	}
 }

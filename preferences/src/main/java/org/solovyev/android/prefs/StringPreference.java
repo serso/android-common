@@ -23,11 +23,12 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.text.EnumMapper;
 import org.solovyev.common.text.Mapper;
 import org.solovyev.common.text.StringMapper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -38,6 +39,7 @@ import org.solovyev.common.text.StringMapper;
 /**
  * {@link Preference} implementation which uses {@link String} way of storing object in persistence.
  * This class provides methods for mapping real java objects to String and vice versa.
+ *
  * @param <T>
  */
 public final class StringPreference<T> extends AbstractPreference<T> {

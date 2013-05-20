@@ -23,6 +23,7 @@
 package org.solovyev.android.http;
 
 import org.apache.http.client.methods.HttpUriRequest;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,33 +33,33 @@ import javax.annotation.Nonnull;
  */
 public abstract class AbstractHttpTransaction<R> implements HttpTransaction<R>, HttpTransactionDef {
 
-    @Nonnull
-    private final HttpMethod httpMethod;
+	@Nonnull
+	private final HttpMethod httpMethod;
 
-    @Nonnull
-    private final String uri;
+	@Nonnull
+	private final String uri;
 
-    protected AbstractHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-        this.uri = uri;
-    }
+	protected AbstractHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod) {
+		this.httpMethod = httpMethod;
+		this.uri = uri;
+	}
 
-    @Override
-    @Nonnull
-    public HttpMethod getHttpMethod() {
-        return httpMethod;
-    }
+	@Override
+	@Nonnull
+	public HttpMethod getHttpMethod() {
+		return httpMethod;
+	}
 
-    @Override
-    @Nonnull
-    public String getUri() {
-        return uri;
-    }
+	@Override
+	@Nonnull
+	public String getUri() {
+		return uri;
+	}
 
-    @Nonnull
-    @Override
-    public HttpUriRequest createRequest() {
-        return httpMethod.createRequest(uri, getRequestParameters());
-    }
+	@Nonnull
+	@Override
+	public HttpUriRequest createRequest() {
+		return httpMethod.createRequest(uri, getRequestParameters());
+	}
 
 }

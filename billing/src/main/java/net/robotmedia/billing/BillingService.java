@@ -32,9 +32,9 @@ import android.os.RemoteException;
 import android.util.Log;
 import com.android.vending.billing.IMarketBillingService;
 import net.robotmedia.billing.utils.Compatibility;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -42,8 +42,8 @@ import java.util.List;
 
 public class BillingService extends Service implements ServiceConnection, IBillingService {
 
-    @Nonnull
-    private static final String TAG = BillingService.class.getSimpleName();
+	@Nonnull
+	private static final String TAG = BillingService.class.getSimpleName();
 
 	private static final String ACTION_MARKET_BILLING_SERVICE = "com.android.vending.billing.MarketBillingService.BIND";
 
@@ -185,7 +185,7 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 
 	private boolean runRequest(@Nonnull IMarketBillingService service, @Nonnull IBillingRequest request, int counter) {
 		try {
-            BillingController.debug("Running request: " + request.getRequestType());
+			BillingController.debug("Running request: " + request.getRequestType());
 
 			final long requestId = request.run(service);
 
@@ -193,7 +193,7 @@ public class BillingService extends Service implements ServiceConnection, IBilli
 
 			return true;
 		} catch (RemoteException e) {
-            BillingController.debug("Remote exception: " + e.getMessage());
+			BillingController.debug("Remote exception: " + e.getMessage());
 
 			Log.w(this.getClass().getSimpleName(), "Remote billing service crashed");
 			if (counter < MAX_RETRIES) {

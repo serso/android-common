@@ -23,5 +23,5 @@
   -->
 
 <resources>
-    <string name="app_name">Android Common Library Samples (Test)</string>
+	<string name="app_name">Android Common Library Samples (Test)</string>
 </resources>

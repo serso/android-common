@@ -24,11 +24,12 @@ package org.solovyev.android.view;
 
 import android.content.SharedPreferences;
 import android.os.Vibrator;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.android.prefs.BooleanPreference;
 import org.solovyev.android.prefs.NumberToStringPreference;
 import org.solovyev.android.prefs.Preference;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * User: serso
@@ -37,10 +38,10 @@ import org.solovyev.android.prefs.Preference;
  */
 public class VibratorContainer implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static class Preferences {
-        public static final Preference<Boolean> hapticFeedbackEnabled = BooleanPreference.of("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", false);
-        public static final Preference<Long> hapticFeedbackDuration = NumberToStringPreference.of("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L, Long.class);
-    }
+	public static class Preferences {
+		public static final Preference<Boolean> hapticFeedbackEnabled = BooleanPreference.of("org.solovyev.android.calculator.CalculatorModel_haptic_feedback", false);
+		public static final Preference<Long> hapticFeedbackDuration = NumberToStringPreference.of("org.solovyev.android.calculator.CalculatorActivity_calc_haptic_feedback_duration_key", 60L, Long.class);
+	}
 
 	private final float vibrationTimeScale;
 
@@ -66,7 +67,7 @@ public class VibratorContainer implements SharedPreferences.OnSharedPreferenceCh
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences preferences, @Nullable String key) {
-		if ( Preferences.hapticFeedbackEnabled.getPreference(preferences)) {
+		if (Preferences.hapticFeedbackEnabled.getPreference(preferences)) {
 			//noinspection ConstantConditions
 			this.time = getScaledValue(Preferences.hapticFeedbackDuration.getPreference(preferences));
 		} else {

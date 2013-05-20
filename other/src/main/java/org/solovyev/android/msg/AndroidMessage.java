@@ -23,10 +23,10 @@
 package org.solovyev.android.msg;
 
 import android.app.Application;
-import javax.annotation.Nonnull;
 import org.solovyev.common.msg.AbstractMessage;
 import org.solovyev.common.msg.MessageType;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,56 +37,56 @@ import java.util.Locale;
  */
 public class AndroidMessage extends AbstractMessage {
 
-    @Nonnull
-    private final Integer messageCodeId;
+	@Nonnull
+	private final Integer messageCodeId;
 
-    @Nonnull
-    private final Application application;
+	@Nonnull
+	private final Application application;
 
-    private final boolean javaFormat;
+	private final boolean javaFormat;
 
-    public AndroidMessage(@Nonnull Integer messageCodeId,
-                          @Nonnull MessageType messageType,
-                          @Nonnull Application application,
-                          @javax.annotation.Nullable Object... arguments) {
-        super(String.valueOf(messageCodeId), messageType, arguments);
-        this.messageCodeId = messageCodeId;
-        this.application = application;
-        this.javaFormat = false;
-    }
+	public AndroidMessage(@Nonnull Integer messageCodeId,
+						  @Nonnull MessageType messageType,
+						  @Nonnull Application application,
+						  @javax.annotation.Nullable Object... arguments) {
+		super(String.valueOf(messageCodeId), messageType, arguments);
+		this.messageCodeId = messageCodeId;
+		this.application = application;
+		this.javaFormat = false;
+	}
 
-    public AndroidMessage(@Nonnull Integer messageCodeId,
-                          @Nonnull MessageType messageType,
-                          @Nonnull Application application,
-                          @Nonnull List<?> arguments) {
-        this(messageCodeId, messageType, application, arguments, false);
-    }
+	public AndroidMessage(@Nonnull Integer messageCodeId,
+						  @Nonnull MessageType messageType,
+						  @Nonnull Application application,
+						  @Nonnull List<?> arguments) {
+		this(messageCodeId, messageType, application, arguments, false);
+	}
 
-    public AndroidMessage(@Nonnull Integer messageCodeId,
-                          @Nonnull MessageType messageType,
-                          @Nonnull Application application,
-                          @Nonnull List<?> arguments,
-                          boolean javaFormat) {
-        super(String.valueOf(messageCodeId), messageType, arguments);
-        this.messageCodeId = messageCodeId;
-        this.application = application;
-        this.javaFormat = javaFormat;
-    }
+	public AndroidMessage(@Nonnull Integer messageCodeId,
+						  @Nonnull MessageType messageType,
+						  @Nonnull Application application,
+						  @Nonnull List<?> arguments,
+						  boolean javaFormat) {
+		super(String.valueOf(messageCodeId), messageType, arguments);
+		this.messageCodeId = messageCodeId;
+		this.application = application;
+		this.javaFormat = javaFormat;
+	}
 
-    @Nonnull
-    @Override
-    public String getLocalizedMessage(@Nonnull Locale locale) {
-        if (javaFormat) {
-            return super.getLocalizedMessage(locale);
-        } else {
-            final List<Object> parameters = getParameters();
-            final Object[] parametersArray = parameters.toArray(new Object[parameters.size()]);
-            return application.getResources().getString(messageCodeId, (Object[])parametersArray);
-        }
-    }
+	@Nonnull
+	@Override
+	public String getLocalizedMessage(@Nonnull Locale locale) {
+		if (javaFormat) {
+			return super.getLocalizedMessage(locale);
+		} else {
+			final List<Object> parameters = getParameters();
+			final Object[] parametersArray = parameters.toArray(new Object[parameters.size()]);
+			return application.getResources().getString(messageCodeId, (Object[]) parametersArray);
+		}
+	}
 
-    @Override
-    protected String getMessagePattern(@Nonnull Locale locale) {
-        return application.getResources().getString(messageCodeId);
-    }
+	@Override
+	protected String getMessagePattern(@Nonnull Locale locale) {
+		return application.getResources().getString(messageCodeId);
+	}
 }

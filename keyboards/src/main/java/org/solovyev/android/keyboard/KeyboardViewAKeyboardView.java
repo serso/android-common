@@ -27,6 +27,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.inputmethod.InputMethodSubtype;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -36,54 +37,54 @@ import javax.annotation.Nonnull;
  */
 public class KeyboardViewAKeyboardView extends KeyboardView implements AndroidKeyboardView<AndroidAKeyboard> {
 
-    public KeyboardViewAKeyboardView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+	public KeyboardViewAKeyboardView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
 
-    public KeyboardViewAKeyboardView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+	public KeyboardViewAKeyboardView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+	}
 
-    @Override
-    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
-        super.setOnKeyboardActionListener(keyboardActionListener);
-    }
+	@Override
+	public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+		super.setOnKeyboardActionListener(keyboardActionListener);
+	}
 
-    @Override
-    public void setKeyboard(@Nonnull AndroidAKeyboard keyboard) {
-        super.setKeyboard(keyboard.getKeyboard());
-    }
+	@Override
+	public void setKeyboard(@Nonnull AndroidAKeyboard keyboard) {
+		super.setKeyboard(keyboard.getKeyboard());
+	}
 
-    @Override
-    public void close() {
-        super.closing();
-    }
+	@Override
+	public void close() {
+		super.closing();
+	}
 
-    @Override
-    public void dismiss() {
-        super.handleBack();
-    }
+	@Override
+	public void dismiss() {
+		super.handleBack();
+	}
 
-    @Override
-    public void reload() {
-        setKeyboard(getKeyboard());
-    }
+	@Override
+	public void reload() {
+		setKeyboard(getKeyboard());
+	}
 
-    static final int KEYCODE_OPTIONS = -100;
+	static final int KEYCODE_OPTIONS = -100;
 
-    @Override
-    protected boolean onLongPress(Keyboard.Key key) {
-        if (key.codes[0] == Keyboard.KEYCODE_CANCEL) {
-            getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null);
-            return true;
-        } else {
-            return super.onLongPress(key);
-        }
-    }
+	@Override
+	protected boolean onLongPress(Keyboard.Key key) {
+		if (key.codes[0] == Keyboard.KEYCODE_CANCEL) {
+			getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null);
+			return true;
+		} else {
+			return super.onLongPress(key);
+		}
+	}
 
-    void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
-        final LatinKeyboard keyboard = (LatinKeyboard)getKeyboard();
-        keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
-        invalidateAllKeys();
-    }
+	void setSubtypeOnSpaceKey(final InputMethodSubtype subtype) {
+		final LatinKeyboard keyboard = (LatinKeyboard) getKeyboard();
+		keyboard.setSpaceIcon(getResources().getDrawable(subtype.getIconResId()));
+		invalidateAllKeys();
+	}
 }

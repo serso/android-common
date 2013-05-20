@@ -7,27 +7,27 @@ import java.util.Map;
 
 public final class Properties {
 
-    private Properties() {
-        throw new AssertionError();
-    }
+	private Properties() {
+		throw new AssertionError();
+	}
 
-    @Nonnull
-    public static AProperty newProperty(@Nonnull String name, @Nullable String value) {
-        return APropertyImpl.newInstance(name, value);
-    }
+	@Nonnull
+	public static AProperty newProperty(@Nonnull String name, @Nullable String value) {
+		return APropertyImpl.newInstance(name, value);
+	}
 
-    @Nonnull
-    public static MutableAProperties newProperties(@Nonnull Collection<AProperty> properties) {
-        return MutableAPropertiesImpl.newInstance(properties);
-    }
+	@Nonnull
+	public static MutableAProperties newProperties(@Nonnull Collection<AProperty> properties) {
+		return MutableAPropertiesImpl.newInstance(properties);
+	}
 
-    @Nonnull
-    public static MutableAProperties newProperties(@Nonnull Map<String, AProperty> properties) {
-        return MutableAPropertiesImpl.newInstance(properties);
-    }
+	@Nonnull
+	public static MutableAProperties newProperties(@Nonnull Map<String, AProperty> properties) {
+		return MutableAPropertiesImpl.newInstance(properties);
+	}
 
-    @Nonnull
-    public static MutableAProperties copyOf(@Nonnull MutableAProperties properties) {
-        return MutableAPropertiesImpl.copyOf(properties);
-    }
+	@Nonnull
+	public static MutableAProperties copyOf(@Nonnull MutableAProperties properties) {
+		return MutableAPropertiesImpl.copyOf(properties);
+	}
 }

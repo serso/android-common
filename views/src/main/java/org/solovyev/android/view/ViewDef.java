@@ -31,19 +31,19 @@ import javax.annotation.Nullable;
  */
 public interface ViewDef {
 
-    @Nullable
-    Float getLayoutWeight();
+	@Nullable
+	Float getLayoutWeight();
 
-    @Nullable
-    Integer getLayoutMarginLeft();
+	@Nullable
+	Integer getLayoutMarginLeft();
 
-    @Nullable
-    Integer getLayoutMarginRight();
+	@Nullable
+	Integer getLayoutMarginRight();
 
-    @Nullable
-    String getTag();
+	@Nullable
+	String getTag();
 
-    @Nullable
-    Integer getBackgroundResId();
+	@Nullable
+	Integer getBackgroundResId();
 
 }

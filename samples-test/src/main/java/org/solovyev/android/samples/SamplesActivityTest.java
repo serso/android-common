@@ -35,22 +35,22 @@ import android.widget.ListAdapter;
  */
 public class SamplesActivityTest extends ActivityInstrumentationTestCase2<SamplesActivity> {
 
-    public SamplesActivityTest() {
-        super(SamplesActivity.class.getPackage().getName(), SamplesActivity.class);
-    }
+	public SamplesActivityTest() {
+		super(SamplesActivity.class.getPackage().getName(), SamplesActivity.class);
+	}
 
-    @SmallTest
-    public void testPreconditions() throws Exception {
-    }
+	@SmallTest
+	public void testPreconditions() throws Exception {
+	}
 
-    @UiThreadTest
-    public void testList() throws Exception {
-        final SamplesActivity activity = getActivity();
-        final ListAdapter adapter = activity.getListAdapter();
-        if (adapter != null) {
-            assertTrue(adapter.getCount() >= 4);
-        } else {
-            Log.w("Test", "List adapter is null, must be fixed!");
-        }
-    }
+	@UiThreadTest
+	public void testList() throws Exception {
+		final SamplesActivity activity = getActivity();
+		final ListAdapter adapter = activity.getListAdapter();
+		if (adapter != null) {
+			assertTrue(adapter.getCount() >= 4);
+		} else {
+			Log.w("Test", "List adapter is null, must be fixed!");
+		}
+	}
 }

@@ -25,6 +25,7 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -34,12 +35,13 @@ import javax.annotation.Nonnull;
  */
 public final class Activities {
 
-    private Activities() {
-        throw new AssertionError();
-    }
+	private Activities() {
+		throw new AssertionError();
+	}
 
-    /**
+	/**
 	 * Method restarts activity
+	 *
 	 * @param activity to be restarted activity
 	 */
 	public static void restartActivity(@Nonnull Activity activity) {

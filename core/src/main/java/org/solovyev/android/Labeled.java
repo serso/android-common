@@ -29,8 +29,8 @@ package org.solovyev.android;
  */
 public interface Labeled {
 
-    /**
-     * @return string resource ID
-     */
-    int getCaptionResId();
+	/**
+	 * @return string resource ID
+	 */
+	int getCaptionResId();
 }

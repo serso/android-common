@@ -24,8 +24,8 @@ package org.solovyev.android.keyboard;
 
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -35,17 +35,17 @@ import java.util.List;
  */
 public interface AKeyboardViewWithSuggestions<K extends AKeyboard> extends AKeyboardView<K> {
 
-    void setCandidatesViewShown(boolean shown);
+	void setCandidatesViewShown(boolean shown);
 
-    void setSuggestions(@Nonnull List<String> suggestions, boolean completions, boolean typedWordValid);
+	void setSuggestions(@Nonnull List<String> suggestions, boolean completions, boolean typedWordValid);
 
-    void setCompletions(@Nonnull List<CompletionInfo> completions);
+	void setCompletions(@Nonnull List<CompletionInfo> completions);
 
-    @Nonnull
-    List<CompletionInfo> getCompletions();
+	@Nonnull
+	List<CompletionInfo> getCompletions();
 
-    void clearCandidateView();
+	void clearCandidateView();
 
-    View onCreateCandidatesView();
+	View onCreateCandidatesView();
 
 }

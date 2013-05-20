@@ -39,34 +39,34 @@ import java.util.List;
  */
 public final class HttpTransactions {
 
-    private HttpTransactions() {
-        throw new AssertionError();
-    }
+	private HttpTransactions() {
+		throw new AssertionError();
+	}
 
-    @Nonnull
-    public static AHttpClient newHttpClient() {
-        return new AHttpClientImpl();
-    }
+	@Nonnull
+	public static AHttpClient newHttpClient() {
+		return new AHttpClientImpl();
+	}
 
-    public static <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
-        return newHttpClient().execute(httpTransaction);
-    }
+	public static <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
+		return newHttpClient().execute(httpTransaction);
+	}
 
-    @Nonnull
-    public static <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
-        return newHttpClient().execute(httpTransactions);
-    }
+	@Nonnull
+	public static <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
+		return newHttpClient().execute(httpTransactions);
+	}
 
-    public static void asyncExecute(@Nonnull HttpTransactionDef httpTransactionDef,
-                                    @Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
-        final AsyncHttpClient httpClient = new AsyncHttpClient();
+	public static void asyncExecute(@Nonnull HttpTransactionDef httpTransactionDef,
+									@Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
+		final AsyncHttpClient httpClient = new AsyncHttpClient();
 
-        final RequestParams requestParams = new RequestParams();
-        for (NameValuePair requestParam : httpTransactionDef.getRequestParameters()) {
-            requestParams.put(requestParam.getName(), requestParam.getValue());
-        }
+		final RequestParams requestParams = new RequestParams();
+		for (NameValuePair requestParam : httpTransactionDef.getRequestParameters()) {
+			requestParams.put(requestParam.getName(), requestParam.getValue());
+		}
 
-        httpTransactionDef.getHttpMethod().doAsyncRequest(httpClient, httpTransactionDef.getUri(), requestParams, responseHandle);
+		httpTransactionDef.getHttpMethod().doAsyncRequest(httpClient, httpTransactionDef.getUri(), requestParams, responseHandle);
 
-    }
+	}
 }

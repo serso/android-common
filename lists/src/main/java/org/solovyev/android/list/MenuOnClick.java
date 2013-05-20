@@ -25,11 +25,11 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
-import javax.annotation.Nonnull;
 import org.solovyev.android.menu.ContextMenuBuilder;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.menu.ListContextMenu;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -39,25 +39,25 @@ import java.util.List;
  */
 public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
 
-    @Nonnull
-    private final List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems;
+	@Nonnull
+	private final List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems;
 
-    @Nonnull
-    private final String menuName;
+	@Nonnull
+	private final String menuName;
 
-    protected MenuOnClick(@Nonnull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems,
-                          @Nonnull String menuName) {
-        this.menuItems = menuItems;
-        this.menuName = menuName;
-    }
+	protected MenuOnClick(@Nonnull List<? extends LabeledMenuItem<ListItemOnClickData<T>>> menuItems,
+						  @Nonnull String menuName) {
+		this.menuItems = menuItems;
+		this.menuName = menuName;
+	}
 
-    @Override
-    public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
-        if (!menuItems.isEmpty()) {
-            ContextMenuBuilder.newInstance((FragmentActivity)context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
-        }
-    }
+	@Override
+	public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+		if (!menuItems.isEmpty()) {
+			ContextMenuBuilder.newInstance((FragmentActivity) context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
+		}
+	}
 
-    @Nonnull
-    protected abstract T getData();
+	@Nonnull
+	protected abstract T getData();
 }

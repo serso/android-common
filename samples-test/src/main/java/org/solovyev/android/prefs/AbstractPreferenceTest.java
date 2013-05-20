@@ -26,47 +26,48 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.test.AndroidTestCase;
 import junit.framework.Assert;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class AbstractPreferenceTest<T> extends AndroidTestCase {
 
-    public void testPreferences() throws Exception {
-        runPreferenceTest(createDefaultValue(), createValue());
-    }
+	public void testPreferences() throws Exception {
+		runPreferenceTest(createDefaultValue(), createValue());
+	}
 
-    protected void runPreferenceTest(@Nullable T defaultValue, @Nullable T value) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        preferences.edit().clear().commit();
+	protected void runPreferenceTest(@Nullable T defaultValue, @Nullable T value) {
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+		preferences.edit().clear().commit();
 
-        final Preference<T> preference = createPreference("test", defaultValue);
+		final Preference<T> preference = createPreference("test", defaultValue);
 
-        Assert.assertTrue(preference.isSameKey("test"));
-        Assert.assertEquals(preference.getKey(), "test");
+		Assert.assertTrue(preference.isSameKey("test"));
+		Assert.assertEquals(preference.getKey(), "test");
 
-        Assert.assertEquals(false, preference.isSet(preferences));
-        Assert.assertEquals(defaultValue, preference.getPreference(preferences));
+		Assert.assertEquals(false, preference.isSet(preferences));
+		Assert.assertEquals(defaultValue, preference.getPreference(preferences));
 
-        preference.tryPutDefault(preferences);
-        Assert.assertEquals(true, preference.isSet(preferences));
-        Assert.assertEquals(defaultValue, preference.getPreference(preferences));
+		preference.tryPutDefault(preferences);
+		Assert.assertEquals(true, preference.isSet(preferences));
+		Assert.assertEquals(defaultValue, preference.getPreference(preferences));
 
-        preference.putPreference(preferences, value);
-        Assert.assertEquals(true, preference.isSet(preferences));
-        Assert.assertEquals(value, preference.getPreference(preferences));
-        Assert.assertEquals(defaultValue, preference.getDefaultValue());
+		preference.putPreference(preferences, value);
+		Assert.assertEquals(true, preference.isSet(preferences));
+		Assert.assertEquals(value, preference.getPreference(preferences));
+		Assert.assertEquals(defaultValue, preference.getDefaultValue());
 
-        preferences.edit().clear().commit();
+		preferences.edit().clear().commit();
 
-        Assert.assertEquals(false, preference.isSet(preferences));
-        Assert.assertEquals(defaultValue, preference.getPreference(preferences));
-    }
+		Assert.assertEquals(false, preference.isSet(preferences));
+		Assert.assertEquals(defaultValue, preference.getPreference(preferences));
+	}
 
-    @Nonnull
-    protected abstract Preference<T> createPreference(@Nonnull String key, @Nullable T defaultValue);
+	@Nonnull
+	protected abstract Preference<T> createPreference(@Nonnull String key, @Nullable T defaultValue);
 
-    @Nonnull
-    protected abstract T createDefaultValue();
+	@Nonnull
+	protected abstract T createDefaultValue();
 
-    protected abstract T createValue();
+	protected abstract T createValue();
 }

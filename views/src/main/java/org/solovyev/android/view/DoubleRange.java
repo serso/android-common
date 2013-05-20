@@ -22,9 +22,10 @@
 
 package org.solovyev.android.view;
 
+import org.solovyev.common.text.Formatter;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.common.text.Formatter;
 
 /**
  * User: serso
@@ -33,41 +34,41 @@ import org.solovyev.common.text.Formatter;
  */
 public class DoubleRange extends NumberRange<Double> {
 
-    public DoubleRange(@Nonnull Double min,
-                       @Nonnull Double max,
-                       @Nonnull Double step,
-                       int startPosition,
-                       @Nullable Formatter<Double> formatter) {
-        super(min, max, step, startPosition, formatter);
-    }
+	public DoubleRange(@Nonnull Double min,
+					   @Nonnull Double max,
+					   @Nonnull Double step,
+					   int startPosition,
+					   @Nullable Formatter<Double> formatter) {
+		super(min, max, step, startPosition, formatter);
+	}
 
-    @Nonnull
-    public static NumberRange<Double> newInstance(@Nonnull Double min,
-                                                  @Nonnull Double max,
-                                                  @Nonnull Double step,
-                                                  @Nonnull Double selected,
-                                                  @Nullable Formatter<Double> formatter) {
-        if (selected < min || selected > max) {
-            throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
-        }
+	@Nonnull
+	public static NumberRange<Double> newInstance(@Nonnull Double min,
+												  @Nonnull Double max,
+												  @Nonnull Double step,
+												  @Nonnull Double selected,
+												  @Nullable Formatter<Double> formatter) {
+		if (selected < min || selected > max) {
+			throw new IllegalArgumentException("Selected value: " + selected + " should be >= " + min + " and <= " + max + "!");
+		}
 
-        int startPosition = 0;
-        for ( double i = min; i < selected; i += step ) {
-            startPosition += 1;
-        }
+		int startPosition = 0;
+		for (double i = min; i < selected; i += step) {
+			startPosition += 1;
+		}
 
-        return new DoubleRange(min, max, step, startPosition, formatter);
-    }
+		return new DoubleRange(min, max, step, startPosition, formatter);
+	}
 
-    @Override
-    protected int getCount(@Nonnull Double min, @Nonnull Double max, @Nonnull Double step) {
-        int result = (int) ((max - min) / step);
-        return result + 1;
-    }
+	@Override
+	protected int getCount(@Nonnull Double min, @Nonnull Double max, @Nonnull Double step) {
+		int result = (int) ((max - min) / step);
+		return result + 1;
+	}
 
-    @Nonnull
-    @Override
-    protected Double getValueAt(int position, @Nonnull Double min, @Nonnull Double max, @Nonnull Double step) {
-        return min + position * step;
-    }
+	@Nonnull
+	@Override
+	protected Double getValueAt(int position, @Nonnull Double min, @Nonnull Double max, @Nonnull Double step) {
+		return min + position * step;
+	}
 }

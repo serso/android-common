@@ -24,6 +24,7 @@ package org.solovyev.android.keyboard;
 
 import android.os.Handler;
 import android.view.View;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -34,12 +35,13 @@ import javax.annotation.Nullable;
  */
 public class RepeatHelper {
 
-    // in ms
-    private static final int MAX_REPEAT_INTERVAL = 300;
-    private static final int MIN_REPEAT_INTERVAL = 100;
-    private static final int STEPS = 20;
+	// in ms
+	private static final int MAX_REPEAT_INTERVAL = 300;
+	private static final int MIN_REPEAT_INTERVAL = 100;
+	private static final int STEPS = 20;
 
-    private static final int[] REPEAT_INTERVALS = new int[STEPS];
+	private static final int[] REPEAT_INTERVALS = new int[STEPS];
+
 	static {
 		for (int i = 0; i < REPEAT_INTERVALS.length; i++) {
 			REPEAT_INTERVALS[i] = (STEPS - i) * (MAX_REPEAT_INTERVAL - MIN_REPEAT_INTERVAL) / (STEPS - 1);
@@ -47,16 +49,16 @@ public class RepeatHelper {
 		}
 	}
 
-    @Nullable
-    private View repeatView;
+	@Nullable
+	private View repeatView;
 
-    private int repeatInterval = REPEAT_INTERVALS[0];
+	private int repeatInterval = REPEAT_INTERVALS[0];
 
-    private long lastTime = 0;
+	private long lastTime = 0;
 
-    private int repeatCounter = 0;
+	private int repeatCounter = 0;
 
-    private boolean repeat = false;
+	private boolean repeat = false;
 
 	@Nonnull
 	private final Handler uiHandler = new Handler();
@@ -65,7 +67,7 @@ public class RepeatHelper {
 	private Runnable repeatRunnable;
 
 	public synchronized void keyUp(@Nonnull View v) {
-		if (this.repeatView == v ) {
+		if (this.repeatView == v) {
 			clean(null);
 		}
 	}
@@ -73,7 +75,7 @@ public class RepeatHelper {
 	public synchronized void keyDown(@Nonnull View v, @Nullable final Runnable repeatRunnable) {
 		clean(v);
 
-		if (repeatRunnable !=  null) {
+		if (repeatRunnable != null) {
 			this.repeatRunnable = new Runnable() {
 				@Override
 				public void run() {

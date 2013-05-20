@@ -23,6 +23,7 @@
 package org.solovyev.android.keyboard;
 
 import android.inputmethodservice.KeyboardView;
+
 import javax.annotation.Nonnull;
 
 /**

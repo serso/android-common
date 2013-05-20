@@ -23,18 +23,18 @@
 package org.solovyev.android.menu;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.collections.Collections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
-* User: serso
-* Date: 12/18/11
-* Time: 1:31 PM
-*/
+ * User: serso
+ * Date: 12/18/11
+ * Time: 1:31 PM
+ */
 public class ListContextMenu<T extends LabeledMenuItem<D>, D> implements ContextMenu<T, D> {
 
 	private final List<? extends T> menuItems;

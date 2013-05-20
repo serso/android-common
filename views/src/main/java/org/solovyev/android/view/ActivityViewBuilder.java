@@ -23,6 +23,7 @@
 package org.solovyev.android.view;
 
 import android.app.Activity;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -32,5 +33,5 @@ import javax.annotation.Nonnull;
  */
 public interface ActivityViewBuilder {
 
-    void buildView(@Nonnull Activity activity);
+	void buildView(@Nonnull Activity activity);
 }

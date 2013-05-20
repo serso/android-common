@@ -24,9 +24,9 @@ package net.robotmedia.billing.utils;
 
 import android.content.Context;
 import net.robotmedia.billing.model.Transaction;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -51,8 +51,8 @@ public final class ObfuscateUtils {
 	 * developer payload are obfuscated.
 	 *
 	 * @param context context
-	 * @param t	   purchase to be obfuscated.
-	 * @param salt	salt
+	 * @param t       purchase to be obfuscated.
+	 * @param salt    salt
 	 * @see #unobfuscate(android.content.Context, net.robotmedia.billing.model.Transaction, byte[])
 	 */
 	public static void obfuscate(@Nonnull Context context, @Nonnull Transaction t, @Nullable byte[] salt) {
@@ -68,8 +68,8 @@ public final class ObfuscateUtils {
 	 * Unobfuscate the specified purchase.
 	 *
 	 * @param context context
-	 * @param t	   purchase to unobfuscate.
-	 * @param salt	salt
+	 * @param t       purchase to unobfuscate.
+	 * @param salt    salt
 	 * @see #obfuscate(android.content.Context, net.robotmedia.billing.model.Transaction, byte[])
 	 */
 	public static void unobfuscate(@Nonnull Context context, @Nonnull Transaction t, @Nullable byte[] salt) {

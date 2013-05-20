@@ -23,9 +23,9 @@
 package org.solovyev.android;
 
 import android.os.Handler;
-import javax.annotation.Nonnull;
 import org.solovyev.common.threads.DelayedExecutor;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,20 +40,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class UiThreadExecutor implements DelayedExecutor {
 
-    @Nonnull
-    private final Handler uiHandler;
+	@Nonnull
+	private final Handler uiHandler;
 
-    public UiThreadExecutor() {
-        this.uiHandler = Threads.newUiHandler();
-    }
+	public UiThreadExecutor() {
+		this.uiHandler = Threads.newUiHandler();
+	}
 
-    @Override
-    public void execute(@Nonnull Runnable command, long delay, @Nonnull TimeUnit delayUnit) {
-        this.uiHandler.postDelayed(command, delayUnit.toMillis(delay));
-    }
+	@Override
+	public void execute(@Nonnull Runnable command, long delay, @Nonnull TimeUnit delayUnit) {
+		this.uiHandler.postDelayed(command, delayUnit.toMillis(delay));
+	}
 
-    @Override
-    public void execute(@Nonnull Runnable command) {
-        this.uiHandler.post(command);
-    }
+	@Override
+	public void execute(@Nonnull Runnable command) {
+		this.uiHandler.post(command);
+	}
 }

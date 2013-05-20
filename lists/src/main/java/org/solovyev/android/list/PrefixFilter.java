@@ -35,56 +35,56 @@ import javax.annotation.Nullable;
  */
 public class PrefixFilter<T> implements JPredicate<T> {
 
-    @Nonnull
-    private String prefix;
+	@Nonnull
+	private String prefix;
 
-    public PrefixFilter(@Nonnull String prefix) {
-        this.prefix = prefix;
-    }
+	public PrefixFilter(@Nonnull String prefix) {
+		this.prefix = prefix;
+	}
 
-    @Override
-    public boolean apply(@Nullable T input) {
-        boolean shown = false;
+	@Override
+	public boolean apply(@Nullable T input) {
+		boolean shown = false;
 
-        if (input != null) {
-            final String valueText = input.toString().toLowerCase();
+		if (input != null) {
+			final String valueText = input.toString().toLowerCase();
 
-            // First match against the whole, non-splitted value
-            if (valueText.startsWith(prefix)) {
-                shown = true;
-            } else {
-                final String[] words = valueText.split(" ");
+			// First match against the whole, non-splitted value
+			if (valueText.startsWith(prefix)) {
+				shown = true;
+			} else {
+				final String[] words = valueText.split(" ");
 
-                for (String word : words) {
-                    if (word.startsWith(prefix)) {
-                        shown = true;
-                        break;
-                    }
-                }
-            }
-        }
+				for (String word : words) {
+					if (word.startsWith(prefix)) {
+						shown = true;
+						break;
+					}
+				}
+			}
+		}
 
-        return shown;
-    }
+		return shown;
+	}
 
-    @Override
-    public boolean equals(@Nullable Object o) {
-        if (o == this) {
-            return true;
-        }
+	@Override
+	public boolean equals(@Nullable Object o) {
+		if (o == this) {
+			return true;
+		}
 
-        if (o instanceof PrefixFilter) {
-            final PrefixFilter that = (PrefixFilter) o;
-            if (this.prefix.equals(that.prefix)) {
-                return true;
-            }
-        }
+		if (o instanceof PrefixFilter) {
+			final PrefixFilter that = (PrefixFilter) o;
+			if (this.prefix.equals(that.prefix)) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public int hashCode() {
-        return prefix.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return prefix.hashCode();
+	}
 }

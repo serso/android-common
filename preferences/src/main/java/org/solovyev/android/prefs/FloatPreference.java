@@ -23,6 +23,7 @@
 package org.solovyev.android.prefs;
 
 import android.content.SharedPreferences;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -37,12 +38,12 @@ public class FloatPreference extends AbstractPreference<Float> {
 		super(key, defaultValue);
 	}
 
-    @Nonnull
-    public static FloatPreference of(@Nonnull String key, @Nullable Float defaultValue) {
-        return new FloatPreference(key, defaultValue);
-    }
+	@Nonnull
+	public static FloatPreference of(@Nonnull String key, @Nullable Float defaultValue) {
+		return new FloatPreference(key, defaultValue);
+	}
 
-    @Override
+	@Override
 	protected Float getPersistedValue(@Nonnull SharedPreferences preferences) {
 		return preferences.getFloat(getKey(), -1f);
 	}

@@ -22,11 +22,12 @@
 
 package net.robotmedia.billing.helper;
 
+import android.app.Activity;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.BillingController.BillingStatus;
 import net.robotmedia.billing.ResponseCode;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
-import android.app.Activity;
+
 import javax.annotation.Nonnull;
 
 public abstract class AbstractBillingActivity extends Activity implements BillingController.IConfiguration {
@@ -38,7 +39,7 @@ public abstract class AbstractBillingActivity extends Activity implements Billin
 	 * if billing is supported and
 	 * {@link net.robotmedia.billing.helper.AbstractBillingActivity#onBillingChecked(boolean)} should be
 	 * called later with the result.
-	 * 
+	 *
 	 * @return the current billing status (unknown, supported or unsupported).
 	 * @see net.robotmedia.billing.helper.AbstractBillingActivity#onBillingChecked(boolean)
 	 */
@@ -91,13 +92,15 @@ public abstract class AbstractBillingActivity extends Activity implements Billin
 	protected void onDestroy() {
 		super.onDestroy();
 		BillingController.unregisterObserver(mBillingObserver); // Avoid
-																// receiving
+		// receiving
 		// notifications after
 		// destroy
 		BillingController.setConfiguration(null);
 	}
 
-	public abstract void onPurchaseStateChanged(String productId, PurchaseState state);;
+	public abstract void onPurchaseStateChanged(String productId, PurchaseState state);
+
+	;
 
 	public abstract void onRequestPurchaseResponse(String productId, ResponseCode response);
 
@@ -108,9 +111,8 @@ public abstract class AbstractBillingActivity extends Activity implements Billin
 	 * confirmation is preferred use
 	 * {@link BillingController#requestPurchase(android.content.Context, String, boolean)}
 	 * instead.
-	 * 
-	 * @param productId
-	 *            id of the item to be purchased.
+	 *
+	 * @param productId id of the item to be purchased.
 	 */
 	public void requestPurchase(String productId) {
 		BillingController.requestPurchase(this, productId);

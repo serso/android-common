@@ -23,10 +23,10 @@
 package org.solovyev.android.samples.db;
 
 import android.content.Context;
-import javax.annotation.Nonnull;
 import org.solovyev.android.App;
 import org.solovyev.android.samples.Locator;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -39,77 +39,77 @@ import java.util.List;
  */
 public class DbItemServiceImpl implements DbItemService {
 
-    // cached items
-    @Nonnull
-    private final List<DbItem> items = new ArrayList<DbItem>();
+	// cached items
+	@Nonnull
+	private final List<DbItem> items = new ArrayList<DbItem>();
 
-    @Nonnull
-    @Override
-    public List<DbItem> getAllDbItems(@Nonnull Context context) {
-        synchronized (items) {
-            if (items.isEmpty()) {
-                // assuming: empty => not loaded
-                items.addAll(getDbItemDao().loadAll());
-            }
+	@Nonnull
+	@Override
+	public List<DbItem> getAllDbItems(@Nonnull Context context) {
+		synchronized (items) {
+			if (items.isEmpty()) {
+				// assuming: empty => not loaded
+				items.addAll(getDbItemDao().loadAll());
+			}
 
-            return Collections.unmodifiableList(items);
-        }
-    }
+			return Collections.unmodifiableList(items);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public List<DbItem> getAllStartsWith(@Nonnull String prefix, @Nonnull Context context) {
-        final List<DbItem> result;
-        synchronized (items) {
-            result = new ArrayList<DbItem>(getAllDbItems(context));
-        }
+	@Nonnull
+	@Override
+	public List<DbItem> getAllStartsWith(@Nonnull String prefix, @Nonnull Context context) {
+		final List<DbItem> result;
+		synchronized (items) {
+			result = new ArrayList<DbItem>(getAllDbItems(context));
+		}
 
-        prefix = prefix.toLowerCase();
+		prefix = prefix.toLowerCase();
 
-        // filter by prefix
-        for (Iterator<DbItem> it = result.iterator(); it.hasNext(); ) {
-            final DbItem notFilteredItem = it.next();
-            if (!notFilteredItem.getName().toLowerCase().startsWith(prefix)) {
-                it.remove();
-            }
-        }
+		// filter by prefix
+		for (Iterator<DbItem> it = result.iterator(); it.hasNext(); ) {
+			final DbItem notFilteredItem = it.next();
+			if (!notFilteredItem.getName().toLowerCase().startsWith(prefix)) {
+				it.remove();
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public void addItem(@Nonnull DbItem dbItem, @Nonnull Context context) {
-        synchronized (items) {
-            getDbItemDao().insert(dbItem);
-            // if successfully insert => add to the cache
-            items.add(dbItem);
-        }
-    }
+	@Override
+	public void addItem(@Nonnull DbItem dbItem, @Nonnull Context context) {
+		synchronized (items) {
+			getDbItemDao().insert(dbItem);
+			// if successfully insert => add to the cache
+			items.add(dbItem);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public List<DbItem> removeItemByName(@Nonnull String name, @Nonnull Context context) {
-        synchronized (items) {
-            final List<DbItem> removedItems = new ArrayList<DbItem>();
+	@Nonnull
+	@Override
+	public List<DbItem> removeItemByName(@Nonnull String name, @Nonnull Context context) {
+		synchronized (items) {
+			final List<DbItem> removedItems = new ArrayList<DbItem>();
 
-            // remove from db
-            getDbItemDao().removeByName(name);
+			// remove from db
+			getDbItemDao().removeByName(name);
 
-            // remove from cache
-            for (Iterator<DbItem> it = items.iterator(); it.hasNext(); ) {
-                final DbItem dbItem = it.next();
-                if (name.equals(dbItem.getName())) {
-                    it.remove();
-                    removedItems.add(dbItem);
-                }
-            }
+			// remove from cache
+			for (Iterator<DbItem> it = items.iterator(); it.hasNext(); ) {
+				final DbItem dbItem = it.next();
+				if (name.equals(dbItem.getName())) {
+					it.remove();
+					removedItems.add(dbItem);
+				}
+			}
 
-            return removedItems;
-        }
-    }
+			return removedItems;
+		}
+	}
 
-    @Nonnull
-    private DbItemDao getDbItemDao() {
-        return ((Locator) App.getLocator()).getDbItemDao();
-    }
+	@Nonnull
+	private DbItemDao getDbItemDao() {
+		return ((Locator) App.getLocator()).getDbItemDao();
+	}
 }

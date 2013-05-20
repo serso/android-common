@@ -11,33 +11,33 @@ import java.util.Random;
 
 public class AndroidStringCiphererTest extends AndroidTestCase {
 
-    public void testEncryptDecrypt() throws Exception {
-        final SecurityService<String, String, String> securityService = Security.newAndroidAesStringSecurityService();
+	public void testEncryptDecrypt() throws Exception {
+		final SecurityService<String, String, String> securityService = Security.newAndroidAesStringSecurityService();
 
-        final Cipherer<String, String> cipherer = securityService.getCipherer();
-        final SecretKeyProvider secretKeyProvider = securityService.getSecretKeyProvider();
-        final SaltGenerator saltGenerator = securityService.getSaltGenerator();
-        final HashProvider<String, String> hashProvider = securityService.getHashProvider();
+		final Cipherer<String, String> cipherer = securityService.getCipherer();
+		final SecretKeyProvider secretKeyProvider = securityService.getSecretKeyProvider();
+		final SaltGenerator saltGenerator = securityService.getSaltGenerator();
+		final HashProvider<String, String> hashProvider = securityService.getHashProvider();
 
-        final Random r = new Random(new Date().getTime());
-        for ( int i = 0; i < 100; i++ ) {
+		final Random r = new Random(new Date().getTime());
+		for (int i = 0; i < 100; i++) {
 
-            final String expected = Strings.generateRandomString(r.nextInt(1000));
+			final String expected = Strings.generateRandomString(r.nextInt(1000));
 
-            final String secret = Strings.generateRandomString(10);
-            byte[] salt = saltGenerator.generateSalt();
-            final SecretKey sk = secretKeyProvider.getSecretKey(secret, salt);
+			final String secret = Strings.generateRandomString(10);
+			byte[] salt = saltGenerator.generateSalt();
+			final SecretKey sk = secretKeyProvider.getSecretKey(secret, salt);
 
-            final String encrypted = cipherer.encrypt(sk, expected);
-            final String decrypted = cipherer.decrypt(sk, encrypted);
+			final String encrypted = cipherer.encrypt(sk, expected);
+			final String decrypted = cipherer.decrypt(sk, encrypted);
 
-            Assert.assertEquals(expected, decrypted);
+			Assert.assertEquals(expected, decrypted);
 
-            final byte[] hashSalt = saltGenerator.generateSalt();
-            final String decryptedHash = hashProvider.getHash(decrypted, hashSalt);
-            final String expectedHash = hashProvider.getHash(expected, hashSalt);
+			final byte[] hashSalt = saltGenerator.generateSalt();
+			final String decryptedHash = hashProvider.getHash(decrypted, hashSalt);
+			final String expectedHash = hashProvider.getHash(expected, hashSalt);
 
-            Assert.assertEquals(expectedHash, decryptedHash);
-        }
-    }
+			Assert.assertEquals(expectedHash, decryptedHash);
+		}
+	}
 }

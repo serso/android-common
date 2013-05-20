@@ -22,12 +22,12 @@
 
 package net.robotmedia.billing.model;
 
-import javax.annotation.Nonnull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.solovyev.common.JCloneable;
 import org.solovyev.common.JObject;
 
+import javax.annotation.Nonnull;
 import java.util.Date;
 
 public class Transaction extends JObject implements JCloneable<Transaction> {
@@ -53,7 +53,7 @@ public class Transaction extends JObject implements JCloneable<Transaction> {
 
 		public static PurchaseState valueOf(int id) {
 			for (PurchaseState purchaseState : values()) {
-				if ( purchaseState.id == id ) {
+				if (purchaseState.id == id) {
 					return purchaseState;
 				}
 			}
@@ -113,29 +113,29 @@ public class Transaction extends JObject implements JCloneable<Transaction> {
 		this.developerPayload = developerPayload;
 	}
 
-    @Nonnull
-    public JSONObject toJson() throws JSONException {
-        final JSONObject json = new JSONObject();
+	@Nonnull
+	public JSONObject toJson() throws JSONException {
+		final JSONObject json = new JSONObject();
 
-        json.put(PURCHASE_STATE, this.purchaseState.id);
-        json.put(PRODUCT_ID, this.productId);
-        json.put(PACKAGE_NAME, this.packageName);
-        json.put(PURCHASE_TIME, this.purchaseTime);
-        json.put(ORDER_ID, this.orderId);
-        json.put(NOTIFICATION_ID, this.notificationId);
-        json.put(DEVELOPER_PAYLOAD, this.developerPayload);
+		json.put(PURCHASE_STATE, this.purchaseState.id);
+		json.put(PRODUCT_ID, this.productId);
+		json.put(PACKAGE_NAME, this.packageName);
+		json.put(PURCHASE_TIME, this.purchaseTime);
+		json.put(ORDER_ID, this.orderId);
+		json.put(NOTIFICATION_ID, this.notificationId);
+		json.put(DEVELOPER_PAYLOAD, this.developerPayload);
 
 
-        return json;
-    }
+		return json;
+	}
 
-    @Nonnull
-    @Override
-    public Transaction clone() {
-        return (Transaction) super.clone();
-    }
+	@Nonnull
+	@Override
+	public Transaction clone() {
+		return (Transaction) super.clone();
+	}
 
-    @Override
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

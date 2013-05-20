@@ -22,8 +22,9 @@
 
 package net.robotmedia.billing;
 
-import net.robotmedia.billing.model.Transaction.PurchaseState;
 import android.app.PendingIntent;
+import net.robotmedia.billing.model.Transaction.PurchaseState;
+
 import javax.annotation.Nonnull;
 
 public interface IBillingObserver {
@@ -39,17 +40,17 @@ public interface IBillingObserver {
 	/**
 	 * Called after requesting the purchase of the specified item.
 	 *
-	 * @param productId	  id of the item whose purchase was requested.
+	 * @param productId      id of the item whose purchase was requested.
 	 * @param purchaseIntent a purchase pending intent for the specified item.
 	 * @see BillingController#requestPurchase(android.content.Context, String,
-	 *	  boolean)
+	 *      boolean)
 	 */
 	public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent);
 
 	/**
 	 * Called when purchase intent was not sent due to billing service error
 	 *
-	 * @param productId	id of the item whose purchase was requested
+	 * @param productId    id of the item whose purchase was requested
 	 * @param responseCode one of the failures response codes from billing service
 	 */
 	void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode);
@@ -58,7 +59,7 @@ public interface IBillingObserver {
 	 * Called when the specified item is purchased, cancelled or refunded.
 	 *
 	 * @param productId id of the item whose purchase state has changed.
-	 * @param state	 purchase state of the specified item.
+	 * @param state     purchase state of the specified item.
 	 */
 	public void onPurchaseStateChanged(@Nonnull String productId, @Nonnull PurchaseState state);
 
@@ -80,6 +81,7 @@ public interface IBillingObserver {
 
 	/**
 	 * Called when a restore transactions request ended with a server error.
+	 *
 	 * @param responseCode response code
 	 */
 	public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode);

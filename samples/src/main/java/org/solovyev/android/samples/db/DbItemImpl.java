@@ -31,33 +31,33 @@ import javax.annotation.Nonnull;
  */
 public class DbItemImpl implements DbItem {
 
-    @Nonnull
-    private String name;
+	@Nonnull
+	private String name;
 
-    public DbItemImpl(@Nonnull String name) {
-        this.name = name;
-    }
+	public DbItemImpl(@Nonnull String name) {
+		this.name = name;
+	}
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return this.name;
-    }
+	@Nonnull
+	@Override
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DbItemImpl)) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof DbItemImpl)) return false;
 
-        DbItemImpl dbItem = (DbItemImpl) o;
+		DbItemImpl dbItem = (DbItemImpl) o;
 
-        if (!name.equals(dbItem.name)) return false;
+		if (!name.equals(dbItem.name)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
 }

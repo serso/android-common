@@ -28,6 +28,7 @@ import android.inputmethodservice.KeyboardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodSubtype;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -38,111 +39,111 @@ import javax.annotation.Nullable;
  */
 public class AKeyboardViewImpl<K extends AKeyboard, KV extends View & AndroidKeyboardView<K>> implements AKeyboardView<K> {
 
-    @Nullable
-    private KV keyboardView;
+	@Nullable
+	private KV keyboardView;
 
-    private final int keyboardLayoutResId;
+	private final int keyboardLayoutResId;
 
-    @Nonnull
-    private final AKeyboardController keyboardController;
+	@Nonnull
+	private final AKeyboardController keyboardController;
 
-    @Nonnull
-    private final InputMethodService inputMethodService;
+	@Nonnull
+	private final InputMethodService inputMethodService;
 
-    @Nullable
-    private KeyboardView.OnKeyboardActionListener keyboardActionListener;
-
-
-    public AKeyboardViewImpl(int keyboardLayoutResId,
-                             @Nonnull AKeyboardController keyboardController,
-                             @Nonnull InputMethodService inputMethodService) {
-        this.keyboardLayoutResId = keyboardLayoutResId;
-        this.keyboardController = keyboardController;
-        this.inputMethodService = inputMethodService;
-    }
+	@Nullable
+	private KeyboardView.OnKeyboardActionListener keyboardActionListener;
 
 
-    @Nullable
-    protected KeyboardView.OnKeyboardActionListener getKeyboardActionListener() {
-        return keyboardActionListener;
-    }
+	public AKeyboardViewImpl(int keyboardLayoutResId,
+							 @Nonnull AKeyboardController keyboardController,
+							 @Nonnull InputMethodService inputMethodService) {
+		this.keyboardLayoutResId = keyboardLayoutResId;
+		this.keyboardController = keyboardController;
+		this.inputMethodService = inputMethodService;
+	}
 
 
-    @Override
-    public boolean isExtractViewShown() {
-        return inputMethodService.isExtractViewShown();
-    }
-
-    public void setCandidatesViewShown(boolean shown) {
-        inputMethodService.setCandidatesViewShown(shown);
-    }
-
-    @Nonnull
-    public AKeyboardController getKeyboardController() {
-        return keyboardController;
-    }
-
-    @Nonnull
-    public InputMethodService getInputMethodService() {
-        return inputMethodService;
-    }
+	@Nullable
+	protected KeyboardView.OnKeyboardActionListener getKeyboardActionListener() {
+		return keyboardActionListener;
+	}
 
 
-    @Override
-    public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
-        this.keyboardActionListener = keyboardActionListener;
+	@Override
+	public boolean isExtractViewShown() {
+		return inputMethodService.isExtractViewShown();
+	}
 
-        if (this.keyboardView != null) {
-            this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
-        }
-    }
+	public void setCandidatesViewShown(boolean shown) {
+		inputMethodService.setCandidatesViewShown(shown);
+	}
 
-    @Override
-    public void createAndroidKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
-        this.keyboardView = (KV) layoutInflater.inflate(keyboardLayoutResId, null);
+	@Nonnull
+	public AKeyboardController getKeyboardController() {
+		return keyboardController;
+	}
 
-        final KeyboardView.OnKeyboardActionListener keyboardActionListener = this.getKeyboardActionListener();
-        if (keyboardActionListener != null) {
-            this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
-        }
-    }
+	@Nonnull
+	public InputMethodService getInputMethodService() {
+		return inputMethodService;
+	}
 
-    @Override
-    public void setKeyboard(@Nonnull K keyboard) {
-        if (this.keyboardView != null) {
-            this.keyboardView.setKeyboard(keyboard);
-        }
-    }
 
-    @Override
-    public void close() {
-        if (this.keyboardView != null) {
-            this.keyboardView.close();
-        }
-    }
+	@Override
+	public void setOnKeyboardActionListener(@Nonnull KeyboardView.OnKeyboardActionListener keyboardActionListener) {
+		this.keyboardActionListener = keyboardActionListener;
 
-    @Override
-    public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
-    }
+		if (this.keyboardView != null) {
+			this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
+		}
+	}
 
-    @Override
-    public void dismiss() {
-        if (this.keyboardView != null) {
-            this.keyboardView.dismiss();
-        }
-    }
+	@Override
+	public void createAndroidKeyboardView(@Nonnull Context context, @Nonnull LayoutInflater layoutInflater) {
+		this.keyboardView = (KV) layoutInflater.inflate(keyboardLayoutResId, null);
 
-    @Nonnull
-    public View getAndroidKeyboardView() {
-        assert keyboardView != null;
-        return keyboardView;
-    }
+		final KeyboardView.OnKeyboardActionListener keyboardActionListener = this.getKeyboardActionListener();
+		if (keyboardActionListener != null) {
+			this.keyboardView.setOnKeyboardActionListener(keyboardActionListener);
+		}
+	}
 
-    @Override
-    public void reloadAndroidKeyboardView() {
-        if (this.keyboardView != null) {
-            this.keyboardView.reload();
-        }
-    }
+	@Override
+	public void setKeyboard(@Nonnull K keyboard) {
+		if (this.keyboardView != null) {
+			this.keyboardView.setKeyboard(keyboard);
+		}
+	}
+
+	@Override
+	public void close() {
+		if (this.keyboardView != null) {
+			this.keyboardView.close();
+		}
+	}
+
+	@Override
+	public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
+	}
+
+	@Override
+	public void dismiss() {
+		if (this.keyboardView != null) {
+			this.keyboardView.dismiss();
+		}
+	}
+
+	@Nonnull
+	public View getAndroidKeyboardView() {
+		assert keyboardView != null;
+		return keyboardView;
+	}
+
+	@Override
+	public void reloadAndroidKeyboardView() {
+		if (this.keyboardView != null) {
+			this.keyboardView.reload();
+		}
+	}
 
 }

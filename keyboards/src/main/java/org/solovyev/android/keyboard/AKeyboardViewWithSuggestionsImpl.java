@@ -26,9 +26,9 @@ import android.inputmethodservice.InputMethodService;
 import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.InputMethodSubtype;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -46,23 +46,23 @@ public class AKeyboardViewWithSuggestionsImpl<K extends AKeyboard, KV extends Vi
 	private List<CompletionInfo> completions = Collections.emptyList();
 
 	public AKeyboardViewWithSuggestionsImpl(int keyboardLayoutResId,
-                                            @Nonnull AKeyboardController keyboardController,
-                                            @Nonnull InputMethodService inputMethodService) {
-		super(keyboardLayoutResId,keyboardController, inputMethodService);
+											@Nonnull AKeyboardController keyboardController,
+											@Nonnull InputMethodService inputMethodService) {
+		super(keyboardLayoutResId, keyboardController, inputMethodService);
 	}
 
-    @Override
-    public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
-        super.setSubtypeOnSpaceKey(subtype);
+	@Override
+	public void setSubtypeOnSpaceKey(@Nonnull InputMethodSubtype subtype) {
+		super.setSubtypeOnSpaceKey(subtype);
 
 		final View keyboardView = getAndroidKeyboardView();
-        if ( keyboardView instanceof KeyboardViewAKeyboardView ) {
-            // todo serso: refactor
-            ((KeyboardViewAKeyboardView) keyboardView).setSubtypeOnSpaceKey(subtype);
-        }
-    }
+		if (keyboardView instanceof KeyboardViewAKeyboardView) {
+			// todo serso: refactor
+			((KeyboardViewAKeyboardView) keyboardView).setSubtypeOnSpaceKey(subtype);
+		}
+	}
 
-    @Override
+	@Override
 	public void setSuggestions(@Nonnull List<String> suggestions, boolean completions, boolean typedWordValid) {
 		if (candidateView != null) {
 			candidateView.setSuggestions(suggestions, completions, typedWordValid);

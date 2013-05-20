@@ -25,9 +25,10 @@ package org.solovyev.android.list;
 import android.content.Context;
 import android.view.View;
 import android.widget.ListView;
+import org.solovyev.android.view.UpdatableViewBuilder;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.solovyev.android.view.UpdatableViewBuilder;
 
 /**
  * User: serso
@@ -40,16 +41,16 @@ import org.solovyev.android.view.UpdatableViewBuilder;
  */
 public interface ListItem extends UpdatableViewBuilder<View> {
 
-    static final String TAG = "ListItem";
+	static final String TAG = "ListItem";
 
-    @Nullable
-    OnClickAction getOnClickAction();
+	@Nullable
+	OnClickAction getOnClickAction();
 
-    @Nullable
-    OnClickAction getOnLongClickAction();
+	@Nullable
+	OnClickAction getOnLongClickAction();
 
-    public static interface OnClickAction {
+	public static interface OnClickAction {
 
-        void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView);
-    }
+		void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView);
+	}
 }

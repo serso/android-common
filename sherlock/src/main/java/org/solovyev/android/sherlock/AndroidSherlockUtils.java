@@ -29,9 +29,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.*;
 import com.actionbarsherlock.view.MenuInflater;
-import javax.annotation.Nonnull;
 import org.solovyev.android.list.ListAdapter;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -41,90 +41,90 @@ import java.util.List;
  */
 public final class AndroidSherlockUtils {
 
-    private AndroidSherlockUtils() {
-        throw new AssertionError("Not intended for instantiation!");
-    }
+	private AndroidSherlockUtils() {
+		throw new AssertionError("Not intended for instantiation!");
+	}
 
-    @Nonnull
-    public static ActionBar getSupportActionBar(@Nonnull Activity activity) {
-        if (activity instanceof SherlockActivity) {
-            return ((SherlockActivity) activity).getSupportActionBar();
-        }
+	@Nonnull
+	public static ActionBar getSupportActionBar(@Nonnull Activity activity) {
+		if (activity instanceof SherlockActivity) {
+			return ((SherlockActivity) activity).getSupportActionBar();
+		}
 
-        if (activity instanceof SherlockFragmentActivity) {
-            return ((SherlockFragmentActivity) activity).getSupportActionBar();
-        }
+		if (activity instanceof SherlockFragmentActivity) {
+			return ((SherlockFragmentActivity) activity).getSupportActionBar();
+		}
 
-        if (activity instanceof SherlockListActivity) {
-            return ((SherlockListActivity) activity).getSupportActionBar();
-        }
+		if (activity instanceof SherlockListActivity) {
+			return ((SherlockListActivity) activity).getSupportActionBar();
+		}
 
-        if (activity instanceof SherlockPreferenceActivity) {
-            return ((SherlockPreferenceActivity) activity).getSupportActionBar();
-        }
+		if (activity instanceof SherlockPreferenceActivity) {
+			return ((SherlockPreferenceActivity) activity).getSupportActionBar();
+		}
 
-        throw new IllegalArgumentException(activity.getClass() + " is not supported!");
+		throw new IllegalArgumentException(activity.getClass() + " is not supported!");
 
-    }
+	}
 
-    public static ActionBar getSupportActionBar(@Nonnull Fragment fragment) {
-        if (fragment instanceof SherlockFragment) {
-            return ((SherlockFragment) fragment).getSherlockActivity().getSupportActionBar();
-        }
+	public static ActionBar getSupportActionBar(@Nonnull Fragment fragment) {
+		if (fragment instanceof SherlockFragment) {
+			return ((SherlockFragment) fragment).getSherlockActivity().getSupportActionBar();
+		}
 
-        if (fragment instanceof SherlockListFragment) {
-            return ((SherlockListFragment) fragment).getSherlockActivity().getSupportActionBar();
-        }
+		if (fragment instanceof SherlockListFragment) {
+			return ((SherlockListFragment) fragment).getSherlockActivity().getSupportActionBar();
+		}
 
-        if (fragment instanceof SherlockDialogFragment) {
-            return ((SherlockDialogFragment) fragment).getSherlockActivity().getSupportActionBar();
-        }
+		if (fragment instanceof SherlockDialogFragment) {
+			return ((SherlockDialogFragment) fragment).getSherlockActivity().getSupportActionBar();
+		}
 
-        throw new IllegalArgumentException(fragment.getClass() + " is not supported!");
-    }
+		throw new IllegalArgumentException(fragment.getClass() + " is not supported!");
+	}
 
 
-    @Nonnull
-    public static ListAdapter<String> newSherlockDefaultAdapter(@Nonnull SherlockFragmentActivity activity,
-                                                                @Nonnull List<String> items) {
-        final ListAdapter<String> result = new ListAdapter<String>(activity, com.actionbarsherlock.R.layout.sherlock_spinner_item, items);
-        result.setDropDownViewResource(com.actionbarsherlock.R.layout.sherlock_spinner_dropdown_item);
-        return result;
-    }
+	@Nonnull
+	public static ListAdapter<String> newSherlockDefaultAdapter(@Nonnull SherlockFragmentActivity activity,
+																@Nonnull List<String> items) {
+		final ListAdapter<String> result = new ListAdapter<String>(activity, com.actionbarsherlock.R.layout.sherlock_spinner_item, items);
+		result.setDropDownViewResource(com.actionbarsherlock.R.layout.sherlock_spinner_dropdown_item);
+		return result;
+	}
 
-    @Nonnull
-    public static MenuInflater getSupportMenuInflater(@Nonnull Activity activity) {
-        if (activity instanceof SherlockActivity) {
-            return ((SherlockActivity) activity).getSupportMenuInflater();
-        }
+	@Nonnull
+	public static MenuInflater getSupportMenuInflater(@Nonnull Activity activity) {
+		if (activity instanceof SherlockActivity) {
+			return ((SherlockActivity) activity).getSupportMenuInflater();
+		}
 
-        if (activity instanceof SherlockFragmentActivity) {
-            return ((SherlockFragmentActivity) activity).getSupportMenuInflater();
-        }
+		if (activity instanceof SherlockFragmentActivity) {
+			return ((SherlockFragmentActivity) activity).getSupportMenuInflater();
+		}
 
-        if (activity instanceof SherlockListActivity) {
-            return ((SherlockListActivity) activity).getSupportMenuInflater();
-        }
+		if (activity instanceof SherlockListActivity) {
+			return ((SherlockListActivity) activity).getSupportMenuInflater();
+		}
 
-        if (activity instanceof SherlockPreferenceActivity) {
-            return ((SherlockPreferenceActivity) activity).getSupportMenuInflater();
-        }
+		if (activity instanceof SherlockPreferenceActivity) {
+			return ((SherlockPreferenceActivity) activity).getSupportMenuInflater();
+		}
 
-        throw new IllegalArgumentException(activity.getClass() + " is not supported!");
-    }
+		throw new IllegalArgumentException(activity.getClass() + " is not supported!");
+	}
 
-    public static void showDialog(@Nonnull DialogFragment dialogFragment,
-                                  @Nonnull String fragmentTag,
-                                  @Nonnull FragmentManager fm) {
-        final FragmentTransaction ft = fm.beginTransaction();
+	public static void showDialog(@Nonnull DialogFragment dialogFragment,
+								  @Nonnull String fragmentTag,
+								  @Nonnull FragmentManager fm) {
+		final FragmentTransaction ft = fm.beginTransaction();
 
-        Fragment prev = fm.findFragmentByTag(fragmentTag);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
+		Fragment prev = fm.findFragmentByTag(fragmentTag);
+		if (prev != null) {
+			ft.remove(prev);
+		}
+		ft.addToBackStack(null);
 
-        // Create and show the dialog.
-        dialogFragment.show(ft, fragmentTag);
-    }
+		// Create and show the dialog.
+		dialogFragment.show(ft, fragmentTag);
+	}
 }

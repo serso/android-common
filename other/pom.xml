@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,64 +21,63 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>android-common</artifactId>
-        <groupId>org.solovyev.android</groupId>
-        <version>1.1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>android-common</artifactId>
+		<groupId>org.solovyev.android</groupId>
+		<version>1.1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>android-common-other</artifactId>
-    <name>Android Common Library Other</name>
-    <version>1.1.0-SNAPSHOT</version>
+	<artifactId>android-common-other</artifactId>
+	<name>Android Common Library Other</name>
+	<version>1.1.0-SNAPSHOT</version>
 
-    <packaging>apklib</packaging>
+	<packaging>apklib</packaging>
 
-    <dependencies>
+	<dependencies>
 
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.solovyev</groupId>
-            <artifactId>common-msg</artifactId>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.pivotallabs</groupId>
-            <artifactId>robolectric</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.solovyev</groupId>
+			<artifactId>common-msg</artifactId>
+		</dependency>
 
 
-    </dependencies>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>annotations</artifactId>
+		</dependency>
 
-    <build>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-        <extensions>
-            <extension>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-            </extension>
-        </extensions>
+		<dependency>
+			<groupId>com.pivotallabs</groupId>
+			<artifactId>robolectric</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-    </build>
+
+	</dependencies>
+
+	<build>
+
+		<extensions>
+			<extension>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+			</extension>
+		</extensions>
+
+	</build>
 
 
 </project>

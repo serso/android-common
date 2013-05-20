@@ -26,20 +26,20 @@ import javax.annotation.Nonnull;
 
 public class BooleanPreferenceTest extends AbstractPreferenceTest<Boolean> {
 
-    @Nonnull
-    @Override
-    protected Preference<Boolean> createPreference(@Nonnull String key, @Nonnull Boolean defaultValue) {
-        return BooleanPreference.of(key,  defaultValue);
-    }
+	@Nonnull
+	@Override
+	protected Preference<Boolean> createPreference(@Nonnull String key, @Nonnull Boolean defaultValue) {
+		return BooleanPreference.of(key, defaultValue);
+	}
 
-    @Nonnull
-    @Override
-    protected Boolean createDefaultValue() {
-        return true;
-    }
+	@Nonnull
+	@Override
+	protected Boolean createDefaultValue() {
+		return true;
+	}
 
-    @Override
-    protected Boolean createValue() {
-        return false;
-    }
+	@Override
+	protected Boolean createValue() {
+		return false;
+	}
 }

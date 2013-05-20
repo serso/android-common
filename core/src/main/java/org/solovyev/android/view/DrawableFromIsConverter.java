@@ -23,10 +23,10 @@
 package org.solovyev.android.view;
 
 import android.graphics.drawable.Drawable;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import org.solovyev.common.Converter;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.InputStream;
 
 /**
@@ -36,46 +36,46 @@ import java.io.InputStream;
  */
 public class DrawableFromIsConverter implements Converter<InputStream, Drawable> {
 
-    @Nonnull
-    private static final DrawableFromIsConverter instance = new DrawableFromIsConverter("instance");
+	@Nonnull
+	private static final DrawableFromIsConverter instance = new DrawableFromIsConverter("instance");
 
-    @Nonnull
-    private final String name;
+	@Nonnull
+	private final String name;
 
-    @Nullable
-    private final Drawable defaultDrawable;
+	@Nullable
+	private final Drawable defaultDrawable;
 
-    public DrawableFromIsConverter(@Nonnull String name) {
-        this(name, null);
-    }
+	public DrawableFromIsConverter(@Nonnull String name) {
+		this(name, null);
+	}
 
-    public DrawableFromIsConverter(@Nonnull String name, @Nullable Drawable defaultDrawable) {
-        this.name = name;
-        this.defaultDrawable = defaultDrawable;
-    }
+	public DrawableFromIsConverter(@Nonnull String name, @Nullable Drawable defaultDrawable) {
+		this.name = name;
+		this.defaultDrawable = defaultDrawable;
+	}
 
-    @Nonnull
-    public static DrawableFromIsConverter getInstance() {
-        return instance;
-    }
+	@Nonnull
+	public static DrawableFromIsConverter getInstance() {
+		return instance;
+	}
 
-    @Nonnull
-    @Override
-    public Drawable convert(@Nonnull InputStream inputStream) {
-        Drawable result = Drawable.createFromStream(inputStream, name);
+	@Nonnull
+	@Override
+	public Drawable convert(@Nonnull InputStream inputStream) {
+		Drawable result = Drawable.createFromStream(inputStream, name);
 
-        if ( result == null ) {
-            result = defaultDrawable;
-        }
+		if (result == null) {
+			result = defaultDrawable;
+		}
 
-        if ( result == null ) {
-            throw new DrawableConversionFailedException();
-        }
+		if (result == null) {
+			throw new DrawableConversionFailedException();
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    public static class DrawableConversionFailedException extends RuntimeException {
+	public static class DrawableConversionFailedException extends RuntimeException {
 
-    }
+	}
 }

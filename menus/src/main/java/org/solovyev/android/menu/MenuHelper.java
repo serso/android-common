@@ -23,6 +23,7 @@
 package org.solovyev.android.menu;
 
 import android.app.Activity;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -33,22 +34,23 @@ import javax.annotation.Nonnull;
 
 /**
  * Helper class to provide support for Android and Sherlock menu
+ *
  * @param <M>
  * @param <MI>
  */
 public interface MenuHelper<M, MI> {
 
-    int size(@Nonnull M menu);
+	int size(@Nonnull M menu);
 
-    @Nonnull
-    MI add(@Nonnull M menu, int groupId, int itemId, int orderId, @Nonnull String caption);
+	@Nonnull
+	MI add(@Nonnull M menu, int groupId, int itemId, int orderId, @Nonnull String caption);
 
-    public void setOnMenuItemClickListener(@Nonnull MI menuItem, @Nonnull AMenuItem<MI> onMenuItemClick, @Nonnull Activity activity);
+	public void setOnMenuItemClickListener(@Nonnull MI menuItem, @Nonnull AMenuItem<MI> onMenuItemClick, @Nonnull Activity activity);
 
-    void removeItem(@Nonnull M menu, @Nonnull Integer menuItemId);
+	void removeItem(@Nonnull M menu, @Nonnull Integer menuItemId);
 
-    void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull M menu);
+	void inflateMenu(@Nonnull Activity activity, int layoutId, @Nonnull M menu);
 
-    @Nonnull
-    Integer getItemId(@Nonnull MI item);
+	@Nonnull
+	Integer getItemId(@Nonnull MI item);
 }
