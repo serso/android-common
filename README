@@ -10,6 +10,3 @@ Some modules of project contain dependencies not included in Maven Central - to 
 these dependencies in your local repository. Such libraries are located under misc/lib folders.
 For example, one can install admob-6.1.0.jar using next command (assuming other/misc/lib is current folder):
 mvn install:install-file -Dfile=admob-6.1.0.jar -DgroupId=admob -DartifactId=admob -Dversion=6.1.0 -Dpackaging=jar
-
-To install missing Maven plugin use next command (plugin jar can be found in misc/lib folder):
-mvn install:install-file -Dfile=javac2-maven-plugin-1.0.1.jar -DgroupId=com.electriccloud -DartifactId=javac2-maven-plugin -Dversion=1.0.1 -Dpackaging=maven-plugin

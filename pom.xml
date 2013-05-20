@@ -303,9 +303,9 @@
         <plugins>
 
             <plugin>
-                <groupId>com.electriccloud</groupId>
-                <artifactId>javac2-maven-plugin</artifactId>
-                <version>1.0.2</version>
+				<groupId>org.solovyev.external.com.electriccloud</groupId>
+				<artifactId>org.solovyev.external.javac2-maven-plugin</artifactId>
+				<version>1.0.3</version>
                 <executions>
                     <execution>
                         <id>instrument-notnull-src</id>
