@@ -26,8 +26,8 @@
 	package="org.solovyev.android.samples.test">
 
 	<uses-sdk
-		android:minSdkVersion="4"
-		android:targetSdkVersion="8" />
+		android:minSdkVersion="5"
+		android:targetSdkVersion="17" />
 
 	<instrumentation
 		android:targetPackage="org.solovyev.android.samples"

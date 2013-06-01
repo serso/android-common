@@ -26,8 +26,9 @@
 	package="net.robotmedia.billing">
 
 	<uses-sdk
-		android:minSdkVersion="4"
-		android:targetSdkVersion="13" />
+		android:minSdkVersion="5"
+		android:targetSdkVersion="17" />
+
 	<!-- Add this permission to your manifest -->
 	<uses-permission android:name="com.android.vending.BILLING" />
 	<application android:debuggable="false">
