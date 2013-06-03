@@ -666,7 +666,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		}
 
 		@Override
-		public void setAllElements(@Nonnull List<T> allElements) {
+		public void setAllElements(@Nullable List<T> allElements) {
 			ListAdapter.this.allElements = allElements;
 		}
 

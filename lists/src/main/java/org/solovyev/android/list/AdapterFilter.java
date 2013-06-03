@@ -55,8 +55,8 @@ public abstract class AdapterFilter<T> extends Filter {
 		final List<T> filteredElements;
 		if ((prefix == null || prefix.length() == 0) && !doFilterOnEmptyString()) {
 			// no constraint => show all elements
-			allElements = getAllElements();
-			filteredElements = allElements;
+			filteredElements = getAllElements();
+			allElements = null;
 		} else {
 			// filter
 			final JPredicate<T> filter = getFilter(prefix);
@@ -131,7 +131,7 @@ public abstract class AdapterFilter<T> extends Filter {
 		@Nullable
 		List<T> getAllElements();
 
-		void setAllElements(@Nonnull List<T> allElements);
+		void setAllElements(@Nullable  List<T> allElements);
 
 		void notifyDataSetChanged();
 	}
