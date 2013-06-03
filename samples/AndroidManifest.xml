@@ -19,7 +19,7 @@
   ~
   ~ Email: se.solovyev@gmail.com
   ~ Site:  http://se.solovyev.org
-  --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="16" android:versionName="1.1.0" package="org.solovyev.android.samples">
+  --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="16" android:versionName="1.1.1-SNAPSHOT" package="org.solovyev.android.samples">
 
 	<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17"/>
 
@@ -38,6 +38,7 @@
 
 		</activity>
 
+		<activity android:name="org.solovyev.android.list.ListAdapterActivity"/>
 		<activity android:name=".prefs.SamplesPreferencesActivity"/>
 		<activity android:name=".menu.SamplesMenuActivity"/>
 		<activity android:name=".http.SamplesHttpActivity"/>

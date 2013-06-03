@@ -49,40 +49,43 @@ public abstract class AdapterFilter<T> extends Filter {
 	protected FilterResults performFiltering(@Nullable CharSequence prefix) {
 		final FilterResults results = new FilterResults();
 
-		List<T> allElements = helper.getAllElements();
-		if (allElements == null) {
-			// backup all list of elements
-			synchronized (helper.getLock()) {
-				allElements = new ArrayList<T>(helper.getShownElements());
-				helper.setAllElements(allElements);
-			}
-		}
+		final List<T> allElements;
 
 		// elements to be shown on list view
 		final List<T> filteredElements;
 		if ((prefix == null || prefix.length() == 0) && !doFilterOnEmptyString()) {
 			// no constraint => show all elements
-			synchronized (helper.getLock()) {
-				filteredElements = new ArrayList<T>(allElements);
-			}
+			allElements = getAllElements();
+			filteredElements = allElements;
 		} else {
 			// filter
 			final JPredicate<T> filter = getFilter(prefix);
 			synchronized (helper.getLock()) {
+				allElements = new ArrayList<T>(getAllElements());
+			}
 
-				filteredElements = new ArrayList<T>(allElements.size());
-				for (T element : allElements) {
-					if (filter.apply(element)) {
-						filteredElements.add(element);
-					}
+			filteredElements = new ArrayList<T>(allElements.size());
+			for (T element : allElements) {
+				if (filter.apply(element)) {
+					filteredElements.add(element);
 				}
 			}
 		}
 
 		results.values = filteredElements;
+		results.allElements = allElements;
 		results.count = filteredElements.size();
 
 		return results;
+	}
+
+	@Nonnull
+	private List<T> getAllElements() {
+		List<T> result = helper.getAllElements();
+		if (result == null) {
+			result= helper.getShownElements();
+		}
+		return result;
 	}
 
 	protected boolean doFilterOnEmptyString() {
@@ -92,10 +95,26 @@ public abstract class AdapterFilter<T> extends Filter {
 	protected abstract JPredicate<T> getFilter(@Nullable CharSequence prefix);
 
 	@Override
-	protected void publishResults(CharSequence constraint, FilterResults results) {
-		//noinspection unchecked
-		helper.setShownElements((List<T>) results.values);
-		helper.notifyDataSetChanged();
+	protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
+		boolean changed = false;
+
+		synchronized (helper.getLock()) {
+
+			if (results.values != helper.getShownElements()) {
+				helper.setShownElements((List<T>) results.values);
+				changed = true;
+			}
+
+			if (((FilterResults) results).allElements != helper.getAllElements()) {
+				helper.setAllElements((List<T>) ((FilterResults) results).allElements);
+				changed = true;
+			}
+
+		}
+
+		if (changed) {
+			helper.notifyDataSetChanged();
+		}
 
 	}
 
@@ -115,5 +134,11 @@ public abstract class AdapterFilter<T> extends Filter {
 		void setAllElements(@Nonnull List<T> allElements);
 
 		void notifyDataSetChanged();
+	}
+
+	private static class FilterResults<T> extends Filter.FilterResults {
+
+		@Nullable
+		private List<T> allElements;
 	}
 }

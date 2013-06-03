@@ -23,6 +23,7 @@
 package org.solovyev.android.list;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +37,35 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+import static java.util.Collections.unmodifiableList;
+
 /**
  * User: serso
  * Date: 6/6/12
  * Time: 12:53 AM
  */
 public class ListAdapter<T> extends BaseAdapter implements Filterable {
+
+	/*
+	**********************************************************************
+	*
+	*                           CONSTANTS
+	*
+	**********************************************************************
+	*/
+
+
+	@Nonnull
+	private static final String FILTER_TEXT = "filter_text";
+
+	/*
+	**********************************************************************
+	*
+	*                           FIELDS
+	*
+	**********************************************************************
+	*/
+
 	/**
 	 * Contains the list of objects that represent the data of this ListAdapter.
 	 * The content of this list is referred to as "the array" in the documentation.
@@ -74,7 +98,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	private int dropDownResource;
 
 	/**
-	 * If the inflated resource is not a TextView, {@link #fieldId} is used to find
+	 * If the inflated resource is not a TextView, fieldId is used to find
 	 * a TextView inside the inflated views hierarchy. This field must contain the
 	 * identifier that matches the one defined in the resource file.
 	 */
@@ -86,6 +110,8 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 */
 	private boolean notifyOnChange = true;
 
+	@Nullable
+	private CharSequence filterText;
 
 	@Nonnull
 	private final Context context;
@@ -170,7 +196,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 */
 	public ListAdapter(@Nonnull Context context, int resource, int textViewResourceId, @Nonnull List<T> elements) {
 		this.context = context;
-		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.inflater = LayoutInflater.from(context);
 		this.resources = this.dropDownResource = resource;
 		this.shownElements = elements;
 		this.fieldId = textViewResourceId;
@@ -183,14 +209,39 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param object The object to add at the end of the array.
 	 */
 	public void add(T object) {
-		if (allElements != null) {
-			synchronized (lock) {
-				allElements.add(object);
-				if (notifyOnChange) notifyDataSetChanged();
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = allElements.add(object);
+			} else {
+				changed = shownElements.add(object);
 			}
-		} else {
-			shownElements.add(object);
-			if (notifyOnChange) notifyDataSetChanged();
+
+			resort(changed);
+		}
+
+		tryNotifyDataSetChanged(changed);
+	}
+
+	private void resort(boolean changed) {
+		assert Thread.holdsLock(lock);
+
+		if (changed) {
+			final Comparator<? super T> comparator = getComparator();
+			if (comparator != null) {
+				sort(comparator, false);
+			}
+		}
+	}
+
+	private void tryNotifyDataSetChanged(boolean changed) {
+		if (changed) {
+			refilter();
+
+			if (notifyOnChange) {
+				notifyDataSetChanged();
+			}
 		}
 	}
 
@@ -200,15 +251,19 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param collection The Collection to add at the end of the array.
 	 */
 	public void addAll(Collection<? extends T> collection) {
-		if (allElements != null) {
-			synchronized (lock) {
-				allElements.addAll(collection);
-				if (notifyOnChange) notifyDataSetChanged();
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = allElements.addAll(collection);
+			} else {
+				changed = shownElements.addAll(collection);
 			}
-		} else {
-			shownElements.addAll(collection);
-			if (notifyOnChange) notifyDataSetChanged();
+
+			resort(changed);
 		}
+
+		tryNotifyDataSetChanged(changed);
 	}
 
 	/**
@@ -217,15 +272,19 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param items The items to add at the end of the array.
 	 */
 	public void addAll(T... items) {
-		if (allElements != null) {
-			synchronized (lock) {
-				Collections.addAll(allElements, items);
-				if (notifyOnChange) notifyDataSetChanged();
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = Collections.addAll(allElements, items);
+			} else {
+				changed = Collections.addAll(shownElements, items);
 			}
-		} else {
-			Collections.addAll(shownElements, items);
-			if (notifyOnChange) notifyDataSetChanged();
+
+			resort(changed);
 		}
+
+		tryNotifyDataSetChanged(changed);
 	}
 
 	/**
@@ -235,15 +294,17 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param index  The index at which the object must be inserted.
 	 */
 	public void insert(T object, int index) {
-		if (allElements != null) {
-			synchronized (lock) {
+		synchronized (lock) {
+			if (allElements != null) {
 				allElements.add(index, object);
-				if (notifyOnChange) notifyDataSetChanged();
+			} else {
+				shownElements.add(index, object);
 			}
-		} else {
-			shownElements.add(index, object);
-			if (notifyOnChange) notifyDataSetChanged();
+
+			resort(true);
 		}
+
+		tryNotifyDataSetChanged(true);
 	}
 
 	/**
@@ -252,28 +313,57 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @param object The object to remove.
 	 */
 	public void remove(T object) {
-		if (allElements != null) {
-			synchronized (lock) {
-				allElements.remove(object);
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = allElements.remove(object);
+			} else {
+				changed = shownElements.remove(object);
 			}
-		} else {
-			shownElements.remove(object);
+
+			resort(changed);
 		}
-		if (notifyOnChange) notifyDataSetChanged();
+
+		tryNotifyDataSetChanged(changed);
 	}
+
+	public void removeAt(int position) {
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = allElements.remove(position) != null;
+			} else {
+				changed = shownElements.remove(position) != null;
+			}
+
+			resort(changed);
+		}
+
+		tryNotifyDataSetChanged(changed);
+	}
+
 
 	/**
 	 * Remove all elements from the list.
 	 */
 	public void clear() {
-		if (allElements != null) {
-			synchronized (lock) {
+		boolean changed;
+
+		synchronized (lock) {
+			if (allElements != null) {
+				changed = !allElements.isEmpty();
 				allElements.clear();
+			} else {
+				changed = !shownElements.isEmpty();
+				shownElements.clear();
 			}
-		} else {
-			shownElements.clear();
+
+			resort(changed);
 		}
-		if (notifyOnChange) notifyDataSetChanged();
+
+		tryNotifyDataSetChanged(changed);
 	}
 
 	/**
@@ -283,13 +373,22 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 *                   in this adapter.
 	 */
 	public void sort(Comparator<? super T> comparator) {
-		Collections.sort(shownElements, comparator);
+		sort(comparator, true);
+	}
 
-		// must to sort all elements!!!
-		if (allElements != null) {
-			Collections.sort(allElements, comparator);
+	private void sort(Comparator<? super T> comparator, boolean notify) {
+		synchronized (lock) {
+			Collections.sort(shownElements, comparator);
+
+			// must sort all elements!!!
+			if (allElements != null) {
+				Collections.sort(allElements, comparator);
+			}
 		}
-		if (notifyOnChange) notifyDataSetChanged();
+
+		if (notify) {
+			tryNotifyDataSetChanged(true);
+		}
 	}
 
 	/**
@@ -334,14 +433,18 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * {@inheritDoc}
 	 */
 	public int getCount() {
-		return shownElements.size();
+		synchronized (lock) {
+			return shownElements.size();
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public T getItem(int position) {
-		return shownElements.get(position);
+		synchronized (lock) {
+			return shownElements.get(position);
+		}
 	}
 
 	/**
@@ -351,11 +454,15 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 * @return The position of the specified item.
 	 */
 	public int getPosition(T item) {
-		return shownElements.indexOf(item);
+		synchronized (lock) {
+			return shownElements.indexOf(item);
+		}
 	}
 
 	public boolean containsInShown(@Nonnull T element) {
-		return this.shownElements.contains(element);
+		synchronized (lock) {
+			return this.shownElements.contains(element);
+		}
 	}
 
 	public boolean containsInAll(@Nonnull T element) {
@@ -389,17 +496,19 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		}
 	}
 
-	private View createViewFromResource(int position, View convertView, ViewGroup parent,
+	private View createViewFromResource(int position,
+										@Nullable View convertView,
+										ViewGroup parent,
 										int resource) {
-		View view;
-		TextView text;
-
-		if (convertView == null) {
-			view = inflater.inflate(resource, parent, false);
-		} else {
+		final View view;
+		if (convertView != null) {
 			view = convertView;
+		} else {
+			view = inflater.inflate(resource, parent, false);
 		}
 
+
+		TextView text;
 		try {
 			if (fieldId == 0) {
 				//  If no custom field is assigned, assume the whole resource is a TextView
@@ -474,12 +583,32 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 
 	@Nonnull
 	protected List<T> getShownElements() {
-		return Collections.unmodifiableList(shownElements);
+		synchronized (lock) {
+			return unmodifiableList(shownElements);
+		}
 	}
 
 	@Nonnull
 	protected List<T> getAllElements() {
-		return Collections.unmodifiableList(allElements == null ? shownElements : allElements);
+		synchronized (lock) {
+			return unmodifiableList(allElements == null ? shownElements : allElements);
+		}
+	}
+
+	@Nullable
+	protected Comparator<? super T> getComparator() {
+		return null;
+	}
+
+
+	public void saveState(@Nonnull Bundle outState) {
+		if (filterText != null) {
+			outState.putString(FILTER_TEXT, filterText.toString());
+		}
+	}
+
+	public void restoreState(@Nonnull Bundle savedInstanceState) {
+		filterText = savedInstanceState.getString(FILTER_TEXT);
 	}
 
 	@Nonnull
@@ -489,6 +618,26 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 
 	public boolean isNotifyOnChange() {
 		return notifyOnChange;
+	}
+
+	public void filter(@Nullable CharSequence filterText) {
+		this.filterText = filterText;
+		this.getFilter().filter(filterText);
+	}
+
+	public void filter(@Nullable CharSequence filterText, @Nullable Filter.FilterListener listener) {
+		this.filterText = filterText;
+		this.getFilter().filter(filterText, listener);
+	}
+
+
+	public void refilter() {
+		this.getFilter().filter(filterText);
+	}
+
+	@Nullable
+	public CharSequence getFilterText() {
+		return filterText;
 	}
 
 	public class AdapterHelper implements AdapterFilter.Helper<T> {
@@ -523,76 +672,9 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 
 		@Override
 		public void notifyDataSetChanged() {
-			ListAdapter.this.notifyDataSetChanged();
+			if (notifyOnChange) {
+				ListAdapter.this.notifyDataSetChanged();
+			}
 		}
 	}
-
-	/**
-	 * <p>An array filter constrains the content of the array adapter with
-	 * a prefix. Each item that does not start with the supplied prefix
-	 * is removed from the list.</p>
-	 */
-/*    private class ArrayFilter extends Filter {
-		@Override
-        protected FilterResults performFiltering(CharSequence prefix) {
-            FilterResults results = new FilterResults();
-
-            if (allElements == null) {
-                synchronized (lock) {
-                    allElements = new ArrayList<T>(shownElements);
-                }
-            }
-
-            if (prefix == null || prefix.length() == 0) {
-                synchronized (lock) {
-                    ArrayList<T> list = new ArrayList<T>(allElements);
-                    results.values = list;
-                    results.count = list.size();
-                }
-            } else {
-                String prefixString = prefix.toString().toLowerCase();
-
-                final List<T> values = allElements;
-                final int count = values.size();
-
-                final ArrayList<T> newValues = new ArrayList<T>(count);
-
-                for (int i = 0; i < count; i++) {
-                    final T value = values.get(i);
-                    final String valueText = value.toString().toLowerCase();
-
-                    // First match against the whole, non-splitted value
-                    if (valueText.startsWith(prefixString)) {
-                        newValues.add(value);
-                    } else {
-                        final String[] words = valueText.split(" ");
-                        final int wordCount = words.length;
-
-                        for (int k = 0; k < wordCount; k++) {
-                            if (words[k].startsWith(prefixString)) {
-                                newValues.add(value);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                results.values = newValues;
-                results.count = newValues.size();
-            }
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            //noinspection unchecked
-            shownElements = (List<T>) results.values;
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
-    }*/
 }

@@ -361,7 +361,7 @@
 						</sourceDirectories>
 
 						<sdk>
-							<platform>15</platform>
+							<platform>17</platform>
 						</sdk>
 
 						<device>emulator</device>

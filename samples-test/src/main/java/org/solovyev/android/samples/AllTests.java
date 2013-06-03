@@ -26,6 +26,7 @@ import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import net.robotmedia.billing.utils.ObfuscateUtilsTest;
+import org.solovyev.android.list.ListAdapterTest;
 import org.solovyev.android.prefs.AbstractPreferenceTest;
 import org.solovyev.android.properties.APropertyTest;
 import org.solovyev.android.security.AndroidStringCiphererTest;
@@ -44,6 +45,7 @@ public class AllTests extends TestSuite {
 				.includePackages(AndroidStringCiphererTest.class.getPackage().getName())
 				.includePackages(AbstractPreferenceTest.class.getPackage().getName())
 				.includePackages(APropertyTest.class.getPackage().getName())
+				.includePackages(ListAdapterTest.class.getPackage().getName())
 				.build();
 	}
 }
