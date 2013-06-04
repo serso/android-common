@@ -32,6 +32,8 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import org.solovyev.common.Objects;
+import org.solovyev.common.text.Strings;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -111,7 +113,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	private boolean notifyOnChange = true;
 
 	@Nullable
-	private CharSequence filterText;
+	private String filterText;
 
 	@Nonnull
 	private final Context context;
@@ -484,15 +486,20 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	public void doWork(@Nonnull Runnable runnable) {
-		final boolean notifyOnChange = isNotifyOnChange();
-		try {
-			setNotifyOnChange(false);
-			runnable.run();
-		} finally {
-			setNotifyOnChange(notifyOnChange);
-			if (notifyOnChange) {
-				notifyDataSetChanged();
+		final boolean notifyOnChange;
+
+		synchronized (lock) {
+			notifyOnChange = isNotifyOnChange();
+			try {
+				setNotifyOnChange(false);
+				runnable.run();
+			} finally {
+				setNotifyOnChange(notifyOnChange);
 			}
+		}
+
+		if (notifyOnChange) {
+			notifyDataSetChanged();
 		}
 	}
 
@@ -620,16 +627,31 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		return notifyOnChange;
 	}
 
-	public void filter(@Nullable CharSequence filterText) {
-		this.filterText = filterText;
-		this.getFilter().filter(filterText);
+	public void filter(@Nullable String filterText) {
+		filter(filterText, null);
 	}
 
-	public void filter(@Nullable CharSequence filterText, @Nullable Filter.FilterListener listener) {
-		this.filterText = filterText;
-		this.getFilter().filter(filterText, listener);
+	private boolean isSameFilterText(@Nullable String filterText) {
+		if (Objects.areEqual(this.filterText, filterText)) {
+			return true;
+		} else {
+			if (Strings.isEmpty(this.filterText) && Strings.isEmpty(filterText)) {
+				return true;
+			}
+		}
+		return  false;
 	}
 
+	public void filter(@Nullable String filterText, @Nullable Filter.FilterListener listener) {
+		if (!isSameFilterText(filterText)) {
+			this.filterText = filterText;
+			this.getFilter().filter(filterText, listener);
+		} else {
+			if (listener != null) {
+				listener.onFilterComplete(getCount());
+			}
+		}
+	}
 
 	public void refilter() {
 		this.getFilter().filter(filterText);

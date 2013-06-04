@@ -52,6 +52,17 @@ public class ListAdapterTest extends ActivityInstrumentationTestCase2<ListAdapte
 				}
 			});
 			activity.removeItems(size);
+
+			activity.addItemsViaRunnable(size);
+			assertEquals(oldSize + size, adapter.getCount());
+			checkOrder(adapter);
+			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
+				@Override
+				public void onFilterComplete(int count) {
+					checkOrder(adapter);
+				}
+			});
+			activity.removeItems(size);
 		}
 	}
 

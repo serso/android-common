@@ -43,6 +43,17 @@ public class ListAdapterActivity extends ListActivity {
 		adapter.addAll(generateItems(size));
 	}
 
+	void addItemsViaRunnable(final int size) {
+		adapter.doWork(new Runnable() {
+			@Override
+			public void run() {
+				for (TestListItem listItem : generateItems(size)) {
+					adapter.add(listItem);
+				}
+			}
+		});
+	}
+
 	@Nonnull
 	private List<TestListItem> generateItems(int size) {
 		final List<TestListItem> result = new ArrayList<TestListItem>();
