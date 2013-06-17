@@ -159,4 +159,9 @@ public class ListItemAdapter<LI extends ListItem> extends ListAdapter<LI> {
 			return listItem.updateView(getContext(), convertView);
 		}
 	}
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return getView(position, convertView, parent);
+    }
 }
