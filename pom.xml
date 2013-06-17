@@ -53,7 +53,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<common.version>1.0.4-SNAPSHOT</common.version>
+		<common.version>1.0.5-SNAPSHOT</common.version>
 	</properties>
 
 	<dependencyManagement>
@@ -213,37 +213,37 @@
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-core</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-tasks</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-text</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-msg</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-listeners</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-security</artifactId>
-				<version>1.0.4</version>
+				<version>${common.version}</version>
 			</dependency>
 
 			<!-- Other -->
@@ -269,7 +269,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.9</version>
+				<version>4.11</version>
 			</dependency>
 
 			<!--
