@@ -307,28 +307,25 @@ public class DirectionDragButton extends DragButton {
 			int attr = a.getIndex(i);
 
 			if (a.hasValue(attr)) {
-				switch (attr) {
-					case R.styleable.DirectionDragButton_directionTextColor:
-						this.directionTextColor = a.getColor(attr, DEFAULT_DIRECTION_TEXT_COLOR);
-						break;
-					case R.styleable.DirectionDragButton_directionTextScale:
-						this.directionTextScale = a.getString(attr);
-						break;
-					case R.styleable.DirectionDragButton_directionTextAlpha:
-						this.directionTextAlpha = a.getInt(attr, DEFAULT_DIRECTION_TEXT_ALPHA);
-						break;
-					default:
-						// try drag direction text
-						for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
-							if (guiDragDirection.getAttributeId() == attr) {
-								this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, a.getString(attr)));
-								break;
-							}
+				if (attr == R.styleable.DirectionDragButton_directionTextColor) {
+					this.directionTextColor = a.getColor(attr, DEFAULT_DIRECTION_TEXT_COLOR);
+				} else if (attr == R.styleable.DirectionDragButton_directionTextScale) {
+					this.directionTextScale = a.getString(attr);
+				} else if (attr == R.styleable.DirectionDragButton_directionTextAlpha) {
+					this.directionTextAlpha = a.getInt(attr, DEFAULT_DIRECTION_TEXT_ALPHA);
+				} else {
+					// try drag direction text
+					for (GuiDragDirection guiDragDirection : GuiDragDirection.values()) {
+						if (guiDragDirection.getAttributeId() == attr) {
+							this.directionTextDataMap.put(guiDragDirection, new DirectionTextData(guiDragDirection, a.getString(attr)));
+							break;
 						}
-						break;
+					}
 				}
 			}
 		}
+
+		a.recycle();
 
 		for (Map.Entry<GuiDragDirection, Float> entry : getDirectionTextScales().entrySet()) {
 			final DirectionTextData dtd = directionTextDataMap.get(entry.getKey());
