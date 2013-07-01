@@ -53,7 +53,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<common.version>1.0.5-SNAPSHOT</common.version>
+		<jcl.version>1.0.5-SNAPSHOT</jcl.version>
 	</properties>
 
 	<dependencyManagement>
@@ -213,37 +213,37 @@
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-core</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-tasks</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-text</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-msg</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-listeners</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev</groupId>
 				<artifactId>common-security</artifactId>
-				<version>${common.version}</version>
+				<version>${jcl.version}</version>
 			</dependency>
 
 			<!-- Other -->
