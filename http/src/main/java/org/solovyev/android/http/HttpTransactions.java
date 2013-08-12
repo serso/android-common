@@ -22,9 +22,6 @@
 
 package org.solovyev.android.http;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import org.apache.http.NameValuePair;
 
 import javax.annotation.Nonnull;
@@ -55,18 +52,5 @@ public final class HttpTransactions {
 	@Nonnull
 	public static <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
 		return newHttpClient().execute(httpTransactions);
-	}
-
-	public static void asyncExecute(@Nonnull HttpTransactionDef httpTransactionDef,
-									@Nullable AsyncHttpResponseHandler responseHandle) throws IOException {
-		final AsyncHttpClient httpClient = new AsyncHttpClient();
-
-		final RequestParams requestParams = new RequestParams();
-		for (NameValuePair requestParam : httpTransactionDef.getRequestParameters()) {
-			requestParams.put(requestParam.getName(), requestParam.getValue());
-		}
-
-		httpTransactionDef.getHttpMethod().doAsyncRequest(httpClient, httpTransactionDef.getUri(), requestParams, responseHandle);
-
 	}
 }

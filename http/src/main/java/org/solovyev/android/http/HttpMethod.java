@@ -22,16 +22,12 @@
 
 package org.solovyev.android.http;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.protocol.HTTP;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
@@ -49,12 +45,6 @@ public enum HttpMethod {
 		protected HttpRequestBase createRequest() {
 			return new HttpDelete();
 		}
-
-		@Override
-		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-			assert requestParams == null;
-			client.delete(uri, asyncHttpResponseHandler);
-		}
 	},
 
 	GET(ParamsLocation.in_uri) {
@@ -62,11 +52,6 @@ public enum HttpMethod {
 		@Override
 		protected HttpRequestBase createRequest() {
 			return new HttpGet();
-		}
-
-		@Override
-		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-			client.get(uri, requestParams, asyncHttpResponseHandler);
 		}
 	},
 
@@ -76,11 +61,6 @@ public enum HttpMethod {
 		protected HttpRequestBase createRequest() {
 			return new HttpHead();
 		}
-
-		@Override
-		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-			throw new UnsupportedOperationException();
-		}
 	},
 
 	POST(ParamsLocation.in_headers) {
@@ -89,11 +69,6 @@ public enum HttpMethod {
 		protected HttpRequestBase createRequest() {
 			return new HttpPost();
 		}
-
-		@Override
-		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-			client.post(uri, requestParams, asyncHttpResponseHandler);
-		}
 	},
 
 	PUT(ParamsLocation.in_headers) {
@@ -101,11 +76,6 @@ public enum HttpMethod {
 		@Override
 		protected HttpRequestBase createRequest() {
 			return new HttpPut();
-		}
-
-		@Override
-		public void doAsyncRequest(@Nonnull AsyncHttpClient client, @Nonnull String uri, @Nullable RequestParams requestParams, @Nullable AsyncHttpResponseHandler asyncHttpResponseHandler) {
-			client.put(uri, requestParams, asyncHttpResponseHandler);
 		}
 	};
 
@@ -188,9 +158,4 @@ public enum HttpMethod {
 		paramsLocation.addParams(result, params);
 		return result;
 	}
-
-	public abstract void doAsyncRequest(@Nonnull AsyncHttpClient client,
-										@Nonnull String uri,
-										@Nullable RequestParams requestParams,
-										@Nullable AsyncHttpResponseHandler asyncHttpResponseHandler);
 }
