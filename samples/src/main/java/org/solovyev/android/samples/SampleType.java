@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
+import org.solovyev.android.samples.ads.SamplesAdsActivity;
 import org.solovyev.android.samples.db.SamplesDbActivity;
 import org.solovyev.android.samples.http.SamplesHttpActivity;
 import org.solovyev.android.samples.keyboard.SamplesKeyboardActivity;
@@ -53,7 +54,8 @@ public enum SampleType implements ListItem {
 	view(R.string.view, SamplesViewActivity.class),
 	keyboard(R.string.keyboard, SamplesKeyboardActivity.class),
 	tasks(R.string.tasks, SamplesTaskActivity.class),
-	menu(R.string.menu, SamplesMenuActivity.class);
+	menu(R.string.menu, SamplesMenuActivity.class),
+	ads(R.string.acl_ads, SamplesAdsActivity.class);
 
 	private final int captionResId;
 

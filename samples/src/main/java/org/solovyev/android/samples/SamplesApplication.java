@@ -25,6 +25,7 @@ package org.solovyev.android.samples;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import net.robotmedia.billing.BillingController;
 import org.solovyev.android.App;
 import org.solovyev.android.db.CommonSQLiteOpenHelper;
 import org.solovyev.android.db.SQLiteOpenHelperConfiguration;
@@ -61,7 +62,6 @@ public class SamplesApplication extends Application implements Locator {
 		super.onCreate();
 
 		App.init(this);
-
 		sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
 		dbItemService = new DbItemServiceImpl();
 		taskService = Tasks.newTaskService();
