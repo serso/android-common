@@ -23,28 +23,25 @@
 package org.solovyev.android.samples.ads;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.PendingIntent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
 import android.view.*;
-import android.widget.Toast;
-import org.solovyev.android.Fragments;
-import org.solovyev.android.ads.AdsController;
-import org.solovyev.android.list.ListItemAdapter;
-import org.solovyev.android.menu.*;
-import org.solovyev.android.samples.R;
-import org.solovyev.android.samples.menu.MenuListItem;
-import org.solovyev.android.samples.menu.SamplesStaticMenu;
-import org.solovyev.common.JPredicate;
-import org.solovyev.common.Objects;
+import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.IBillingObserver;
+import net.robotmedia.billing.ResponseCode;
+import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.Transaction;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+
+import org.solovyev.android.Activities;
+import org.solovyev.android.ads.AdsController;
+import org.solovyev.android.samples.R;
+import org.solovyev.android.samples.SamplesApplication;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static org.solovyev.android.samples.SamplesApplication.ADS_FREE_PRODUCT;
 
 /**
  * User: serso
@@ -53,12 +50,79 @@ import java.util.List;
  */
 public class SamplesAdsActivity extends Activity {
 
+	@Nonnull
+	private final SamplesBillingObserver billingObserver = new SamplesBillingObserver();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.acl_ads_layout);
-        final ViewGroup views = (ViewGroup) findViewById(R.id.acl_main_linearlayout);
-        AdsController.getInstance().inflateAd(this, views, R.id.acl_main_linearlayout);
+		final ViewGroup views = (ViewGroup) findViewById(R.id.acl_ads_linearlayout);
+		AdsController.getInstance().inflateAd(this, views, R.id.acl_ads_advertisement_framelayout);
+
+		BillingController.registerObserver(billingObserver);
+		final View removeAdsButton = views.findViewById(R.id.acl_ads_remove_advertisement_button);
+		if (AdsController.getInstance().isAdFree(this)) {
+			removeAdsButton.setEnabled(false);
+		}
+		removeAdsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				BillingController.requestPurchase(SamplesAdsActivity.this, ADS_FREE_PRODUCT);
+			}
+		});
+	}
+
+	@Override
+	protected void onDestroy() {
+		BillingController.unregisterObserver(billingObserver);
+		super.onDestroy();
+	}
+
+	private final class SamplesBillingObserver implements IBillingObserver {
+
+		@Override
+		public void onCheckBillingSupportedResponse(boolean supported) {
+
+		}
+
+		@Override
+		public void onPurchaseIntentOK(@Nonnull String productId, @Nonnull PendingIntent purchaseIntent) {
+
+		}
+
+		@Override
+		public void onPurchaseIntentFailure(@Nonnull String productId, @Nonnull ResponseCode responseCode) {
+
+		}
+
+		@Override
+		public void onPurchaseStateChanged(@Nonnull String productId, @Nonnull Transaction.PurchaseState state) {
+			if (ADS_FREE_PRODUCT.equals(productId)) {
+				switch (state) {
+					case PURCHASED:
+					case CANCELLED:
+					case REFUNDED:
+						Activities.restartActivity(SamplesAdsActivity.this);
+						break;
+				}
+			}
+		}
+
+		@Override
+		public void onRequestPurchaseResponse(@Nonnull String productId, @Nonnull ResponseCode response) {
+
+		}
+
+		@Override
+		public void onTransactionsRestored() {
+
+		}
+
+		@Override
+		public void onErrorRestoreTransactions(@Nonnull ResponseCode responseCode) {
+
+		}
 	}
 }

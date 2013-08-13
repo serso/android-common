@@ -58,52 +58,7 @@
 
 	<build>
 
-		<!--tag:filter_resources        &lt;!&ndash; specifying the resources: e.g. layout.xml, strings.xml to be processed &ndash;&gt;
-				<resources>
-
-
-					&lt;!&ndash; a pair definition for resource filtering of xml files only
-					(not binary files since they can become mangled) &ndash;&gt;
-					<resource>
-						<directory>${project.basedir}/res</directory>
-						<filtering>true</filtering>
-						<targetPath>${project.build.directory}/filtered-res</targetPath>
-						<includes>
-							<include>**/*.xml</include>
-						</includes>
-					</resource>
-
-					<resource>
-						<directory>${project.basedir}/res</directory>
-						<filtering>false</filtering>
-						<targetPath>${project.build.directory}/filtered-res</targetPath>
-						<excludes>
-							<exclude>**/*.xml</exclude>
-						</excludes>
-					</resource>
-
-				</resources>-->
-
 		<plugins>
-
-			<!--tag:filter_resources
-							<plugin>
-							<artifactId>maven-resources-plugin</artifactId>
-							<version>2.4.3</version>
-
-							<executions>
-
-								&lt;!&ndash; NOTE: default phase changed to initialize in order to filter resources before manifest-update&ndash;&gt;
-								<execution>
-									<phase>initialize</phase>
-									<goals>
-										<goal>resources</goal>
-									</goals>
-								</execution>
-
-							</executions>
-
-						</plugin>-->
 
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -111,7 +66,6 @@
 				<extensions>true</extensions>
 
 				<configuration>
-					<!--tag:filter_resources <resourceDirectory>${project.build.directory}/filtered-res</resourceDirectory>-->
 					<manifest>
 						<debuggable>true</debuggable>
 					</manifest>
@@ -144,28 +98,6 @@
 
 	<profiles>
 
-		<!-- tag:filter_resources We can update some resources by specifying properties, for example, using development/production profiles and specifying deployment.stage property
-		<profile>
-			<id>development</id>
-			&lt;!&ndash; using this since activeByDefault does not work well with multiple profiles &ndash;&gt;
-			<activation>
-				<property>
-					<name>environment</name>
-					<value>!production</value>
-				</property>
-			</activation>
-			<properties>
-				<deployment.stage>In Development</deployment.stage>
-			</properties>
-		</profile>
-
-		<profile>
-			<id>production</id>
-			<properties>
-				<deployment.stage>In Production</deployment.stage>
-			</properties>
-		</profile>-->
-
 		<profile>
 			<id>release</id>
 			<!-- via this activation the profile is automatically used when the release is done with the maven release
@@ -179,28 +111,6 @@
 
 			<build>
 				<plugins>
-
-					<!-- read the properties needed for jarsigner plugin-->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>properties-maven-plugin</artifactId>
-						<version>1.0-alpha-2</version>
-						<executions>
-							<execution>
-								<id>read-jarsigner-properties</id>
-								<phase>initialize</phase>
-								<goals>
-									<goal>read-project-properties</goal>
-								</goals>
-								<configuration>
-									<files>
-										<file>${project.basedir}/env/jarsigner.properties</file>
-									</files>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
 
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -221,18 +131,11 @@
 								<configuration>
 									<removeExistingSignatures>true</removeExistingSignatures>
 
-									<archiveDirectory />
-
 									<includes>
 										<include>
 											${project.build.directory}/${project.artifactId}-${project.version}.apk
 										</include>
 									</includes>
-
-									<keystore>${jarsigner.keystore}</keystore>
-									<alias>${jarsigner.alias}</alias>
-									<storepass>${jarsigner.storepass}</storepass>
-									<keypass>${jarsigner.keypass}</keypass>
 
 									<verbose>true</verbose>
 								</configuration>
@@ -254,6 +157,7 @@
 							</sign>
 
 							<zipalign>
+								<skip>false</skip>
 								<verbose>false</verbose>
 								<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk
 								</inputApk>

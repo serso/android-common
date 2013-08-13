@@ -25,8 +25,9 @@ package org.solovyev.android.samples;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import net.robotmedia.billing.BillingController;
+
 import org.solovyev.android.App;
+import org.solovyev.android.ads.AdsController;
 import org.solovyev.android.db.CommonSQLiteOpenHelper;
 import org.solovyev.android.db.SQLiteOpenHelperConfiguration;
 import org.solovyev.android.samples.db.DbItemDao;
@@ -44,6 +45,9 @@ import javax.annotation.Nonnull;
  * Time: 4:29 PM
  */
 public class SamplesApplication extends Application implements Locator {
+
+	private static final String ADMOB_USER_ID = "a15209e52074b57";
+	public static final String ADS_FREE_PRODUCT = "ads_free";
 
 	@Nonnull
 	private CommonSQLiteOpenHelper sqliteOpenHelper;
@@ -65,6 +69,8 @@ public class SamplesApplication extends Application implements Locator {
 		sqliteOpenHelper = new CommonSQLiteOpenHelper(this, getSqliteOpenHelperConfiguration());
 		dbItemService = new DbItemServiceImpl();
 		taskService = Tasks.newTaskService();
+
+		AdsController.getInstance().init(this, ADMOB_USER_ID, ADS_FREE_PRODUCT, new SamplesBillingConfiguration());
 	}
 
 	@Nonnull
@@ -116,4 +122,5 @@ public class SamplesApplication extends Application implements Locator {
 			return 3;
 		}
 	}
+
 }

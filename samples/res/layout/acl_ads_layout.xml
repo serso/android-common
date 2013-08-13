@@ -23,7 +23,18 @@
   -->
 
 <LinearLayout xmlns:a="http://schemas.android.com/apk/res/android"
-	a:id="@+id/acl_main_linearlayout"
+	a:id="@+id/acl_ads_linearlayout"
 	a:layout_width="match_parent"
 	a:layout_height="match_parent"
-	a:orientation="vertical" />
+	a:orientation="vertical">
+
+	<FrameLayout a:id="@+id/acl_ads_advertisement_framelayout"
+				 a:layout_width="match_parent"
+				 a:layout_height="wrap_content"/>
+
+	<Button a:id="@+id/acl_ads_remove_advertisement_button"
+			a:text="@string/acl_ads_remove_advertisement"
+			a:layout_width="match_parent"
+			a:layout_height="wrap_content"/>
+
+</LinearLayout>

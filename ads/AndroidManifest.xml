@@ -29,4 +29,6 @@
 		android:minSdkVersion="5"
 		android:targetSdkVersion="17" />
 
+	<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.ads.AdActivity"/>
+
 </manifest>

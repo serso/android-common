@@ -23,6 +23,7 @@
 package org.solovyev.android.ads;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import net.robotmedia.billing.BillingController;
 import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.BillingDB;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,7 +73,7 @@ public final class AdsController {
 		final ViewGroup layout = parentView != null ? parentView : (ViewGroup) activity.findViewById(layoutId);
 
 		// Create the adView
-		final AdView adView = new AdView(activity, AdSize.BANNER, admobAccountId);
+		final AdView adView = new AdView(activity, AdSize.SMART_BANNER, admobAccountId);
 
 		// Add the adView to it
 		layout.addView(adView);
@@ -91,11 +93,12 @@ public final class AdsController {
 		return adView;
 	}
 
-	public void init(@Nonnull String admobUserId, @Nonnull String adFreeProductId, @Nonnull BillingController.IConfiguration configuration) {
+	public void init(@Nonnull Application application, @Nonnull String admobUserId, @Nonnull String adFreeProductId, @Nonnull BillingController.IConfiguration configuration) {
 		this.admobUserId = admobUserId;
 		this.adFreeProductId = adFreeProductId;
 
 		//BillingController.setDebug(true);
+		BillingDB.init(application);
 		BillingController.setConfiguration(configuration);
 
 		this.initialized = true;
