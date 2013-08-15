@@ -184,7 +184,7 @@ public class MultiPaneFragmentManager {
 					// fragment cannot be reused => remove if first
 					ft.remove(fragmentByTag);
 
-					if (fragmentById != null) {
+					if (fragmentById != null && fragmentById != fragmentByTag) {
 						tryToPreserveFragment(ft, fragmentById);
 					}
 					// add new fragment
