@@ -28,7 +28,7 @@ public final class MultiPaneFragmentDef {
 	private /*final*/ JPredicate<Fragment> reuseCondition;
 
 	@Nonnull
-	private /*final*/ Builder<Fragment> builder;
+	private /*final*/ Builder<? extends Fragment> builder;
 
     /*
     **********************************************************************
@@ -49,7 +49,7 @@ public final class MultiPaneFragmentDef {
 	}
 
 	@Nonnull
-	public static MultiPaneFragmentDef newInstance(@Nonnull String tag, boolean addToBackStack, @Nonnull Builder<Fragment> builder, @Nullable JPredicate<Fragment> reuseCondition) {
+	public static MultiPaneFragmentDef newInstance(@Nonnull String tag, boolean addToBackStack, @Nonnull Builder<? extends Fragment> builder, @Nullable JPredicate<Fragment> reuseCondition) {
 		final MultiPaneFragmentDef result = new MultiPaneFragmentDef(tag, addToBackStack);
 		result.builder = builder;
 		result.reuseCondition = reuseCondition;
