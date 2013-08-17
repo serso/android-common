@@ -49,6 +49,11 @@ public final class MultiPaneFragmentDef {
 	}
 
 	@Nonnull
+	public static MultiPaneFragmentDef forClass(@Nonnull String tag, boolean addToBackStack, @Nonnull Class<? extends Fragment> fragmentClass, @Nonnull Context context, @Nullable Bundle args, @Nullable JPredicate<Fragment> reuseCondition) {
+		return newInstance(tag, addToBackStack, ReflectionFragmentBuilder.forClass(context, fragmentClass, args), reuseCondition);
+	}
+
+	@Nonnull
 	public static MultiPaneFragmentDef newInstance(@Nonnull String tag, boolean addToBackStack, @Nonnull Builder<? extends Fragment> builder, @Nullable JPredicate<Fragment> reuseCondition) {
 		final MultiPaneFragmentDef result = new MultiPaneFragmentDef(tag, addToBackStack);
 		result.builder = builder;

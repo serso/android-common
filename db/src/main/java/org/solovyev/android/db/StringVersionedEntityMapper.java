@@ -3,9 +3,10 @@ package org.solovyev.android.db;
 import android.database.Cursor;
 import org.solovyev.common.Converter;
 import org.solovyev.common.VersionedEntity;
-import org.solovyev.common.VersionedEntityImpl;
 
 import javax.annotation.Nonnull;
+
+import static org.solovyev.common.Entities.newEntity;
 
 /**
  * User: serso
@@ -32,6 +33,6 @@ public class StringVersionedEntityMapper implements Converter<Cursor, VersionedE
 		final String id = cursor.getString(0);
 		final int version = cursor.getInt(1);
 
-		return new VersionedEntityImpl<String>(id, version);
+		return newEntity(id, version);
 	}
 }

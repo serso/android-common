@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item name="acl_content_first_pane" type="id"/>
+	<item name="acl_content_second_pane" type="id"/>
+	<item name="acl_content_third_pane" type="id"/>
+	<item name="acl_fragment_title" type="id"/>
+</resources>
