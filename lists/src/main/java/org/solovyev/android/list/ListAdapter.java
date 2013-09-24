@@ -112,7 +112,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 */
 	private boolean notifyOnChange = true;
 
-	private boolean autoResortAndRefilter = true;
+	private boolean resortAndRefilter = true;
 
 	@Nullable
 	private String filterText;
@@ -222,30 +222,33 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				changed = shownElements.add(object);
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
 	}
 
-	private void resort(boolean changed) {
+	private void tryResortAndRefilter(boolean changed) {
+		if(changed && resortAndRefilter) {
+			resort();
+			refilter();
+		}
+	}
+
+	private void resort() {
 		assert Thread.holdsLock(lock);
 
-		if (changed) {
-			final Comparator<? super T> comparator = getComparator();
-			if (comparator != null) {
-				sort(comparator, false);
-			}
+		final Comparator<? super T> comparator = getComparator();
+		if (comparator != null) {
+			sort(comparator, false);
 		}
 	}
 
 	private void tryNotifyDataSetChanged(boolean changed) {
-		if (changed) {
-			refilter();
+		assert !Thread.holdsLock(lock);
 
-			if (notifyOnChange) {
-				notifyDataSetChanged();
-			}
+		if (changed && notifyOnChange) {
+			notifyDataSetChanged();
 		}
 	}
 
@@ -264,7 +267,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				changed = shownElements.addAll(collection);
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
@@ -285,7 +288,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				changed = Collections.addAll(shownElements, items);
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
@@ -305,7 +308,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				shownElements.add(index, object);
 			}
 
-			resort(true);
+			tryResortAndRefilter(true);
 		}
 
 		tryNotifyDataSetChanged(true);
@@ -326,7 +329,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				changed = shownElements.remove(object);
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
@@ -342,7 +345,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				changed = shownElements.remove(position) != null;
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
@@ -364,7 +367,7 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 				shownElements.clear();
 			}
 
-			resort(changed);
+			tryResortAndRefilter(changed);
 		}
 
 		tryNotifyDataSetChanged(changed);
@@ -493,18 +496,16 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		synchronized (lock) {
 			notifyOnChange = isNotifyOnChange();
 			try {
-				autoResortAndRefilter = false;
+				resortAndRefilter = false;
 				setNotifyOnChange(false);
 				runnable.run();
 			} finally {
 				setNotifyOnChange(notifyOnChange);
-				autoResortAndRefilter = true;
+				resortAndRefilter = true;
 			}
 
-			resort(true);
+			tryResortAndRefilter(true);
 		}
-
-		refilter();
 
 		if (notifyOnChange) {
 			notifyDataSetChanged();
