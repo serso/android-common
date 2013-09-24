@@ -112,6 +112,8 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	 */
 	private boolean notifyOnChange = true;
 
+	private boolean autoResortAndRefilter = true;
+
 	@Nullable
 	private String filterText;
 
@@ -491,12 +493,18 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		synchronized (lock) {
 			notifyOnChange = isNotifyOnChange();
 			try {
+				autoResortAndRefilter = false;
 				setNotifyOnChange(false);
 				runnable.run();
 			} finally {
 				setNotifyOnChange(notifyOnChange);
+				autoResortAndRefilter = true;
 			}
+
+			resort(true);
 		}
+
+		refilter();
 
 		if (notifyOnChange) {
 			notifyDataSetChanged();
