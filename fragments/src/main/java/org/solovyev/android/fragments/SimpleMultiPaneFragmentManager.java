@@ -69,14 +69,14 @@ public class SimpleMultiPaneFragmentManager extends MultiPaneFragmentManager {
 
 		if (this.isDualPane()) {
 			if (this.isFirstPane(paneParent)) {
-				pane.setBackground(activity.getResources().getDrawable(R.drawable.acl_border_right));
+				pane.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.acl_border_right));
 				// border may add padding => set to zeros
 				pane.setPadding(0, 0, 0, 0);
 			} else if (this.isSecondPane(paneParent)) {
 				pane.setBackgroundColor(activity.getResources().getColor(R.color.acl_bg));
 			} else if (this.isTriplePane() && this.isThirdPane(paneParent)) {
 				if (Views.getScreenOrientation(activity) == Configuration.ORIENTATION_LANDSCAPE) {
-					pane.setBackground(activity.getResources().getDrawable(R.drawable.acl_border_left));
+					pane.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.acl_border_left));
 				} else {
 					pane.setBackgroundColor(activity.getResources().getColor(R.color.acl_bg));
 				}
