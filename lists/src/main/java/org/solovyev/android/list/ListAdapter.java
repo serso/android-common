@@ -228,6 +228,20 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		tryNotifyDataSetChanged(changed);
 	}
 
+	protected final void onDataSetChanged(boolean resortAndRefilter) {
+		if (resortAndRefilter) {
+			synchronized (lock) {
+				tryResortAndRefilter(true);
+			}
+		}
+
+		tryNotifyDataSetChanged(true);
+	}
+
+	protected final void onDataSetChanged() {
+		onDataSetChanged(true);
+	}
+
 	private void tryResortAndRefilter(boolean changed) {
 		if(changed && resortAndRefilter) {
 			resort();
