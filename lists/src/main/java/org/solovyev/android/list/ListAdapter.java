@@ -398,7 +398,6 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	private void sort(Comparator<? super T> comparator, boolean notify) {
-		onBeforeChange();
 		synchronized (lock) {
 			Collections.sort(shownElements, comparator);
 
@@ -411,9 +410,6 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 		if (notify) {
 			tryNotifyDataSetChanged(true);
 		}
-	}
-
-	protected void onBeforeChange() {
 	}
 
 	/**
@@ -672,7 +668,6 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	public void filter(@Nullable String filterText, @Nullable Filter.FilterListener listener) {
 		if (!isSameFilterText(filterText)) {
 			this.filterText = filterText;
-			onBeforeChange();
 			this.getFilter().filter(filterText, listener);
 		} else {
 			if (listener != null) {
@@ -682,7 +677,6 @@ public class ListAdapter<T> extends BaseAdapter implements Filterable {
 	}
 
 	public void refilter() {
-		onBeforeChange();
 		this.getFilter().filter(filterText);
 	}
 
