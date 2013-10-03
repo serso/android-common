@@ -56,7 +56,7 @@ public class DialogFragmentShower {
 	}
 
 	public void show() {
-		show(true);
+		show(false);
 	}
 
 	public void show(boolean addToBackStack) {
