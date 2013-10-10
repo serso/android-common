@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -55,7 +56,17 @@ public class DialogFragmentShower {
 	}
 
 	public void show() {
-		Fragments.showDialog(new AlertDialogFragment(menuBuilder), fragmentTag, fragmentActivity.getSupportFragmentManager());
+		show(false);
+	}
+
+	public void show(boolean addToBackStack) {
+		if (addToBackStack) {
+			Fragments.showDialog(new AlertDialogFragment(menuBuilder), fragmentTag, fragmentActivity.getSupportFragmentManager());
+		} else {
+			final FragmentManager fm = fragmentActivity.getSupportFragmentManager();
+			final AlertDialogFragment fragment = new AlertDialogFragment(menuBuilder);
+			fragment.show(fm, fragmentTag);
+		}
 	}
 
 	/**
