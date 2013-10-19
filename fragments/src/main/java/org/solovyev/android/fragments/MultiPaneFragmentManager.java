@@ -119,7 +119,7 @@ public class MultiPaneFragmentManager {
 	protected void setFragment(int fragmentViewId, @Nonnull MultiPaneFragmentDef mpfd) {
 		final FragmentManager fm = activity.getSupportFragmentManager();
 
-		final FragmentTransaction ft = fm.beginTransaction();
+		FragmentTransaction ft = fm.beginTransaction();
 
 		setFragment(fragmentViewId, mpfd, fm, ft);
 
@@ -130,9 +130,9 @@ public class MultiPaneFragmentManager {
 	}
 
 	private void setFragment(final int fragmentViewId,
-							 @Nonnull MultiPaneFragmentDef mpfd,
-							 @Nonnull FragmentManager fm,
-							 @Nonnull FragmentTransaction ft) {
+							 @Nonnull final MultiPaneFragmentDef mpfd,
+							 @Nonnull final FragmentManager fm,
+							 @Nonnull final FragmentTransaction ft) {
 		hideKeyboard();
 
 		// in some cases we cannot execute pending transactions after commit (e.g. transactions from action bar => we need to try to execute them now)
@@ -172,12 +172,15 @@ public class MultiPaneFragmentManager {
 						if (fragmentByTag.equals(fragmentById)) {
 							// yes, fragment is shown under the view with same ID
 						} else {
-							// no, fragment is shown somewhere else, but that's bad - either fragment was not correctly detached or it has been already added
+							// no, fragment is shown somewhere else, let's copy state
 							if (fragmentById != null) {
-								tryToPreserveFragment(ft, fragmentById);
+								ft.remove(fragmentById);
 							}
-							// add new fragment
-							ft.add(fragmentViewId, mpfd.build(), mpfd.getTag());
+
+							final Fragment newFragment = mpfd.build();
+							copyState(fragmentByTag, newFragment, fm);
+							ft.remove(fragmentByTag);
+							ft.add(fragmentViewId, newFragment, mpfd.getTag());
 						}
 					}
 				} else {
@@ -198,6 +201,11 @@ public class MultiPaneFragmentManager {
 				ft.add(fragmentViewId, mpfd.build(), mpfd.getTag());
 			}
 		}
+	}
+
+	public void copyState(@Nonnull Fragment source, @Nonnull Fragment destination, @Nonnull FragmentManager fm) {
+		final Fragment.SavedState savedState = fm.saveFragmentInstanceState(source);
+		destination.setInitialSavedState(savedState);
 	}
 
 	private void hideKeyboard() {
@@ -245,19 +253,6 @@ public class MultiPaneFragmentManager {
 			// no, we cannot => remove
 			ft.remove(fragment);
 		}
-	}
-
-	private void goBackTillStart(@Nonnull FragmentManager fm) {
-		if (!activity.isFinishing()) {
-			int backStackEntryCount = fm.getBackStackEntryCount();
-			for (int i = 0; i < backStackEntryCount; i++) {
-				fm.popBackStack();
-			}
-		}
-	}
-
-	public void goBackTillStart() {
-		goBackTillStart(activity.getSupportFragmentManager());
 	}
 
 	public void goBack() {
@@ -335,14 +330,10 @@ public class MultiPaneFragmentManager {
 	public void setMainFragment(@Nonnull FragmentDef fragmentDef,
 								@Nonnull FragmentManager fm,
 								@Nonnull FragmentTransaction ft) {
-		goBackTillStart(fm);
-
 		setFragment(mainPaneViewId, MultiPaneFragmentDef.fromFragmentDef(fragmentDef, null, activity), fm, ft);
 	}
 
 	public void setMainFragment(@Nonnull FragmentDef fragmentDef, @Nullable Bundle fragmentArgs) {
-		goBackTillStart(activity.getSupportFragmentManager());
-
 		setFragment(mainPaneViewId, MultiPaneFragmentDef.fromFragmentDef(fragmentDef, fragmentArgs, activity));
 	}
 
