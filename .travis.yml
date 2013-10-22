@@ -11,11 +11,11 @@ before_install:
 
   # Install required components.
   # For a full list, run `android list sdk -a --extended`
-  # Note that sysimg-16 downloads the ARM, x86 and MIPS images (we should optimize this).
+  # Note that sysimg-17 downloads the ARM, x86 and MIPS images (we should optimize this).
   # Note that `echo y` only accepts the first license. This is actually convenient, since
   # it prevents the installation of the ATOM and MIPS emulator images. It might cause
   # issues in the future though.
-  - echo y | android update sdk --filter platform-tools,extra-android-support,add-on,android-17,sysimg-17 --no-ui --force --all
+  - printf "y\ny\ny\ny\ny\ny\ny\n" | android update sdk --filter platform-tools,extra-android-support,add-on,android-17,sysimg-17 --no-ui --force --all
 
   - git clone git://github.com/mosabua/maven-android-sdk-deployer.git
   - cd ./maven-android-sdk-deployer
