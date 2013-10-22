@@ -49,13 +49,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>android-async-http</groupId>
-			<artifactId>android-async-http</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
-
-		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>annotations</artifactId>
 		</dependency>
