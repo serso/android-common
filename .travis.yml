@@ -18,6 +18,12 @@ before_install:
   - cd ../../
   - cd ./extras/admob
   - mvn install -P4.2
+  - cd ../
+  - cd ./compatibility-v4
+  - mvn install -P4.2
+  - cd ../../
+  - cd ./platforms/android-17
+  - mvn install -P4.2
   - cd ../../../
 #  # Create and start emulator
 #  - echo no | android create avd --force -n test -t android-17 --abi armeabi-v7a
