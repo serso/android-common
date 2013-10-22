@@ -53,11 +53,19 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>in-project-repository</id>
-			<name>In Project Repo</name>
+			<id>in-project-plugin-repository</id>
+			<name>In Project Plugin Repo</name>
 			<url>file://${project.basedir}/maven-repository</url>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</repository>
+	</repositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
