@@ -51,6 +51,14 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jcl.version>1.0.6</jcl.version>
@@ -298,7 +306,7 @@
 			<plugin>
 				<groupId>org.solovyev.external.com.electriccloud</groupId>
 				<artifactId>org.solovyev.external.javac2-maven-plugin</artifactId>
-				<version>1.0.3</version>
+				<version>1.0.4</version>
 				<executions>
 					<execution>
 						<id>instrument-notnull-src</id>
