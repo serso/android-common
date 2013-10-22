@@ -55,7 +55,7 @@
 		<pluginRepository>
 			<id>in-project-plugin-repository</id>
 			<name>In Project Plugin Repo</name>
-			<url>file://${project.basedir}/maven-plugin-repository</url>
+			<url>file://${project.basedir}/maven-repository</url>
 		</pluginRepository>
 	</pluginRepositories>
 
