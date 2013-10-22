@@ -15,13 +15,13 @@ before_install:
   # Note that `echo y` only accepts the first license. This is actually convenient, since
   # it prevents the installation of the ATOM and MIPS emulator images. It might cause
   # issues in the future though.
-  - echo y | android update sdk --filter platform-tools,android-17,extra-android-support,add-on,$ANDROID_SDKS --no-ui --force --all > /dev/null
+  - echo y | android update sdk --filter platform-tools,extra-android-support,add-on,android-17,sysimg-17 --no-ui --force --all > /dev/null
 
   - git clone git://github.com/mosabua/maven-android-sdk-deployer.git
   - cd ./maven-android-sdk-deployer
   - mvn install -P4.2
 #  # Create and start emulator
-#  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+#  - echo no | android create avd --force -n test -t android-17 --abi armeabi-v7a
 #  - emulator -avd test -no-skin -no-audio -no-window &
 #
 #before_script:
