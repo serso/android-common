@@ -34,6 +34,14 @@
 
 	<packaging>apklib</packaging>
 
+	<repositories>
+		<repository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 
 		<dependency>
