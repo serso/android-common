@@ -66,15 +66,19 @@ public class ListAdapterTest extends ActivityInstrumentationTestCase2<ListAdapte
 		}
 	}
 
-	private void checkOrder(ListItemAdapter<? extends ListItem> adapter) {
-		for (int i = 0; i < adapter.getCount(); i++) {
-			 if ( i > 0 ) {
-				 final ListItem prevItem = adapter.getItem(i-1);
-				 final ListItem item = adapter.getItem(i);
-				 assertTrue(prevItem.toString().compareTo(item.toString()) <= 0);
-			 }
-
-		}
+	private void checkOrder(final ListItemAdapter<? extends ListItem> adapter) {
+		adapter.doWork(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < adapter.getCount(); i++) {
+					if ( i > 0 ) {
+						final ListItem prevItem = adapter.getItem(i-1);
+						final ListItem item = adapter.getItem(i);
+						assertTrue(prevItem.toString().compareTo(item.toString()) <= 0);
+					}
+				}
+			}
+		});
 	}
 
 }
