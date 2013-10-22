@@ -44,20 +44,20 @@
 
 	<packaging>pom</packaging>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<scm>
 		<connection>scm:git:git@github.com:serso/android-common.git</connection>
 		<developerConnection>scm:git:git@github.com:serso/android-common.git</developerConnection>
 		<url>http://github.com/serso/android-common</url>
 		<tag>HEAD</tag>
 	</scm>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>in-project-plugin-repository</id>
-			<name>In Project Plugin Repo</name>
-			<url>file://${project.basedir}/maven-repository</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
