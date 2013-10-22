@@ -9,7 +9,8 @@ before_install:
   - tar xzf android-sdk.tgz
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  - chmod +x .travis_install_android.sh & ./.travis_install_android.sh
+  - chmod +x $PWD/.travis_install_android.sh
+  - $PWD/.travis_install_android.sh
 
   - git clone git://github.com/mosabua/maven-android-sdk-deployer.git
   - cd ./maven-android-sdk-deployer
