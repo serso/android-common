@@ -25,6 +25,7 @@ package org.solovyev.android.samples.http;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -121,7 +122,7 @@ public class SamplesHttpActivity extends ListActivity {
 		setContentView(R.layout.acl_http_layout);
 
 		// should be one instance in application if several threads are working with it
-		this.imageLoader = new CachingImageLoader(this, "acl-samples");
+		this.imageLoader = new CachingImageLoader(this, "acl-samples", new Handler());
 
 		final List<HttpListItem> listItems = new ArrayList<HttpListItem>();
 		for (String imageName : imageNames) {

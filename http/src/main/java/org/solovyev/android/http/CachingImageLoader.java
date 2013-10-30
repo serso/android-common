@@ -22,14 +22,13 @@
 
 package org.solovyev.android.http;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import org.solovyev.android.FileCache;
-import org.solovyev.android.Threads;
 import org.solovyev.common.Objects;
 
 import javax.annotation.Nonnull;
@@ -80,14 +79,18 @@ public class CachingImageLoader implements ImageLoader {
 	@Nonnull
 	private final ExecutorService executorService;
 
-	public CachingImageLoader(@Nonnull Context context, @Nonnull String cacheFileName) {
-		fileCache = new FileCache(context, cacheFileName);
-		executorService = Executors.newFixedThreadPool(5);
+	@Nonnull
+	private final Handler handler;
+
+	public CachingImageLoader(@Nonnull Context context, @Nonnull String cacheFileName, @Nonnull Handler handler) {
+		this.fileCache = new FileCache(context, cacheFileName);
+		this.executorService = Executors.newFixedThreadPool(5);
+		this.handler = handler;
 	}
 
 	@Override
 	public void loadImage(@Nonnull String url, @Nonnull ImageView imageView, @Nullable Integer defaultImageId) {
-		loadImage(url, new ImageViewImageLoadedListener(imageView, defaultImageId));
+		loadImage(url, new ImageViewImageLoadedListener(imageView, defaultImageId, handler));
 	}
 
 	@Override
@@ -284,17 +287,20 @@ public class CachingImageLoader implements ImageLoader {
 		@Nullable
 		private final Integer defaultImageId;
 
-		private ImageViewImageLoadedListener(@Nonnull ImageView imageView, @Nullable Integer defaultImageId) {
+		@Nonnull
+		private final Handler handler;
+
+		private ImageViewImageLoadedListener(@Nonnull ImageView imageView, @Nullable Integer defaultImageId, @Nonnull Handler handler) {
 			this.imageViewRef = new WeakReference<ImageView>(imageView);
 			this.defaultImageId = defaultImageId;
+			this.handler = handler;
 		}
 
 		@Override
 		public void onImageLoaded(@Nullable final Bitmap image) {
 			final ImageView imageView = imageViewRef.get();
 			if (imageView != null) {
-				final Activity activity = (Activity) imageView.getContext();
-				Threads.tryRunOnUiThread(activity, new Runnable() {
+				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						if (image != null) {
@@ -313,8 +319,7 @@ public class CachingImageLoader implements ImageLoader {
 		public void setDefaultImage() {
 			final ImageView imageView = imageViewRef.get();
 			if (imageView != null) {
-				final Activity activity = (Activity) imageView.getContext();
-				Threads.tryRunOnUiThread(activity, new Runnable() {
+				handler.post(new Runnable() {
 					@Override
 					public void run() {
 						if (defaultImageId != null) {
