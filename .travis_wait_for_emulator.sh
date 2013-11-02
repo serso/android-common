@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script waits for Android emulator to be started
+
 bootanim=""
 failcounter=0
 until [[ "$bootanim" =~ "stopped" ]]; do
