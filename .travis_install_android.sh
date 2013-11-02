@@ -2,7 +2,7 @@
 
 # Script installs Android SDK
 
-sudo apt-get update -qq
+sudo apt-get update -q
 if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq libstdc++6:i386 lib32z1; fi
 wget -O android-sdk.tgz http://dl.google.com/android/android-sdk_r22.0.4-linux.tgz
 tar xzf android-sdk.tgz
