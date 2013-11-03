@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script waits for Android emulator to be started
 

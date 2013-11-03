@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Scripts installs Android SDK artifacts in local Maven repository
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Scripts starts Android emulator with name 'Default'
 
