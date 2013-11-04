@@ -16,7 +16,7 @@
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common</artifactId>
-	<version>1.1.4</version>
+	<version>1.1.5-SNAPSHOT</version>
 
 	<modules>
 		<module>app</module>
@@ -56,7 +56,7 @@
 		<connection>scm:git:git@github.com:serso/android-common.git</connection>
 		<developerConnection>scm:git:git@github.com:serso/android-common.git</developerConnection>
 		<url>http://github.com/serso/android-common</url>
-		<tag>release-1.1.4</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
@@ -72,147 +72,147 @@
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-core</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-billing</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-ads</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-db</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-http</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-lists</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-menus</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-other</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-preferences</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-samples</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apk</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-samples</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>jar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-samples-test</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-sherlock</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-security</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-views</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-keyboards</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-app</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-networks</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-fragments</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-tasks</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-all</artifactId>
-				<version>1.1.4</version>
+				<version>1.1.5-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
 
