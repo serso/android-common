@@ -114,7 +114,7 @@ public class MultiPaneFragmentManager {
 	protected void setFragment(int fragmentViewId, @Nonnull MultiPaneFragmentDef mpfd) {
 		final FragmentManager fm = activity.getSupportFragmentManager();
 
-		FragmentTransaction ft = fm.beginTransaction();
+		final FragmentTransaction ft = fm.beginTransaction();
 
 		setFragment(fragmentViewId, mpfd, fm, ft);
 
@@ -157,7 +157,7 @@ public class MultiPaneFragmentManager {
 					// fragment can be reused
 					if (fragmentByTag.isDetached()) {
 						if (fragmentById != null) {
-							tryToPreserveFragment(ft, fragmentById);
+							tryRemoveFragment(ft, fragmentById);
 						}
 						// fragment is detached and can be simple reused
 						ft.attach(fragmentByTag);
@@ -183,7 +183,7 @@ public class MultiPaneFragmentManager {
 					ft.remove(fragmentByTag);
 
 					if (fragmentById != null && fragmentById != fragmentByTag) {
-						tryToPreserveFragment(ft, fragmentById);
+						tryRemoveFragment(ft, fragmentById);
 					}
 					// add new fragment
 					ft.add(fragmentViewId, mpfd.build(), mpfd.getTag());
@@ -191,7 +191,7 @@ public class MultiPaneFragmentManager {
 
 			} else {
 				if (fragmentById != null) {
-					tryToPreserveFragment(ft, fragmentById);
+					tryRemoveFragment(ft, fragmentById);
 				}
 				ft.add(fragmentViewId, mpfd.build(), mpfd.getTag());
 			}
@@ -237,7 +237,7 @@ public class MultiPaneFragmentManager {
 		return success;
 	}
 
-	private void tryToPreserveFragment(@Nonnull FragmentTransaction ft, @Nonnull Fragment fragment) {
+	private void tryRemoveFragment(@Nonnull FragmentTransaction ft, @Nonnull Fragment fragment) {
 		// let's see if we can preserve old fragment for further use
 		if (fragment instanceof DetachableFragment) {
 			// yes, we can => detach if not detached yet
@@ -248,6 +248,22 @@ public class MultiPaneFragmentManager {
 			// no, we cannot => remove
 			ft.remove(fragment);
 		}
+	}
+
+	public void removeFragment(int fragmentViewId) {
+		final FragmentManager fm = activity.getSupportFragmentManager();
+
+		final FragmentTransaction ft = fm.beginTransaction();
+
+		final Fragment fragmentById = fm.findFragmentById(fragmentViewId);
+		if (fragmentById != null) {
+			tryRemoveFragment(ft, fragmentById);
+		}
+
+		ft.commit();
+
+		// we cannot wait until android will execute pending transactions as some logic rely on added/attached transactions
+		executePendingTransactions(fm);
 	}
 
 	public void goBack() {
