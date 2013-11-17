@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.5</version>
+		<version>1.1.6-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-security</artifactId>
-	<version>1.1.5</version>
+	<version>1.1.6-SNAPSHOT</version>
 
 	<name>Android Common Library Security</name>
 
