@@ -15,11 +15,6 @@ import org.solovyev.common.text.Strings;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 8/17/13
- * Time: 10:54 PM
- */
 public class SimpleMultiPaneFragmentManager extends MultiPaneFragmentManager {
 
 	public SimpleMultiPaneFragmentManager(@Nonnull FragmentActivity activity, @Nonnull Class<? extends Fragment> emptyFragmentClass) {

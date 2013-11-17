@@ -8,11 +8,6 @@ import org.solovyev.common.Builder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 3/7/13
- * Time: 8:18 PM
- */
 public class ReflectionFragmentBuilder<F extends Fragment> implements Builder<F> {
 
 	@Nonnull

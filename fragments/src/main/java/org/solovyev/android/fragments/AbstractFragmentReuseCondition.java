@@ -6,11 +6,6 @@ import org.solovyev.common.JPredicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 3/5/13
- * Time: 1:35 PM
- */
 public abstract class AbstractFragmentReuseCondition<F extends Fragment> implements JPredicate<Fragment> {
 
 	@Nonnull

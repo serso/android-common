@@ -16,11 +16,6 @@ import org.solovyev.common.JPredicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 3/7/13
- * Time: 9:02 PM
- */
 public class MultiPaneFragmentManager {
 
 

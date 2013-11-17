@@ -5,11 +5,6 @@ import org.solovyev.common.JPredicate;
 
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 3/5/13
- * Time: 2:03 PM
- */
 public class SimpleFragmentReuseCondition<F extends Fragment> extends AbstractFragmentReuseCondition<F> {
 
 	private SimpleFragmentReuseCondition(@Nonnull Class<F> fragmentClass) {
