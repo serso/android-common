@@ -123,7 +123,7 @@ public class ListItemAdapter<LI extends ListItem> extends ListAdapter<LI> {
 				final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
 				ListItem.OnClickAction onClickAction = listItem.getOnClickAction();
 				if (onClickAction != null) {
-					onClickAction.onClick(context, adapter, lv);
+					onClickAction.onClick(context, adapter);
 				}
 			}
 		});
@@ -134,7 +134,7 @@ public class ListItemAdapter<LI extends ListItem> extends ListAdapter<LI> {
 				final ListItem listItem = (ListItem) lv.getItemAtPosition(position);
 				ListItem.OnClickAction onLongClickAction = listItem.getOnLongClickAction();
 				if (onLongClickAction != null) {
-					onLongClickAction.onClick(context, adapter, lv);
+					onLongClickAction.onClick(context, adapter);
 					return true;
 				} else {
 					return false;

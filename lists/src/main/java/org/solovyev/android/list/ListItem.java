@@ -31,12 +31,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * User: serso
- * Date: 4/14/12
- * Time: 4:28 PM
- */
-
-/**
  * One row of list in Adapter. Can build, update view and provide functionality on clicking and on long clicking.
  */
 public interface ListItem extends UpdatableViewBuilder<View> {
@@ -51,6 +45,6 @@ public interface ListItem extends UpdatableViewBuilder<View> {
 
 	public static interface OnClickAction {
 
-		void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView);
+		void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter);
 	}
 }

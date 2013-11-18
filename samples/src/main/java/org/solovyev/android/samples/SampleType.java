@@ -26,7 +26,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import org.solovyev.android.list.ListAdapter;
 import org.solovyev.android.list.ListItem;
@@ -71,7 +70,7 @@ public enum SampleType implements ListItem {
 	public OnClickAction getOnClickAction() {
 		return new OnClickAction() {
 			@Override
-			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter) {
 				context.startActivity(new Intent(context.getApplicationContext(), sampleActivity));
 			}
 		};

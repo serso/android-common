@@ -24,7 +24,7 @@ package org.solovyev.android.list;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
-import android.widget.ListView;
+
 import org.solovyev.android.menu.ContextMenuBuilder;
 import org.solovyev.android.menu.LabeledMenuItem;
 import org.solovyev.android.menu.ListContextMenu;
@@ -32,11 +32,6 @@ import org.solovyev.android.menu.ListContextMenu;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 5/5/12
- * Time: 7:52 PM
- */
 public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
 
 	@Nonnull
@@ -52,9 +47,9 @@ public abstract class MenuOnClick<T> implements ListItem.OnClickAction {
 	}
 
 	@Override
-	public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+	public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter) {
 		if (!menuItems.isEmpty()) {
-			ContextMenuBuilder.newInstance((FragmentActivity) context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter, listView)).show();
+			ContextMenuBuilder.newInstance((FragmentActivity) context, menuName, ListContextMenu.newInstance(menuItems)).build(new ListItemOnClickDataImpl<T>(getData(), adapter)).show();
 		}
 	}
 

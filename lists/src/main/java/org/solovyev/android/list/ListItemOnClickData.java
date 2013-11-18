@@ -22,15 +22,8 @@
 
 package org.solovyev.android.list;
 
-import android.widget.ListView;
-
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 5/5/12
- * Time: 8:16 PM
- */
 public interface ListItemOnClickData<T> {
 
 	@Nonnull
@@ -38,7 +31,4 @@ public interface ListItemOnClickData<T> {
 
 	@Nonnull
 	ListAdapter<? extends ListItem> getAdapter();
-
-	@Nonnull
-	ListView getListView();
 }

@@ -22,15 +22,8 @@
 
 package org.solovyev.android.list;
 
-import android.widget.ListView;
-
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 5/5/12
- * Time: 8:17 PM
- */
 public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
 
 	@Nonnull
@@ -39,13 +32,9 @@ public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
 	@Nonnull
 	private ListAdapter<? extends ListItem> adapter;
 
-	@Nonnull
-	private ListView listView;
-
-	public ListItemOnClickDataImpl(@Nonnull T dataObject, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+	public ListItemOnClickDataImpl(@Nonnull T dataObject, @Nonnull ListAdapter<? extends ListItem> adapter) {
 		this.dataObject = dataObject;
 		this.adapter = adapter;
-		this.listView = listView;
 	}
 
 	@Nonnull
@@ -58,11 +47,5 @@ public class ListItemOnClickDataImpl<T> implements ListItemOnClickData<T> {
 	@Override
 	public ListAdapter<? extends ListItem> getAdapter() {
 		return this.adapter;
-	}
-
-	@Nonnull
-	@Override
-	public ListView getListView() {
-		return this.listView;
 	}
 }

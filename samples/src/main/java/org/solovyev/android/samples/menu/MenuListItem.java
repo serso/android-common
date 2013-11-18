@@ -24,7 +24,6 @@ package org.solovyev.android.samples.menu;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.solovyev.android.list.ListAdapter;
@@ -58,7 +57,7 @@ public class MenuListItem implements ListItem {
 	public OnClickAction getOnClickAction() {
 		return new OnClickAction() {
 			@Override
-			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter, @Nonnull ListView listView) {
+			public void onClick(@Nonnull Context context, @Nonnull ListAdapter<? extends ListItem> adapter) {
 				Toast.makeText(context, context.getString(R.string.long_press_to_open_menu), Toast.LENGTH_SHORT).show();
 			}
 		};
