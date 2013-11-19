@@ -40,34 +40,28 @@ public class ListAdapterTest extends ActivityInstrumentationTestCase2<ListAdapte
 		final ListAdapterActivity activity = getActivity();
 		final ListItemAdapter<? extends ListItem> adapter = activity.getAdapter();
 		for (int i = 0; i < 100; i++) {
-			int oldSize = adapter.getCount();
-			int size = random.nextInt(10);
+			final int oldSize = adapter.getCount();
+			final int addedCount = random.nextInt(10);
 
-			activity.addItems(size);
-			Thread.sleep(10);
+			activity.addItems(addedCount);
+			assertEquals(oldSize + addedCount, adapter.getCount());
 
-			assertEquals(oldSize + size, adapter.getCount());
-			checkOrder(adapter);
 			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
 				@Override
 				public void onFilterComplete(int count) {
 					checkOrder(adapter);
 				}
 			});
-			activity.removeItems(size);
-			activity.addItemsViaRunnable(size);
-			Thread.sleep(10);
-
-			assertEquals(oldSize + size, adapter.getCount());
-			checkOrder(adapter);
+			activity.removeItems(addedCount);
+			activity.addItemsViaRunnable(addedCount);
+			assertEquals(oldSize + addedCount, adapter.getCount());
 			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
 				@Override
 				public void onFilterComplete(int count) {
 					checkOrder(adapter);
 				}
 			});
-			activity.removeItems(size);
-			Thread.sleep(10);
+			activity.removeItems(addedCount);
 		}
 	}
 
