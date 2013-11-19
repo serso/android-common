@@ -42,18 +42,10 @@ public class ListAdapterTest extends ActivityInstrumentationTestCase2<ListAdapte
 		for (int i = 0; i < 100; i++) {
 			int oldSize = adapter.getCount();
 			int size = random.nextInt(10);
-			activity.addItems(size);
-			assertEquals(oldSize + size, adapter.getCount());
-			checkOrder(adapter);
-			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
-				@Override
-				public void onFilterComplete(int count) {
-					checkOrder(adapter);
-				}
-			});
-			activity.removeItems(size);
 
-			activity.addItemsViaRunnable(size);
+			activity.addItems(size);
+			Thread.sleep(10);
+
 			assertEquals(oldSize + size, adapter.getCount());
 			checkOrder(adapter);
 			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
@@ -63,6 +55,19 @@ public class ListAdapterTest extends ActivityInstrumentationTestCase2<ListAdapte
 				}
 			});
 			activity.removeItems(size);
+			activity.addItemsViaRunnable(size);
+			Thread.sleep(10);
+
+			assertEquals(oldSize + size, adapter.getCount());
+			checkOrder(adapter);
+			adapter.filter(String.valueOf(random.nextInt(9)), new Filter.FilterListener() {
+				@Override
+				public void onFilterComplete(int count) {
+					checkOrder(adapter);
+				}
+			});
+			activity.removeItems(size);
+			Thread.sleep(10);
 		}
 	}
 
