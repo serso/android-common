@@ -9,10 +9,10 @@ cd ./maven-android-sdk-deployer/
 git checkout tags/api-19-mvn3.1
 mvn install -P4.2
 
-# install extras
-cd ./extras
+# install admob
+cd ./extras/admob
 mvn install
-cd ..
+cd ../..
 
-# exit
+#exit
 cd ..
