@@ -40,7 +40,9 @@
 		<module>tasks</module>
 		<module>all</module>
 	</modules>
+
 	<name>Android Common Library</name>
+	<url>https://oss.sonatype.org/content/repositories/releases/org/solovyev/android</url>
 
 	<licenses>
 		<license>
