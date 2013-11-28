@@ -17,6 +17,10 @@
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common</artifactId>
 	<version>1.1.7-SNAPSHOT</version>
+	<name>Android Common Library</name>
+	<url>https://oss.sonatype.org/content/repositories/releases/org/solovyev/android</url>
+
+	<packaging>pom</packaging>
 
 	<modules>
 		<module>app</module>
@@ -41,9 +45,6 @@
 		<module>all</module>
 	</modules>
 
-	<name>Android Common Library</name>
-	<url>https://oss.sonatype.org/content/repositories/releases/org/solovyev/android</url>
-
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -52,15 +53,10 @@
 		</license>
 	</licenses>
 
-	<packaging>pom</packaging>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>in-project-repository</id>
-			<name>In Project Repo</name>
-			<url>file://${project.basedir}/maven-repository</url>
-		</pluginRepository>
-	</pluginRepositories>
+	<organization>
+		<name>se.solovyev</name>
+		<url>http://se.solovyev.org</url>
+	</organization>
 
 	<scm>
 		<connection>scm:git:git@github.com:serso/android-common.git</connection>
@@ -69,10 +65,34 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<developers>
+		<developer>
+			<id>se.solovyev</id>
+			<name>Sergey Solovyev</name>
+			<email>se.solovyev@gmail.com</email>
+			<url>http://se.solovyev.org</url>
+			<organization>se.solovyev</organization>
+			<organizationUrl>http://se.solovyev.org</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+4</timezone>
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jcl.version>1.0.7</jcl.version>
 	</properties>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>in-project-repository</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/maven-repository</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencyManagement>
 		<dependencies>
