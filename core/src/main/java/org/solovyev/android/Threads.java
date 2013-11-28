@@ -25,15 +25,12 @@ package org.solovyev.android;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 2/2/13
- * Time: 5:55 PM
- */
 public final class Threads {
 
 	private Threads() {
@@ -64,6 +61,18 @@ public final class Threads {
 				});
 			}
 		}
+	}
+
+	public static void tryRunOnUiThread(@Nonnull final Fragment fragment, @Nonnull final Runnable runnable) {
+		Threads.tryRunOnUiThread(fragment.getActivity(), new Runnable() {
+			@Override
+			public void run() {
+				final FragmentActivity activity = fragment.getActivity();
+				if (activity != null) {
+					runnable.run();
+				}
+			}
+		});
 	}
 
 	/**

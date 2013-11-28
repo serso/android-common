@@ -23,17 +23,17 @@
 package org.solovyev.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 2/2/13
- * Time: 6:03 PM
- */
+import static org.solovyev.android.Android.newTag;
+
 public final class Activities {
+
+	private static final String TAG = newTag("Activities");
 
 	private Activities() {
 		throw new AssertionError();
@@ -47,10 +47,29 @@ public final class Activities {
 	public static void restartActivity(@Nonnull Activity activity) {
 		final Intent intent = activity.getIntent();
 
-		Log.d(activity.getClass().getName(), "Finishing current activity!");
+		Log.d(TAG, "Restarting activity: " + activity.getClass().getSimpleName());
 		activity.finish();
 
-		Log.d(activity.getClass().getName(), "Starting new activity!");
 		activity.startActivity(intent);
+	}
+
+	public static void startActivity(@Nonnull Intent intent, @Nonnull Context context) {
+		addIntentFlags(intent, false, context);
+		context.startActivity(intent);
+	}
+
+	public static void addIntentFlags(@Nonnull Intent intent, boolean detached, @Nonnull Context context) {
+		int flags = 0;
+
+		if (!(context instanceof Activity)) {
+			flags = flags | Intent.FLAG_ACTIVITY_NEW_TASK;
+		}
+
+		if (detached) {
+			flags = flags | Intent.FLAG_ACTIVITY_NO_HISTORY;
+		}
+
+		intent.setFlags(flags);
+
 	}
 }

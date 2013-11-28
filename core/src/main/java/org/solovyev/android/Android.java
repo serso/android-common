@@ -134,19 +134,10 @@ public final class Android {
 		return StringParcelableCreator.getInstance();
 	}
 
+	// use org.solovyev.android.Activities.addIntentFlags
+	@Deprecated
 	public static void addIntentFlags(@Nonnull Intent intent, boolean detached, @Nonnull Context context) {
-		int flags = 0;
-
-		if (!(context instanceof Activity)) {
-			flags = flags | Intent.FLAG_ACTIVITY_NEW_TASK;
-		}
-
-		if (detached) {
-			flags = flags | Intent.FLAG_ACTIVITY_NO_HISTORY;
-		}
-
-		intent.setFlags(flags);
-
+		Activities.addIntentFlags(intent, detached, context);
 	}
 
 	// use enableComponent() instead

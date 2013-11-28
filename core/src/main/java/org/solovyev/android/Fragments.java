@@ -10,14 +10,9 @@ import android.support.v4.app.FragmentActivity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 2/23/13
- * Time: 12:33 PM
- */
-public final class Fragments {
+public class Fragments {
 
-	private Fragments() {
+	protected Fragments() {
 		throw new AssertionError();
 	}
 
