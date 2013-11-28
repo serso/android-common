@@ -41,12 +41,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * User: serso
- * Date: 12/21/11
- * Time: 11:54 PM
- */
-
-/**
  * This class contains static methods for working with some android classes
  */
 @SuppressWarnings("UnusedDeclaration")
@@ -67,6 +61,7 @@ public final class Android {
 
 	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
+	public static final String TAG = "ACL";
 
     /*
     **********************************************************************
@@ -87,6 +82,15 @@ public final class Android {
     **********************************************************************
     */
 
+	@Nonnull
+	public static String newTag(@Nonnull String tag) {
+		return newSubTag(TAG, tag);
+	}
+
+	@Nonnull
+	public static String newSubTag(@Nonnull String tag, @Nonnull String subTag) {
+		return tag + "/" + subTag;
+	}
 
 	/**
 	 * Method returns version of application identified by it's package name.
@@ -145,8 +149,16 @@ public final class Android {
 
 	}
 
+	// use enableComponent() instead
+	@Deprecated
 	public static void toggleComponent(@Nonnull Context context,
-									   @Nonnull Class<? extends Context> componentClass,
+									   @Nonnull Class<?> componentClass,
+									   boolean enable) {
+		enableComponent(context, componentClass, enable);
+	}
+
+	public static void enableComponent(@Nonnull Context context,
+									   @Nonnull Class<?> componentClass,
 									   boolean enable) {
 		final PackageManager pm = context.getPackageManager();
 
@@ -184,15 +196,15 @@ public final class Android {
 				bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 				fos.flush();
 			} catch (FileNotFoundException e) {
-				Log.e("AndroidUtils", e.getMessage(), e);
+				Log.e(TAG, e.getMessage(), e);
 			} catch (IOException e) {
-				Log.e("AndroidUtils", e.getMessage(), e);
+				Log.e(TAG, e.getMessage(), e);
 			} finally {
 				if (fos != null) {
 					try {
 						fos.close();
 					} catch (IOException e) {
-						Log.e("AndroidUtils", e.getMessage(), e);
+						Log.e(TAG, e.getMessage(), e);
 					}
 				}
 			}
