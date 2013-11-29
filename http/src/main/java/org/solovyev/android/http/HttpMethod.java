@@ -25,6 +25,7 @@ package org.solovyev.android.http;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.protocol.HTTP;
 
 import javax.annotation.Nonnull;
@@ -32,11 +33,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 5/27/12
- * Time: 2:45 PM
- */
 public enum HttpMethod {
 
 	DELETE(ParamsLocation.in_uri) {
@@ -83,32 +79,20 @@ public enum HttpMethod {
 		this.paramsLocation = paramsLocation;
 	}
 
-	private static enum ParamsLocation {
+	static enum ParamsLocation {
 		in_uri {
 			@Nonnull
 			@Override
-			public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
-				final StringBuilder result = new StringBuilder(uri);
-
-				if (!params.isEmpty()) {
-					result.append("?");
+			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params) {
+				if (params.isEmpty()) {
+					return uri;
+				} else {
+					return uri + "?" + URLEncodedUtils.format(params, null);
 				}
-
-				boolean first = true;
-				for (NameValuePair param : params) {
-					if (first) {
-						first = false;
-					} else {
-						result.append("&");
-					}
-					result.append(param.getName()).append("=").append(param.getValue());
-				}
-
-				return result.toString();
 			}
 
 			@Override
-			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params) {
 				// no additional parameters
 			}
 		},
@@ -116,12 +100,12 @@ public enum HttpMethod {
 		in_headers {
 			@Nonnull
 			@Override
-			public String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
+			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params) {
 				return uri;
 			}
 
 			@Override
-			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params) {
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params) {
 				if (request instanceof HttpEntityEnclosingRequestBase) {
 					try {
 						((HttpEntityEnclosingRequestBase) request).setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
@@ -135,9 +119,9 @@ public enum HttpMethod {
 		};
 
 		@Nonnull
-		public abstract String prepareUri(@Nonnull String uri, @Nonnull List<NameValuePair> params);
+		public abstract String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params);
 
-		public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<NameValuePair> params);
+		public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params);
 	}
 
 	@Nonnull
