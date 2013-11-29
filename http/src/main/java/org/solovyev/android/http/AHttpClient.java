@@ -6,11 +6,6 @@ import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 4/13/13
- * Time: 4:33 PM
- */
 public interface AHttpClient {
 
 	@Nonnull

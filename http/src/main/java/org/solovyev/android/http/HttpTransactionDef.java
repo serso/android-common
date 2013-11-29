@@ -27,11 +27,6 @@ import org.apache.http.NameValuePair;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 6/4/12
- * Time: 4:24 PM
- */
 public interface HttpTransactionDef {
 
 	@Nonnull

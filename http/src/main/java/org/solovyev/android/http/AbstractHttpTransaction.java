@@ -26,11 +26,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 
 import javax.annotation.Nonnull;
 
-/**
- * User: serso
- * Date: 5/27/12
- * Time: 2:33 PM
- */
 public abstract class AbstractHttpTransaction<R> implements HttpTransaction<R>, HttpTransactionDef {
 
 	@Nonnull

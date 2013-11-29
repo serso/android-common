@@ -1,5 +1,6 @@
 package org.solovyev.android.http;
 
+import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -11,11 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 4/13/13
- * Time: 4:34 PM
- */
+import static java.util.Arrays.asList;
+import static org.solovyev.android.http.HttpTransactions.TAG;
+
 class AHttpClientImpl implements AHttpClient {
 
 	@Nonnull
@@ -29,7 +28,7 @@ class AHttpClientImpl implements AHttpClient {
 
 	@Override
 	public <R> R execute(@Nonnull HttpTransaction<R> httpTransaction) throws IOException {
-		return Collections.getFirstListElement(execute(Arrays.asList(httpTransaction)));
+		return Collections.getFirstListElement(execute(asList(httpTransaction)));
 	}
 
 	@Override
@@ -37,11 +36,15 @@ class AHttpClientImpl implements AHttpClient {
 	public <R> List<R> execute(@Nonnull List<? extends HttpTransaction<R>> httpTransactions) throws IOException {
 		final List<R> result = new ArrayList<R>();
 		for (HttpTransaction<R> httpTransaction : httpTransactions) {
+			final String transactionName = httpTransaction.getClass().getSimpleName();
+			Log.d(TAG, "Executing transaction: " + transactionName);
+
 			final HttpUriRequest request = httpTransaction.createRequest();
 			final HttpResponse httpResponse = httpClient.execute(request);
 
 			final R response = httpTransaction.getResponse(httpResponse);
 			result.add(response);
+			Log.d(TAG, "Execution finished: " + transactionName);
 		}
 
 		return result;

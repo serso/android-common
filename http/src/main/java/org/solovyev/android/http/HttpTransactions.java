@@ -22,19 +22,16 @@
 
 package org.solovyev.android.http;
 
-import org.apache.http.NameValuePair;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 5/28/12
- * Time: 2:17 PM
- */
+import static org.solovyev.android.Android.newTag;
+
 public final class HttpTransactions {
+
+	@Nonnull
+	static final String TAG = newTag("Http");
 
 	private HttpTransactions() {
 		throw new AssertionError();
