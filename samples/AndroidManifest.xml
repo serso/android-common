@@ -19,7 +19,7 @@
   ~
   ~ Email: se.solovyev@gmail.com
   ~ Site:  http://se.solovyev.org
-  --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="20" android:versionName="1.1.8" package="org.solovyev.android.samples">
+  --><manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="20" android:versionName="1.1.9" package="org.solovyev.android.samples">
 
 	<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17"/>
 
