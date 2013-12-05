@@ -18,16 +18,16 @@ public class HttpMethodTest {
 
 	@Test
 	public void testShouldReturnUrlWithParams() throws Exception {
-		assertEquals("test", in_uri.prepareUri("test", Collections.<BasicNameValuePair>emptyList()));
+		assertEquals("test", in_uri.prepareUri("test", Collections.<BasicNameValuePair>emptyList(), null));
 	}
 
 	@Test
 	public void testShouldAddParamToUrl() throws Exception {
-		assertEquals("test?param=value", in_uri.prepareUri("test", asList(new BasicNameValuePair("param", "value"))));
+		assertEquals("test?param=value", in_uri.prepareUri("test", asList(new BasicNameValuePair("param", "value")), null));
 	}
 
 	@Test
 	public void testShouldEncodeParamsInUrl() throws Exception {
-		assertEquals("test?param=%2C%2C%60%28%2F", in_uri.prepareUri("test", asList(new BasicNameValuePair("param", ",,`(/"))));
+		assertEquals("test?param=%2C%2C%60%28%2F", in_uri.prepareUri("test", asList(new BasicNameValuePair("param", ",,`(/")), null));
 	}
 }

@@ -26,9 +26,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.protocol.HTTP;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.List;
@@ -83,16 +83,16 @@ public enum HttpMethod {
 		in_uri {
 			@Nonnull
 			@Override
-			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params) {
+			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params, @Nullable String encoding) {
 				if (params.isEmpty()) {
 					return uri;
 				} else {
-					return uri + "?" + URLEncodedUtils.format(params, null);
+					return uri + "?" + URLEncodedUtils.format(params, encoding);
 				}
 			}
 
 			@Override
-			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params) {
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params, String encoding) {
 				// no additional parameters
 			}
 		},
@@ -100,15 +100,15 @@ public enum HttpMethod {
 		in_headers {
 			@Nonnull
 			@Override
-			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params) {
+			public String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params, @Nullable String encoding) {
 				return uri;
 			}
 
 			@Override
-			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params) {
+			public void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params, @Nullable String encoding) {
 				if (request instanceof HttpEntityEnclosingRequestBase) {
 					try {
-						((HttpEntityEnclosingRequestBase) request).setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+						((HttpEntityEnclosingRequestBase) request).setEntity(new UrlEncodedFormEntity(params, encoding));
 					} catch (UnsupportedEncodingException e) {
 						throw new RuntimeException(e);
 					}
@@ -119,9 +119,9 @@ public enum HttpMethod {
 		};
 
 		@Nonnull
-		public abstract String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params);
+		public abstract String prepareUri(@Nonnull String uri, @Nonnull List<? extends NameValuePair> params, String encoding);
 
-		public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params);
+		public abstract void addParams(@Nonnull HttpRequestBase request, @Nonnull List<? extends NameValuePair> params, String encoding);
 	}
 
 	@Nonnull
@@ -131,15 +131,15 @@ public enum HttpMethod {
 	protected abstract HttpRequestBase createRequest();
 
 	@Nonnull
-	public HttpUriRequest createRequest(@Nonnull String uri, @Nonnull List<NameValuePair> params) {
-		return createRequest(URI.create(paramsLocation.prepareUri(uri, params)), params);
+	public HttpUriRequest createRequest(@Nonnull String uri, @Nonnull List<NameValuePair> params, @Nullable String encoding) {
+		return createRequest(URI.create(paramsLocation.prepareUri(uri, params, encoding)), params, encoding);
 	}
 
 	@Nonnull
-	public HttpUriRequest createRequest(@Nonnull URI uri, @Nonnull List<NameValuePair> params) {
+	public HttpUriRequest createRequest(@Nonnull URI uri, @Nonnull List<NameValuePair> params, @Nullable String encoding) {
 		final HttpRequestBase result = createRequest();
 		result.setURI(uri);
-		paramsLocation.addParams(result, params);
+		paramsLocation.addParams(result, params, encoding);
 		return result;
 	}
 }

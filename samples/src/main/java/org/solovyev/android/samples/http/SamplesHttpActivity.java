@@ -45,11 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 8/10/12
- * Time: 2:26 PM
- */
 public class SamplesHttpActivity extends ListActivity {
 
 	@Nonnull

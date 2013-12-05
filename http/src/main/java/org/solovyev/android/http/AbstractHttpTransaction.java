@@ -23,8 +23,10 @@
 package org.solovyev.android.http;
 
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.protocol.HTTP;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class AbstractHttpTransaction<R> implements HttpTransaction<R>, HttpTransactionDef {
 
@@ -34,9 +36,17 @@ public abstract class AbstractHttpTransaction<R> implements HttpTransaction<R>, 
 	@Nonnull
 	private final String uri;
 
+	@Nullable
+	private final String encoding;
+
 	protected AbstractHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod) {
-		this.httpMethod = httpMethod;
+		this(uri, httpMethod, HTTP.UTF_8);
+	}
+
+	protected AbstractHttpTransaction(@Nonnull String uri, @Nonnull HttpMethod httpMethod, @Nullable String encoding) {
+		this.encoding = encoding;
 		this.uri = uri;
+		this.httpMethod = httpMethod;
 	}
 
 	@Override
@@ -51,10 +61,15 @@ public abstract class AbstractHttpTransaction<R> implements HttpTransaction<R>, 
 		return uri;
 	}
 
+	@Nullable
+	public String getEncoding() {
+		return encoding;
+	}
+
 	@Nonnull
 	@Override
 	public HttpUriRequest createRequest() {
-		return httpMethod.createRequest(uri, getRequestParameters());
+		return httpMethod.createRequest(uri, getRequestParameters(), encoding);
 	}
 
 }

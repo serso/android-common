@@ -32,11 +32,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 5/29/12
- * Time: 9:51 PM
- */
 public class DownloadFileHttpTransaction<R> extends AbstractHttpTransaction<R> {
 
 	@Nonnull
