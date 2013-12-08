@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.10</version>
+		<version>1.1.11-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-tasks</artifactId>
-	<version>1.1.10</version>
+	<version>1.1.11-SNAPSHOT</version>
 	<name>Android Common Library Tasks</name>
 
 	<packaging>apklib</packaging>
