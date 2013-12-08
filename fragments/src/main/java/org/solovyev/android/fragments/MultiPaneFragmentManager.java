@@ -118,7 +118,7 @@ public class MultiPaneFragmentManager {
 
 		setFragment(fragmentViewId, mpfd, fm, ft);
 
-		ft.commit();
+		ft.commitAllowingStateLoss();
 
 		// we cannot wait until android will execute pending transactions as some logic rely on added/attached transactions
 		executePendingTransactions(fm);
@@ -260,7 +260,7 @@ public class MultiPaneFragmentManager {
 			tryRemoveFragment(ft, fragmentById);
 		}
 
-		ft.commit();
+		ft.commitAllowingStateLoss();
 
 		// we cannot wait until android will execute pending transactions as some logic rely on added/attached transactions
 		executePendingTransactions(fm);

@@ -32,11 +32,6 @@ import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-/**
- * User: serso
- * Date: 5/29/12
- * Time: 11:39 PM
- */
 public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask<PARAM, PROGRESS, CommonAsyncTask.Result<RESULT>> {
 
 	@Nonnull
@@ -72,7 +67,7 @@ public abstract class CommonAsyncTask<PARAM, PROGRESS, RESULT> extends AsyncTask
 	protected abstract RESULT doWork(@Nonnull List<PARAM> params);
 
 	@Override
-	protected final void onPostExecute(@Nonnull Result<RESULT> r) {
+	protected void onPostExecute(@Nonnull Result<RESULT> r) {
 		super.onPostExecute(r);
 
 		if (r.isFailure()) {
