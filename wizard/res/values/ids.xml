@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright 2013 serso aka se.solovyev
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,9 @@
   -->
 
 <resources>
-	<string name="acl_loading">Loading…</string>
-	<string name="acl_yes">Yes</string>
-	<string name="acl_no">No</string>
+
+	<item type="id" name="acl_wizard_prev_button"/>
+	<item type="id" name="acl_wizard_next_button"/>
+	<item type="id" name="acl_wizard_content"/>
+
 </resources>

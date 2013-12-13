@@ -42,6 +42,7 @@
 		<module>networks</module>
 		<module>fragments</module>
 		<module>tasks</module>
+		<module>wizard</module>
 		<module>all</module>
 	</modules>
 
@@ -235,6 +236,13 @@
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-tasks</artifactId>
+				<version>1.1.11-SNAPSHOT</version>
+				<type>apklib</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.solovyev.android</groupId>
+				<artifactId>android-common-wizard</artifactId>
 				<version>1.1.11-SNAPSHOT</version>
 				<type>apklib</type>
 			</dependency>
