@@ -26,19 +26,24 @@ import android.content.Context;
 import android.os.Build;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 
-public class FileCache {
+import static android.os.Environment.MEDIA_MOUNTED;
+import static android.os.Environment.getExternalStorageDirectory;
+import static android.os.Environment.getExternalStorageState;
+
+public final class FileCache {
 
 	@Nonnull
 	private final File cacheDir;
 
 	public FileCache(@Nonnull Context context, @Nonnull String cacheFileName) {
 		// find the dir to save cached images
-		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-			cacheDir = new File(createCachePath(context), cacheFileName);
+		if (getExternalStorageState().equals(MEDIA_MOUNTED)) {
+			cacheDir = new File(createExternalCachePath(context), cacheFileName);
 		} else {
-			cacheDir = context.getCacheDir();
+			cacheDir = new File(createInternalCachePath(context), cacheFileName);
 		}
 
 		if (!cacheDir.exists()) {
@@ -46,13 +51,20 @@ public class FileCache {
 		}
 	}
 
-	@Nonnull
-	private String createCachePath(@Nonnull Context context) {
+	@Nullable
+	private String createExternalCachePath(@Nonnull Context context) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-			return context.getExternalCacheDir().getPath();
+			final File cacheDir = context.getExternalCacheDir();
+			return cacheDir != null ? cacheDir.getPath() : createInternalCachePath(context);
 		} else {
-			return android.os.Environment.getExternalStorageDirectory().getPath() + "/Android/data/" + context.getApplicationContext().getPackageName() + "/cache";
+			return getExternalStorageDirectory().getPath() + "/Android/data/" + context.getPackageName() + "/cache";
 		}
+	}
+
+	@Nullable
+	private String createInternalCachePath(@Nonnull Context context) {
+		final File cacheDir = context.getCacheDir();
+		return cacheDir != null ? cacheDir.getPath() : null;
 	}
 
 	@Nonnull
@@ -68,5 +80,4 @@ public class FileCache {
 			}
 		}
 	}
-
 }

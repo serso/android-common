@@ -27,11 +27,6 @@ import android.widget.ImageView;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * User: serso
- * Date: 8/17/12
- * Time: 11:41 AM
- */
 public interface ImageLoader {
 
 	void loadImage(@Nonnull String url, @Nonnull ImageView imageView, @Nullable Integer defaultImageId);
