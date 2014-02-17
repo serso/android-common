@@ -203,7 +203,7 @@ public class MultiPaneFragmentManager {
 		destination.setInitialSavedState(savedState);
 	}
 
-	private void hideKeyboard() {
+	public void hideKeyboard() {
 		final View focusedView = activity.getCurrentFocus();
 
 		if (focusedView != null) {
@@ -267,14 +267,17 @@ public class MultiPaneFragmentManager {
 	}
 
 	public void goBack() {
+		hideKeyboard();
 		activity.getSupportFragmentManager().popBackStack();
 	}
 
 	public boolean goBackImmediately() {
+		hideKeyboard();
 		return activity.getSupportFragmentManager().popBackStackImmediate();
 	}
 
 	public void goBack(@Nonnull String tag) {
+		hideKeyboard();
 		activity.getSupportFragmentManager().popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 	}
 
