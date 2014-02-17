@@ -24,14 +24,14 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.13</version>
+		<version>1.1.14-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-views</artifactId>
 	<name>Android Common Library View</name>
-	<version>1.1.13</version>
+	<version>1.1.14-SNAPSHOT</version>
 
 	<packaging>apklib</packaging>
 
