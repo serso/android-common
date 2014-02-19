@@ -31,13 +31,10 @@ import javax.annotation.Nonnull;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Scanner;
 
-/**
- * User: serso
- * Date: 6/3/12
- * Time: 4:35 PM
- */
 public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	private static final String TAG = "DbOperation";
@@ -66,7 +63,7 @@ public class CommonSQLiteOpenHelper extends SQLiteOpenHelper {
 	public void onUpgrade(@Nonnull SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.d(TAG, "Upgrading database, old version: " + oldVersion + ", new version: " + newVersion);
 
-		final DecimalFormat decimalFormat = new DecimalFormat("000");
+		final DecimalFormat decimalFormat = new DecimalFormat("000", new DecimalFormatSymbols(Locale.US));
 
 		for (int version = oldVersion + 1; version <= newVersion; version++) {
 			try {
