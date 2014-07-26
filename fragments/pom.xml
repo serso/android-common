@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.15-SNAPSHOT</version>
+		<version>1.1.15</version>
 	</parent>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-fragments</artifactId>
-	<version>1.1.15-SNAPSHOT</version>
+	<version>1.1.15</version>
 	<name>Android Common Library Fragments</name>
 
 	<packaging>apklib</packaging>
