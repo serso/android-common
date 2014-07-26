@@ -24,13 +24,13 @@
 	<parent>
 		<artifactId>android-common</artifactId>
 		<groupId>org.solovyev.android</groupId>
-		<version>1.1.15</version>
+		<version>1.1.16-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>android-common-other</artifactId>
 	<name>Android Common Library Other</name>
-	<version>1.1.15</version>
+	<version>1.1.16-SNAPSHOT</version>
 
 	<packaging>apklib</packaging>
 
