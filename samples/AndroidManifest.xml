@@ -22,7 +22,7 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	android:versionCode="20"
-	android:versionName="1.1.15-SNAPSHOT"
+	android:versionName="1.1.15"
 	package="org.solovyev.android.samples">
 
 <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17"/>
