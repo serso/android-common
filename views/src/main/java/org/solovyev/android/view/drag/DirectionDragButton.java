@@ -82,6 +82,7 @@ public class DirectionDragButton extends DragButton {
 		protected void init(@Nonnull Paint basePaint,
 							int color,
 							int alpha) {
+			paint.set(basePaint);
 			paint.setColor(color);
 			paint.setAlpha(alpha);
 			paint.setTextSize(basePaint.getTextSize() * scale);
