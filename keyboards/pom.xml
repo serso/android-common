@@ -26,13 +26,13 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.17</version>
+		<version>1.1.18-SNAPSHOT</version>
 	</parent>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-keyboards</artifactId>
 	<name>Android Common Library Keyboard</name>
-	<version>1.1.17</version>
+	<version>1.1.18-SNAPSHOT</version>
 
 	<packaging>apklib</packaging>
 
