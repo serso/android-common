@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright 2013 serso aka se.solovyev
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  ~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Contact details
+  ~
+  ~ Email: se.solovyev@gmail.com
+  ~ Site:  http://se.solovyev.org
+  -->
+
+<resources>
+
+	<attr name="orientation" format="enum">
+		<enum name="horizontal" value="0" />
+		<enum name="vertical" value="1" />
+	</attr>
+
+	<declare-styleable name="DirectionDragButton">
+		<attr name="directionTextColor" format="color" />
+		<attr name="textUp" format="string" />
+		<attr name="textDown" format="string" />
+		<attr name="textRight" format="string" />
+		<attr name="textLeft" format="string" />
+		<attr name="directionTextScale" format="string" />
+		<attr name="directionTextAlpha" format="integer" />
+	</declare-styleable>
+
+	<declare-styleable name="DragButton">
+		<attr name="hTextPosition" format="float" />
+	</declare-styleable>
+
+	<declare-styleable name="MultiSelectListPreference">
+		<attr name="separator" format="string" />
+	</declare-styleable>
+
+	<declare-styleable name="Picker">
+		<attr name="orientation" />
+	</declare-styleable>
+
+	<attr name="defaultButtonStyle" format="reference" />
+
+	<declare-styleable name="FlowLayout">
+		<attr name="horizontalSpacing" format="dimension" />
+		<attr name="verticalSpacing" format="dimension" />
+		<attr name="orientation" />
+		<attr name="debugDraw" format="boolean" />
+	</declare-styleable>
+	<declare-styleable name="FlowLayout_LayoutParams">
+		<attr name="layout_newLine" format="boolean" />
+		<attr name="layout_horizontalSpacing" format="dimension" />
+		<attr name="layout_verticalSpacing" format="dimension" />
+	</declare-styleable>
+
+	<declare-styleable name="SideBarLayout">
+		<attr name="slidingViewId" format="reference" />
+		<attr name="mainViewId" format="reference" />
+		<attr name="slidingViewStyle" format="integer">
+			<enum name="hover" value="0" />
+			<enum name="push" value="1" />
+		</attr>
+		<attr name="slidingViewLedge" format="dimension" />
+		<attr name="slidingViewPosition" format="integer">
+			<enum name="left" value="0" />
+			<enum name="top" value="1" />
+			<enum name="right" value="2" />
+			<enum name="bottom" value="3" />
+		</attr>
+	</declare-styleable>
+
+</resources>

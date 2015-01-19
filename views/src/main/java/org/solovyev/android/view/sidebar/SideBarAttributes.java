@@ -43,25 +43,13 @@ final class SideBarAttributes {
 
 		final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.SideBarLayout);
 
-		for (int i = 0; i < attributes.getIndexCount(); i++) {
-			switch (attributes.getIndex(i)) {
-				case R.styleable.SideBarLayout_mainViewId:
-					result.mainViewId = attributes.getResourceId(i, View.NO_ID);
-					break;
-				case R.styleable.SideBarLayout_slidingViewId:
-					result.slidingViewId = attributes.getResourceId(i, View.NO_ID);
-					break;
-				case R.styleable.SideBarLayout_slidingViewLedge:
-					result.slidingViewLedge = attributes.getDimensionPixelSize(i, 0);
-					break;
-				case R.styleable.SideBarLayout_slidingViewPosition:
-					result.slidingViewPosition = SideBarSlidingViewPosition.getById(attributes.getInt(i, 0));
-					break;
-				case R.styleable.SideBarLayout_slidingViewStyle:
-					result.slidingViewStyle = SideBarSlidingViewStyle.getById(attributes.getInt(i, 0));
-					break;
-			}
-		}
+		result.mainViewId = attributes.getResourceId(R.styleable.SideBarLayout_mainViewId, View.NO_ID);
+		result.slidingViewId = attributes.getResourceId(R.styleable.SideBarLayout_slidingViewId, View.NO_ID);
+		result.slidingViewLedge = attributes.getDimensionPixelSize(R.styleable.SideBarLayout_slidingViewLedge, 0);
+		result.slidingViewPosition = SideBarSlidingViewPosition.getById(attributes.getInt(R.styleable.SideBarLayout_slidingViewPosition, 0));
+		result.slidingViewStyle = SideBarSlidingViewStyle.getById(attributes.getInt(R.styleable.SideBarLayout_slidingViewStyle, 0));
+
+		attributes.recycle();
 
 		checkAttributes(result);
 

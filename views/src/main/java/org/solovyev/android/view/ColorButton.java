@@ -75,20 +75,12 @@ public class ColorButton extends Button {
 		super(context, attrs);
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DragButton);
-		final int N = a.getIndexCount();
-		for (int i = 0; i < N; i++) {
-			int attr = a.getIndex(i);
-
-			final String attrValue = a.getString(attr);
-
-			if (!Strings.isEmpty(attrValue)) {
-				switch (attr) {
-					case R.styleable.DragButton_hTextPosition:
-						this.hTextPosition = Float.valueOf(attrValue);
-						break;
-				}
-			}
+		if (a.hasValue(R.styleable.DragButton_hTextPosition)) {
+			this.hTextPosition = Float.valueOf(a.getString(R.styleable.DragButton_hTextPosition));
+		} else {
+			this.hTextPosition = H_TEXT_POSITION_DEFAULT_VALUE;
 		}
+		a.recycle();
 
 		if (init) {
 			init(context);

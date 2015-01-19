@@ -33,7 +33,6 @@ import android.util.AttributeSet;
 import org.solovyev.android.view.R;
 import org.solovyev.common.text.StringCollections;
 import org.solovyev.common.text.StringMapper;
-import org.solovyev.common.text.Strings;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,22 +72,14 @@ public class MultiSelectListPreference<T> extends ListPreference {
 	public MultiSelectListPreference(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 
-		String separator = DEFAULT_SEPARATOR;
-
 		final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MultiSelectListPreference);
-		for (int i = 0; i < a.getIndexCount(); i++) {
-			int attr = a.getIndex(i);
-
-			final String attrValue = a.getString(attr);
-
-			if (!Strings.isEmpty(attrValue)) {
-				switch (attr) {
-					case R.styleable.MultiSelectListPreference_separator:
-						separator = attrValue;
-						break;
-				}
-			}
+		final String separator;
+		if (a.hasValue(R.styleable.MultiSelectListPreference_separator)) {
+			separator = a.getString(R.styleable.MultiSelectListPreference_separator);
+		} else {
+			separator = DEFAULT_SEPARATOR;
 		}
+		a.recycle();
 
 		this.mapper = new Mapper(separator);
 
