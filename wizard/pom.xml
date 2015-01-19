@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.solovyev.android</groupId>
 		<artifactId>android-common</artifactId>
-		<version>1.1.17-SNAPSHOT</version>
+		<version>1.1.17</version>
 	</parent>
 
 	<groupId>org.solovyev.android</groupId>
 	<artifactId>android-common-wizard</artifactId>
-	<version>1.1.17-SNAPSHOT</version>
+	<version>1.1.17</version>
 	<name>Android Common Library Wizard</name>
 
 	<packaging>apklib</packaging>
