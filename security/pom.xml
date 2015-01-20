@@ -14,7 +14,7 @@
 
 	<name>Android Common Library Security</name>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 
 	<dependencies>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-core</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>

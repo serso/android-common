@@ -104,63 +104,63 @@
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-core</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-billing</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-ads</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-db</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-http</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-lists</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-menus</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-other</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-preferences</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
@@ -181,77 +181,77 @@
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-samples-test</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-sherlock</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-security</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-views</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-keyboards</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-app</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-networks</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-fragments</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-tasks</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-wizard</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<dependency>
 				<groupId>org.solovyev.android</groupId>
 				<artifactId>android-common-all</artifactId>
 				<version>1.1.18-SNAPSHOT</version>
-				<type>apklib</type>
+				<type>aar</type>
 			</dependency>
 
 			<!-- Own -->

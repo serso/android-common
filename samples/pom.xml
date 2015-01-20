@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-all</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>

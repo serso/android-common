@@ -33,7 +33,7 @@
 	<name>Android Common Library View</name>
 	<version>1.1.18-SNAPSHOT</version>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 	<dependencies>
 
@@ -46,13 +46,13 @@
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-core</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-preferences</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 

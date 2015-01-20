@@ -34,7 +34,7 @@
 
 	<name>Android Common Library Core</name>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 	<dependencies>
 

@@ -14,7 +14,7 @@
 
 	<name>Android Common Library Network</name>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 	<dependencies>
 

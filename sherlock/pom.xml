@@ -34,7 +34,7 @@
 
 	<name>Android Common Library Sherlock</name>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 	<dependencies>
 
@@ -48,13 +48,13 @@
 			<groupId>com.actionbarsherlock</groupId>
 			<artifactId>actionbarsherlock</artifactId>
 			<version>4.4.0</version>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-lists</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>

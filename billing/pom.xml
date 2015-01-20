@@ -35,14 +35,14 @@
 
 	<name>Android Common Library Billing</name>
 
-	<packaging>apklib</packaging>
+	<packaging>aar</packaging>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-db</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.solovyev.android</groupId>
 			<artifactId>android-common-security</artifactId>
-			<type>apklib</type>
+			<type>aar</type>
 		</dependency>
 
 		<dependency>
